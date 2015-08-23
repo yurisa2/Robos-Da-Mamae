@@ -11,7 +11,8 @@
 /////////////////////////////////////// Inoputs
 
 input int Lotes = 1;
-input int Periodos =  6;
+input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
+input int Periodos =  4;
 input double StopLoss = 0;
 input double TakeProfit = 0;
 
@@ -27,6 +28,10 @@ string HorarioInicio = IntegerToString(HoraDeInicio,2,'0') + ":" + IntegerToStri
 input bool   ZerarFinalDoDia = true;
 
 input bool OperacaoLogoDeCara = true;
+
+
+
+
 
 ///////////////////////////////// Variaveis
 

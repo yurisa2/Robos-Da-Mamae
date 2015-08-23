@@ -1,0 +1,114 @@
+//+------------------------------------------------------------------+
+//|                                            BenderDefinitivo1.mq5 |
+//|                        Copyright 2015, MetaQuotes Software Corp. |
+//|                                             https://www.mql5.com |
+//+------------------------------------------------------------------+
+#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property link      "http://www.sa2.com.br/"
+#property version   "1.06"
+
+#include <FuncoesBucaresteIndicador.mqh>
+
+int Segundos = PeriodSeconds();
+
+
+int OnInit()
+  {
+
+   HandleGHL = iCustom(NULL,0,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
+   
+
+   
+   Print(TimeCurrent());
+
+ //  return(0);
+   
+   if(HoraDeInicio>HoraDeFim)
+     {
+      return(INIT_PARAMETERS_INCORRECT);
+     }
+     else
+       {
+        return(0);
+       }
+   
+   
+}
+
+
+void OnTimer()
+{
+
+HiLo();
+CalculaStops();
+//Print(TimeCurrent());
+//Print("Operações: ",Operacoes);
+
+//Print("zrou ",JaZerou);
+
+
+//Print("StopLoss Valor Venda: ",StopLossValorVenda);
+
+ }
+
+void OnTick()
+{
+
+
+/////////////////// Iniciar o Dia
+
+
+        if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
+        {
+        
+        //Print("Horario configurado ",HorarioInicio);
+        
+        JaZerou = true;
+        JaDeuFinal = false;
+        Operacoes = 0;
+        TipoOp = 0;
+        
+        EventKillTimer();
+        EventSetTimer(Segundos);
+        
+
+        Print("Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
+        SendMail("Indicio das operações Bucareste","Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
+        SendNotification("Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
+        HiLo();
+        
+
+        
+        
+        }
+        
+
+
+/////////////////////////////////////////////////////////
+/////////////////////// Funções de STOP
+
+         StopLossCompra();
+         StopLossVenda();
+         TakeProfitCompra();
+         TakeProfitVenda ();
+
+/////////////////////////////////////////////////
+
+/////////////// Começo do dia
+
+
+if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
+
+////////////////// Fim 
+
+
+if(ZerarFinalDoDia == true) ZerarODia();
+   else
+   {
+   
+   if(Operacoes>1) Print("Finalização do Dia. Finalizamos o dia COMPRADOS");
+   if(Operacoes<1) Print("Finalização do Dia. Finalizamos o dia VENDIDOS");   
+   
+   }
+
+}

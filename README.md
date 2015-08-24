@@ -1,6 +1,6 @@
 README PetroSa MQL5 Repository
 
-Tudo o que você precisa está nesse GIT. Até mesmo se você quiser dar um COMITT...
+Tudo o que você precisa está nesse GIT. Até mesmo se você quiser dar um COMMIT...
 
 ###TODOS OS ROBÔS ESTÃO NA MASTER###
 

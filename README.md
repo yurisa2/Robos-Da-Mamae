@@ -1,14 +1,5 @@
-README
- _______  _______ _________ _______  _______  _______  _______ 
-(  ____ )(  ____ \\__   __/(  ____ )(  ___  )(  ____ \(  ___  )
-| (    )|| (    \/   ) (   | (    )|| (   ) || (    \/| (   ) |
-| (____)|| (__       | |   | (____)|| |   | || (_____ | (___) |
-|  _____)|  __)      | |   |     __)| |   | |(_____  )|  ___  |
-| (      | (         | |   | (\ (   | |   | |      ) || (   ) |
-| )      | (____/\   | |   | ) \ \__| (___) |/\____) || )   ( |
-|/       (_______/   )_(   |/   \__/(_______)\_______)|/     \|
-                                                               
-https://bitbucket.org/petrosa/petrosa-bots
+README PetroSa MQL5 Repository
+
 Tudo o que você precisa está nesse GIT. Até mesmo se você quiser dar um COMITT...
 
 ###TODOS OS ROBÔS ESTÃO NA MASTER###

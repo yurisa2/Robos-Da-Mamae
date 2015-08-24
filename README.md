@@ -20,4 +20,4 @@ Tudo o que você precisa está nesse GIT, nunca, mas nunca dê um commit, senão
 
 Em caso de dúvida, sempre fale com o Yurão primeiro.
 
-### Pode-se e deve-se adicionar bugs e resolver o máximo de tretas por aqui, fica documentado e trampo é zero ###
+### Pode-se e deve-se adicionar bugs e resolver o máximo de tretas (Issues) por aqui, fica documentado e trampo é zero ###

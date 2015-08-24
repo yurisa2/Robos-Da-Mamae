@@ -10,7 +10,7 @@
                                                                        
 https://bitbucket.org/petrosa/petrosa-bots
 
-Tudo o que você precisa está nesse GIT, nunca, mas nunca dê um commit, senão vou atrás de você com um facão.
+Tudo o que você precisa está nesse GIT. Até mesmo se você quiser dar um COMITT...
 
 ### TODOS OS ROBÔS ESTÃO NA MASTER ###
 

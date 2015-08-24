@@ -147,7 +147,6 @@ SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolve
 
 if(Operacoes==0)
 {
-//trade.Buy(Lotes,NULL,daotick(),NULL,NULL,"Compra do Buca!");
 TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();
 

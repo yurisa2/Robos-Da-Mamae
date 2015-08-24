@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br/"
-#property version   "1.07"
+#property version   "1.08"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -17,21 +17,16 @@ int OnInit()
 
    HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
    
-
-   
  //  Print(TimeCurrent());
 
  //  return(0);
    
    if(HoraDeInicio>HoraDeFim) return(INIT_PARAMETERS_INCORRECT);
-   if(HoraDeInicio==HoraDeFim && MinutoDeInicio > MinutoDeFim) return(INIT_PARAMETERS_INCORRECT);
-   if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >23 || HoraDeFim >23) return(INIT_PARAMETERS_INCORRECT);
+   if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) return(INIT_PARAMETERS_INCORRECT);
+   if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >17 || HoraDeFim >17 || HoraDeInicio <9 || HoraDeFim <9 ) return(INIT_PARAMETERS_INCORRECT);
    if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || Periodos <=1 ) return(INIT_PARAMETERS_INCORRECT);
 
 
-
-
-   
    return(0);
 
    
@@ -43,13 +38,7 @@ void OnTimer()
 
 HiLo();
 CalculaStops();
-//Print(TimeCurrent());
-//Print("Operações: ",Operacoes);
 
-//Print("zrou ",JaZerou);
-
-
-//Print("StopLoss Valor Venda: ",StopLossValorVenda);
 
  }
 

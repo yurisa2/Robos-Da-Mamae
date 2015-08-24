@@ -3,35 +3,38 @@
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br/"
-#property version   "1.06"
+#property version   "1.07"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
-int Segundos = PeriodSeconds();
+int Segundos = PeriodSeconds(TimeFrame);
 
 
 int OnInit()
   {
 
-   HandleGHL = iCustom(NULL,0,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
+   HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
    
 
    
-   Print(TimeCurrent());
+ //  Print(TimeCurrent());
 
  //  return(0);
    
-   if(HoraDeInicio>HoraDeFim)
-     {
-      return(INIT_PARAMETERS_INCORRECT);
-     }
-     else
-       {
-        return(0);
-       }
+   if(HoraDeInicio>HoraDeFim) return(INIT_PARAMETERS_INCORRECT);
+   if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) return(INIT_PARAMETERS_INCORRECT);
+   if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >17 || HoraDeFim >17 || HoraDeInicio <9 || HoraDeFim <9 ) return(INIT_PARAMETERS_INCORRECT);
+   if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || Periodos <=1 ) return(INIT_PARAMETERS_INCORRECT);
+
+
+
+
+
    
+   return(0);
+
    
 }
 
@@ -42,7 +45,7 @@ void OnTimer()
 HiLo();
 CalculaStops();
 //Print(TimeCurrent());
-//Print("Operações: ",Operacoes);
+//Print("Operaï¿½ï¿½es: ",Operacoes);
 
 //Print("zrou ",JaZerou);
 
@@ -72,9 +75,9 @@ void OnTick()
         EventSetTimer(Segundos);
         
 
-        Print("Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
-        SendMail("Indicio das operações Bucareste","Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
-        SendNotification("Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
+        Print("Bom dia! Bucareste ï¿½s ordens, segura o coraï¿½ï¿½o pq o rolï¿½ ï¿½ monstro!!!");
+        SendMail("Indicio das operaï¿½ï¿½es Bucareste","Bom dia! Bucareste ï¿½s ordens, segura o coraï¿½ï¿½o pq o rolï¿½ ï¿½ monstro!!!");
+        SendNotification("Bom dia! Bucareste ï¿½s ordens, segura o coraï¿½ï¿½o pq o rolï¿½ ï¿½ monstro!!!");
         HiLo();
         
 
@@ -85,7 +88,7 @@ void OnTick()
 
 
 /////////////////////////////////////////////////////////
-/////////////////////// Funções de STOP
+/////////////////////// Funï¿½ï¿½es de STOP
 
          StopLossCompra();
          StopLossVenda();
@@ -94,7 +97,7 @@ void OnTick()
 
 /////////////////////////////////////////////////
 
-/////////////// Começo do dia
+/////////////// Comeï¿½o do dia
 
 
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
@@ -106,8 +109,8 @@ if(ZerarFinalDoDia == true) ZerarODia();
    else
    {
    
-   if(Operacoes>1) Print("Finalização do Dia. Finalizamos o dia COMPRADOS");
-   if(Operacoes<1) Print("Finalização do Dia. Finalizamos o dia VENDIDOS");   
+   if(Operacoes>1) Print("Finalizaï¿½ï¿½o do Dia. Finalizamos o dia COMPRADOS");
+   if(Operacoes<1) Print("Finalizaï¿½ï¿½o do Dia. Finalizamos o dia VENDIDOS");   
    
    }
 

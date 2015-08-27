@@ -8,10 +8,12 @@
 #property version   "2.00"
 #include <basico.mqh>
 
-/////////////////////////////////////// Inoputs
+/////////////////////////////////////// Inputs
 
 input int Lotes = 1;
-input int Periodos =  6;
+input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
+input int Periodos =  4;
+
 input double StopLoss = 0;
 input double TakeProfit = 0;
 
@@ -27,6 +29,7 @@ string HorarioInicio = IntegerToString(HoraDeInicio,2,'0') + ":" + IntegerToStri
 input bool   ZerarFinalDoDia = true;
 
 input bool OperacaoLogoDeCara = true;
+input string Descricao_Robo = "";
 
 ///////////////////////////////// Variaveis
 
@@ -55,6 +58,11 @@ bool   PrimeiraOp = false;
 ENUM_ORDER_TYPE TipoOp = 0;
 
 int Mudou = 0;
+
+int TimeMagic;
+bool DaResultado;
+double Acumulado = 0;
+
 
 
 ///////////////////////////////////////////
@@ -93,8 +101,8 @@ bool TaDentroDoHorario (string HoraInicio, string HoraFim)
 
 
 
-//////////////////////// DAOTICK ///////////€
-////// Função Pega Tick e devolve a hora e o valor da porra do ativo
+//////////////////////// DAOTICK ///////////
+////// Funçao Pega Tick e devolve a hora e o valor da porra do ativo
 double daotick ()
 {
 
@@ -135,20 +143,19 @@ TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();
 
 Operacoes = Operacoes + 1;
-PrecoCompra = daotick();
-SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolveu que ia comprar no HiLo | Valor da compra: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
+//PrecoCompra = daotick();
+//SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolveu que ia comprar no HiLo | Valor da compra: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
 
 }
 
 if(Operacoes==0)
 {
-//trade.Buy(Lotes,NULL,daotick(),NULL,NULL,"Compra do Buca!");
 TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();
 
 Operacoes = Operacoes + 1;
-PrecoCompra = daotick();
-SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolveu que ia comprar no HiLo | Valor da compra: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
+//PrecoCompra = daotick();
+//SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolveu que ia comprar no HiLo | Valor da compra: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
 
 }
 
@@ -170,8 +177,8 @@ TipoOp = ORDER_TYPE_SELL;
 MontarRequisicao();
 
 Operacoes = Operacoes - 1;
-PrecoVenda = daotick();
-SendMail("Bucareste: VENDEU no HiLo","Bucareste fez um monte de conta e resolveu que ia VENDER no HiLo | Valor da venda: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
+//PrecoVenda = daotick();
+//SendMail("Bucareste: VENDEU no HiLo","Bucareste fez um monte de conta e resolveu que ia VENDER no HiLo | Valor da venda: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
 
 }
 
@@ -183,8 +190,8 @@ TipoOp = ORDER_TYPE_SELL;
 MontarRequisicao();
 
 Operacoes = Operacoes - 1;
-PrecoVenda = daotick();
-SendMail("Bucareste: VENDEU no HiLo","Bucareste fez um monte de conta e resolveu que ia VENDER no HiLo | Valor da venda: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
+//PrecoVenda = daotick();
+//SendMail("Bucareste: VENDEU no HiLo","Bucareste fez um monte de conta e resolveu que ia VENDER no HiLo | Valor da venda: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
 
 }
 
@@ -217,7 +224,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    
    int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
 
-   Print("Indicador do Hilo: ;",_ma1[0],"; | Media Max(NMax): ;",NormalizeDouble(NMax[0],2),"; | Media Min(NMin): ;",NormalizeDouble(NMin[0],2)," | Preco: ;",daotick(),"; | Valor do HiLo: ;",NormalizeDouble(ValorHilo[0],2));
+//   Print("Indicador do Hilo: ;",_ma1[0],"; | Media Max(NMax): ;",NormalizeDouble(NMax[0],2),"; | Media Min(NMin): ;",NormalizeDouble(NMin[0],2),"; | Preco: ;",daotick(),"; | Valor do HiLo: ;",NormalizeDouble(ValorHilo[0],2));
    
    
  //  if(_ma1[0]==NMin[0]) Print("Compra");
@@ -306,12 +313,12 @@ void StopLossCompra ()
 
  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes >0 && StopLoss != 0)
    {
- //  CalculaStops();
+//   CalculaStops();
    
       if(daotick()<=StopLossValorCompra)
         {
          
-         Print("Deu TakeProfit COMPRADO | Venda à: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
+         Print("Deu TakeProfit COMPRADO | Venda r: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
          Print("VENDA! ",Operacoes);
 
          VendaHiLoStop();
@@ -335,12 +342,12 @@ void StopLossVenda ()
 
  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && StopLoss != 0)
    {
- //  CalculaStops();
+//   CalculaStops();
    
       if(daotick()>=StopLossValorVenda)
         {
          
-         Print("Deu StopLoss VENDIDO | Compra à: ",daotick()," Valor do Stop: ",StopLossValorVenda);
+         Print("Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
          Print("COMPRA! ",Operacoes);
          DeuStopLoss = true;
          CompraHiLoStop();
@@ -361,12 +368,12 @@ void TakeProfitCompra ()
 
  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && TakeProfit != 0)
    {
-  // CalculaStops();
+//   CalculaStops();
    
       if(daotick()>=TakeProfitValorCompra)
         {
          
-         Print("Deu TakeProfit COMPRADO | VENDA à: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
+         Print("Deu TakeProfit COMPRADO | VENDA r: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
          VendaHiLoStop();
          DeuTakeProfit = true;
          
@@ -386,12 +393,12 @@ void TakeProfitVenda ()
 
  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true  && DeuTakeProfit == false && Operacoes!=0 && Operacoes <0 && TakeProfit !=0)
    {
- //  CalculaStops();
+//   CalculaStops();
    
       if(daotick()<=TakeProfitValorVenda)
         {
          
-         Print("Deu TakeProfit VENDIDO | Compra à: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
+         Print("Deu TakeProfit VENDIDO | Compra r: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
          CompraHiLoStop();
          DeuTakeProfit = true;
         }
@@ -412,8 +419,8 @@ TipoOp = ORDER_TYPE_SELL;
 MontarRequisicao();
 
 Operacoes = Operacoes - 1;
-PrecoVenda = daotick();
-SendMail("Bucareste: VENDEU no HiLo","Bucareste fez um monte de conta e resolveu que ia VENDER no HiLo | Valor da venda: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
+//PrecoVenda = daotick();    //DEPRECADO, AGORA TO PEGANDO NO TRANSACTIO
+//SendMail("Bucareste: VENDEU no HiLo","Bucareste fez um monte de conta e resolveu que ia VENDER no HiLo | Valor da venda: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS)); // DEPRECADO, AGORA TEM QUE SER TUDO DO TRANSACTIONS
 
 
 }
@@ -429,13 +436,13 @@ TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();
 
 Operacoes = Operacoes + 1;
-PrecoCompra = daotick();
-SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolveu que ia comprar no HiLo | Valor da compra: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
+//PrecoCompra = daotick();   // Deprecado, agora pegando tudo do Transaction
+//SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolveu que ia comprar no HiLo | Valor da compra: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
 
 
 }
 
-//////////////////////////// Primeira Operação
+//////////////////////////// Primeira Operaçao
 
 ////////////////// Zerar o dia
 void ZerarODia ()
@@ -446,8 +453,8 @@ void ZerarODia ()
       JaDeuFinal = true;
       JaZerou = false;
       PrimeiraOp = false;
-      Print("Final do Dia! Operações: ",Operacoes);
-      SendNotification("Bucareste encerrando");
+      Print("Final do Dia! Operaçoes: ",Operacoes);
+      SendNotification(Descricao_Robo+" encerrando");
     
     if(Operacoes<0) 
     {
@@ -457,7 +464,7 @@ void ZerarODia ()
     MontarRequisicao();  
     
     Operacoes = Operacoes +1;
-    SendMail("Bucareste: Compra para zerar o dia","Finalizando o dia com uma comprinha...");
+//    SendMail("Bucareste: Compra para zerar o dia","Finalizando o dia com uma comprinha...");
     }
     
     
@@ -474,7 +481,7 @@ void ZerarODia ()
    }
    
    
-         Print("Depois da Ultima Operação: ",Operacoes);
+         Print("Depois da Ultima Operaçao: ",Operacoes);
    }
 
    
@@ -484,7 +491,7 @@ void ZerarODia ()
 /////////////////////
 
 
-/////////////////////////// Req de Operação
+/////////////////////////// Req de Operaçao
 
 
 void MontarRequisicao ()
@@ -496,16 +503,17 @@ void MontarRequisicao ()
          ZeroMemory(Res);     
          Req.symbol       = Symbol();
          Req.volume       = Lotes;
-         Req.magic = 646572;
+         Req.magic = TimeMagic;
          Req.type_filling = ORDER_FILLING_RETURN;                 
          Req.action=TRADE_ACTION_DEAL; 
          Req.type=TipoOp; 
-         Req.comment="Bucareste Operando";     
+         Req.comment=Descricao_Robo;     
          Req.tp=0;
          Req.sl=0;
          
-   if(OrderSend(Req,Res)) Print("If positivo"); else Print("Deu Pau, Verifique com pressão");
-   
+         if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada"); else Print("Deu Pau, Verifique com pressao");
+         
+         DaResultado = true;
    
    }
    
@@ -513,7 +521,7 @@ void MontarRequisicao ()
    
    /////////////////////////////////////////// Final da req.
    
-   //////////////////////////////// Primeira Operação
+   //////////////////////////////// Primeira Operaçao
    
    void PrimeiraOperacao ()
 {
@@ -533,4 +541,4 @@ void MontarRequisicao ()
  }
  
  
- //////////////// Fim Primeira Operação
+ //////////////// Fim Primeira Operaçao

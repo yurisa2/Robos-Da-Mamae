@@ -3,11 +3,8 @@
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-<<<<<<< Updated upstream
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
-=======
-#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
->>>>>>> Stashed changes
+
 #property link      "http://www.sa2.com.br/"
 #property version   "1.08"
 
@@ -16,44 +13,65 @@
 int Segundos = PeriodSeconds(TimeFrame);
 
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
+
+
 int OnInit()
   {
 
    HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
-<<<<<<< Updated upstream
-=======
+
    TimeMagic =MathRand();
->>>>>>> Stashed changes
+   Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
+   
+   ChartIndicatorAdd(0,0,HandleGHL);
+
+   
    
  //  Print(TimeCurrent());
 
  //  return(0);
-   
-   if(HoraDeInicio>HoraDeFim) return(INIT_PARAMETERS_INCORRECT);
-   if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) return(INIT_PARAMETERS_INCORRECT);
-   if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >17 || HoraDeFim >17 || HoraDeInicio <9 || HoraDeFim <9 ) return(INIT_PARAMETERS_INCORRECT);
-   if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || Periodos <=1 ) return(INIT_PARAMETERS_INCORRECT);
 
-
-<<<<<<< Updated upstream
-=======
-
-
+   if(HoraDeInicio==9 && MinutoDeInicio==0) 
+   {
+   return(INIT_PARAMETERS_INCORRECT);
+   Alert("Comece a partir de 09:01");
+   }
 
    
->>>>>>> Stashed changes
+   if(HoraDeInicio>HoraDeFim) 
+   {
+   return(INIT_PARAMETERS_INCORRECT);
+   Alert("Hora de início depois da Hora de Fim");
+   }
+   if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) 
+    {
+   return(INIT_PARAMETERS_INCORRECT);
+   Alert("Hora de início depois da Hora de Fim");
+   }
+   
+   if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >17 || HoraDeFim >17 || HoraDeInicio <9 || HoraDeFim <9 ) 
+    {
+   return(INIT_PARAMETERS_INCORRECT);
+   Alert("Coloca a Hora Direito, lerdo.");
+   }
+   
+   
+    if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || Periodos <=1 ) 
+     {
+   return(INIT_PARAMETERS_INCORRECT);
+   Alert("Erro nos parametros de grana ou técnicos");
+   }
+
+   
+
    return(0);
 
    
 }
 
 
-<<<<<<< Updated upstream
-=======
+
 
 void OnTradeTransaction(const MqlTradeTransaction& trans,
                         const MqlTradeRequest& request,
@@ -92,8 +110,6 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   CalculaStops(); 
                   }
                   
-                  
-
                 
                 Print(Descricao_Robo);
                 Print("Volume: ",negocio.Volume());
@@ -110,21 +126,21 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
         string  BodyEmail =
         
                  Descricao_Robo + 
-                 + "Volume: " + DoubleToString(negocio.Volume()) + 
-                 + "Preço: " + DoubleToString(negocio.Price()) + 
-                 + "<BR>Time: " + TimeToString(negocio.Time(),TIME_MINUTES) + 
-                 + "<BR>Symbol: " + negocio.Symbol() + 
-                 + "<BR>Type: " + EnumToString(negocio.DealType()) + 
-                 + "<BR>Entry: " + EnumToString(negocio.Entry()) + 
-                 + "<BR>Profit: " + DoubleToString(negocio.Profit()) + 
-                 + "<BR>Magic: " + IntegerToString(negocio.Magic()) + 
-                 + "<BR>Comentário: " +  negocio.Comment();
+                 + "\r\nVolume: " + DoubleToString(NormalizeDouble(negocio.Volume(),2)) + 
+                 + "\r\nPreço: " + DoubleToString(NormalizeDouble(negocio.Price(),2)) + 
+                 + "\r\nTime: " + TimeToString(negocio.Time(),TIME_MINUTES) + 
+                 + "\r\nSimbolo: " + negocio.Symbol() + 
+                 + "\r\nTipo: " + EnumToString(negocio.DealType()) + 
+                 + "\r\nEntrada: " + EnumToString(negocio.Entry()) + 
+                 + "\r\nLucro: " + DoubleToString(NormalizeDouble(negocio.Profit(),2)) + 
+                 + "\r\nMagic: " + IntegerToString(negocio.Magic()) + 
+                 + "\r\nComentário: " +  negocio.Comment();
                 
                 
                 SendMail("Relatório: "+Descricao_Robo,BodyEmail);
                 
-                Acumulado = Acumulado + negocio.Profit();
-                Print("\nAcumulado: ",Acumulado);
+                //Acumulado = Acumulado + negocio.Profit();
+                //Print("\nAcumulado: ",Acumulado);
                
                 
                 
@@ -143,24 +159,23 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 
 
 
->>>>>>> Stashed changes
+
 void OnTimer()
 {
 
 HiLo();
-<<<<<<< Updated upstream
 CalculaStops();
 
-=======
+
 //CalculaStops();
 //Print(TimeCurrent());
-//Print("Operaï¿½ï¿½es: ",Operacoes);
+//Print("Operadz?dz?es: ",Operacoes);
 
 //Print("zrou ",JaZerou);
 
 
 //Print("StopLoss Valor Venda: ",StopLossValorVenda);
->>>>>>> Stashed changes
+
 
  }
 
@@ -185,9 +200,9 @@ void OnTick()
         EventSetTimer(Segundos);
         
 
-        Print("Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
-        SendMail("Indicio das operações Bucareste","Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
-        SendNotification("Bom dia! Bucareste às ordens, segura o coração pq o rolê é monstro!!!");
+        Print("Bom dia! Bucareste rs ordens, segura o coraçao pq o role é monstro!!!");
+        SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
+        SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         HiLo();
         
 
@@ -198,7 +213,7 @@ void OnTick()
 
 
 /////////////////////////////////////////////////////////
-/////////////////////// Funções de STOP
+/////////////////////// Funçoes de STOP
 
          StopLossCompra();
          StopLossVenda();
@@ -219,13 +234,12 @@ if(ZerarFinalDoDia == true) ZerarODia();
    else
    {
    
-<<<<<<< Updated upstream
-   if(Operacoes>1) Print("Finalização do Dia. Finalizamos o dia COMPRADOS");
-   if(Operacoes<1) Print("Finalização do Dia. Finalizamos o dia VENDIDOS");   
-=======
-   if(Operacoes>1) Print("Finalizaï¿½ï¿½o do Dia. Finalizamos o dia COMPRADOS");
-   if(Operacoes<1) Print("Finalizaï¿½ï¿½o do Dia. Finalizamos o dia VENDIDOS");   
->>>>>>> Stashed changes
+   if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
+   if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
+
+   if(Operacoes>1) Print("Finalizadz?dz?o do Dia. Finalizamos o dia COMPRADOS");
+   if(Operacoes<1) Print("Finalizadz?dz?o do Dia. Finalizamos o dia VENDIDOS");   
+
    
    }
 

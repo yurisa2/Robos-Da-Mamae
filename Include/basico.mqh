@@ -9,6 +9,8 @@
 
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
+#include <Charts\Chart.mqh>
+
 
 //--- object for performing trade operations
 CTrade  trade;
@@ -16,6 +18,8 @@ CTrade  CObject;
 CSymbolInfo simbolo;
 CPositionInfo posicao;
 CDealInfo negocio;
+CChart grafico;
+
 ////////////    Funcao iniciaconexao()
 int iniciaconexao ()
 {

@@ -4,7 +4,7 @@ Tudo o que você precisa está nesse GIT. Até mesmo se você quiser dar um COMM
 
 ###TODOS OS ROBÔS ESTÃO NA MASTER mas estão invariavelmente deprecados, as Branches contem os atuais###
 
-* Cada robô tem sua própria *Branch*, mas o Master Abriga **Todos**, atualizado antes do desenvolvimento ativo. **SEMPRE**.
+* Cada robô tem sua própria *Branch*, mas o Master Abriga **"Todos"** ativo. **SEMPRE**.
 * Todos os EX5 tem o mesmo nome, sempre, tome **cuidado** com o que você PULLa, verifique a versão.
 * Um dia eu ligo o Wiki, ou não
 * Em caso de dúvida, sempre fale com o Yurão primeiro.

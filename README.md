@@ -2,7 +2,7 @@ README PetroSa MQL5 Repository
 
 Tudo o que você precisa está nesse GIT. Até mesmo se você quiser dar um COMMIT...
 
-###TODOS OS ROBÔS ESTÃO NA MASTER###
+###TODOS OS ROBÔS ESTÃO NA MASTER mas estão invariavelmente deprecados, as Branches contem os atuais###
 
 * Cada robô tem sua própria *Branch*, mas o Master Abriga **Todos**, atualizado antes do desenvolvimento ativo. **SEMPRE**.
 * Todos os EX5 tem o mesmo nome, sempre, tome **cuidado** com o que você PULLa, verifique a versão.

@@ -98,14 +98,14 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                
                if(negocio.DealType() == DEAL_TYPE_BUY)
                   {
-                  Print("É COMPRA");
+                  Print(Descricao_Robo+" É COMPRA");
                   PrecoCompra = negocio.Price();
                   CalculaStops(); 
                   }
                
                if(negocio.DealType() == DEAL_TYPE_SELL)
                   {
-                  Print("É VENDA");
+                  Print(Descricao_Robo+" É VENDA");
                   PrecoVenda = negocio.Price();
                   CalculaStops(); 
                   }
@@ -166,17 +166,6 @@ void OnTimer()
 HiLo();
 CalculaStops();
 
-
-//CalculaStops();
-//Print(TimeCurrent());
-//Print("Operadz?dz?es: ",Operacoes);
-
-//Print("zrou ",JaZerou);
-
-
-//Print("StopLoss Valor Venda: ",StopLossValorVenda);
-
-
  }
 
 void OnTick()
@@ -189,7 +178,6 @@ void OnTick()
         if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
         {
         
-        //Print("Horario configurado ",HorarioInicio);
         
         JaZerou = true;
         JaDeuFinal = false;
@@ -237,8 +225,8 @@ if(ZerarFinalDoDia == true) ZerarODia();
    if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
    if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
 
-   if(Operacoes>1) Print("Finalizadz?dz?o do Dia. Finalizamos o dia COMPRADOS");
-   if(Operacoes<1) Print("Finalizadz?dz?o do Dia. Finalizamos o dia VENDIDOS");   
+   if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
+   if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
 
    
    }

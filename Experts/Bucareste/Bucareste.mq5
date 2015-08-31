@@ -3,10 +3,10 @@
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "Pe'troSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.08"
+#property version   "1.10"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -26,11 +26,6 @@ int OnInit()
    
    ChartIndicatorAdd(0,0,HandleGHL);
 
-   
-   
- //  Print(TimeCurrent());
-
- //  return(0);
 
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
@@ -90,7 +85,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
       if((ticket=HistoryDealGetTicket(total-1))>0 && DaResultado == true)
         {
          negocio.Ticket(ticket);
-         
+         Acumulado = Acumulado + negocio.Profit();
          
          if(negocio.Magic() ==TimeMagic)
            {
@@ -141,15 +136,8 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 
                 //Acumulado = Acumulado + negocio.Profit();
                 //Print("\nAcumulado: ",Acumulado);
-               
-                
-                
-           }   
-         
 
-         
-         
-         
+           }   
    
      }
 
@@ -163,8 +151,8 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 void OnTimer()
 {
 
-HiLo();
-CalculaStops();
+   HiLo();
+
 
  }
 
@@ -178,7 +166,14 @@ void OnTick()
         if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
         {
         
+        PrecoCompra =0;
+        PrecoVenda =0;
         
+        StopLossValorCompra =-9999999999;
+        TakeProfitValorCompra = 999999999;
+        StopLossValorVenda =99999999999;
+        TakeProfitValorVenda = -999999999;
+                 
         JaZerou = true;
         JaDeuFinal = false;
         Operacoes = 0;
@@ -195,7 +190,6 @@ void OnTick()
         
 
         
-        
         }
         
 
@@ -210,7 +204,7 @@ void OnTick()
 
 /////////////////////////////////////////////////
 
-/////////////// Começo do dia
+/////////////// Começo do dia - Verifica se opera logo de cara ou nem
 
 
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();

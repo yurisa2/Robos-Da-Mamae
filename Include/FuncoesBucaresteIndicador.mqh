@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "2.00"
+#property version   "1.10"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
@@ -16,6 +16,7 @@ input int Periodos =  4;
 
 input double StopLoss = 0;
 input double TakeProfit = 0;
+input double Trailing_stop;
 
 input int HoraDeInicio = 9;
 input int MinutoDeInicio = 0;
@@ -133,8 +134,8 @@ if(SymbolInfoTick(_Symbol,last_tick))
 
 void CompraHiLo ()
 {
-Print("Compra HiLo");
-//CalculaStops();
+
+Print(Descricao_Robo+" Compra HiLo");
 
 if(Operacoes<0)
 {
@@ -143,9 +144,6 @@ TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();
 
 Operacoes = Operacoes + 1;
-//PrecoCompra = daotick();
-//SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolveu que ia comprar no HiLo | Valor da compra: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
-
 }
 
 if(Operacoes==0)
@@ -154,9 +152,6 @@ TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();
 
 Operacoes = Operacoes + 1;
-//PrecoCompra = daotick();
-//SendMail("Bucareste: COMPROU no HiLo","Bucareste fez um monte de conta e resolveu que ia comprar no HiLo | Valor da compra: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
-
 }
 
 }
@@ -167,19 +162,14 @@ Operacoes = Operacoes + 1;
 void VendaHiLo ()
 {
 
-//CalculaStops();
-
 if(Operacoes>0) 
 {
-Print("Venda HiLo");
+Print(Descricao_Robo+" Venda HiLo");
 
 TipoOp = ORDER_TYPE_SELL;
 MontarRequisicao();
 
 Operacoes = Operacoes - 1;
-//PrecoVenda = daotick();
-//SendMail("Bucareste: VENDEU no HiLo","Bucareste fez um monte de conta e resolveu que ia VENDER no HiLo | Valor da venda: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
-
 }
 
 
@@ -190,9 +180,6 @@ TipoOp = ORDER_TYPE_SELL;
 MontarRequisicao();
 
 Operacoes = Operacoes - 1;
-//PrecoVenda = daotick();
-//SendMail("Bucareste: VENDEU no HiLo","Bucareste fez um monte de conta e resolveu que ia VENDER no HiLo | Valor da venda: " + DoubleToString(NormalizeDouble(daotick(),2)) + " | Hora: "+TimeToString(TimeCurrent(),TIME_SECONDS));
-
 }
 
 }
@@ -277,6 +264,11 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
 void CalculaStops ()
 
 {
+StopLossValorCompra =-9999999999;
+TakeProfitValorCompra = 999999999;
+StopLossValorVenda =99999999999;
+TakeProfitValorVenda = -999999999;
+
            if(StopLoss==0)
               {
               StopLossValorCompra = NULL;
@@ -313,13 +305,12 @@ void StopLossCompra ()
 
  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes >0 && StopLoss != 0)
    {
-//   CalculaStops();
    
       if(daotick()<=StopLossValorCompra)
         {
          
-         Print("Deu TakeProfit COMPRADO | Venda r: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
-         Print("VENDA! ",Operacoes);
+         Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda r: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
+         Print(Descricao_Robo+" VENDA! ",Operacoes);
 
          VendaHiLoStop();
          DeuStopLoss = true;
@@ -342,13 +333,12 @@ void StopLossVenda ()
 
  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && StopLoss != 0)
    {
-//   CalculaStops();
    
       if(daotick()>=StopLossValorVenda)
         {
          
-         Print("Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
-         Print("COMPRA! ",Operacoes);
+         Print(Descricao_Robo+" Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
+         Print(Descricao_Robo+" COMPRA! ",Operacoes);
          DeuStopLoss = true;
          CompraHiLoStop();
          
@@ -370,10 +360,10 @@ void TakeProfitCompra ()
    {
 //   CalculaStops();
    
-      if(daotick()>=TakeProfitValorCompra)
+      if(daotick()>TakeProfitValorCompra)
         {
          
-         Print("Deu TakeProfit COMPRADO | VENDA r: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
+         Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
          VendaHiLoStop();
          DeuTakeProfit = true;
          
@@ -395,10 +385,10 @@ void TakeProfitVenda ()
    {
 //   CalculaStops();
    
-      if(daotick()<=TakeProfitValorVenda)
+      if(daotick()<TakeProfitValorVenda)
         {
          
-         Print("Deu TakeProfit VENDIDO | Compra r: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
+         Print(Descricao_Robo+" Deu TakeProfit VENDIDO | Compra: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
          CompraHiLoStop();
          DeuTakeProfit = true;
         }
@@ -413,7 +403,8 @@ void TakeProfitVenda ()
 ///////////// Venda Do Stop
 void VendaHiLoStop ()
 {
-Print("Venda HILO Stop");
+
+Print(Descricao_Robo+" Venda HILO Stop");
 
 TipoOp = ORDER_TYPE_SELL;
 MontarRequisicao();
@@ -430,7 +421,7 @@ Operacoes = Operacoes - 1;
 void CompraHiLoStop ()
 {
 
-Print("Compra HILO Stop");
+Print(Descricao_Robo+" Compra HILO Stop");
 
 TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();
@@ -453,7 +444,7 @@ void ZerarODia ()
       JaDeuFinal = true;
       JaZerou = false;
       PrimeiraOp = false;
-      Print("Final do Dia! Operaçoes: ",Operacoes);
+      Print(Descricao_Robo+"Final do Dia! Operaçoes: ",Operacoes);
       SendNotification(Descricao_Robo+" encerrando");
     
     if(Operacoes<0) 
@@ -477,11 +468,11 @@ void ZerarODia ()
 
        Operacoes = Operacoes -1;
 
-           SendMail("Bucareste: Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
+           SendMail(Descricao_Robo+"Bucareste: Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
    }
    
    
-         Print("Depois da Ultima Operaçao: ",Operacoes);
+         Print(Descricao_Robo+"Depois da Ultima Operaçao: ",Operacoes);
    }
 
    
@@ -493,9 +484,15 @@ void ZerarODia ()
 
 /////////////////////////// Req de Operaçao
 
-
 void MontarRequisicao ()
    {
+   
+         StopLossValorCompra =-9999999999;
+         TakeProfitValorCompra = 999999999;
+         StopLossValorVenda =99999999999;
+         TakeProfitValorVenda = -999999999;
+   
+   
 
          MqlTradeRequest Req;     
          MqlTradeResult Res;     
@@ -511,9 +508,11 @@ void MontarRequisicao ()
          Req.tp=0;
          Req.sl=0;
          
-         if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada"); else Print("Deu Pau, Verifique com pressao");
+         if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada"); else Print(Descricao_Robo+"Deu Pau, Verifique com pressao");
          
          DaResultado = true;
+         
+         
    
    }
    
@@ -528,8 +527,8 @@ void MontarRequisicao ()
        if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && PrimeiraOp==false)
        {
        
-       Print("Horario Setup: ",HorarioInicio);
-       Print("Mudanca Inicio dia: ",Mudanca);
+       Print(Descricao_Robo+" Horario Setup: ",HorarioInicio);
+       Print(Descricao_Robo+" Mudanca Inicio dia: ",Mudanca);
        
        PrimeiraOp = true;
        

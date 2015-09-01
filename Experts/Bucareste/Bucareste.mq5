@@ -95,7 +95,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   {
                   Print(Descricao_Robo+" É COMPRA");
                   PrecoCompra = negocio.Price();
-                  CalculaStops(); 
+                  CalculaStops();
                   }
                
                if(negocio.DealType() == DEAL_TYPE_SELL)

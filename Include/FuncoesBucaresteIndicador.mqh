@@ -277,7 +277,8 @@ TakeProfitValorVenda = -999999999;
            else
              {
               StopLossValorVenda = PrecoVenda+StopLoss;
-              StopLossValorCompra = PrecoCompra-StopLoss;              
+              StopLossValorCompra = PrecoCompra-StopLoss;
+              Print("SL Compra: ",StopLossValorCompra," SL Venda: ",StopLossValorVenda);
               
              }
              
@@ -290,7 +291,8 @@ TakeProfitValorVenda = -999999999;
            else
              {
               TakeProfitValorVenda = PrecoVenda-TakeProfit;
-              TakeProfitValorCompra = PrecoCompra+TakeProfit;              
+              TakeProfitValorCompra = PrecoCompra+TakeProfit;
+              Print("TP Compra: ",TakeProfitValorCompra," TP Venda: ",TakeProfitValorVenda);              
              }             
              
 

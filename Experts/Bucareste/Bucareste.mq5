@@ -3,10 +3,10 @@
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "Pe'troSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.10"
+#property version   "1.11"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -180,6 +180,8 @@ void OnTick()
         TipoOp = 0;
         Ordem = false;
         PrimeiraOp = false;
+        DeuTakeProfit = true;
+        DeuStopLoss = true;
         
         EventKillTimer();
         EventSetTimer(Segundos);
@@ -188,7 +190,7 @@ void OnTick()
         Print("Bom dia! Bucareste rs ordens, segura o coraçao pq o role é monstro!!!");
         SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
-        HiLo();
+        //HiLo();
         
 
         

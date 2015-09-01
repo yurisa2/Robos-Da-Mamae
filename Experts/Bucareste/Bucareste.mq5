@@ -107,15 +107,15 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   
                 
                 Print(Descricao_Robo);
-                Print("Volume: ",negocio.Volume());
-                Print("Preço: ",negocio.Price());
-                Print("Time: ",negocio.Time());
-                Print("Symbol: ",negocio.Symbol());
-                Print("Type: ",EnumToString(negocio.DealType()));
-                Print("Entry: ",EnumToString(negocio.Entry()));
-                Print("Profit: ",negocio.Profit());
-                Print("Magic: ",negocio.Magic());
-                Print("Comentário: ", negocio.Comment());
+                Print(Descricao_Robo+" "+"Volume: ",negocio.Volume());
+                Print(Descricao_Robo+" "+"Preço: ",negocio.Price());
+                Print(Descricao_Robo+" "+"Time: ",negocio.Time());
+                Print(Descricao_Robo+" "+"Symbol: ",negocio.Symbol());
+                Print(Descricao_Robo+" "+"Type: ",EnumToString(negocio.DealType()));
+                Print(Descricao_Robo+" "+"Entry: ",EnumToString(negocio.Entry()));
+                Print(Descricao_Robo+" "+"Profit: ",negocio.Profit());
+                Print(Descricao_Robo+" "+"Magic: ",negocio.Magic());
+                Print(Descricao_Robo+" "+"Comentário: ", negocio.Comment());
                 
                 
         string  BodyEmail =

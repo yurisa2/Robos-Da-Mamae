@@ -178,6 +178,8 @@ void OnTick()
         JaDeuFinal = false;
         Operacoes = 0;
         TipoOp = 0;
+        Ordem = false;
+        PrimeiraOp = false;
         
         EventKillTimer();
         EventSetTimer(Segundos);

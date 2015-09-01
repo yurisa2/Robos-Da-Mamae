@@ -190,7 +190,7 @@ void OnTick()
         Print("Bom dia! Bucareste rs ordens, segura o coraçao pq o role é monstro!!!");
         SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
-        //HiLo();
+        HiLo();
         
 
         

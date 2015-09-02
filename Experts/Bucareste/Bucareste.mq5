@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.11"
+#property version   "1.12"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -118,16 +118,16 @@ for(uint i=0;i<total;i++)
                if(negocio.DealType() == DEAL_TYPE_BUY)
                   {
                   Print(Descricao_Robo+" É COMPRA");
-                  PrecoCompra = negocio.Price();
-                  CalculaStops();
+//                  PrecoCompra = negocio.Price();
+//                  CalculaStops();
                   num_ordem_tiquete=0;
                   }
                
                if(negocio.DealType() == DEAL_TYPE_SELL)
                   {
                   Print(Descricao_Robo+" É VENDA");
-                  PrecoVenda = negocio.Price();
-                  CalculaStops(); 
+//                  PrecoVenda = negocio.Price();
+//                  CalculaStops(); 
                   num_ordem_tiquete=0;
                   }
                   

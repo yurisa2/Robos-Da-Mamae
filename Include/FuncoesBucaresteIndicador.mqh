@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.11"
+#property version   "1.12"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
@@ -143,6 +143,7 @@ if(Operacoes<0)
 {
 
 TipoOp = ORDER_TYPE_BUY;
+
 MontarRequisicao();
 
 Operacoes = Operacoes + 1;
@@ -496,6 +497,11 @@ void MontarRequisicao ()
          StopLossValorVenda =99999999999;
          TakeProfitValorVenda = -999999999;
    
+   if(TipoOp==ORDER_TYPE_SELL)    PrecoVenda = daotick();
+   if(TipoOp==ORDER_TYPE_BUY)    PrecoCompra = daotick();   
+   
+
+   CalculaStops();
    
 
          MqlTradeRequest Req;     

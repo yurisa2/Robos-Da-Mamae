@@ -63,6 +63,8 @@ int Mudou = 0;
 int TimeMagic;
 bool DaResultado;
 double Acumulado = 0;
+uint num_ordem_tiquete;
+datetime Data_Hoje;
 
 
 
@@ -278,7 +280,7 @@ TakeProfitValorVenda = -999999999;
              {
               StopLossValorVenda = PrecoVenda+StopLoss;
               StopLossValorCompra = PrecoCompra-StopLoss;
-              Print("SL Compra: ",StopLossValorCompra," SL Venda: ",StopLossValorVenda);
+              Print(Descricao_Robo+" "+"SL Compra: ",StopLossValorCompra," SL Venda: ",StopLossValorVenda);
               
              }
              
@@ -292,7 +294,7 @@ TakeProfitValorVenda = -999999999;
              {
               TakeProfitValorVenda = PrecoVenda-TakeProfit;
               TakeProfitValorCompra = PrecoCompra+TakeProfit;
-              Print("TP Compra: ",TakeProfitValorCompra," TP Venda: ",TakeProfitValorVenda);              
+              Print(Descricao_Robo+" "+"TP Compra: ",TakeProfitValorCompra," TP Venda: ",TakeProfitValorVenda);              
              }             
              
 

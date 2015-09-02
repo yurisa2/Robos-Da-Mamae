@@ -29,8 +29,9 @@ int OnInit()
 
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
-   return(INIT_PARAMETERS_INCORRECT);
    Alert("Comece a partir de 09:01");
+   MessageBox("Deu errado Mano","Errado",MB_ICONERROR);
+   return(INIT_PARAMETERS_INCORRECT);
    }
 
    
@@ -74,18 +75,41 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
   {
    
    
+   Data_Hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+HorarioInicio+":00");
+//   Print("Data Hoje: ",Data_Hoje);
    
-   HistorySelect(0,TimeCurrent());
+   
+   HistorySelect(Data_Hoje,TimeCurrent());
+   
+   
+   
 //--- create objects
 
    uint     total=HistoryDealsTotal();
    ulong    ticket=0;
 //--- for all deals
+
+for(uint i=0;i<total;i++)
+     {
+     ticket=HistoryDealGetTicket(i);
+     negocio.Ticket(ticket);             
+            
+            if(negocio.Magic() ==TimeMagic)
+             {
    
-      if((ticket=HistoryDealGetTicket(total-1))>0 && DaResultado == true)
+            num_ordem_tiquete=i;
+//            Print(Descricao_Robo+" Debug Ticket: ",ticket);
+         
+//            Print(Descricao_Robo+" Magic: ",negocio.Magic());
+              }
+ 
+ 
+            
+    }
+   
+      if((ticket=HistoryDealGetTicket(num_ordem_tiquete))>0 && DaResultado == true)
         {
          negocio.Ticket(ticket);
-         Acumulado = Acumulado + negocio.Profit();
          
          if(negocio.Magic() ==TimeMagic)
            {
@@ -96,6 +120,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   Print(Descricao_Robo+" É COMPRA");
                   PrecoCompra = negocio.Price();
                   CalculaStops();
+                  num_ordem_tiquete=0;
                   }
                
                if(negocio.DealType() == DEAL_TYPE_SELL)
@@ -103,6 +128,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   Print(Descricao_Robo+" É VENDA");
                   PrecoVenda = negocio.Price();
                   CalculaStops(); 
+                  num_ordem_tiquete=0;
                   }
                   
                 
@@ -140,7 +166,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
            }   
    
      }
-
+//      }  //Bracket do FOR
   
    
   }

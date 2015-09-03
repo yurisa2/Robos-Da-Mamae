@@ -19,6 +19,7 @@ CSymbolInfo simbolo;
 CPositionInfo posicao;
 CDealInfo negocio;
 CChart grafico;
+CAccountInfo conta;
 
 ////////////    Funcao iniciaconexao()
 int iniciaconexao ()

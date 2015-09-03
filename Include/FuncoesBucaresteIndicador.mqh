@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.12"
+#property version   "1.13"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
@@ -16,7 +16,7 @@ input int Periodos =  4;
 
 input double StopLoss = 0;
 input double TakeProfit = 0;
-input double Trailing_stop;
+input double Trailing_stop =0;
 
 input int HoraDeInicio = 9;
 input int MinutoDeInicio = 0;
@@ -66,6 +66,12 @@ double Acumulado = 0;
 uint num_ordem_tiquete;
 datetime Data_Hoje;
 
+
+double TS_ValorCompra = 0;
+double TS_ValorVenda = 999999999;
+
+double TS_ValorVenda_atual = 9999999;
+double TS_ValorCompra_atual = 0;        
 
 
 ///////////////////////////////////////////
@@ -411,6 +417,10 @@ void VendaHiLoStop ()
 
 Print(Descricao_Robo+" Venda HILO Stop");
 
+
+Print(Descricao_Robo+" NA FUNCAO TrailingStopNACompra Ativado, Valor: ",TS_ValorCompra);
+
+
 TipoOp = ORDER_TYPE_SELL;
 MontarRequisicao();
 
@@ -427,6 +437,8 @@ void CompraHiLoStop ()
 {
 
 Print(Descricao_Robo+" Compra HILO Stop");
+
+Print(Descricao_Robo+" NA FUNCAO TrailingStopNAVenda Ativado, Valor: ",TS_ValorVenda);
 
 TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();
@@ -496,6 +508,11 @@ void MontarRequisicao ()
          TakeProfitValorCompra = 999999999;
          StopLossValorVenda =99999999999;
          TakeProfitValorVenda = -999999999;
+         TS_ValorVenda = 99999999;
+         TS_ValorCompra = 0;
+         
+         
+         
    
    if(TipoOp==ORDER_TYPE_SELL)    PrecoVenda = daotick();
    if(TipoOp==ORDER_TYPE_BUY)    PrecoCompra = daotick();   
@@ -550,4 +567,59 @@ void MontarRequisicao ()
  }
  
  
- //////////////// Fim Primeira Operaçao
+//////////////// Fim Pridmeira Operaçao
+ 
+////////////// Avaliação do TS
+void TS ()
+   {
+   
+   
+   
+   
+   
+      if(Operacoes>0 && Trailing_stop >0 && daotick() > PrecoCompra + Trailing_stop)
+        {
+        
+        TS_ValorCompra_atual = daotick()-Trailing_stop;
+        
+         if(TS_ValorCompra<TS_ValorCompra_atual)
+           {
+            
+            TS_ValorCompra = TS_ValorCompra_atual;
+           } 
+           
+        }    
+      if(Operacoes<0 && Trailing_stop >0&& daotick() > PrecoVenda - Trailing_stop)
+        {
+        
+        TS_ValorVenda_atual = daotick()+Trailing_stop;        
+        
+         if(TS_ValorVenda>TS_ValorVenda_atual)
+           {
+            
+            TS_ValorVenda = TS_ValorVenda_atual;
+           }
+        }
+ 
+      
+      
+     
+      if(Operacoes>0 && Trailing_stop >0 && daotick()<= TS_ValorCompra)      
+        {
+         VendaHiLoStop();
+         Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor: ",TS_ValorCompra);
+        }
+   
+      if(Operacoes<0 && Trailing_stop >0 && daotick()>= TS_ValorVenda)      
+        {
+         CompraHiLoStop();
+         Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor: ",TS_ValorVenda);
+        }   
+   
+   
+   
+   }
+
+
+
+/////////////////////////////////

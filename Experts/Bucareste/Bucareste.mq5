@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.12"
+#property version   "1.13"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -26,7 +26,8 @@ int OnInit()
    
    ChartIndicatorAdd(0,0,HandleGHL);
 
-
+   Print("Liquidez da conta: ",conta.Equity());
+   
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
    Alert("Comece a partir de 09:01");
@@ -58,7 +59,15 @@ int OnInit()
    return(INIT_PARAMETERS_INCORRECT);
    Alert("Erro nos parametros de grana ou técnicos");
    }
-
+   
+   
+    if(TakeProfit>0 && Trailing_stop>0) 
+     {
+   Alert("Não faz sentido você ter TakeProfit e Trailing Stop, filosoficamente falando");
+   return(INIT_PARAMETERS_INCORRECT);
+   }
+   
+   
    
 
    return(0);
@@ -230,8 +239,9 @@ void OnTick()
          StopLossCompra();
          StopLossVenda();
          TakeProfitCompra();
-         TakeProfitVenda ();
-
+         TakeProfitVenda();
+         TS();
+         
 /////////////////////////////////////////////////
 
 /////////////// Começo do dia - Verifica se opera logo de cara ou nem

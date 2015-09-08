@@ -213,7 +213,6 @@ void OnTick()
         JaZerou = true;
         JaDeuFinal = false;
         Operacoes = 0;
-        TipoOp = 0;
         Ordem = false;
         PrimeiraOp = false;
         DeuTakeProfit = true;

@@ -56,8 +56,6 @@ bool   DeuTakeProfit = true;
 bool   DeuStopLoss = true;
 bool   PrimeiraOp = false;
 
-ENUM_ORDER_TYPE TipoOp = 0;
-
 int Mudou = 0;
 
 int TimeMagic;
@@ -151,10 +149,6 @@ Desc_Req = "Compra HiLo";
 if(Operacoes<0)
 {
 
-
-
-//TipoOp = ORDER_TYPE_BUY;   // Apagar se função der certo
-
 MontarRequisicao(ORDER_TYPE_BUY,"Compra HiLo");
 
 Operacoes = Operacoes + 1;
@@ -162,9 +156,7 @@ Operacoes = Operacoes + 1;
 
 if(Operacoes==0)
 {
-TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao(ORDER_TYPE_BUY,"Compra HiLo");
-
 Operacoes = Operacoes + 1;
 }
 
@@ -541,9 +533,6 @@ void ZerarODia ()
     
     if(Operacoes>0) 
    {
-   
-
-      TipoOp = ORDER_TYPE_SELL;
       MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia");
 
        Operacoes = Operacoes -1;
@@ -593,7 +582,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          Req.magic = TimeMagic;
          Req.type_filling = ORDER_FILLING_RETURN;                 
          Req.action=TRADE_ACTION_DEAL; 
-         Req.type=TipoOp; 
+         Req.type=order_type; 
          Req.comment=Descricao_Robo+" "+comentario_req;     
          Req.tp=0;
          Req.sl=0;

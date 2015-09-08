@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.14"
+#property version   "1.15"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
@@ -661,7 +661,7 @@ void TS ()
            } 
            
         }    
-      if(Operacoes<0 && Trailing_stop >0&& daotick() > PrecoVenda - Trailing_stop)
+      if(Operacoes<0 && Trailing_stop >0&& daotick() < PrecoVenda - Trailing_stop)
         {
         
         TS_ValorVenda_atual = daotick()+Trailing_stop;        

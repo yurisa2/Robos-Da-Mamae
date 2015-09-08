@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.15"
+#property version   "1.16"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
@@ -153,9 +153,9 @@ if(Operacoes<0)
 
 
 
-TipoOp = ORDER_TYPE_BUY;
+//TipoOp = ORDER_TYPE_BUY;   // Apagar se função der certo
 
-MontarRequisicao();
+MontarRequisicao(ORDER_TYPE_BUY,"Compra HiLo");
 
 Operacoes = Operacoes + 1;
 }
@@ -163,7 +163,7 @@ Operacoes = Operacoes + 1;
 if(Operacoes==0)
 {
 TipoOp = ORDER_TYPE_BUY;
-MontarRequisicao();
+MontarRequisicao(ORDER_TYPE_BUY,"Compra HiLo");
 
 Operacoes = Operacoes + 1;
 }
@@ -178,14 +178,11 @@ void VendaHiLo ()
 
 Print(Descricao_Robo+" Venda HiLo");
 
-Desc_Req = "Venda HiLo";
 
 if(Operacoes>0) 
 {
 
-
-TipoOp = ORDER_TYPE_SELL;
-MontarRequisicao();
+MontarRequisicao(ORDER_TYPE_SELL,"Venda HiLo");
 
 Operacoes = Operacoes - 1;
 }
@@ -194,8 +191,7 @@ Operacoes = Operacoes - 1;
 if(Operacoes==0) 
 {
 
-TipoOp = ORDER_TYPE_SELL;
-MontarRequisicao();
+MontarRequisicao(ORDER_TYPE_SELL,"Venda HiLo");
 
 Operacoes = Operacoes - 1;
 }
@@ -488,13 +484,10 @@ void VendaHiLoStop ()
 
 Print(Descricao_Robo+" Venda HILO Stop");
 
-Desc_Req = "Venda HiLo STOP";
 
 //Print(Descricao_Robo+" NA FUNCAO TrailingStopNACompra Ativado, Valor: ",TS_ValorCompra);
 
-
-TipoOp = ORDER_TYPE_SELL;
-MontarRequisicao();
+MontarRequisicao(ORDER_TYPE_SELL,"Venda HiLo STOP");
 
 Operacoes = Operacoes - 1;
 //PrecoVenda = daotick();    //DEPRECADO, AGORA TO PEGANDO NO TRANSACTIO
@@ -512,8 +505,7 @@ Print(Descricao_Robo+" Compra HILO Stop");
 
 //Print(Descricao_Robo+" NA FUNCAO TrailingStopNAVenda Ativado, Valor: ",TS_ValorVenda);
 
-TipoOp = ORDER_TYPE_BUY;
-MontarRequisicao();
+MontarRequisicao(ORDER_TYPE_BUY,"Compra HILO Stop");
 
 Operacoes = Operacoes + 1;
 //PrecoCompra = daotick();   // Deprecado, agora pegando tudo do Transaction
@@ -540,8 +532,7 @@ void ZerarODia ()
     {
     
     
-    TipoOp = ORDER_TYPE_BUY;
-    MontarRequisicao();  
+    MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia");  
     
     Operacoes = Operacoes +1;
 //    SendMail("Bucareste: Compra para zerar o dia","Finalizando o dia com uma comprinha...");
@@ -553,7 +544,7 @@ void ZerarODia ()
    
 
       TipoOp = ORDER_TYPE_SELL;
-      MontarRequisicao();
+      MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia");
 
        Operacoes = Operacoes -1;
 
@@ -573,7 +564,7 @@ void ZerarODia ()
 
 /////////////////////////// Req de Operaçao
 
-void MontarRequisicao ()
+void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
    {
    
          StopLossValorCompra =-9999999999;
@@ -586,8 +577,8 @@ void MontarRequisicao ()
          
          
    
-   if(TipoOp==ORDER_TYPE_SELL)    PrecoVenda = daotick();
-   if(TipoOp==ORDER_TYPE_BUY)    PrecoCompra = daotick();   
+   if(order_type==ORDER_TYPE_SELL)    PrecoVenda = daotick();
+   if(order_type==ORDER_TYPE_BUY)    PrecoCompra = daotick();   
    
 
    CalculaStops();
@@ -603,12 +594,13 @@ void MontarRequisicao ()
          Req.type_filling = ORDER_FILLING_RETURN;                 
          Req.action=TRADE_ACTION_DEAL; 
          Req.type=TipoOp; 
-         Req.comment=Descricao_Robo;     
+         Req.comment=Descricao_Robo+" "+comentario_req;     
          Req.tp=0;
          Req.sl=0;
          
          if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada"); else Print(Descricao_Robo+"Deu Pau, Verifique com pressao");
          
+
          DaResultado = true;
          
          

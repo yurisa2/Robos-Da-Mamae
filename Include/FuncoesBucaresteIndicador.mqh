@@ -679,13 +679,13 @@ void TS ()
       if(Operacoes>0 && Trailing_stop >0 && daotick()<= TS_ValorCompra)      
         {
          VendaHiLoStop();
-         Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor: ",TS_ValorCompra);
+         Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor daotick: ",daotick());
         }
    
       if(Operacoes<0 && Trailing_stop >0 && daotick()>= TS_ValorVenda)      
         {
          CompraHiLoStop();
-         Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor: ",TS_ValorVenda);
+         Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor daotick: ",daotick());
         }   
    
    

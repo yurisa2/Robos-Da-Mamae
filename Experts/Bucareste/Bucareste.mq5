@@ -6,20 +6,18 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.13"
+#property version   "1.14"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
 int Segundos = PeriodSeconds(TimeFrame);
 
 
-
-
-
 int OnInit()
   {
 
    HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
+   CalculaHiLo();
 
    TimeMagic =MathRand();
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
@@ -31,7 +29,6 @@ int OnInit()
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
    Alert("Comece a partir de 09:01");
-   MessageBox("Deu errado Mano","Errado",MB_ICONERROR);
    return(INIT_PARAMETERS_INCORRECT);
    }
 
@@ -43,14 +40,16 @@ int OnInit()
    }
    if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) 
     {
+   Alert("Hora de início depois da Hora de Fim");    
    return(INIT_PARAMETERS_INCORRECT);
-   Alert("Hora de início depois da Hora de Fim");
+
    }
    
    if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >17 || HoraDeFim >17 || HoraDeInicio <9 || HoraDeFim <9 ) 
     {
-   return(INIT_PARAMETERS_INCORRECT);
    Alert("Coloca a Hora Direito, lerdo.");
+   return(INIT_PARAMETERS_INCORRECT);
+
    }
    
    
@@ -201,6 +200,8 @@ void OnTick()
         if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
         {
         
+        CalculaHiLo();
+        
         PrecoCompra =0;
         PrecoVenda =0;
         
@@ -225,7 +226,6 @@ void OnTick()
         Print("Bom dia! Bucareste rs ordens, segura o coraçao pq o role é monstro!!!");
         SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
-        HiLo();
         
 
         

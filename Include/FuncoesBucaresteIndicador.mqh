@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.13"
+#property version   "1.14"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
@@ -73,6 +73,7 @@ double TS_ValorVenda = 999999999;
 double TS_ValorVenda_atual = 9999999;
 double TS_ValorCompra_atual = 0;        
 
+string Desc_Req = "";
 
 ///////////////////////////////////////////
 
@@ -145,8 +146,12 @@ void CompraHiLo ()
 
 Print(Descricao_Robo+" Compra HiLo");
 
+Desc_Req = "Compra HiLo";
+
 if(Operacoes<0)
 {
+
+
 
 TipoOp = ORDER_TYPE_BUY;
 
@@ -171,9 +176,13 @@ Operacoes = Operacoes + 1;
 void VendaHiLo ()
 {
 
+Print(Descricao_Robo+" Venda HiLo");
+
+Desc_Req = "Venda HiLo";
+
 if(Operacoes>0) 
 {
-Print(Descricao_Robo+" Venda HiLo");
+
 
 TipoOp = ORDER_TYPE_SELL;
 MontarRequisicao();
@@ -195,6 +204,67 @@ Operacoes = Operacoes - 1;
 
 
 /////////////////////// PEGA O VALOR DO HI LO 
+
+
+void CalculaHiLo ()
+
+{
+
+
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+   {
+   
+   double _ma1[];
+   double NMax[];
+   double NMin[];
+   double ValorHilo[];
+   
+   ArraySetAsSeries(_ma1, true);
+   ArraySetAsSeries(NMax, true);
+   ArraySetAsSeries(NMin, true);   
+   ArraySetAsSeries(ValorHilo, true);
+
+   int copied=CopyBuffer(HandleGHL,4,0,100,_ma1);
+   
+   int copiadoNmax=CopyBuffer(HandleGHL,2,0,100,NMax);
+   
+   int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
+   
+   int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
+
+//   Print("Indicador do Hilo: ;",_ma1[0],"; | Media Max(NMax): ;",NormalizeDouble(NMax[0],2),"; | Media Min(NMin): ;",NormalizeDouble(NMin[0],2),"; | Preco: ;",daotick(),"; | Valor do HiLo: ;",NormalizeDouble(ValorHilo[0],2));
+   
+   
+ //  if(_ma1[0]==NMin[0]) Print("Compra");
+ //  if(_ma1[0]==NMax[0]) Print("Vende");
+   
+                   
+                    //Print(_ma1[i]);
+                    
+
+                    
+                    if(Mudanca!=_ma1[0]) 
+                    {
+                    //Print("Mudou Hein");
+                    DeuStopLoss = false;
+                    DeuTakeProfit = false;                   
+                    Ordem = false;
+                    }
+                    
+//   Print("Operacoes: ",Operacoes);
+   Mudanca = _ma1[0];
+   
+   Mudou = 0;
+//     if(Debug==true) Print("Indicador do Hilo: ",_ma1[0]," | Media Max(NMax): ",NMax[0]," | Media Min(NMin): ",NMin[0]);
+
+   }   //FIM DO IF TaDentroDoHorario
+
+
+
+}
+
+
+
 
 void HiLo ()
 {
@@ -241,7 +311,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                       
                     if(Mudanca==1 && Ordem==false) 
                     {
-                    Print("VENDE! ",Operacoes);
+                    Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
                     VendaHiLo();
                     Ordem = true;
@@ -249,7 +319,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     
                     if(Mudanca==-1 && Ordem==false) 
                     {
-                    Print("COMPRA! ",Operacoes);
+                    Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
                     CompraHiLo();
                     Ordem = true;
                     }
@@ -319,6 +389,7 @@ void StopLossCompra ()
    
       if(daotick()<=StopLossValorCompra)
         {
+               
          
          Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda r: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
          Print(Descricao_Robo+" VENDA! ",Operacoes);
@@ -417,8 +488,9 @@ void VendaHiLoStop ()
 
 Print(Descricao_Robo+" Venda HILO Stop");
 
+Desc_Req = "Venda HiLo STOP";
 
-Print(Descricao_Robo+" NA FUNCAO TrailingStopNACompra Ativado, Valor: ",TS_ValorCompra);
+//Print(Descricao_Robo+" NA FUNCAO TrailingStopNACompra Ativado, Valor: ",TS_ValorCompra);
 
 
 TipoOp = ORDER_TYPE_SELL;
@@ -438,7 +510,7 @@ void CompraHiLoStop ()
 
 Print(Descricao_Robo+" Compra HILO Stop");
 
-Print(Descricao_Robo+" NA FUNCAO TrailingStopNAVenda Ativado, Valor: ",TS_ValorVenda);
+//Print(Descricao_Robo+" NA FUNCAO TrailingStopNAVenda Ativado, Valor: ",TS_ValorVenda);
 
 TipoOp = ORDER_TYPE_BUY;
 MontarRequisicao();

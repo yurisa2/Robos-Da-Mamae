@@ -44,14 +44,14 @@ int OnInit()
    return(INIT_PARAMETERS_INCORRECT);
 
    }
-   
+   /*
    if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >17 || HoraDeFim >17 || HoraDeInicio <9 || HoraDeFim <9 ) 
     {
    Alert("Coloca a Hora Direito, lerdo.");
    return(INIT_PARAMETERS_INCORRECT);
 
    }
-   
+   */
    
     if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || Periodos <=1 ) 
      {

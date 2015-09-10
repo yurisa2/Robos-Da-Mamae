@@ -19,7 +19,7 @@ input double TakeProfit = 0;
 input double Trailing_stop =0;
 
 input int HoraDeInicio = 9;
-input int MinutoDeInicio = 0;
+input int MinutoDeInicio = 1;
 input int HoraDeFim = 17;
 input int MinutoDeFim = 27;
 

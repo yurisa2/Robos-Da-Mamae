@@ -109,3 +109,62 @@ int iniciaconexao ()
 
    return(0);
 }
+
+
+
+////////////////////  TaDentroDoHorario //////////////
+bool TaDentroDoHorario (string HoraInicio, string HoraFim)
+   {
+   string DiaHoraInicio;
+   string DiaHoraFim;
+   bool RetornoHorario =false;
+   
+   Agora = TimeCurrent();
+   
+   DiaHoje = TimeToString(TimeCurrent(),TIME_DATE);
+
+   DiaHoraInicio = DiaHoje + " " + HoraInicio;
+   DiaHoraFim = DiaHoje + " " + HoraFim;
+   
+   // Se Agora > String Dia + String Hora OK.
+   //   Print("DiaHoje ",DiaHoje);
+   if(Agora>=StringToTime(DiaHoraInicio))
+     {
+      if(Agora<=StringToTime(DiaHoraFim))
+      {
+      RetornoHorario = true;
+      }
+     }
+   
+   return(RetornoHorario);
+   
+   
+   }
+////////////////////////////////////////////////////////////////
+
+
+//////////////////////// DAOTICK ///////////
+////// Funçao Pega Tick e devolve a hora e o valor da porra do ativo
+double daotick ()
+{
+
+double retornoTick;
+
+   MqlTick last_tick;
+   
+if(SymbolInfoTick(_Symbol,last_tick))
+     {
+     // Print(last_tick.time,": Bid = ",last_tick.bid,
+          //  " Ask = ",last_tick.ask,"  Volume = ",last_tick.volume); //total e completo
+    
+     }
+     else Print("SymbolInfoTick() failed, error = ",GetLastError());
+   
+     retornoTick = last_tick.ask;
+
+     return(retornoTick);
+    
+}
+   
+
+////////////////// Fecha o PEGA O TICK

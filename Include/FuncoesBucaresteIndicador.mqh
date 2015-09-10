@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.16"
+#property version   "1.17"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
@@ -77,86 +77,32 @@ string Desc_Req = "";
 
 //////////////////////////////////// Funcoes
 
-////////////////////  TaDentroDoHorario //////////////
-bool TaDentroDoHorario (string HoraInicio, string HoraFim)
-   {
-   string DiaHoraInicio;
-   string DiaHoraFim;
-   bool RetornoHorario =false;
-   
-   Agora = TimeCurrent();
-   
-   DiaHoje = TimeToString(TimeCurrent(),TIME_DATE);
-
-   DiaHoraInicio = DiaHoje + " " + HoraInicio;
-   DiaHoraFim = DiaHoje + " " + HoraFim;
-   
-   // Se Agora > String Dia + String Hora OK.
-   //   Print("DiaHoje ",DiaHoje);
-   if(Agora>=StringToTime(DiaHoraInicio))
-     {
-      if(Agora<=StringToTime(DiaHoraFim))
-      {
-      RetornoHorario = true;
-      }
-     }
-   
-   return(RetornoHorario);
-   
-   
-   }
-////////////////////////////////////////////////////////////////
 
 
 
-//////////////////////// DAOTICK ///////////
-////// Funçao Pega Tick e devolve a hora e o valor da porra do ativo
-double daotick ()
-{
 
-double retornoTick;
-
-   MqlTick last_tick;
-   
-if(SymbolInfoTick(_Symbol,last_tick))
-     {
-     // Print(last_tick.time,": Bid = ",last_tick.bid,
-          //  " Ask = ",last_tick.ask,"  Volume = ",last_tick.volume); //total e completo
-    
-     }
-     else Print("SymbolInfoTick() failed, error = ",GetLastError());
-   
-     retornoTick = last_tick.ask;
-
-     return(retornoTick);
-    
-}
-   
-
-////////////////// Fecha o PEGA O TICK
 
 
 
 ///////////////// COMPRA
 
-void CompraHiLo ()
+void CompraHiLo (string Desc)
 {
 
-Print(Descricao_Robo+" Compra HiLo");
+Print(Descricao_Robo+" "+Desc);
 
-Desc_Req = "Compra HiLo";
 
 if(Operacoes<0)
 {
 
-MontarRequisicao(ORDER_TYPE_BUY,"Compra HiLo");
+MontarRequisicao(ORDER_TYPE_BUY,Desc);
 
 Operacoes = Operacoes + 1;
 }
 
 if(Operacoes==0)
 {
-MontarRequisicao(ORDER_TYPE_BUY,"Compra HiLo");
+MontarRequisicao(ORDER_TYPE_BUY,Desc);
 Operacoes = Operacoes + 1;
 }
 
@@ -165,16 +111,16 @@ Operacoes = Operacoes + 1;
 //////////////////////////
 
 ///////////// Venda
-void VendaHiLo ()
+void VendaHiLo (string Desc)
 {
 
-Print(Descricao_Robo+" Venda HiLo");
+Print(Descricao_Robo+" "+Desc);
 
 
 if(Operacoes>0) 
 {
 
-MontarRequisicao(ORDER_TYPE_SELL,"Venda HiLo");
+MontarRequisicao(ORDER_TYPE_SELL,Desc);
 
 Operacoes = Operacoes - 1;
 }
@@ -183,7 +129,7 @@ Operacoes = Operacoes - 1;
 if(Operacoes==0) 
 {
 
-MontarRequisicao(ORDER_TYPE_SELL,"Venda HiLo");
+MontarRequisicao(ORDER_TYPE_SELL,Desc);
 
 Operacoes = Operacoes - 1;
 }
@@ -301,14 +247,14 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
-                    VendaHiLo();
+                    VendaHiLo("Venda por HiLo");
                     Ordem = true;
                     }
                     
                     if(Mudanca==-1 && Ordem==false) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
-                    CompraHiLo();
+                    CompraHiLo("Compra por HiLo");
                     Ordem = true;
                     }
                       
@@ -382,7 +328,7 @@ void StopLossCompra ()
          Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda r: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
          Print(Descricao_Robo+" VENDA! ",Operacoes);
 
-         VendaHiLoStop();
+         VendaHiLoStop("Venda SL: "+DoubleToString(daotick(),2));
          DeuStopLoss = true;
          
         }
@@ -410,7 +356,7 @@ void StopLossVenda ()
          Print(Descricao_Robo+" Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
          Print(Descricao_Robo+" COMPRA! ",Operacoes);
          DeuStopLoss = true;
-         CompraHiLoStop();
+         CompraHiLoStop("Compra SL: "+DoubleToString(daotick(),2));
          
         }
    
@@ -434,7 +380,7 @@ void TakeProfitCompra ()
         {
          
          Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
-         VendaHiLoStop();
+         VendaHiLoStop("Venda TP: "+DoubleToString(daotick(),2));
          DeuTakeProfit = true;
          
         }
@@ -459,7 +405,7 @@ void TakeProfitVenda ()
         {
          
          Print(Descricao_Robo+" Deu TakeProfit VENDIDO | Compra: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
-         CompraHiLoStop();
+         CompraHiLoStop("Compra TP "+DoubleToString(daotick()));
          DeuTakeProfit = true;
         }
    
@@ -471,15 +417,15 @@ void TakeProfitVenda ()
 
 
 ///////////// Venda Do Stop
-void VendaHiLoStop ()
+void VendaHiLoStop (string Desc)
 {
 
-Print(Descricao_Robo+" Venda HILO Stop");
+Print(Descricao_Robo+" "+Desc);
 
 
 //Print(Descricao_Robo+" NA FUNCAO TrailingStopNACompra Ativado, Valor: ",TS_ValorCompra);
 
-MontarRequisicao(ORDER_TYPE_SELL,"Venda HiLo STOP");
+MontarRequisicao(ORDER_TYPE_SELL,Desc);
 
 Operacoes = Operacoes - 1;
 //PrecoVenda = daotick();    //DEPRECADO, AGORA TO PEGANDO NO TRANSACTIO
@@ -490,14 +436,14 @@ Operacoes = Operacoes - 1;
 ///////////////////////////////
 
 /////////////////////////// Compra Hilo STOP
-void CompraHiLoStop ()
+void CompraHiLoStop (string Desc)
 {
 
-Print(Descricao_Robo+" Compra HILO Stop");
+Print(Descricao_Robo+" "+Desc);
 
 //Print(Descricao_Robo+" NA FUNCAO TrailingStopNAVenda Ativado, Valor: ",TS_ValorVenda);
 
-MontarRequisicao(ORDER_TYPE_BUY,"Compra HILO Stop");
+MontarRequisicao(ORDER_TYPE_BUY,Desc);
 
 Operacoes = Operacoes + 1;
 //PrecoCompra = daotick();   // Deprecado, agora pegando tudo do Transaction
@@ -587,13 +533,15 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          Req.tp=0;
          Req.sl=0;
          
-         if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada"); else Print(Descricao_Robo+"Deu Pau, Verifique com pressao");
-         
+         if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada |",comentario_req); 
+         else 
+            {
+            Print(Descricao_Robo+" Deu Pau, Verifique com pressao");
+            SendNotification("ERRO GRAVE, VERIFIQUE: "+IntegerToString(GetLastError()));
+            ExpertRemove();
+            }
 
          DaResultado = true;
-         
-         
-   
    }
    
    
@@ -612,8 +560,8 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
        
        PrimeiraOp = true;
        
-       if(Mudanca>0) CompraHiLoStop();
-       if(Mudanca<0) VendaHiLoStop();
+       if(Mudanca>0) CompraHiLoStop("Compra OperaLogoDeCara");
+       if(Mudanca<0) VendaHiLoStop("Venda OperaLogoDeCara");
        
        }
        
@@ -659,13 +607,13 @@ void TS ()
      
       if(Operacoes>0 && Trailing_stop >0 && daotick()<= TS_ValorCompra)      
         {
-         VendaHiLoStop();
+         VendaHiLoStop("Venda TrailingStop");
          Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor daotick: ",daotick());
         }
    
       if(Operacoes<0 && Trailing_stop >0 && daotick()>= TS_ValorVenda)      
         {
-         CompraHiLoStop();
+         CompraHiLoStop("Compra TrailingStop");
          Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor daotick: ",daotick());
         }   
    

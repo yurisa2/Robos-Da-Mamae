@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.16"
+#property version   "1.17"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -59,14 +59,9 @@ int OnInit()
    Alert("Erro nos parametros de grana ou técnicos");
    }
    
+   Print("HiLo de início: ",Mudanca);
    
-    if(TakeProfit>0 && Trailing_stop>0) 
-     {
-   Alert("Não faz sentido você ter TakeProfit e Trailing Stop, filosoficamente falando");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-   
+   Comment(Descricao_Robo);
    
 
    return(0);
@@ -226,6 +221,7 @@ void OnTick()
         SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         
+        Print("Indicador HiLo inicio do dia: ",Mudanca);
 
         
         }

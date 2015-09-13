@@ -103,7 +103,7 @@ MontarRequisicao(ORDER_TYPE_BUY,Desc);
 Operacoes = Operacoes + 1;
 }
 
-if(Operacoes==0)
+if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2))
 {
 MontarRequisicao(ORDER_TYPE_BUY,Desc);
 Operacoes = Operacoes + 1;
@@ -129,7 +129,7 @@ Operacoes = Operacoes - 1;
 }
 
 
-if(Operacoes==0) 
+if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2)) 
 {
 
 MontarRequisicao(ORDER_TYPE_SELL,Desc);

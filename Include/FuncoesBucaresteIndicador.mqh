@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.17"
+#property version   "1.18"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
@@ -23,7 +23,8 @@ input int MinutoDeInicio = 1;
 input int HoraDeFim = 17;
 input int MinutoDeFim = 27;
 
-       
+input int Limite_Operacoes = 9999;
+  
 string HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim,2,'0');
 string HorarioInicio = IntegerToString(HoraDeInicio,2,'0') + ":" + IntegerToString(MinutoDeInicio,2,'0');
 
@@ -72,6 +73,8 @@ double TS_ValorVenda_atual = 9999999;
 double TS_ValorCompra_atual = 0;        
 
 string Desc_Req = "";
+
+int OperacoesFeitas = 0;
 
 ///////////////////////////////////////////
 
@@ -243,7 +246,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     Ordem = false;
                       
                       
-                    if(Mudanca==1 && Ordem==false) 
+                    if(Mudanca==1 && Ordem==false && OperacoesFeitas< (Limite_Operacoes*2)) 
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -251,7 +254,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     Ordem = true;
                     }
                     
-                    if(Mudanca==-1 && Ordem==false) 
+                    if(Mudanca==-1 && Ordem==false && OperacoesFeitas< (Limite_Operacoes*2)) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
                     CompraHiLo("Compra por HiLo");
@@ -405,7 +408,7 @@ void TakeProfitVenda ()
         {
          
          Print(Descricao_Robo+" Deu TakeProfit VENDIDO | Compra: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
-         CompraHiLoStop("Compra TP "+DoubleToString(daotick()));
+         CompraHiLoStop("Compra TP "+DoubleToString(daotick(),2));
          DeuTakeProfit = true;
         }
    
@@ -508,6 +511,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          TakeProfitValorVenda = -999999999;
          TS_ValorVenda = 99999999;
          TS_ValorCompra = 0;
+         OperacoesFeitas++;
          
          
          

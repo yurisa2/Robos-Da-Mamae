@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.17"
+#property version   "1.18"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -200,6 +200,8 @@ void OnTick()
         PrecoCompra =0;
         PrecoVenda =0;
         
+        OperacoesFeitas =0;
+        
         StopLossValorCompra =-9999999999;
         TakeProfitValorCompra = 999999999;
         StopLossValorVenda =99999999999;
@@ -226,6 +228,14 @@ void OnTick()
         
         }
         
+        
+/////////////// Começo do dia - Verifica se opera logo de cara ou nem
+
+
+if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
+
+////////////////// Fim 
+
 
 
 /////////////////////////////////////////////////////////
@@ -239,12 +249,6 @@ void OnTick()
          
 /////////////////////////////////////////////////
 
-/////////////// Começo do dia - Verifica se opera logo de cara ou nem
-
-
-if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
-
-////////////////// Fim 
 
 
 if(ZerarFinalDoDia == true) ZerarODia();

@@ -155,7 +155,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    double NMax[];
    double NMin[];
    double ValorHilo[];
-   
+
    ArraySetAsSeries(_ma1, true);
    ArraySetAsSeries(NMax, true);
    ArraySetAsSeries(NMin, true);   
@@ -246,7 +246,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     Ordem = false;
                       
                       
-                    if(Mudanca==1 && Ordem==false && OperacoesFeitas< (Limite_Operacoes*2)) 
+                    if(Mudanca==1 && Ordem==false) 
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -254,7 +254,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     Ordem = true;
                     }
                     
-                    if(Mudanca==-1 && Ordem==false && OperacoesFeitas< (Limite_Operacoes*2)) 
+                    if(Mudanca==-1 && Ordem==false) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
                     CompraHiLo("Compra por HiLo");

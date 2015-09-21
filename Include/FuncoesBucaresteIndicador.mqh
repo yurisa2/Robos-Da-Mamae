@@ -5,10 +5,12 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.18"
+#property version   "1.19"
 #include <basico.mqh>
 
 /////////////////////////////////////// Inputs
+
+input double lucro_dia = 1000000;
 
 input int Lotes = 1;
 input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
@@ -32,6 +34,11 @@ input bool   ZerarFinalDoDia = true;
 
 input bool OperacaoLogoDeCara = true;
 input string Descricao_Robo = "";
+
+
+
+
+
 
 ///////////////////////////////// Variaveis
 
@@ -76,6 +83,9 @@ string Desc_Req = "";
 
 int OperacoesFeitas = 0;
 
+
+double liquidez_inicio=0;
+
 ///////////////////////////////////////////
 
 //////////////////////////////////// Funcoes
@@ -103,7 +113,7 @@ MontarRequisicao(ORDER_TYPE_BUY,Desc);
 Operacoes = Operacoes + 1;
 }
 
-if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2))
+if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia)
 {
 MontarRequisicao(ORDER_TYPE_BUY,Desc);
 Operacoes = Operacoes + 1;
@@ -129,7 +139,7 @@ Operacoes = Operacoes - 1;
 }
 
 
-if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2)) 
+if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia) 
 {
 
 MontarRequisicao(ORDER_TYPE_SELL,Desc);

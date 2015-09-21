@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.18"
+#property version   "1.19"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -25,6 +25,8 @@ int OnInit()
    ChartIndicatorAdd(0,0,HandleGHL);
 
    Print("Liquidez da conta: ",conta.Equity());
+   
+
    
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
@@ -224,6 +226,8 @@ void OnTick()
         SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         
         Print("Indicador HiLo inicio do dia: ",Mudanca);
+        
+        liquidez_inicio = conta.Equity();
 
         
         }

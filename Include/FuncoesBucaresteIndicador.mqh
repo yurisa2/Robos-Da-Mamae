@@ -472,7 +472,7 @@ Operacoes = Operacoes + 1;
 void ZerarODia ()
 {
 
- if(TaDentroDoHorario(HorarioFim,"17:40")==true && JaDeuFinal==false)
+ if(TaDentroDoHorario(HorarioFim,HorarioFim)==true && JaDeuFinal==false)
    {
       JaDeuFinal = true;
       JaZerou = false;

@@ -693,8 +693,8 @@ void IniciaDia ()
         DeuTakeProfit = true;
         DeuStopLoss = true;
         
-//        EventKillTimer();
-//        EventSetTimer(Segundos);
+//        EventKillTimer();         // 1.18  remover na próxima versão
+//        EventSetTimer(Segundos);  // 1.18  remover na próxima versão
         
 
         Print("Bom dia! Bucareste rs ordens, segura o coraçao pq o role é monstro!!!");

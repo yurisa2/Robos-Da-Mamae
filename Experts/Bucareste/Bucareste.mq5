@@ -10,7 +10,7 @@
 
 #include <FuncoesBucaresteIndicador.mqh>
 
-int Segundos = PeriodSeconds(TimeFrame);
+//int Segundos = PeriodSeconds(TimeFrame);
 
 
 int OnInit()
@@ -187,8 +187,6 @@ void OnTimer()
 IniciaDia();
 
 
-
-
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
 
 ////////////////// Fim 
@@ -229,15 +227,7 @@ void OnTick()
 {
 
 
-/////////////////// Iniciar o Dia
 
-
-
-        
-       
-        
-        
-/////////////// Começo do dia - Verifica se opera logo de cara ou nem
 
 
 }

@@ -5,8 +5,9 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.19"
+#property version   "1.20"
 #include <basico.mqh>
+
 
 /////////////////////////////////////// Inputs
 
@@ -638,3 +639,71 @@ void TS ()
 
 
 /////////////////////////////////
+
+
+
+void DetectaNovaBarra ()
+{
+//---
+   int period_seconds=PeriodSeconds(_Period);                     // Number of seconds in current chart period
+   datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
+   if(grafico_atual.isNewBar(new_time)) OnNewBar();      
+  
+}
+
+
+void OnNewBar()
+{
+   HiLo();
+   
+   
+   
+   
+
+
+
+
+}
+
+
+void IniciaDia ()
+{
+
+
+        if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
+        {
+        
+        CalculaHiLo();
+        
+        PrecoCompra =0;
+        PrecoVenda =0;
+        
+        OperacoesFeitas =0;
+        
+        StopLossValorCompra =-9999999999;
+        TakeProfitValorCompra = 999999999;
+        StopLossValorVenda =99999999999;
+        TakeProfitValorVenda = -999999999;
+                 
+        JaZerou = true;
+        JaDeuFinal = false;
+        Operacoes = 0;
+        Ordem = false;
+        PrimeiraOp = false;
+        DeuTakeProfit = true;
+        DeuStopLoss = true;
+        
+//        EventKillTimer();
+//        EventSetTimer(Segundos);
+        
+
+        Print("Bom dia! Bucareste rs ordens, segura o coraçao pq o role é monstro!!!");
+        SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
+        SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
+        
+        Print("Indicador HiLo inicio do dia: ",Mudanca);
+        
+        liquidez_inicio = conta.Equity();
+        }
+
+}

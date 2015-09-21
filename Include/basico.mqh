@@ -10,6 +10,8 @@
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
 #include <Charts\Chart.mqh>
+#include <Lib_CisNewBar.mqh>
+
 
 
 //--- object for performing trade operations
@@ -20,6 +22,8 @@ CPositionInfo posicao;
 CDealInfo negocio;
 CChart grafico;
 CAccountInfo conta;
+CisNewBar grafico_atual; // instance of the CisNewBar class: current chart
+
 
 ////////////    Funcao iniciaconexao()
 int iniciaconexao ()

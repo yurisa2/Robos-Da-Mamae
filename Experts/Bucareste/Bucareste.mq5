@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.19"
+#property version   "1.20"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -15,6 +15,8 @@ int Segundos = PeriodSeconds(TimeFrame);
 
 int OnInit()
   {
+  
+   EventSetMillisecondTimer(500);
 
    HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
    CalculaHiLo();
@@ -182,58 +184,9 @@ for(uint i=0;i<total;i++)
 void OnTimer()
 {
 
-   HiLo();
+IniciaDia();
 
 
- }
-
-void OnTick()
-{
-
-
-/////////////////// Iniciar o Dia
-
-
-        if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
-        {
-        
-        CalculaHiLo();
-        
-        PrecoCompra =0;
-        PrecoVenda =0;
-        
-        OperacoesFeitas =0;
-        
-        StopLossValorCompra =-9999999999;
-        TakeProfitValorCompra = 999999999;
-        StopLossValorVenda =99999999999;
-        TakeProfitValorVenda = -999999999;
-                 
-        JaZerou = true;
-        JaDeuFinal = false;
-        Operacoes = 0;
-        Ordem = false;
-        PrimeiraOp = false;
-        DeuTakeProfit = true;
-        DeuStopLoss = true;
-        
-        EventKillTimer();
-        EventSetTimer(Segundos);
-        
-
-        Print("Bom dia! Bucareste rs ordens, segura o coraçao pq o role é monstro!!!");
-        SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
-        SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
-        
-        Print("Indicador HiLo inicio do dia: ",Mudanca);
-        
-        liquidez_inicio = conta.Equity();
-
-        
-        }
-        
-        
-/////////////// Começo do dia - Verifica se opera logo de cara ou nem
 
 
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
@@ -253,6 +206,7 @@ if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio
          
 /////////////////////////////////////////////////
 
+DetectaNovaBarra();
 
 
 if(ZerarFinalDoDia == true) ZerarODia();
@@ -268,4 +222,23 @@ if(ZerarFinalDoDia == true) ZerarODia();
    
    }
 
+
+ }
+
+void OnTick()
+{
+
+
+/////////////////// Iniciar o Dia
+
+
+
+        
+       
+        
+        
+/////////////// Começo do dia - Verifica se opera logo de cara ou nem
+
+
 }
+

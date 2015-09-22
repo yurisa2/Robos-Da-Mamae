@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.20"
+#property version   "1.21"
 
 #include <FuncoesBucaresteIndicador.mqh>
 

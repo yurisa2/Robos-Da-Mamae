@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.20"
+#property version   "1.21"
 #include <basico.mqh>
 
 
@@ -20,6 +20,8 @@ input int Periodos =  4;
 input double StopLoss = 0;
 input double TakeProfit = 0;
 input double Trailing_stop =0;
+input bool  SaiPeloHilo = true;
+
 
 input int HoraDeInicio = 9;
 input int MinutoDeInicio = 1;
@@ -33,7 +35,7 @@ string HorarioInicio = IntegerToString(HoraDeInicio,2,'0') + ":" + IntegerToStri
 
 input bool   ZerarFinalDoDia = true;
 
-input bool OperacaoLogoDeCara = true;
+input bool OperacaoLogoDeCara = false;
 input string Descricao_Robo = "";
 
 
@@ -106,7 +108,7 @@ void CompraHiLo (string Desc)
 Print(Descricao_Robo+" "+Desc);
 
 
-if(Operacoes<0)
+if(Operacoes<0 && SaiPeloHilo==true)
 {
 
 MontarRequisicao(ORDER_TYPE_BUY,Desc);
@@ -131,7 +133,7 @@ void VendaHiLo (string Desc)
 Print(Descricao_Robo+" "+Desc);
 
 
-if(Operacoes>0) 
+if(Operacoes>0 && SaiPeloHilo==true) 
 {
 
 MontarRequisicao(ORDER_TYPE_SELL,Desc);

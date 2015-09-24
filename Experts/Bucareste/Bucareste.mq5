@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.21"
+#property version   "1.22"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -48,6 +48,17 @@ int OnInit()
    return(INIT_PARAMETERS_INCORRECT);
 
    }
+   
+   
+      if(SaiPeloHilo==true && HiLoTempoReal == true) 
+    {
+   Alert("Se o HiLo está em tempo real, não dá pra sair pelo HiLo, chuva de ordens");    
+   return(INIT_PARAMETERS_INCORRECT);
+
+   }
+   
+   
+   
    /*
    if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >17 || HoraDeFim >17 || HoraDeInicio <9 || HoraDeFim <9 ) 
     {
@@ -205,6 +216,9 @@ if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio
 /////////////////////////////////////////////////
 
 DetectaNovaBarra();
+
+
+   if(HiLoTempoReal == true)      HiLo();
 
 
 if(ZerarFinalDoDia == true) ZerarODia();

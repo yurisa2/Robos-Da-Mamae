@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.21"
+#property version   "1.22"
 #include <basico.mqh>
 
 
@@ -21,6 +21,7 @@ input double StopLoss = 0;
 input double TakeProfit = 0;
 input double Trailing_stop =0;
 input bool  SaiPeloHilo = true;
+input bool  HiLoTempoReal = true;
 
 
 input int HoraDeInicio = 9;
@@ -656,7 +657,9 @@ void DetectaNovaBarra ()
 
 void OnNewBar()
 {
-   HiLo();
+   if(HiLoTempoReal == false)      HiLo();
+     
+
    
    
    

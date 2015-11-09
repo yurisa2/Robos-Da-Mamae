@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.22"
+#property version   "1.23"
 #include <basico.mqh>
 
 
@@ -507,7 +507,7 @@ void ZerarODia ()
          Print(Descricao_Robo+"Depois da Ultima Operaçao: ",Operacoes);
    }
 
-   
+Sleep(1000);
   }  
 //+------------------------------------------------------------------+
 
@@ -536,6 +536,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
 
    CalculaStops();
    
+   CriaLinhaTS(0);
 
          MqlTradeRequest Req;     
          MqlTradeResult Res;     
@@ -560,6 +561,13 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
             }
 
          DaResultado = true;
+         
+         
+         
+ObjectsDeleteAll(0,0,-1);
+
+CriaLinhas();
+AtualizaLinhas();
    }
    
    
@@ -605,6 +613,7 @@ void TS ()
            {
             
             TS_ValorCompra = TS_ValorCompra_atual;
+            AtualizaLinhaTS(TS_ValorCompra);
            } 
            
         }    
@@ -617,6 +626,7 @@ void TS ()
            {
             
             TS_ValorVenda = TS_ValorVenda_atual;
+            AtualizaLinhaTS(TS_ValorVenda);
            }
         }
  
@@ -627,12 +637,14 @@ void TS ()
         {
          VendaHiLoStop("Venda TrailingStop");
          Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor daotick: ",daotick());
+         ObjectDelete(0,"TS");
         }
    
       if(Operacoes<0 && Trailing_stop >0 && daotick()>= TS_ValorVenda)      
         {
          CompraHiLoStop("Compra TrailingStop");
          Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor daotick: ",daotick());
+         ObjectDelete(0,"TS");
         }   
    
    
@@ -710,5 +722,67 @@ void IniciaDia ()
         
         liquidez_inicio = conta.Equity();
         }
+Sleep(1000);
+}
+
+
+///////////////////GRAFICOS 
+
+void CriaLinhas ()
+{
+if(Operacoes>0) ObjectCreate(0,"StopLossCompra",OBJ_HLINE,0,0,StopLossValorCompra);
+if(Operacoes<0) ObjectCreate(0,"StopLossVenda",OBJ_HLINE,0,0,StopLossValorVenda);
+if(Operacoes>0) ObjectCreate(0,"TakeProfitCompra",OBJ_HLINE,0,0,TakeProfitValorCompra);
+if(Operacoes<0) ObjectCreate(0,"TakeProfitVenda",OBJ_HLINE,0,0,TakeProfitValorVenda);
 
 }
+
+void CriaLinhaTS (double NivelTS)
+{
+ObjectCreate(0,"TS",OBJ_HLINE,0,0,NivelTS);
+}
+
+void AtualizaLinhas ()
+{
+if(Operacoes>0) ObjectSetInteger(0,"StopLossCompra",OBJPROP_STYLE,STYLE_DASHDOT); 
+if(Operacoes>0) ObjectSetInteger(0,"StopLossCompra",OBJPROP_COLOR,clrRed); 
+if(Operacoes>0) ObjectSetString(0,"StopLossCompra",OBJPROP_LEVELTEXT,"StopLoss: "+DoubleToString(StopLossValorCompra));
+if(Operacoes>0) ObjectSetString(0,"StopLossCompra",OBJPROP_TEXT,"StopLoss: "+DoubleToString(StopLossValorCompra));
+if(Operacoes>0) ObjectSetString(0,"StopLossCompra",OBJPROP_TOOLTIP,"StopLoss: "+DoubleToString(StopLossValorCompra));
+
+
+if(Operacoes<0) ObjectSetInteger(0,"StopLossVenda",OBJPROP_STYLE,STYLE_DASHDOT); 
+if(Operacoes<0) ObjectSetInteger(0,"StopLossVenda",OBJPROP_COLOR,clrRed); 
+if(Operacoes<0) ObjectSetString(0,"StopLossVenda",OBJPROP_LEVELTEXT,"StopLoss: "+DoubleToString(StopLossValorVenda));
+if(Operacoes<0) ObjectSetString(0,"StopLossVenda",OBJPROP_TEXT,"StopLoss: "+DoubleToString(StopLossValorVenda));
+if(Operacoes<0) ObjectSetString(0,"StopLossVenda",OBJPROP_TOOLTIP,"StopLoss: "+DoubleToString(StopLossValorVenda));
+
+
+if(Operacoes>0) ObjectSetInteger(0,"TakeProfitCompra",OBJPROP_STYLE,STYLE_DASHDOT); 
+if(Operacoes>0) ObjectSetInteger(0,"TakeProfitCompra",OBJPROP_COLOR,clrBlue); 
+if(Operacoes>0) ObjectSetString(0,"TakeProfitCompra",OBJPROP_LEVELTEXT,"TakeProfit: "+DoubleToString(TakeProfitValorCompra));
+if(Operacoes>0) ObjectSetString(0,"TakeProfitCompra",OBJPROP_TEXT,"TakeProfit: "+DoubleToString(TakeProfitValorCompra));
+if(Operacoes>0) ObjectSetString(0,"TakeProfitCompra",OBJPROP_TOOLTIP,"TakeProfit: "+DoubleToString(TakeProfitValorCompra));
+
+
+if(Operacoes<0) ObjectSetInteger(0,"TakeProfitVenda",OBJPROP_STYLE,STYLE_DASHDOT); 
+if(Operacoes<0) ObjectSetInteger(0,"TakeProfitVenda",OBJPROP_COLOR,clrBlue); 
+if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_LEVELTEXT,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
+if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_TEXT,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
+if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_TOOLTIP,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
+
+}
+
+void AtualizaLinhaTS (double NivelTS)
+{
+
+ObjectMove(0,"TS",0,0,NivelTS);
+ObjectSetInteger(0,"TS",OBJPROP_STYLE,STYLE_DASHDOT); 
+ObjectSetInteger(0,"TS",OBJPROP_COLOR,clrYellow); 
+ObjectSetString(0,"TS",OBJPROP_LEVELTEXT,"TS: "+DoubleToString(NivelTS));
+ObjectSetString(0,"TS",OBJPROP_TEXT,"TS: "+DoubleToString(NivelTS));
+ObjectSetString(0,"TS",OBJPROP_TOOLTIP,"TS: "+DoubleToString(NivelTS));
+}
+
+
+///////////////////// FIM DOS GRAFICOS

@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.22"
+#property version   "1.23"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -15,6 +15,8 @@
 
 int OnInit()
   {
+  
+   ObjectsDeleteAll(0,0,-1);
   
    EventSetMillisecondTimer(500);
 
@@ -199,6 +201,10 @@ IniciaDia();
 
 
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
+
+if(Operacoes == 0) ObjectsDeleteAll(0,0,-1);
+CriaLinhas();
+AtualizaLinhas();
 
 ////////////////// Fim 
 

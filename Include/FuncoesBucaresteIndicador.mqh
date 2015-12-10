@@ -21,7 +21,8 @@ input double StopLoss = 0;
 input double TakeProfit = 0;
 input double Trailing_stop =0;
 input bool  SaiPeloHilo = true;
-input bool  HiLoTempoReal = true;
+input bool  HiLoTempoReal = false;
+input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;
 
 
 input int HoraDeInicio = 9;
@@ -38,6 +39,8 @@ input bool   ZerarFinalDoDia = true;
 
 input bool OperacaoLogoDeCara = false;
 input string Descricao_Robo = "";
+
+
 
 
 
@@ -545,7 +548,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          Req.symbol       = Symbol();
          Req.volume       = Lotes;
          Req.magic = TimeMagic;
-         Req.type_filling = ORDER_FILLING_RETURN;                 
+         Req.type_filling = TipoDeOrdem;                 
          Req.action=TRADE_ACTION_DEAL; 
          Req.type=order_type; 
          Req.comment=Descricao_Robo+" "+comentario_req;     

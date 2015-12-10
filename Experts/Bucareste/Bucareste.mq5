@@ -93,7 +93,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                         const MqlTradeRequest& request,
                         const MqlTradeResult& result)
   {
-   
+ /*  
    
    Data_Hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+HorarioInicio+":00");
 //   Print("Data Hoje: ",Data_Hoje);
@@ -188,7 +188,7 @@ for(uint i=0;i<total;i++)
      }
 //      }  //Bracket do FOR
   
-   
+    PARA DESLIGAR O SISTEMA DE E_MAILS */
   }
 
 

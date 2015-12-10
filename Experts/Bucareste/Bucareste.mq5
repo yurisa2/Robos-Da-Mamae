@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.23"
+#property version   "1.24"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -199,6 +199,10 @@ void OnTimer()
 
 IniciaDia();
 
+if(Operacoes>1) Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorCompra)+" - TP: "+DoubleToString(TakeProfitValorCompra));
+if(Operacoes<1)Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorVenda)+" - TP: "+DoubleToString(TakeProfitValorVenda));
+if(Operacoes==0) Comment(Descricao_Robo+" - Fora de Operacao ");
+  
 
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
 

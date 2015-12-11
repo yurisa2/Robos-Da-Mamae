@@ -15,7 +15,7 @@
 
 int OnInit()
   {
-  
+
    ObjectsDeleteAll(0,0,-1);
   
    EventSetMillisecondTimer(500);
@@ -29,8 +29,6 @@ int OnInit()
    ChartIndicatorAdd(0,0,HandleGHL);
 
    Print("Liquidez da conta: ",conta.Equity());
-   
-
    
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
@@ -50,7 +48,6 @@ int OnInit()
    return(INIT_PARAMETERS_INCORRECT);
 
    }
-   
    
       if(SaiPeloHilo==true && HiLoTempoReal == true) 
     {
@@ -78,8 +75,8 @@ int OnInit()
    
    Print("HiLo de início: ",Mudanca);
    
-   Comment(Descricao_Robo);
-   
+   Comment("Carregando...");
+   Cria_Botao_Abortar();
 
    return(0);
 
@@ -191,19 +188,20 @@ for(uint i=0;i<total;i++)
     PARA DESLIGAR O SISTEMA DE E_MAILS */
   }
 
-
-
-
 void OnTimer()
 {
 
 IniciaDia();
 
-if(Operacoes>1) Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorCompra)+" - TP: "+DoubleToString(TakeProfitValorCompra));
-if(Operacoes<1)Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorVenda)+" - TP: "+DoubleToString(TakeProfitValorVenda));
-if(Operacoes==0) Comment(Descricao_Robo+" - Fora de Operacao ");
-  
+if(Operacoes>1) Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorCompra)+" - TP: "+DoubleToString(TakeProfitValorCompra)+" TS: "+DoubleToString(TS_ValorCompra));
+if(Operacoes<1)Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorVenda)+" - TP: "+DoubleToString(TakeProfitValorVenda)+" TS: "+DoubleToString(TS_ValorVenda));
+if(Operacoes==0) 
+{
+Comment(Descricao_Robo+" - Nenhuma trade ativa");
 
+
+}
+Botao_Abortar();
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
 
 if(Operacoes == 0) ObjectsDeleteAll(0,0,-1);
@@ -211,8 +209,6 @@ CriaLinhas();
 AtualizaLinhas();
 
 ////////////////// Fim 
-
-
 
 /////////////////////////////////////////////////////////
 /////////////////////// Funçoes de STOP
@@ -230,7 +226,7 @@ DetectaNovaBarra();
 
    if(HiLoTempoReal == true)      HiLo();
 
-
+/* ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
 if(ZerarFinalDoDia == true) ZerarODia();
    else
    {
@@ -243,6 +239,9 @@ if(ZerarFinalDoDia == true) ZerarODia();
 
    
    }
+*/
+
+ZerarODia();
 
 
  }
@@ -251,8 +250,50 @@ void OnTick()
 {
 
 
-
-
-
 }
 
+void OnChartEvent(const int id, 
+                  const long &lparam, 
+                  const double &dparam, 
+                  const string &sparam) 
+  { 
+//--- Verifique o evento pressionando um botão do mouse 
+   if(id==CHARTEVENT_OBJECT_CLICK) 
+     { 
+      string clickedChartObject=sparam; 
+      //--- Se você clicar sobre o objeto com o nome buttonID 
+      if(clickedChartObject=="BTN_ABORTAR") 
+        { 
+         if(Operacoes>0)  VendaHiLoStop(" Abortado pelo botão");
+         if(Operacoes<0)  CompraHiLoStop(" Abortado pelo botão");   
+         //--- Estado do botão - pressionado ou não 
+         bool selected=ObjectGetInteger(0,"BTN_ABORTAR",OBJPROP_STATE); 
+         //--- registrar uma mensagem de depuração 
+         //Print("Botão pressionado = ",selected);
+         
+          
+         int customEventID; // Número do evento personalizado para enviar 
+         string message;    // Mensagem a ser enviada no caso 
+         //--- Se o botão for pressionado 
+         if(selected) 
+           { 
+            message="Botão pressionado"; 
+            customEventID=CHARTEVENT_CUSTOM+1; 
+           } 
+         else // Botão não está pressionado 
+           { 
+            message="Botão não está pressionado"; 
+            customEventID=CHARTEVENT_CUSTOM+999; 
+           } 
+         //--- Enviar um evento personalizado "nosso" gráfico 
+         //EventChartCustom(0,customEventID-CHARTEVENT_CUSTOM,0,0,message); 
+         ///--- Envie uma mensagem para todos os gráficos abertos 
+         //BroadcastEvent(ChartID(),0,"Transmissão de mensagem"); 
+         //--- Depurar mensagem 
+         //Print("Enviar um evento com ID = ",customEventID); 
+        } 
+      ChartRedraw();// Redesenho forçado de todos os objetos de gráfico 
+     } 
+  
+
+  } 

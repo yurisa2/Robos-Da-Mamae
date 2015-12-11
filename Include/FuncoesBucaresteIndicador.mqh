@@ -20,9 +20,10 @@ input int Periodos =  4;
 input double StopLoss = 0;
 input double TakeProfit = 0;
 input double Trailing_stop =0;
+input double Trailing_stop_start = 0;
 input bool  SaiPeloHilo = true;
 input bool  HiLoTempoReal = false;
-input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;
+
 
 
 input int HoraDeInicio = 9;
@@ -39,10 +40,13 @@ input bool   ZerarFinalDoDia = true;
 
 input bool OperacaoLogoDeCara = false;
 input string Descricao_Robo = "";
+input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;
 
 
 
+////// Botão
 
+int broadcastEventID=5000; 
 
 
 
@@ -474,47 +478,7 @@ Operacoes = Operacoes + 1;
 
 //////////////////////////// Primeira Operaçao
 
-////////////////// Zerar o dia
-void ZerarODia ()
-{
 
- if(TaDentroDoHorario(HorarioFim,HorarioFim)==true && JaDeuFinal==false)
-   {
-      JaDeuFinal = true;
-      JaZerou = false;
-      PrimeiraOp = false;
-      Print(Descricao_Robo+"Final do Dia! Operaçoes: ",Operacoes);
-      SendNotification(Descricao_Robo+" encerrando");
-    
-    if(Operacoes<0) 
-    {
-    
-    
-    MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia");  
-    
-    Operacoes = Operacoes +1;
-//    SendMail("Bucareste: Compra para zerar o dia","Finalizando o dia com uma comprinha...");
-    }
-    
-    
-    if(Operacoes>0) 
-   {
-      MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia");
-
-       Operacoes = Operacoes -1;
-
-           SendMail(Descricao_Robo+"Bucareste: Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
-   }
-   
-   
-         Print(Descricao_Robo+"Depois da Ultima Operaçao: ",Operacoes);
-   }
-
-Sleep(1000);
-  }  
-//+------------------------------------------------------------------+
-
-/////////////////////
 
 
 /////////////////////////// Req de Operaçao
@@ -568,7 +532,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          
          
 ObjectsDeleteAll(0,0,-1);
-
+Cria_Botao_Abortar();
 CriaLinhas();
 AtualizaLinhas();
    }
@@ -607,7 +571,7 @@ void TS ()
    
    
    
-      if(Operacoes>0 && Trailing_stop >0 && daotick() > PrecoCompra + Trailing_stop)
+      if(Operacoes>0 && Trailing_stop >0 && daotick() > PrecoCompra + Trailing_stop + Trailing_stop_start)
         {
         
         TS_ValorCompra_atual = daotick()-Trailing_stop;
@@ -620,7 +584,7 @@ void TS ()
            } 
            
         }    
-      if(Operacoes<0 && Trailing_stop >0&& daotick() < PrecoVenda - Trailing_stop)
+      if(Operacoes<0 && Trailing_stop >0&& daotick() < PrecoVenda - Trailing_stop - Trailing_stop_start)
         {
         
         TS_ValorVenda_atual = daotick()+Trailing_stop;        
@@ -789,3 +753,94 @@ ObjectSetString(0,"TS",OBJPROP_TOOLTIP,"TS: "+DoubleToString(NivelTS));
 
 
 ///////////////////// FIM DOS GRAFICOS
+
+
+////////////////// Zerar o dia 
+void ZerarODia ()
+{
+
+ if(TaDentroDoHorario(HorarioFim,HorarioFim)==true && JaDeuFinal==false)
+   {
+      JaDeuFinal = true;
+      JaZerou = false;
+      PrimeiraOp = false;
+      Print(Descricao_Robo+"Final do Dia! Operaçoes: ",Operacoes);
+      SendNotification(Descricao_Robo+" encerrando");
+    
+    if(Operacoes<0) 
+    {
+    Operacoes = Operacoes +1;    
+    MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia");  
+    Sleep(1000);
+
+//    SendMail("Bucareste: Compra para zerar o dia","Finalizando o dia com uma comprinha...");
+    }
+    
+    
+    if(Operacoes>0) 
+   {
+       Operacoes = Operacoes -1;   
+      MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia");
+      Sleep(1000);
+
+
+           SendMail(Descricao_Robo+"Bucareste: Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
+   }
+   
+   
+         Print(Descricao_Robo+"Depois da Ultima Operaçao: ",Operacoes);
+   }
+
+Sleep(1000);
+  }  
+//+------------------------------------------------------------------+
+
+/////////////////////
+void Cria_Botao_Abortar ()
+{
+//--- criar o botão 
+ObjectCreate(0,"BTN_ABORTAR",OBJ_BUTTON,0,0,0,0,0);
+Botao_Abortar();
+}
+
+
+void Botao_Abortar ()                // prioridade para clicar no mouse 
+  { 
+
+
+//--- definir coordenadas do botão 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_XDISTANCE,150); 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_YDISTANCE,0); 
+//--- definir tamanho do botão 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_XSIZE,100); 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_YSIZE,18); 
+//--- determinar o canto do gráfico onde as coordenadas do ponto são definidas 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_CORNER,CORNER_LEFT_UPPER); 
+//--- definir o texto 
+   ObjectSetString(0,"BTN_ABORTAR",OBJPROP_TEXT,"!!!Aborta a Trade!!!"); 
+//--- definir o texto fonte 
+   ObjectSetString(0,"BTN_ABORTAR",OBJPROP_FONT,"Arial"); 
+//--- definir tamanho da fonte 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_FONTSIZE,8); 
+//--- definir a cor do texto 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_COLOR,clrWhite); 
+//--- definir a cor de fundo 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_BGCOLOR,clrRed); 
+//--- definir a cor da borda 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_BORDER_COLOR,clrBlack); 
+//--- exibir em primeiro plano (false) ou fundo (true) 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_BACK,false); 
+//--- set button state 
+ //  ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_STATE,false); 
+//--- habilitar (true) ou desabilitar (false) o modo do movimento do botão com o mouse 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_SELECTABLE,false); 
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_SELECTED,false); 
+//--- ocultar (true) ou exibir (false) o nome do objeto gráfico na lista de objeto  
+   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_HIDDEN,false); 
+//--- definir a prioridade para receber o evento com um clique do mouse no gráfico 
+//   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_ZORDER,1); 
+//--- sucesso na execução 
+
+
+}
+

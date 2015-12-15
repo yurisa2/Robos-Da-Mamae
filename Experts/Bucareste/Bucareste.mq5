@@ -47,8 +47,21 @@ int OnInit()
    {
    MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK);
    return(INIT_PARAMETERS_INCORRECT);
-
    }
+   
+   if(Usa_PSar == true && Periodos>0) 
+   {
+   MessageBox("Psar Nao Usa Periodos","Erro de Inicialização",MB_OK);
+   return(INIT_PARAMETERS_INCORRECT);
+   }
+   
+   if(Usa_Hilo == true && (PSAR_Max_Step > 0 || PSAR_Step >0))
+   {
+   MessageBox("HiLo Nao Usar Steps","Erro de Inicialização",MB_OK);
+   return(INIT_PARAMETERS_INCORRECT);
+   }
+
+
    if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) 
     {
    MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK); 
@@ -56,14 +69,17 @@ int OnInit()
 
    }
    
-      if(SaiPeloIndicador==true && IndicadorTempoReal == true) 
+   if(SaiPeloIndicador==true && IndicadorTempoReal == true) 
     {
    MessageBox("Se o HiLo está em tempo real, não dá pra sair pelo HiLo, chuva de ordens","Erro de Inicialização",MB_OK);   
    return(INIT_PARAMETERS_INCORRECT);
-
    }
    
-
+   if(HoraDeInicio == HoraDeFim && (MinutoDeFim-MinutoDeInicio<10))
+    {
+   MessageBox("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização",MB_OK);   
+   return(INIT_PARAMETERS_INCORRECT);
+   }
    
     if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || Periodos <=1 ) 
      {

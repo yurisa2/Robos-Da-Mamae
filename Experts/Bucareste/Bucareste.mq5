@@ -41,7 +41,13 @@ int OnInit()
    MessageBox("Comece a partir de 09:01","Erro de Inicialização",MB_OK);
    return(INIT_PARAMETERS_INCORRECT);
    }
-
+   
+   if(Trailing_stop > TakeProfit)
+   {
+   MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização",MB_OK);
+   return(INIT_PARAMETERS_INCORRECT);  
+   
+   }
    
    if(HoraDeInicio>HoraDeFim) 
    {

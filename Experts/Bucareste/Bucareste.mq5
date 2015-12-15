@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.24"
+#property version   "1.25"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -15,75 +15,97 @@
 
 int OnInit()
   {
-
+   CalculaHiLo();
+   CalculaPSar();
+   Sleep(500);
+   
    ObjectsDeleteAll(0,0,-1);
   
    EventSetMillisecondTimer(500);
 
    HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
-   CalculaHiLo();
+   HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
+
 
    TimeMagic =MathRand();
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
    
-   ChartIndicatorAdd(0,0,HandleGHL);
 
+   if(Usa_Hilo == true)  ChartIndicatorAdd(0,0,HandleGHL);
+   if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);   
+   
    Print("Liquidez da conta: ",conta.Equity());
    
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
-   Alert("Comece a partir de 09:01");
+   MessageBox("Comece a partir de 09:01","Erro de Inicialização",MB_OK);
    return(INIT_PARAMETERS_INCORRECT);
    }
 
    
    if(HoraDeInicio>HoraDeFim) 
    {
+   MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK);
    return(INIT_PARAMETERS_INCORRECT);
-   Alert("Hora de início depois da Hora de Fim");
+
    }
    if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) 
     {
-   Alert("Hora de início depois da Hora de Fim");    
+   MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK); 
    return(INIT_PARAMETERS_INCORRECT);
 
    }
    
-      if(SaiPeloHilo==true && HiLoTempoReal == true) 
+      if(SaiPeloIndicador==true && IndicadorTempoReal == true) 
     {
-   Alert("Se o HiLo está em tempo real, não dá pra sair pelo HiLo, chuva de ordens");    
+   MessageBox("Se o HiLo está em tempo real, não dá pra sair pelo HiLo, chuva de ordens","Erro de Inicialização",MB_OK);   
    return(INIT_PARAMETERS_INCORRECT);
 
    }
    
-   
-   
-   /*
-   if(MinutoDeInicio >59 || MinutoDeFim > 59 || HoraDeInicio >17 || HoraDeFim >17 || HoraDeInicio <9 || HoraDeFim <9 ) 
-    {
-   Alert("Coloca a Hora Direito, lerdo.");
-   return(INIT_PARAMETERS_INCORRECT);
 
-   }
-   */
    
     if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || Periodos <=1 ) 
      {
-   return(INIT_PARAMETERS_INCORRECT);
-   Alert("Erro nos parametros de grana ou técnicos");
+
+   MessageBox("Erro nos parametros de grana ou técnicos","Erro de Inicialização",MB_OK);     
+      return(INIT_PARAMETERS_INCORRECT);
    }
    
-   Print("HiLo de início: ",Mudanca);
+    if(Usa_Hilo == true && Usa_PSar == true) 
+     {
+
+   MessageBox("Ainda não fazemos 2 indicadores juntos","Erro de Inicialização",MB_OK);     
+      return(INIT_PARAMETERS_INCORRECT);
+   }
+
+   if(Usa_Hilo == true)     Print("HiLo de início: ",Mudanca);
+   if(Usa_PSar == true)     Print("PSAR de início: ",CondicaoPsar);
    
    Comment("Carregando...");
-   Cria_Botao_Abortar();
+   
+
+   ArrumaMinutos();
 
    return(0);
-
-   
 }
 
+void ArrumaMinutos ()
+{
 
+   if(MinutoDeFim == 59) 
+   {
+   MinutoDeFimMenos1 = 58;
+   }
+    else 
+    {
+    MinutoDeFimMenos1 = MinutoDeFim; 
+    } //Tentativa de sanar os erros de teste.
+    
+   HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFimMenos1,2,'0');
+   HorarioFimMais1 = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim+1,2,'0');
+   Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1:",HorarioFimMais1 );
+}
 
 
 void OnTradeTransaction(const MqlTradeTransaction& trans,
@@ -190,7 +212,6 @@ for(uint i=0;i<total;i++)
 
 void OnTimer()
 {
-
 IniciaDia();
 
 if(Operacoes>1) Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorCompra)+" - TP: "+DoubleToString(TakeProfitValorCompra)+" TS: "+DoubleToString(TS_ValorCompra));
@@ -198,8 +219,6 @@ if(Operacoes<1)Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorVend
 if(Operacoes==0) 
 {
 Comment(Descricao_Robo+" - Nenhuma trade ativa");
-
-
 }
 Botao_Abortar();
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
@@ -223,11 +242,11 @@ AtualizaLinhas();
 
 DetectaNovaBarra();
 
+   if(IndicadorTempoReal == true && Usa_Hilo == true)      HiLo();
+   if(IndicadorTempoReal == true && Usa_PSar == true)      PSar();
 
-   if(HiLoTempoReal == true)      HiLo();
-
-/* ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
 if(ZerarFinalDoDia == true) ZerarODia();
+/* ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
    else
    {
    
@@ -241,7 +260,7 @@ if(ZerarFinalDoDia == true) ZerarODia();
    }
 */
 
-ZerarODia();
+//ZerarODia();
 
 
  }
@@ -264,8 +283,8 @@ void OnChartEvent(const int id,
       //--- Se você clicar sobre o objeto com o nome buttonID 
       if(clickedChartObject=="BTN_ABORTAR") 
         { 
-         if(Operacoes>0)  VendaHiLoStop(" Abortado pelo botão");
-         if(Operacoes<0)  CompraHiLoStop(" Abortado pelo botão");   
+         if(Operacoes>0)  VendaStop(" Abortado pelo botão");
+         if(Operacoes<0)  CompraStop(" Abortado pelo botão");   
          //--- Estado do botão - pressionado ou não 
          bool selected=ObjectGetInteger(0,"BTN_ABORTAR",OBJPROP_STATE); 
          //--- registrar uma mensagem de depuração 

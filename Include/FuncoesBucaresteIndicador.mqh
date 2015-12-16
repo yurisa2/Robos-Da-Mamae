@@ -637,8 +637,8 @@ void IniciaDia ()
         SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         
-        Print("Indicador HiLo inicio do dia: ",Mudanca);
-        
+        if(Usa_Hilo == true) Print("Indicador HiLo inicio do dia: ",Mudanca);
+        if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Mudanca);        
         liquidez_inicio = conta.Equity();
         }
 Sleep(1000);

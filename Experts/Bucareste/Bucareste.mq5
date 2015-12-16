@@ -91,7 +91,7 @@ int OnInit()
    MessageBox("Um deles c te que usar né amigão...","Erro de Inicialização",MB_OK);   
    return(INIT_PARAMETERS_INCORRECT);
    }
-    if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || Periodos <=1 ) 
+    if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || (Usa_Hilo == true && Periodos <=1) ) 
      {
 
    MessageBox("Erro nos parametros de grana ou técnicos","Erro de Inicialização",MB_OK);     

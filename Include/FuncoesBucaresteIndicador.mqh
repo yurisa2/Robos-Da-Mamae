@@ -107,59 +107,42 @@ double liquidez_inicio=0;
 
 //////////////////////////////////// Funcoes
 
-
-
-
-
-
-
-
 ///////////////// COMPRA
 
 void CompraIndicador (string Desc)
-{
-
-Print(Descricao_Robo+" "+Desc);
-
-
-if(Operacoes<0 && SaiPeloIndicador==true)
-{
-MontarRequisicao(ORDER_TYPE_BUY,Desc);
-}
-
-if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia)
-{
-MontarRequisicao(ORDER_TYPE_BUY,Desc);
-}
-
-}
+      {
+      Print(Descricao_Robo+" "+Desc);
+      if(Operacoes<0 && SaiPeloIndicador==true)
+         {
+         MontarRequisicao(ORDER_TYPE_BUY,Desc);
+         }
+      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia)
+         {
+         MontarRequisicao(ORDER_TYPE_BUY,Desc);
+         }
+      }
 
 //////////////////////////
 
 ///////////// Venda
 void VendaIndicador (string Desc)
-{
-
-Print(Descricao_Robo+" "+Desc);
-
-if(Operacoes>0 && SaiPeloIndicador==true) 
-{
-MontarRequisicao(ORDER_TYPE_SELL,Desc);
-}
-
-if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia) 
-{
-MontarRequisicao(ORDER_TYPE_SELL,Desc);
-}
-
-}
+      {
+      Print(Descricao_Robo+" "+Desc);
+      if(Operacoes>0 && SaiPeloIndicador==true) 
+         {
+         MontarRequisicao(ORDER_TYPE_SELL,Desc);
+         }
+      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia) 
+         {
+         MontarRequisicao(ORDER_TYPE_SELL,Desc);
+         }
+      }
 
 
 /////////////////////// PEGA O VALOR DO HI LO 
 
 
 void CalculaHiLo ()
-
 {
 if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    {
@@ -179,17 +162,6 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
    int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
 
-//   Print("Indicador do Hilo: ;",_ma1[0],"; | Media Max(NMax): ;",NormalizeDouble(NMax[0],2),"; | Media Min(NMin): ;",NormalizeDouble(NMin[0],2),"; | Preco: ;",daotick(),"; | Valor do HiLo: ;",NormalizeDouble(ValorHilo[0],2));
-   
-   
- //  if(_ma1[0]==NMin[0]) Print("Compra");
- //  if(_ma1[0]==NMax[0]) Print("Vende");
-   
-                   
-                    //Print(_ma1[i]);
-                    
-
-                    
                     if(Mudanca!=_ma1[0]) 
                     {
                     //Print("Mudou Hein");
@@ -197,13 +169,8 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     DeuTakeProfit = false;                   
                     Ordem = false;
                     }
-                    
-//   Print("Operacoes: ",Operacoes);
    Mudanca = _ma1[0];
-   
    Mudou = 0;
-//     if(Debug==true) Print("Indicador do Hilo: ",_ma1[0]," | Media Max(NMax): ",NMax[0]," | Media Min(NMin): ",NMin[0]);
-
    }   //FIM DO IF TaDentroDoHorario
 }
 
@@ -250,12 +217,9 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     CompraIndicador("Compra por HiLo");
                     Ordem = true;
                     }
-                      
                     }
-                    
-//   Print("Operacoes: ",Operacoes);
+
    Mudanca = _ma1[0];
-   
    Mudou = 0;
 
    }   //FIM DO IF TaDentroDoHorario
@@ -291,12 +255,10 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    Mudou = 0;
 
    }   //FIM DO IF TaDentroDoHorario
-
 }
 
 void PSar ()
 {
-
 if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    {
    double PSar_Array[];
@@ -329,8 +291,6 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     }
                       
                     }
-                    
-//   Print("Operacoes: ",Operacoes);
    Mudanca = CondicaoPsar;
    Mudou = 0;
 
@@ -339,14 +299,9 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
 }
 
 //////////////////////////////////
-
-
-
-
 ////////////////////////// Calcula STOPS
 
 void CalculaStops ()
-
 {
 string DeclaraStops = "";
 StopLossValorCompra =-9999999999;
@@ -367,8 +322,6 @@ TakeProfitValorVenda = -999999999;
               if(Operacoes>1) DeclaraStops = DeclaraStops +" "+"SL Compra: "+DoubleToString(StopLossValorCompra);
               if(Operacoes<1) DeclaraStops = DeclaraStops +" "+"SL Venda: "+DoubleToString(StopLossValorVenda);                
              }
-             
-             
            if(TakeProfit==0)
               {
               TakeProfitValorVenda = NULL;
@@ -391,11 +344,8 @@ TakeProfitValorVenda = -999999999;
 
 void StopLossCompra ()
 {
-
-
  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes >0 && StopLoss != 0)
    {
-   
       if(daotick()<=StopLossValorCompra)
         {
          Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
@@ -403,12 +353,8 @@ void StopLossCompra ()
 
          VendaStop("Venda SL: "+DoubleToString(daotick(),2));
          DeuStopLoss = true;
-         
         }
-   
    }
-
-
 }
 
 
@@ -427,10 +373,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && 
          DeuStopLoss = true;
          CompraStop("Compra SL: "+DoubleToString(daotick(),2));
         }
-   
    }
-
-
 }
 //////////////////////////////////////////////
 
@@ -465,8 +408,6 @@ void TakeProfitVenda ()
    }
 }
 //////////////////////////////////////////////
-
-
 ///////////// Venda Do Stop
 void VendaStop (string Desc)
 {
@@ -777,3 +718,18 @@ void Botao_Abortar ()                // prioridade para clicar no mouse
 //--- sucesso na execução 
 }
 
+void ArrumaMinutos ()
+{
+   if(MinutoDeFim == 59) 
+   {
+   MinutoDeFimMenos1 = 58;
+   }
+    else 
+    {
+    MinutoDeFimMenos1 = MinutoDeFim; 
+    } //Tentativa de sanar os erros de teste.
+    
+   HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFimMenos1,2,'0');
+   HorarioFimMais1 = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim+1,2,'0');
+   Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1:",HorarioFimMais1 );
+}

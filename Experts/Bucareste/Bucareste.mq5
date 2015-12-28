@@ -39,31 +39,35 @@ int OnInit()
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
    MessageBox("Comece a partir de 09:01","Erro de Inicialização",MB_OK);
+   Print("Comece a partir de 09:01","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
    
-   if(Trailing_stop > TakeProfit)
+   if(Trailing_stop > TakeProfit && TakeProfit>0)
    {
    MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização",MB_OK);
+   Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);  
-   
    }
    
    if(HoraDeInicio>HoraDeFim) 
    {
    MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK);
+   Print("Hora de início depois da Hora de Fim","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
    
    if(Usa_PSar == true && Periodos>0) 
    {
    MessageBox("Psar Nao Usa Periodos","Erro de Inicialização",MB_OK);
+   Print("Psar Nao Usa Periodos","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
    
    if(Usa_Hilo == true && (PSAR_Max_Step > 0 || PSAR_Step >0))
    {
    MessageBox("HiLo Nao Usar Steps","Erro de Inicialização",MB_OK);
+   Print("HiLo Nao Usar Steps","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
 
@@ -71,37 +75,42 @@ int OnInit()
    if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) 
     {
    MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK); 
+   Print("Hora de início depois da Hora de Fim","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
 
    }
    
    if(SaiPeloIndicador==true && IndicadorTempoReal == true) 
     {
-   MessageBox("Se o HiLo está em tempo real, não dá pra sair pelo HiLo, chuva de ordens","Erro de Inicialização",MB_OK);   
+   MessageBox("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização",MB_OK);
+   Print("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
    
    if(HoraDeInicio == HoraDeFim && (MinutoDeFim-MinutoDeInicio<10))
     {
-   MessageBox("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização",MB_OK);   
+   MessageBox("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização",MB_OK);
+   Print("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
    if(Usa_PSar == false && Usa_Hilo == false)
     {
-   MessageBox("Um deles c te que usar né amigão...","Erro de Inicialização",MB_OK);   
+   MessageBox("Um dos indicadores c te que usar né amigão...","Erro de Inicialização",MB_OK);
+   Print("Um dos indicadores c te que usar né amigão...","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
     if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || (Usa_Hilo == true && Periodos <=1) ) 
      {
-
-   MessageBox("Erro nos parametros de grana ou técnicos","Erro de Inicialização",MB_OK);     
-      return(INIT_PARAMETERS_INCORRECT);
+   MessageBox("Erro nos parametros de grana ou técnicos","Erro de Inicialização",MB_OK); 
+   Print("Erro nos parametros de grana ou técnicos","Erro de Inicialização");
+   return(INIT_PARAMETERS_INCORRECT);
    }
    
     if(Usa_Hilo == true && Usa_PSar == true) 
      {
 
    MessageBox("Ainda não fazemos 2 indicadores juntos","Erro de Inicialização",MB_OK);     
+   Print("Ainda não fazemos 2 indicadores juntos","Erro de Inicialização");
       return(INIT_PARAMETERS_INCORRECT);
    }
 
@@ -109,30 +118,11 @@ int OnInit()
    if(Usa_PSar == true)     Print("PSAR de início: ",CondicaoPsar);
    
    Comment("Carregando...");
-   
 
    ArrumaMinutos();
 
    return(0);
 }
-
-void ArrumaMinutos ()
-{
-
-   if(MinutoDeFim == 59) 
-   {
-   MinutoDeFimMenos1 = 58;
-   }
-    else 
-    {
-    MinutoDeFimMenos1 = MinutoDeFim; 
-    } //Tentativa de sanar os erros de teste.
-    
-   HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFimMenos1,2,'0');
-   HorarioFimMais1 = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim+1,2,'0');
-   Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1:",HorarioFimMais1 );
-}
-
 
 void OnTradeTransaction(const MqlTradeTransaction& trans,
                         const MqlTradeRequest& request,
@@ -243,9 +233,9 @@ IniciaDia();
 if(Operacoes>1) Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorCompra)+" - TP: "+DoubleToString(TakeProfitValorCompra)+" TS: "+DoubleToString(TS_ValorCompra));
 if(Operacoes<1)Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorVenda)+" - TP: "+DoubleToString(TakeProfitValorVenda)+" TS: "+DoubleToString(TS_ValorVenda));
 if(Operacoes==0) 
-{
-Comment(Descricao_Robo+" - Nenhuma trade ativa");
-}
+   {
+   Comment(Descricao_Robo+" - Nenhuma trade ativa");
+   }
 Botao_Abortar();
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
 

@@ -5,7 +5,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.25"
+#property version   "1.26"
 #include <basico.mqh>
 
 
@@ -18,6 +18,7 @@ input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
 
 input bool Usa_Hilo = 1;
 input bool Usa_PSar = 0;
+input bool Usa_Fractal = 0;
 input int Periodos =  4;
 input double PSAR_Step = 0.02;
 input double PSAR_Max_Step = 0.2;
@@ -99,6 +100,7 @@ int OperacoesFeitas = 0;
 
 int HandleGHL;
 int HandlePSar;
+int HandleFrac;
 int CondicaoPsar;
 
 double liquidez_inicio=0;
@@ -297,6 +299,58 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    }   //FIM DO IF TaDentroDoHorario
 
 }
+
+//////////////////Calcula Fractals
+
+
+void CalculaFractal ()
+{
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+   {
+   
+   double _Fractal1[];
+   double _Fractal2[];
+
+   ArraySetAsSeries(_Fractal1, true);
+   ArraySetAsSeries(_Fractal2, true);
+
+   int copied=CopyBuffer(HandleFrac,0,0,100,_Fractal1);
+   int copied2=CopyBuffer(HandleFrac,1,0,100,_Fractal2);
+
+
+for(int x=0;x<3;x++)
+       {
+           double A1 = _Fractal1[x];
+           if (A1!=EMPTY_VALUE) Print("Venda ["+IntegerToString(x)+"] = " + DoubleToString(A1));
+            //else Print("A1 ["+IntegerToString(x)+"] = EMPTY_VALUE");
+       }
+
+for(int x=0;x<3;x++)
+       {
+           double A1 = _Fractal2[x];
+           if (A1!=EMPTY_VALUE) Print("Compra ["+IntegerToString(x)+"] = " + DoubleToString(A1));
+            //else Print("A1 ["+IntegerToString(x)+"] = EMPTY_VALUE");
+       }
+
+/*
+                    if(Mudanca!=_Fractal1[0]) 
+                    {
+                    //Print("Mudou Hein");
+                    DeuStopLoss = false;
+                    DeuTakeProfit = false;                   
+                    Ordem = false;
+                    }
+   Mudanca = _Fractal[0];
+   Mudou = 0;
+   
+*/
+
+
+   }   //FIM DO IF TaDentroDoHorario
+}
+
+//////////////////////
+
 
 //////////////////////////////////
 ////////////////////////// Calcula STOPS
@@ -538,7 +592,7 @@ void TS ()
 void DetectaNovaBarra ()
 {
 //---
-   int period_seconds=PeriodSeconds(_Period);                     // Number of seconds in current chart period
+   int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
    datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
    if(grafico_atual.isNewBar(new_time)) OnNewBar();
 }
@@ -546,6 +600,7 @@ void OnNewBar()
 {
    if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
    if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
+   if(IndicadorTempoReal == false && Usa_Fractal == true)      CalculaFractal();   
 }
 
 void IniciaDia ()

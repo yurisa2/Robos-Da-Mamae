@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.25"
+#property version   "1.26"
 
 #include <FuncoesBucaresteIndicador.mqh>
 
@@ -15,16 +15,17 @@
 
 int OnInit()
   {
-   CalculaHiLo();
-   CalculaPSar();
+   if(Usa_Hilo == true) CalculaHiLo();
+   if(Usa_PSar == true) CalculaPSar();
    Sleep(500);
    
    ObjectsDeleteAll(0,0,-1);
   
    EventSetMillisecondTimer(500);
 
-   HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
-   HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
+   if(Usa_Hilo == true) HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
+   if(Usa_PSar == true) HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
+   if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
 
 
    TimeMagic =MathRand();
@@ -32,7 +33,8 @@ int OnInit()
    
 
    if(Usa_Hilo == true)  ChartIndicatorAdd(0,0,HandleGHL);
-   if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);   
+   if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);
+   if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);   
    
    Print("Liquidez da conta: ",conta.Equity());
    
@@ -93,7 +95,7 @@ int OnInit()
    Print("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
-   if(Usa_PSar == false && Usa_Hilo == false)
+   if(Usa_PSar == false && Usa_Hilo == false && Usa_Fractal== false)
     {
    MessageBox("Um dos indicadores c te que usar né amigão...","Erro de Inicialização",MB_OK);
    Print("Um dos indicadores c te que usar né amigão...","Erro de Inicialização");

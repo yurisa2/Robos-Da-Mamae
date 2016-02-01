@@ -6,8 +6,8 @@
 #property copyright "Copyright 2016, MetaQuotes Software Corp."
 #property link      "https://www.mql5.com"
 
-int Handle_Prop_Media_Alta = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMMA,PRICE_HIGH);
-int Handle_Prop_Media_Baixa = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMMA,PRICE_LOW);
+int Handle_Prop_Media_Alta = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_HIGH);
+int Handle_Prop_Media_Baixa = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_LOW);
 
 
 double Prop_Delta ()
@@ -68,3 +68,42 @@ double   Prop_Calc_TP = Prop_TakeProfit * Prop_Delta();
              }             
              Print(DeclaraStops);
 }
+
+void CalculaStops ()
+{
+string DeclaraStops = "";
+StopLossValorCompra =-9999999999;
+TakeProfitValorCompra = 999999999;
+StopLossValorVenda =99999999999;
+TakeProfitValorVenda = -999999999;
+
+           if(StopLoss==0)
+              {
+              StopLossValorCompra = NULL;
+              StopLossValorVenda = NULL;
+              }
+           else
+             {
+              StopLossValorVenda = PrecoVenda+StopLoss;
+              StopLossValorCompra = PrecoCompra-StopLoss;
+              //Print(Descricao_Robo+" "+"SL Compra: ",StopLossValorCompra," SL Venda: ",StopLossValorVenda);
+              if(Operacoes>1) DeclaraStops = DeclaraStops +" "+"SL Compra: "+DoubleToString(StopLossValorCompra);
+              if(Operacoes<1) DeclaraStops = DeclaraStops +" "+"SL Venda: "+DoubleToString(StopLossValorVenda);                
+             }
+           if(TakeProfit==0)
+              {
+              TakeProfitValorVenda = NULL;
+              TakeProfitValorCompra = NULL;
+              }
+           else
+             {
+              TakeProfitValorVenda = PrecoVenda-TakeProfit;
+              TakeProfitValorCompra = PrecoCompra+TakeProfit;
+              //Print(Descricao_Robo+" "+"TP Compra: ",TakeProfitValorCompra," TP Venda: ",TakeProfitValorVenda);   
+              if(Operacoes>1) DeclaraStops = DeclaraStops +" "+"TP Compra: "+DoubleToString(TakeProfitValorCompra);
+              if(Operacoes<1) DeclaraStops = DeclaraStops +" "+"TP Venda: "+DoubleToString(TakeProfitValorVenda);           
+             }             
+             Print(DeclaraStops);
+
+}
+//////////////////////////////////////////////////////////////////////////

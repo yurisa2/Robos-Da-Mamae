@@ -39,7 +39,8 @@ input bool Usa_PSar = 0;                                                   //Usa
 input double PSAR_Step = 0;                                             //Parabolic SAR Step (0.02)
 input double PSAR_Max_Step = 0;                                          //Parabolic SAR Max Step (0.2)
 
-input string Limites = "-------------------------------------";
+input string Limites_Fixos = "-------------------------------------";
+input bool   Usa_Fixos = true;                                             //Usar Limites Fixos
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
 input double MoverSL = 0;                                                  //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
 input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
@@ -48,7 +49,16 @@ input double Trailing_stop =0;                                             //Tra
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 
 
- 
+input string Limites_Proporcionais  = "-------------------------------------";
+input bool     Usa_Prop = true;                                                //Usar Limites Proporcionais
+input int      Prop_Periodos = 3;                                           //Períodos do cálculo proporcional (SMMA)
+input double   Prop_StopLoss = 0.7;                                        //StopLoss: Multiplicador do Delta (0 desliga)
+input double   Prop_MoverSL = 0;                                                  //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
+input double   Prop_PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
+input double   Prop_TakeProfit = 1;                                       //TakeProfit: Multiplicador do Delta (0 desliga)
+input double   Prop_Trailing_stop =0;                                    //Trailing Stop: Multiplicador do Delta (0 desliga)
+input double   Prop_Limite_Minimo = 0;                                  //Limite Mínimo para operar
+
 
 int Contador_SLMOVEL = 0;    
 
@@ -213,7 +223,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     Ordem = false;
                       
                       
-                    if(Mudanca==1 && Ordem==false) 
+                    if(Mudanca==1 && Ordem==false && Prop_Delta() > Prop_Limite_Minimo) 
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -221,7 +231,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     Ordem = true;
                     }
                     
-                    if(Mudanca==-1 && Ordem==false) 
+                    if(Mudanca==-1 && Ordem==false && Prop_Delta() > Prop_Limite_Minimo) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
                     CompraIndicador("Compra por HiLo");
@@ -509,7 +519,8 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          TS_ValorCompra = 0;
          OperacoesFeitas++;
          
-         CalculaStops();
+         if(Usa_Fixos == true) CalculaStops();
+         if(Usa_Prop == true) Stops_Proporcional();
 
          MqlTradeRequest Req;     
          MqlTradeResult Res;     
@@ -606,11 +617,11 @@ void DetectaNovaBarra ()
 }
 void OnNewBar()
 {
-//   if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
-//   if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
+   if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
+   if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
 //   if(IndicadorTempoReal == false && Usa_Fractal == true)      CalculaFractal();   
 
-Print("Tendencia HiLo: ",DevolveHiLo());
+//Print("Tendencia HiLo: ",DevolveHiLo());
 
 }
 

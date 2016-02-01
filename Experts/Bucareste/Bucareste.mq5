@@ -1,5 +1,5 @@
 //+------------------------------------------------------------------+
-//|                                            BenderDefinitivo1.mq5 |
+//|                                            Bucareste, o fodao... |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
@@ -10,6 +10,7 @@
 
 #include <FuncoesBucaresteIndicador.mqh>
 #include <HiLo.mqh>
+#include <Proporcional.mqh>
 
 //int Segundos = PeriodSeconds(TimeFrame);
 
@@ -124,6 +125,15 @@ int OnInit()
    Print("PontoDeMudancaSL > MoverSL"," - Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
+   
+   
+      if((Usa_Prop == true && Usa_Fixos == true) ||(Usa_Prop == false && Usa_Fixos == false)) 
+     {
+   MessageBox("Escolha o timo de limite novamente.","Erro de Inicialização",MB_OK);     
+   Print("Escolha o timo de limite novamente."," - Erro de Inicialização");
+   return(INIT_PARAMETERS_INCORRECT);
+   }
+ 
 
 
    if(Usa_Hilo == true)     Print("HiLo de início: ",Mudanca);

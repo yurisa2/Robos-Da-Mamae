@@ -5,162 +5,8 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.27"
-#include <basico.mqh>
-
-/////////////////////////////////////// Inputs
-
-input string Parametros_Gerais = "-------------------------------------"; //Parametros Gerais
-input int Lotes = 1;                                                      //Volume negociado
-input int HoraDeInicio = 9;                                                //Hora de Início
-input int MinutoDeInicio = 20;                                              //Minuto de Inicio
-input int HoraDeFim = 17;                                                  //Hora de Fim
-input int MinutoDeFim = 27;                                                //Minuto de Fim
-input int Limite_Operacoes = 9999;                                         //Limite de operações
-input double lucro_dia = 1000000;                                          //Lucro da Conta desde inicio da execução
-
-input bool   ZerarFinalDoDia = true;                                       //Encerra operações no final do dia (execução extendida)
-input string Descricao_Robo = "";                                          //Descrição para logs e mensagens
-input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;          //Tipo de ordem (teste)
-input bool OperacaoLogoDeCara = false;                                     //Opera assim que o horário liberar, sem virada de tendencia
-
-
-input string Indicadores = "-------------------------------------";
-input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
-input bool SaiPeloIndicador = true;                                        //Saida pelo indicador
-input bool IndicadorTempoReal = false;                                     //Indicador em tempo real
-
-input string Configs_HiLo = "-------------------------------------";
-input bool Usa_Hilo = 1;                                                   //Usar HiLo
-input int Periodos =  4;                                              //Periodos do HiLo
-
-input string Configs_PSAR = "-------------------------------------";
-input bool Usa_PSar = 0;                                                   //Usar Parabolic SAR
-input double PSAR_Step = 0;                                             //Parabolic SAR Step (0.02)
-input double PSAR_Max_Step = 0;                                          //Parabolic SAR Max Step (0.2)
-
-input string Limites_Fixos = "-------------------------------------";
-input bool   Usa_Fixos = true;                                             //Usar Limites Fixos
-input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
-input double MoverSL = 0;                                                  //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
-input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
-input double TakeProfit = 0;                                               //Take Profit (0 desliga)
-input double Trailing_stop =0;                                             //Trailing Stop (0 desliga)
-input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
-
-
-input string Limites_Proporcionais  = "-------------------------------------";
-input bool     Usa_Prop = true;                                                //Usar Limites Proporcionais
-input int      Prop_Periodos = 3;                                           //Períodos do cálculo proporcional (SMMA)
-input double   Prop_StopLoss = 0.7;                                        //StopLoss: Multiplicador do Delta (0 desliga)
-input double   Prop_MoverSL = 0;                                                  //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
-input double   Prop_PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
-input double   Prop_TakeProfit = 1;                                       //TakeProfit: Multiplicador do Delta (0 desliga)
-input double   Prop_Trailing_stop =0;                                    //Trailing Stop: Multiplicador do Delta (0 desliga)
-input double   Prop_Limite_Minimo = 0;                                  //Limite Mínimo para operar
-
-
-int Contador_SLMOVEL = 0;    
-
-
-
-string HorarioInicio = IntegerToString(HoraDeInicio,2,'0') + ":" + IntegerToString(MinutoDeInicio,2,'0');
-int MinutoDeFimMenos1;
-string HorarioFim;
-string HorarioFimMais1;
-
-
-
-////// Botão
-
-int broadcastEventID=5000; 
-
-///////////////////////////////// Variaveis
-
-datetime Agora;
-string DiaHoje ;
-
-double   Mudanca = 0;
-bool     Ordem = false;
-int      Operacoes = 0;
-
-bool     JaDeuFinal = false;
-bool     JaZerou = false;
-
-double StopLossValorCompra =-9999999999;
-double TakeProfitValorCompra = 999999999;
-double StopLossValorVenda =99999999999;
-double TakeProfitValorVenda = -999999999;
-double PrecoCompra = 0;
-double PrecoVenda = 0;
-bool   DeuTakeProfit = true;
-bool   DeuStopLoss = true;
-bool   PrimeiraOp = false;
-
-int Mudou = 0;
-
-int TimeMagic;
-bool DaResultado;
-double Acumulado = 0;
-uint num_ordem_tiquete;
-datetime Data_Hoje;
-
-
-double TS_ValorCompra = 0;
-double TS_ValorVenda = 999999999;
-
-double TS_ValorVenda_atual = 9999999;
-double TS_ValorCompra_atual = 0;        
-
-string Desc_Req = "";
-
-int OperacoesFeitas = 0;
-
-int HandleGHL;
-int HandlePSar;
-int HandleFrac;
-int CondicaoPsar;
-
-double liquidez_inicio=0;
-
-///////////////////////////////////////////
 
 //////////////////////////////////// Funcoes
-
-///////////////// COMPRA
-
-void CompraIndicador (string Desc)
-      {
-      Print(Descricao_Robo+" "+Desc);
-      if(Operacoes<0 && SaiPeloIndicador==true)
-         {
-         MontarRequisicao(ORDER_TYPE_BUY,Desc);
-         }
-      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia)
-         {
-         MontarRequisicao(ORDER_TYPE_BUY,Desc);
-         }
-      }
-
-//////////////////////////
-
-///////////// Venda
-void VendaIndicador (string Desc)
-      {
-      Print(Descricao_Robo+" "+Desc);
-      if(Operacoes>0 && SaiPeloIndicador==true) 
-         {
-         MontarRequisicao(ORDER_TYPE_SELL,Desc);
-         }
-      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia) 
-         {
-         MontarRequisicao(ORDER_TYPE_SELL,Desc);
-         }
-      }
-
-
-/////////////////////// PEGA O VALOR DO HI LO 
-
 
 void CalculaHiLo ()
 {
@@ -373,44 +219,7 @@ for(int x=0;x<3;x++)
 //////////////////////////////////
 ////////////////////////// Calcula STOPS
 
-void CalculaStops ()
-{
-string DeclaraStops = "";
-StopLossValorCompra =-9999999999;
-TakeProfitValorCompra = 999999999;
-StopLossValorVenda =99999999999;
-TakeProfitValorVenda = -999999999;
 
-           if(StopLoss==0)
-              {
-              StopLossValorCompra = NULL;
-              StopLossValorVenda = NULL;
-              }
-           else
-             {
-              StopLossValorVenda = PrecoVenda+StopLoss;
-              StopLossValorCompra = PrecoCompra-StopLoss;
-              //Print(Descricao_Robo+" "+"SL Compra: ",StopLossValorCompra," SL Venda: ",StopLossValorVenda);
-              if(Operacoes>1) DeclaraStops = DeclaraStops +" "+"SL Compra: "+DoubleToString(StopLossValorCompra);
-              if(Operacoes<1) DeclaraStops = DeclaraStops +" "+"SL Venda: "+DoubleToString(StopLossValorVenda);                
-             }
-           if(TakeProfit==0)
-              {
-              TakeProfitValorVenda = NULL;
-              TakeProfitValorCompra = NULL;
-              }
-           else
-             {
-              TakeProfitValorVenda = PrecoVenda-TakeProfit;
-              TakeProfitValorCompra = PrecoCompra+TakeProfit;
-              //Print(Descricao_Robo+" "+"TP Compra: ",TakeProfitValorCompra," TP Venda: ",TakeProfitValorVenda);   
-              if(Operacoes>1) DeclaraStops = DeclaraStops +" "+"TP Compra: "+DoubleToString(TakeProfitValorCompra);
-              if(Operacoes<1) DeclaraStops = DeclaraStops +" "+"TP Venda: "+DoubleToString(TakeProfitValorVenda);           
-             }             
-             Print(DeclaraStops);
-
-}
-//////////////////////////////////////////////////////////////////////////
 
 ////////////////////////// StopLoss   - Teste Bazaar
 
@@ -496,63 +305,7 @@ MontarRequisicao(ORDER_TYPE_BUY,Desc);
 }
 
 //////////////////////////// Primeira Operaçao
-/////////////////////////// Req de Operaçao
 
-void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
-   {
-         if(order_type==ORDER_TYPE_SELL) 
-         {
-            PrecoVenda = daotick();
-            Operacoes = Operacoes -1;
-         }
-         if(order_type==ORDER_TYPE_BUY)  
-         {
-            PrecoCompra = daotick();   
-            Operacoes = Operacoes +1;
-         }   
-            
-         StopLossValorCompra =-9999999999;
-         TakeProfitValorCompra = 999999999;
-         StopLossValorVenda =99999999999;
-         TakeProfitValorVenda = -999999999;
-         TS_ValorVenda = 99999999;
-         TS_ValorCompra = 0;
-         OperacoesFeitas++;
-         
-         if(Usa_Fixos == true) CalculaStops();
-         if(Usa_Prop == true) Stops_Proporcional();
-
-         MqlTradeRequest Req;     
-         MqlTradeResult Res;     
-         ZeroMemory(Req);     
-         ZeroMemory(Res);     
-         Req.symbol       = Symbol();
-         Req.volume       = Lotes;
-         Req.magic = TimeMagic;
-         Req.type_filling = TipoDeOrdem;                 
-         Req.action=TRADE_ACTION_DEAL; 
-         Req.type=order_type; 
-         Req.comment=Descricao_Robo+" "+comentario_req;     
-         Req.tp=0;
-         Req.sl=0;
-         
-               if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada |",comentario_req); 
-               else 
-                  {
-                  Print(Descricao_Robo+" Deu Pau, Verifique com pressao");
-                  SendNotification("ERRO GRAVE, VERIFIQUE: "+IntegerToString(GetLastError()));
-                  ExpertRemove();
-                  }
-
-         DaResultado = true;
-   ObjectsDeleteAll(0,0,-1);
-   CriaLinhaTS(0);
-   Cria_Botao_Abortar();
-   CriaLinhas();
-   AtualizaLinhas();
-   Print("Operacoes no fim da req: ",Operacoes);
-   }
-   /////////////////////////////////////////// Final da req.
    
    //////////////////////////////// Primeira Operaçao
    
@@ -662,66 +415,6 @@ void IniciaDia ()
 Sleep(1000);
 }
 
-///////////////////GRAFICOS 
-
-void CriaLinhas ()
-{
-if(Operacoes>0) ObjectCreate(0,"StopLossCompra",OBJ_HLINE,0,0,StopLossValorCompra);
-if(Operacoes<0) ObjectCreate(0,"StopLossVenda",OBJ_HLINE,0,0,StopLossValorVenda);
-if(Operacoes>0) ObjectCreate(0,"TakeProfitCompra",OBJ_HLINE,0,0,TakeProfitValorCompra);
-if(Operacoes<0) ObjectCreate(0,"TakeProfitVenda",OBJ_HLINE,0,0,TakeProfitValorVenda);
-
-}
-
-void CriaLinhaTS (double NivelTS)
-{
-ObjectCreate(0,"TS",OBJ_HLINE,0,0,NivelTS);
-}
-
-void AtualizaLinhas ()
-{
-if(Operacoes>0) ObjectSetInteger(0,"StopLossCompra",OBJPROP_STYLE,STYLE_DASHDOT); 
-if(Operacoes>0) ObjectSetInteger(0,"StopLossCompra",OBJPROP_COLOR,clrRed); 
-if(Operacoes>0) ObjectSetString(0,"StopLossCompra",OBJPROP_LEVELTEXT,"StopLoss: "+DoubleToString(StopLossValorCompra));
-if(Operacoes>0) ObjectSetString(0,"StopLossCompra",OBJPROP_TEXT,"StopLoss: "+DoubleToString(StopLossValorCompra));
-if(Operacoes>0) ObjectSetString(0,"StopLossCompra",OBJPROP_TOOLTIP,"StopLoss: "+DoubleToString(StopLossValorCompra));
-
-
-if(Operacoes<0) ObjectSetInteger(0,"StopLossVenda",OBJPROP_STYLE,STYLE_DASHDOT); 
-if(Operacoes<0) ObjectSetInteger(0,"StopLossVenda",OBJPROP_COLOR,clrRed); 
-if(Operacoes<0) ObjectSetString(0,"StopLossVenda",OBJPROP_LEVELTEXT,"StopLoss: "+DoubleToString(StopLossValorVenda));
-if(Operacoes<0) ObjectSetString(0,"StopLossVenda",OBJPROP_TEXT,"StopLoss: "+DoubleToString(StopLossValorVenda));
-if(Operacoes<0) ObjectSetString(0,"StopLossVenda",OBJPROP_TOOLTIP,"StopLoss: "+DoubleToString(StopLossValorVenda));
-
-
-if(Operacoes>0) ObjectSetInteger(0,"TakeProfitCompra",OBJPROP_STYLE,STYLE_DASHDOT); 
-if(Operacoes>0) ObjectSetInteger(0,"TakeProfitCompra",OBJPROP_COLOR,clrBlue); 
-if(Operacoes>0) ObjectSetString(0,"TakeProfitCompra",OBJPROP_LEVELTEXT,"TakeProfit: "+DoubleToString(TakeProfitValorCompra));
-if(Operacoes>0) ObjectSetString(0,"TakeProfitCompra",OBJPROP_TEXT,"TakeProfit: "+DoubleToString(TakeProfitValorCompra));
-if(Operacoes>0) ObjectSetString(0,"TakeProfitCompra",OBJPROP_TOOLTIP,"TakeProfit: "+DoubleToString(TakeProfitValorCompra));
-
-
-if(Operacoes<0) ObjectSetInteger(0,"TakeProfitVenda",OBJPROP_STYLE,STYLE_DASHDOT); 
-if(Operacoes<0) ObjectSetInteger(0,"TakeProfitVenda",OBJPROP_COLOR,clrBlue); 
-if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_LEVELTEXT,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
-if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_TEXT,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
-if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_TOOLTIP,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
-
-}
-
-void AtualizaLinhaTS (double NivelTS)
-{
-
-ObjectMove(0,"TS",0,0,NivelTS);
-ObjectSetInteger(0,"TS",OBJPROP_STYLE,STYLE_DASHDOT); 
-ObjectSetInteger(0,"TS",OBJPROP_COLOR,clrYellow); 
-ObjectSetString(0,"TS",OBJPROP_LEVELTEXT,"TS: "+DoubleToString(NivelTS));
-ObjectSetString(0,"TS",OBJPROP_TEXT,"TS: "+DoubleToString(NivelTS));
-ObjectSetString(0,"TS",OBJPROP_TOOLTIP,"TS: "+DoubleToString(NivelTS));
-}
-
-
-///////////////////// FIM DOS GRAFICOS
 
 
 ////////////////// Zerar o dia 
@@ -751,49 +444,6 @@ void ZerarODia ()
    Sleep(1000);
   }  
 
-/////////////////////
-void Cria_Botao_Abortar ()
-{
-//--- criar o botão 
-ObjectCreate(0,"BTN_ABORTAR",OBJ_BUTTON,0,0,0,0,0);
-Botao_Abortar();
-}
-
-void Botao_Abortar ()                // prioridade para clicar no mouse 
-  {
-//--- definir coordenadas do botão 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_XDISTANCE,150); 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_YDISTANCE,0); 
-//--- definir tamanho do botão 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_XSIZE,100); 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_YSIZE,18); 
-//--- determinar o canto do gráfico onde as coordenadas do ponto são definidas 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_CORNER,CORNER_LEFT_UPPER); 
-//--- definir o texto 
-   ObjectSetString(0,"BTN_ABORTAR",OBJPROP_TEXT,"!!!Aborta a Trade!!!"); 
-//--- definir o texto fonte 
-   ObjectSetString(0,"BTN_ABORTAR",OBJPROP_FONT,"Arial"); 
-//--- definir tamanho da fonte 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_FONTSIZE,8); 
-//--- definir a cor do texto 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_COLOR,clrWhite); 
-//--- definir a cor de fundo 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_BGCOLOR,clrRed); 
-//--- definir a cor da borda 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_BORDER_COLOR,clrBlack); 
-//--- exibir em primeiro plano (false) ou fundo (true) 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_BACK,false); 
-//--- set button state 
- //  ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_STATE,false); 
-//--- habilitar (true) ou desabilitar (false) o modo do movimento do botão com o mouse 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_SELECTABLE,false); 
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_SELECTED,false); 
-//--- ocultar (true) ou exibir (false) o nome do objeto gráfico na lista de objeto  
-   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_HIDDEN,false); 
-//--- definir a prioridade para receber o evento com um clique do mouse no gráfico 
-//   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_ZORDER,1); 
-//--- sucesso na execução 
-}
 
 void ArrumaMinutos ()
 {

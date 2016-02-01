@@ -6,8 +6,10 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-int VerificaInit ()
+ENUM_INIT_RETCODE VerificaInit ()
 {
+
+
 
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
@@ -103,6 +105,6 @@ int VerificaInit ()
    return(INIT_PARAMETERS_INCORRECT);
    }
  
-
+return INIT_SUCCEEDED;
 
 }

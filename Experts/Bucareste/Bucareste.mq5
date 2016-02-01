@@ -4,13 +4,21 @@
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property link      "http://www.sa2.com.br"
 
-#property link      "http://www.sa2.com.br/"
-#property version   "1.27"
+#property version   "1.28"
 
+#include <basico.mqh>
+#include <OnTrade.mqh>
+#include <Inputs_Vars.mqh>
 #include <FuncoesBucaresteIndicador.mqh>
 #include <HiLo.mqh>
-#include <Proporcional.mqh>
+#include <Stops.mqh>
+#include <Graficos.mqh>
+#include <MontarRequisicao.mqh>
+#include <VerificaInit.mqh>
+#include <Operacoes.mqh>
+
 
 //int Segundos = PeriodSeconds(TimeFrame);
 
@@ -40,101 +48,6 @@ int OnInit()
    
    Print("Liquidez da conta: ",conta.Equity());
    
-   if(HoraDeInicio==9 && MinutoDeInicio==0) 
-   {
-   MessageBox("Comece a partir de 09:01","Erro de Inicialização",MB_OK);
-   Print("Comece a partir de 09:01","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-   if(Trailing_stop > TakeProfit && TakeProfit>0)
-   {
-   MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização",MB_OK);
-   Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);  
-   }
-   
-   if(HoraDeInicio>HoraDeFim) 
-   {
-   MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK);
-   Print("Hora de início depois da Hora de Fim","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-   if(Usa_PSar == true && Periodos>0) 
-   {
-   MessageBox("Psar Nao Usa Periodos","Erro de Inicialização",MB_OK);
-   Print("Psar Nao Usa Periodos","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-   if(Usa_Hilo == true && (PSAR_Max_Step > 0 || PSAR_Step >0))
-   {
-   MessageBox("HiLo Nao Usar Steps","Erro de Inicialização",MB_OK);
-   Print("HiLo Nao Usar Steps","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-
-
-   if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) 
-    {
-   MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK); 
-   Print("Hora de início depois da Hora de Fim","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-
-   }
-   
-   if(SaiPeloIndicador==true && IndicadorTempoReal == true) 
-    {
-   MessageBox("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização",MB_OK);
-   Print("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-   if(HoraDeInicio == HoraDeFim && (MinutoDeFim-MinutoDeInicio<10))
-    {
-   MessageBox("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização",MB_OK);
-   Print("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   //if(Usa_PSar == false && Usa_Hilo == false && Usa_Fractal== false)
-   // {
-   //MessageBox("Um dos indicadores c te que usar né amigão...","Erro de Inicialização",MB_OK);
-   //Print("Um dos indicadores c te que usar né amigão...","Erro de Inicialização");
-   //return(INIT_PARAMETERS_INCORRECT);
-   //}
-    if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || (Usa_Hilo == true && Periodos <=1) ) 
-     {
-   MessageBox("Erro nos parametros de grana ou técnicos","Erro de Inicialização",MB_OK); 
-   Print("Erro nos parametros de grana ou técnicos","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-    if(Usa_Hilo == true && Usa_PSar == true) 
-     {
-
-   MessageBox("Ainda não fazemos 2 indicadores juntos","Erro de Inicialização",MB_OK);     
-   Print("Ainda não fazemos 2 indicadores juntos","Erro de Inicialização");
-      return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-   
-   if(PontoDeMudancaSL > MoverSL || (MoverSL==0 && PontoDeMudancaSL <0)) 
-     {
-   MessageBox("PontoDeMudancaSL > MoverSL ou Mover Desligado e PMSL menor que zero","Erro de Inicialização",MB_OK);     
-   Print("PontoDeMudancaSL > MoverSL"," - Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-   
-      if((Usa_Prop == true && Usa_Fixos == true) ||(Usa_Prop == false && Usa_Fixos == false)) 
-     {
-   MessageBox("Escolha o timo de limite novamente.","Erro de Inicialização",MB_OK);     
-   Print("Escolha o timo de limite novamente."," - Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
- 
-
 
    if(Usa_Hilo == true)     Print("HiLo de início: ",Mudanca);
    if(Usa_PSar == true)     Print("PSAR de início: ",CondicaoPsar);
@@ -143,110 +56,10 @@ int OnInit()
 
    ArrumaMinutos();
 
-   return(0);
+   return(VerificaInit());
 }
 
-void OnTradeTransaction(const MqlTradeTransaction& trans,
-                        const MqlTradeRequest& request,
-                        const MqlTradeResult& result)
-  {
- /*  
-   
-   Data_Hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+HorarioInicio+":00");
-//   Print("Data Hoje: ",Data_Hoje);
-   
-   
-   HistorySelect(Data_Hoje,TimeCurrent());
-   
-   
-   
-//--- create objects
 
-   uint     total=HistoryDealsTotal();
-   ulong    ticket=0;
-//--- for all deals
-
-for(uint i=0;i<total;i++)
-     {
-     ticket=HistoryDealGetTicket(i);
-     negocio.Ticket(ticket);             
-            
-            if(negocio.Magic() ==TimeMagic)
-             {
-   
-            num_ordem_tiquete=i;
-//            Print(Descricao_Robo+" Debug Ticket: ",ticket);
-         
-//            Print(Descricao_Robo+" Magic: ",negocio.Magic());
-              }
- 
- 
-            
-    }
-   
-      if((ticket=HistoryDealGetTicket(num_ordem_tiquete))>0 && DaResultado == true)
-        {
-         negocio.Ticket(ticket);
-         
-         if(negocio.Magic() ==TimeMagic)
-           {
-               DaResultado = false;
-               
-               if(negocio.DealType() == DEAL_TYPE_BUY)
-                  {
-                  Print(Descricao_Robo+" É COMPRA");
-//                  PrecoCompra = negocio.Price();
-//                  CalculaStops();
-                  num_ordem_tiquete=0;
-                  }
-               
-               if(negocio.DealType() == DEAL_TYPE_SELL)
-                  {
-                  Print(Descricao_Robo+" É VENDA");
-//                  PrecoVenda = negocio.Price();
-//                  CalculaStops(); 
-                  num_ordem_tiquete=0;
-                  }
-                  
-                
-                Print(Descricao_Robo);
-                Print(Descricao_Robo+" "+"Volume: ",negocio.Volume());
-                Print(Descricao_Robo+" "+"Preço: ",negocio.Price());
-                Print(Descricao_Robo+" "+"Time: ",negocio.Time());
-                Print(Descricao_Robo+" "+"Symbol: ",negocio.Symbol());
-                Print(Descricao_Robo+" "+"Type: ",EnumToString(negocio.DealType()));
-                Print(Descricao_Robo+" "+"Entry: ",EnumToString(negocio.Entry()));
-                Print(Descricao_Robo+" "+"Profit: ",negocio.Profit());
-                Print(Descricao_Robo+" "+"Magic: ",negocio.Magic());
-                Print(Descricao_Robo+" "+"Comentário: ", negocio.Comment());
-                
-                
-        string  BodyEmail =
-        
-                 Descricao_Robo + 
-                 + "\r\nVolume: " + DoubleToString(NormalizeDouble(negocio.Volume(),2)) + 
-                 + "\r\nPreço: " + DoubleToString(NormalizeDouble(negocio.Price(),2)) + 
-                 + "\r\nTime: " + TimeToString(negocio.Time(),TIME_MINUTES) + 
-                 + "\r\nSimbolo: " + negocio.Symbol() + 
-                 + "\r\nTipo: " + EnumToString(negocio.DealType()) + 
-                 + "\r\nEntrada: " + EnumToString(negocio.Entry()) + 
-                 + "\r\nLucro: " + DoubleToString(NormalizeDouble(negocio.Profit(),2)) + 
-                 + "\r\nMagic: " + IntegerToString(negocio.Magic()) + 
-                 + "\r\nComentário: " +  negocio.Comment();
-                
-                
-                SendMail("Relatório: "+Descricao_Robo,BodyEmail);
-                
-                //Acumulado = Acumulado + negocio.Profit();
-                //Print("\nAcumulado: ",Acumulado);
-
-           }   
-   
-     }
-//      }  //Bracket do FOR
-  
-    PARA DESLIGAR O SISTEMA DE E_MAILS */
-  }
 
 void OnTimer()
 {
@@ -308,49 +121,3 @@ void OnTick()
 
 
 }
-
-void OnChartEvent(const int id, 
-                  const long &lparam, 
-                  const double &dparam, 
-                  const string &sparam) 
-  { 
-//--- Verifique o evento pressionando um botão do mouse 
-   if(id==CHARTEVENT_OBJECT_CLICK) 
-     { 
-      string clickedChartObject=sparam; 
-      //--- Se você clicar sobre o objeto com o nome buttonID 
-      if(clickedChartObject=="BTN_ABORTAR") 
-        { 
-         if(Operacoes>0)  VendaStop(" Abortado pelo botão");
-         if(Operacoes<0)  CompraStop(" Abortado pelo botão");   
-         //--- Estado do botão - pressionado ou não 
-         bool selected=ObjectGetInteger(0,"BTN_ABORTAR",OBJPROP_STATE); 
-         //--- registrar uma mensagem de depuração 
-         //Print("Botão pressionado = ",selected);
-         
-          
-         int customEventID; // Número do evento personalizado para enviar 
-         string message;    // Mensagem a ser enviada no caso 
-         //--- Se o botão for pressionado 
-         if(selected) 
-           { 
-            message="Botão pressionado"; 
-            customEventID=CHARTEVENT_CUSTOM+1; 
-           } 
-         else // Botão não está pressionado 
-           { 
-            message="Botão não está pressionado"; 
-            customEventID=CHARTEVENT_CUSTOM+999; 
-           } 
-         //--- Enviar um evento personalizado "nosso" gráfico 
-         //EventChartCustom(0,customEventID-CHARTEVENT_CUSTOM,0,0,message); 
-         ///--- Envie uma mensagem para todos os gráficos abertos 
-         //BroadcastEvent(ChartID(),0,"Transmissão de mensagem"); 
-         //--- Depurar mensagem 
-         //Print("Enviar um evento com ID = ",customEventID); 
-        } 
-      ChartRedraw();// Redesenho forçado de todos os objetos de gráfico 
-     } 
-  
-
-  } 

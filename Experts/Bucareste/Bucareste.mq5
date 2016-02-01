@@ -6,9 +6,10 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 
 #property link      "http://www.sa2.com.br/"
-#property version   "1.26"
+#property version   "1.27"
 
 #include <FuncoesBucaresteIndicador.mqh>
+#include <HiLo.mqh>
 
 //int Segundos = PeriodSeconds(TimeFrame);
 
@@ -25,7 +26,7 @@ int OnInit()
 
    if(Usa_Hilo == true) HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
    if(Usa_PSar == true) HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
-   if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
+//   if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
 
 
    TimeMagic =MathRand();
@@ -34,7 +35,7 @@ int OnInit()
 
    if(Usa_Hilo == true)  ChartIndicatorAdd(0,0,HandleGHL);
    if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);
-   if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);   
+//   if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);   
    
    Print("Liquidez da conta: ",conta.Equity());
    
@@ -95,12 +96,12 @@ int OnInit()
    Print("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
-   if(Usa_PSar == false && Usa_Hilo == false && Usa_Fractal== false)
-    {
-   MessageBox("Um dos indicadores c te que usar né amigão...","Erro de Inicialização",MB_OK);
-   Print("Um dos indicadores c te que usar né amigão...","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
+   //if(Usa_PSar == false && Usa_Hilo == false && Usa_Fractal== false)
+   // {
+   //MessageBox("Um dos indicadores c te que usar né amigão...","Erro de Inicialização",MB_OK);
+   //Print("Um dos indicadores c te que usar né amigão...","Erro de Inicialização");
+   //return(INIT_PARAMETERS_INCORRECT);
+   //}
     if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || (Usa_Hilo == true && Periodos <=1) ) 
      {
    MessageBox("Erro nos parametros de grana ou técnicos","Erro de Inicialização",MB_OK); 
@@ -115,6 +116,15 @@ int OnInit()
    Print("Ainda não fazemos 2 indicadores juntos","Erro de Inicialização");
       return(INIT_PARAMETERS_INCORRECT);
    }
+   
+   
+   if(PontoDeMudancaSL > MoverSL || (MoverSL==0 && PontoDeMudancaSL <0)) 
+     {
+   MessageBox("PontoDeMudancaSL > MoverSL ou Mover Desligado e PMSL menor que zero","Erro de Inicialização",MB_OK);     
+   Print("PontoDeMudancaSL > MoverSL"," - Erro de Inicialização");
+   return(INIT_PARAMETERS_INCORRECT);
+   }
+
 
    if(Usa_Hilo == true)     Print("HiLo de início: ",Mudanca);
    if(Usa_PSar == true)     Print("PSAR de início: ",CondicaoPsar);
@@ -249,7 +259,7 @@ AtualizaLinhas();
 
 /////////////////////////////////////////////////////////
 /////////////////////// Funçoes de STOP
-
+         SLMovel();
          StopLossCompra();
          StopLossVenda();
          TakeProfitCompra();

@@ -5,52 +5,60 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-#property version   "1.26"
+#property version   "1.27"
 #include <basico.mqh>
-
 
 /////////////////////////////////////// Inputs
 
-input double lucro_dia = 1000000;
+input string Parametros_Gerais = "-------------------------------------"; //Parametros Gerais
+input int Lotes = 1;                                                      //Volume negociado
+input int HoraDeInicio = 9;                                                //Hora de Início
+input int MinutoDeInicio = 20;                                              //Minuto de Inicio
+input int HoraDeFim = 17;                                                  //Hora de Fim
+input int MinutoDeFim = 27;                                                //Minuto de Fim
+input int Limite_Operacoes = 9999;                                         //Limite de operações
+input double lucro_dia = 1000000;                                          //Lucro da Conta desde inicio da execução
 
-input int Lotes = 1;
+input bool   ZerarFinalDoDia = true;                                       //Encerra operações no final do dia (execução extendida)
+input string Descricao_Robo = "";                                          //Descrição para logs e mensagens
+input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;          //Tipo de ordem (teste)
+input bool OperacaoLogoDeCara = false;                                     //Opera assim que o horário liberar, sem virada de tendencia
+
+
+input string Indicadores = "-------------------------------------";
 input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
+input bool SaiPeloIndicador = true;                                        //Saida pelo indicador
+input bool IndicadorTempoReal = false;                                     //Indicador em tempo real
 
-input bool Usa_Hilo = 1;
-input bool Usa_PSar = 0;
-input bool Usa_Fractal = 0;
-input int Periodos =  4;
-input double PSAR_Step = 0.02;
-input double PSAR_Max_Step = 0.2;
+input string Configs_HiLo = "-------------------------------------";
+input bool Usa_Hilo = 1;                                                   //Usar HiLo
+input int Periodos =  4;                                              //Periodos do HiLo
 
-input double StopLoss = 0;
-input double TakeProfit = 0;
-input double Trailing_stop =0;
-input double Trailing_stop_start = 0;
+input string Configs_PSAR = "-------------------------------------";
+input bool Usa_PSar = 0;                                                   //Usar Parabolic SAR
+input double PSAR_Step = 0;                                             //Parabolic SAR Step (0.02)
+input double PSAR_Max_Step = 0;                                          //Parabolic SAR Max Step (0.2)
 
-//--- input bool  SaiPeloHilo = true;
-input bool SaiPeloIndicador = true;
-//--- input bool  HiLoTempoReal = false;
-input bool IndicadorTempoReal = false;
+input string Limites = "-------------------------------------";
+input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
+input double MoverSL = 0;                                                  //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
+input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
+input double TakeProfit = 0;                                               //Take Profit (0 desliga)
+input double Trailing_stop =0;                                             //Trailing Stop (0 desliga)
+input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 
 
-input int HoraDeInicio = 9;
-input int MinutoDeInicio = 1;
-input int HoraDeFim = 17;
-input int MinutoDeFim = 27;
+ 
 
-input int Limite_Operacoes = 9999;
+int Contador_SLMOVEL = 0;    
+
+
 
 string HorarioInicio = IntegerToString(HoraDeInicio,2,'0') + ":" + IntegerToString(MinutoDeInicio,2,'0');
 int MinutoDeFimMenos1;
 string HorarioFim;
 string HorarioFimMais1;
 
-input bool   ZerarFinalDoDia = true;
-
-input bool OperacaoLogoDeCara = false;
-input string Descricao_Robo = "";
-input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;
 
 
 ////// Botão
@@ -598,9 +606,12 @@ void DetectaNovaBarra ()
 }
 void OnNewBar()
 {
-   if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
-   if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
-   if(IndicadorTempoReal == false && Usa_Fractal == true)      CalculaFractal();   
+//   if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
+//   if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
+//   if(IndicadorTempoReal == false && Usa_Fractal == true)      CalculaFractal();   
+
+Print("Tendencia HiLo: ",DevolveHiLo());
+
 }
 
 void IniciaDia ()
@@ -787,4 +798,27 @@ void ArrumaMinutos ()
    HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFimMenos1,2,'0');
    HorarioFimMais1 = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim+1,2,'0');
    Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1:",HorarioFimMais1 );
+}
+
+
+void SLMovel ()
+{
+
+if(MoverSL !=0 && daotick() >= PrecoCompra + MoverSL &&  Operacoes > 0 && Contador_SLMOVEL==0)
+  {
+   StopLossValorCompra = PrecoCompra + PontoDeMudancaSL;
+   Contador_SLMOVEL++;
+   Print(Descricao_Robo+" | StopLoss Movido com sucesso, SL: "+DoubleToString(StopLossValorCompra));
+   ObjectMove(0,"StopLossCompra",0,0,StopLossValorCompra);
+  }
+
+if(MoverSL !=0 && daotick() <= PrecoVenda - MoverSL &&  Operacoes < 0 && Contador_SLMOVEL==0)
+  {
+   StopLossValorVenda = PrecoVenda - PontoDeMudancaSL;
+   Contador_SLMOVEL++;
+Print(Descricao_Robo+" | StopLoss Movido com sucesso, SL: "+DoubleToString(StopLossValorVenda));
+ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);
+  }
+
+
 }

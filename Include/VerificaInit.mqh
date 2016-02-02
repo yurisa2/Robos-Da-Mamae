@@ -104,6 +104,21 @@ ENUM_INIT_RETCODE VerificaInit ()
    Print("Escolha o timo de limite novamente."," - Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
+   
+   if(Prop_MoverSL > Prop_TakeProfit && Prop_TakeProfit >0)
+   {
+      MessageBox("Mover SL maior que TP.","Erro de Inicialização",MB_OK);     
+   Print("Mover SL maior que TP."," - Erro de Inicialização");
+   return(INIT_PARAMETERS_INCORRECT);
+   
+   }
+      if(Prop_Trailing_stop > Prop_TakeProfit && Prop_TakeProfit>0)
+   {
+   MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização",MB_OK);
+   Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização");
+   return(INIT_PARAMETERS_INCORRECT);  
+   }
+   
  
 return INIT_SUCCEEDED;
 

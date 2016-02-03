@@ -31,7 +31,11 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          OperacoesFeitas++;
          
          if(Usa_Fixos == true) CalculaStops();
-         if(Usa_Prop == true) Stops_Proporcional();
+         if(Usa_Prop == true) 
+         {
+         Stops_Proporcional();
+         Print("Delta do Proporcional: ",Prop_Delta());
+         }
 
          MqlTradeRequest Req;     
          MqlTradeResult Res;     

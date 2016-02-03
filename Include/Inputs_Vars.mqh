@@ -55,6 +55,7 @@ input double   Prop_MoverSL = 0;                                                
 input double   Prop_PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
 input double   Prop_TakeProfit = 1;                                       //TakeProfit: Multiplicador do Delta (0 desliga)
 input double   Prop_Trailing_stop =0;                                    //Trailing Stop: Multiplicador do Delta (0 desliga)
+input double   Prop_Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 input double   Prop_Limite_Minimo = 0;                                  //Limite Mínimo para operar
 
 
@@ -117,5 +118,7 @@ int HandleFrac;
 int CondicaoPsar;
 
 double liquidez_inicio=0;
+
+double Prop_MoverSL_Valor = 0;
 
 ///////////////////////////////////////////

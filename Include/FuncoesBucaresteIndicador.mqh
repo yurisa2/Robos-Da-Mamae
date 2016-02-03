@@ -221,89 +221,6 @@ for(int x=0;x<3;x++)
 
 
 
-////////////////////////// StopLoss   - Teste Bazaar
-
-void StopLossCompra ()
-{
- if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes >0 && StopLoss != 0)
-   {
-      if(daotick()<=StopLossValorCompra)
-        {
-         Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
-         Print(Descricao_Robo+" VENDA! ",Operacoes);
-
-         VendaStop("Venda SL: "+DoubleToString(daotick(),2));
-         DeuStopLoss = true;
-        }
-   }
-}
-
-
-/////////////////////////////////////////////////
-
-/////////////////// STOP LOSS VENDA
-
-void StopLossVenda ()
-{
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && StopLoss != 0)
-   {
-      if(daotick()>=StopLossValorVenda)
-        {
-         Print(Descricao_Robo+" Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
-         Print(Descricao_Robo+" COMPRA! ",Operacoes);
-         DeuStopLoss = true;
-         CompraStop("Compra SL: "+DoubleToString(daotick(),2));
-        }
-   }
-}
-//////////////////////////////////////////////
-
-/////////////////// Take Profit Compra
-
-void TakeProfitCompra ()
-{
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && TakeProfit != 0)
-   {
-      if(daotick()>TakeProfitValorCompra)
-        {
-         Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
-         VendaStop("Venda TP: "+DoubleToString(daotick(),2));
-         DeuTakeProfit = true;
-        }
-   }
-}
-//////////////////////////////////////////////
-
-/////////////////// Take Profit Venda
-
-void TakeProfitVenda ()
-{
- if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true  && DeuTakeProfit == false && Operacoes!=0 && Operacoes <0 && TakeProfit !=0)
-   {
-      if(daotick()<TakeProfitValorVenda)
-        {
-         Print(Descricao_Robo+" Deu TakeProfit VENDIDO | Compra: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
-         CompraStop("Compra TP "+DoubleToString(daotick(),2));
-         DeuTakeProfit = true;
-        }
-   }
-}
-//////////////////////////////////////////////
-///////////// Venda Do Stop
-void VendaStop (string Desc)
-{
-Print(Descricao_Robo+" "+Desc);
-MontarRequisicao(ORDER_TYPE_SELL,Desc);
-}
-///////////////////////////////
-
-/////////////////////////// Compra Hilo STOP
-void CompraStop (string Desc)
-{
-Print(Descricao_Robo+" "+Desc);
-MontarRequisicao(ORDER_TYPE_BUY,Desc);
-}
-
 //////////////////////////// Primeira Operaçao
 
    
@@ -325,41 +242,7 @@ MontarRequisicao(ORDER_TYPE_BUY,Desc);
 //////////////// Fim Primeira Operaçao
  
 ////////////// Avaliação do TS
-void TS ()
-   {
-      if(Operacoes>0 && Trailing_stop >0 && daotick() > PrecoCompra + Trailing_stop + Trailing_stop_start)
-        {
-        TS_ValorCompra_atual = daotick()-Trailing_stop;
-         if(TS_ValorCompra<TS_ValorCompra_atual)
-           {
-            TS_ValorCompra = TS_ValorCompra_atual;
-            AtualizaLinhaTS(TS_ValorCompra);
-           }
-        }    
-      if(Operacoes<0 && Trailing_stop >0&& daotick() < PrecoVenda - Trailing_stop - Trailing_stop_start)
-        {
-        TS_ValorVenda_atual = daotick()+Trailing_stop;  
-         if(TS_ValorVenda>TS_ValorVenda_atual)
-           {
-            TS_ValorVenda = TS_ValorVenda_atual;
-            AtualizaLinhaTS(TS_ValorVenda);
-           }
-        }
-  
-      if(Operacoes>0 && Trailing_stop >0 && daotick()<= TS_ValorCompra)      
-        {
-         VendaStop("Venda TrailingStop");
-         Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor daotick: ",daotick());
-         ObjectDelete(0,"TS");
-        }
-   
-      if(Operacoes<0 && Trailing_stop >0 && daotick()>= TS_ValorVenda)      
-        {
-         CompraStop("Compra TrailingStop");
-         Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor daotick: ",daotick());
-         ObjectDelete(0,"TS");
-        }   
-   }
+
 /////////////////////////////////
 void DetectaNovaBarra ()
 {
@@ -459,27 +342,4 @@ void ArrumaMinutos ()
    HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFimMenos1,2,'0');
    HorarioFimMais1 = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim+1,2,'0');
    Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1:",HorarioFimMais1 );
-}
-
-
-void SLMovel ()
-{
-
-if(MoverSL !=0 && daotick() >= PrecoCompra + MoverSL &&  Operacoes > 0 && Contador_SLMOVEL==0)
-  {
-   StopLossValorCompra = PrecoCompra + PontoDeMudancaSL;
-   Contador_SLMOVEL++;
-   Print(Descricao_Robo+" | StopLoss Movido com sucesso, SL: "+DoubleToString(StopLossValorCompra));
-   ObjectMove(0,"StopLossCompra",0,0,StopLossValorCompra);
-  }
-
-if(MoverSL !=0 && daotick() <= PrecoVenda - MoverSL &&  Operacoes < 0 && Contador_SLMOVEL==0)
-  {
-   StopLossValorVenda = PrecoVenda - PontoDeMudancaSL;
-   Contador_SLMOVEL++;
-Print(Descricao_Robo+" | StopLoss Movido com sucesso, SL: "+DoubleToString(StopLossValorVenda));
-ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);
-  }
-
-
 }

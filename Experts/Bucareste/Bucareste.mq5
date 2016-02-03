@@ -38,6 +38,9 @@ int OnInit()
 //   if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
 
 
+if(Usa_Prop == true) ChartIndicatorAdd(0,0,Handle_Prop_Media_Alta);
+if(Usa_Prop == true) ChartIndicatorAdd(0,0,Handle_Prop_Media_Baixa);
+
    TimeMagic =MathRand();
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
    
@@ -69,7 +72,7 @@ if(Operacoes>1) Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorCom
 if(Operacoes<1)Comment(Descricao_Robo+" - SL: "+DoubleToString(StopLossValorVenda)+" - TP: "+DoubleToString(TakeProfitValorVenda)+" TS: "+DoubleToString(TS_ValorVenda));
 if(Operacoes==0) 
    {
-   Comment(Descricao_Robo+" - Nenhuma trade ativa");
+   Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta()));
    }
 Botao_Abortar();
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
@@ -82,12 +85,23 @@ AtualizaLinhas();
 
 /////////////////////////////////////////////////////////
 /////////////////////// Funçoes de STOP
+         if(Usa_Fixos == true) 
+         {
+         TS();         
          SLMovel();
+         }
+        
+         if(Usa_Prop == true) 
+         {
+         Prop_TS();          
+         Prop_SLMovel();
+         }
+         
          StopLossCompra();
          StopLossVenda();
          TakeProfitCompra();
          TakeProfitVenda();
-         TS();
+
          
 /////////////////////////////////////////////////
 

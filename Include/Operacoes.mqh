@@ -39,4 +39,87 @@ void VendaIndicador (string Desc)
 
 
 
+////////////////////////// StopLoss   - Teste Bazaar
+
+void StopLossCompra ()
+{
+ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes >0 && (StopLoss != 0 || Prop_StopLoss !=0))
+   {
+      if(daotick()<=StopLossValorCompra)
+        {
+         Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
+         Print(Descricao_Robo+" VENDA! ",Operacoes);
+
+         VendaStop("Venda SL: "+DoubleToString(daotick(),2));
+         DeuStopLoss = true;
+        }
+   }
+}
+
+
+/////////////////////////////////////////////////
+
+/////////////////// STOP LOSS VENDA
+
+void StopLossVenda ()
+{
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && (StopLoss != 0 || Prop_StopLoss !=0))
+   {
+      if(daotick()>=StopLossValorVenda)
+        {
+         Print(Descricao_Robo+" Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
+         Print(Descricao_Robo+" COMPRA! ",Operacoes);
+         DeuStopLoss = true;
+         CompraStop("Compra SL: "+DoubleToString(daotick(),2));
+        }
+   }
+}
+//////////////////////////////////////////////
+
+/////////////////// Take Profit Compra
+
+void TakeProfitCompra ()
+{
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && (TakeProfit !=0 || Prop_TakeProfit !=0))
+   {
+      if(daotick()>TakeProfitValorCompra)
+        {
+         Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
+         VendaStop("Venda TP: "+DoubleToString(daotick(),2));
+         DeuTakeProfit = true;
+        }
+   }
+}
+//////////////////////////////////////////////
+
+/////////////////// Take Profit Venda
+
+void TakeProfitVenda ()
+{
+ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true  && DeuTakeProfit == false && Operacoes!=0 && Operacoes <0 && (TakeProfit !=0 || Prop_TakeProfit !=0))
+   {
+      if(daotick()<TakeProfitValorVenda)
+        {
+         Print(Descricao_Robo+" Deu TakeProfit VENDIDO | Compra: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
+         CompraStop("Compra TP "+DoubleToString(daotick(),2));
+         DeuTakeProfit = true;
+        }
+   }
+}
+//////////////////////////////////////////////
+///////////// Venda Do Stop
+void VendaStop (string Desc)
+{
+Print(Descricao_Robo+" "+Desc);
+MontarRequisicao(ORDER_TYPE_SELL,Desc);
+}
+///////////////////////////////
+
+/////////////////////////// Compra Hilo STOP
+void CompraStop (string Desc)
+{
+Print(Descricao_Robo+" "+Desc);
+MontarRequisicao(ORDER_TYPE_BUY,Desc);
+}
+
 

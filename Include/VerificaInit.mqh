@@ -18,7 +18,7 @@ ENUM_INIT_RETCODE VerificaInit ()
    return(INIT_PARAMETERS_INCORRECT);
    }
    
-   if(Trailing_stop > TakeProfit && TakeProfit>0)
+   if(Trailing_stop + Trailing_stop_start > TakeProfit && TakeProfit>0)
    {
    MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização",MB_OK);
    Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização");
@@ -100,8 +100,8 @@ ENUM_INIT_RETCODE VerificaInit ()
    
       if((Usa_Prop == true && Usa_Fixos == true) ||(Usa_Prop == false && Usa_Fixos == false)) 
      {
-   MessageBox("Escolha o timo de limite novamente.","Erro de Inicialização",MB_OK);     
-   Print("Escolha o timo de limite novamente."," - Erro de Inicialização");
+   MessageBox("Escolha o tipo de limite novamente.","Erro de Inicialização",MB_OK);     
+   Print("Escolha o tipo de limite novamente."," - Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
    
@@ -112,7 +112,7 @@ ENUM_INIT_RETCODE VerificaInit ()
    return(INIT_PARAMETERS_INCORRECT);
    
    }
-      if(Prop_Trailing_stop > Prop_TakeProfit && Prop_TakeProfit>0)
+      if(Prop_Trailing_stop + Prop_Trailing_stop_start > Prop_TakeProfit && Prop_TakeProfit>0)
    {
    MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização",MB_OK);
    Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização");

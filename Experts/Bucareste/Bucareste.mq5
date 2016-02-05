@@ -58,6 +58,15 @@ if(Usa_Prop == true) ChartIndicatorAdd(0,0,Handle_Prop_Media_Baixa);
    Comment("Carregando...");
 
    ArrumaMinutos();
+   
+   Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
+
+   
+   
+   Prop_Limite_Minimo =  Prop_Limite_Minimo_Tick_Size * Tick_Size;
+   
+   
+      Print("Tamanho do Tick: ",Tick_Size," Delta Minimo: ",Prop_Limite_Minimo);
 
    return(VerificaInit());
 }

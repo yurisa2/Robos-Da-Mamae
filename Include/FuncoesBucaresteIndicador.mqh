@@ -69,7 +69,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     Ordem = false;
                       
                       
-                    if(Mudanca==1 && Ordem==false && Prop_Delta() > Prop_Limite_Minimo) 
+                    if(Mudanca==1 && Ordem==false)
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -77,7 +77,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     Ordem = true;
                     }
                     
-                    if(Mudanca==-1 && Ordem==false && Prop_Delta() > Prop_Limite_Minimo) 
+                    if(Mudanca==-1 && Ordem==false) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
                     CompraIndicador("Compra por HiLo");
@@ -142,14 +142,14 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     DeuTakeProfit = false;                   
                     Ordem = false;
                       
-                    if(Mudanca==1 && Ordem==false) 
+                    if(Mudanca==1 && Ordem==false)  
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     VendaIndicador("Venda por Inversão de PSAR");
                     Ordem = true;
                     }
                     
-                    if(Mudanca==-1 && Ordem==false) 
+                    if(Mudanca==-1 && Ordem==false)
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
                     CompraIndicador("Compra por Inversão de PSAR");

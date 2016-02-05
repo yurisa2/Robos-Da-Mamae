@@ -44,6 +44,8 @@ double   Prop_Calc_TP = Prop_TakeProfit * Prop_Delta();
 
 
             Prop_MoverSL_Valor = Prop_MoverSL * Prop_Delta();
+            Prop_Trailing_Stop_Valor = Prop_Trailing_stop * Prop_Delta();
+            Prop_Trailing_stop_start_Valor = Prop_Trailing_stop_start * Prop_Delta();
 
            if(Prop_StopLoss==0)
               {
@@ -166,18 +168,18 @@ void TS ()
         
 void Prop_TS ()
    {
-      if(Operacoes>0 && Prop_Trailing_stop >0 && daotick() > PrecoCompra + Prop_Trailing_stop + Prop_Trailing_stop_start)
+      if(Operacoes>0 && Prop_Trailing_Stop_Valor >0 && daotick() > PrecoCompra + Prop_Trailing_Stop_Valor + Prop_Trailing_stop_start_Valor)
         {
-        TS_ValorCompra_atual = daotick()- Prop_Trailing_stop;
+        TS_ValorCompra_atual = daotick()- Prop_Trailing_Stop_Valor;
          if(TS_ValorCompra<TS_ValorCompra_atual)
            {
             TS_ValorCompra = TS_ValorCompra_atual;
             AtualizaLinhaTS(TS_ValorCompra);
            }
         }    
-      if(Operacoes<0 && Prop_Trailing_stop >0&& daotick() < PrecoVenda - Prop_Trailing_stop - Prop_Trailing_stop_start)
+      if(Operacoes<0 && Prop_Trailing_Stop_Valor >0&& daotick() < PrecoVenda - Prop_Trailing_Stop_Valor - Prop_Trailing_stop_start_Valor)
         {
-        TS_ValorVenda_atual = daotick()+ Prop_Trailing_stop;  
+        TS_ValorVenda_atual = daotick()+ Prop_Trailing_Stop_Valor;  
          if(TS_ValorVenda>TS_ValorVenda_atual)
            {
             TS_ValorVenda = TS_ValorVenda_atual;
@@ -185,14 +187,14 @@ void Prop_TS ()
            }
         }
   
-      if(Operacoes>0 && Prop_Trailing_stop >0 && daotick()<= TS_ValorCompra)      
+      if(Operacoes>0 && Prop_Trailing_Stop_Valor >0 && daotick()<= TS_ValorCompra)      
         {
          VendaStop("Venda TrailingStop (P)");
          Print(Descricao_Robo+" (P) TrailingStopCompra Ativado, Valor daotick: ",daotick());
          ObjectDelete(0,"TS");
         }
    
-      if(Operacoes<0 && Prop_Trailing_stop >0 && daotick()>= TS_ValorVenda)      
+      if(Operacoes<0 && Prop_Trailing_Stop_Valor >0 && daotick()>= TS_ValorVenda)      
         {
          CompraStop("Compra TrailingStop (P)");
          Print(Descricao_Robo+" (P) TrailingStopVenda Ativado, Valor daotick: ",daotick());

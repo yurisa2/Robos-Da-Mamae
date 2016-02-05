@@ -15,7 +15,7 @@ void CompraIndicador (string Desc)
          {
          MontarRequisicao(ORDER_TYPE_BUY,Desc);
          }
-      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia)
+      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
          {
          MontarRequisicao(ORDER_TYPE_BUY,Desc);
          }
@@ -31,7 +31,7 @@ void VendaIndicador (string Desc)
          {
          MontarRequisicao(ORDER_TYPE_SELL,Desc);
          }
-      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia) 
+      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia&&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
          {
          MontarRequisicao(ORDER_TYPE_SELL,Desc);
          }
@@ -43,7 +43,7 @@ void VendaIndicador (string Desc)
 
 void StopLossCompra ()
 {
- if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes >0 && (StopLoss != 0 || Prop_StopLoss !=0))
+ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes >0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
    {
       if(daotick()<=StopLossValorCompra)
         {
@@ -63,7 +63,7 @@ void StopLossCompra ()
 
 void StopLossVenda ()
 {
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && (StopLoss != 0 || Prop_StopLoss !=0))
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
    {
       if(daotick()>=StopLossValorVenda)
         {
@@ -80,7 +80,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && 
 
 void TakeProfitCompra ()
 {
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && (TakeProfit !=0 || Prop_TakeProfit !=0))
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
    {
       if(daotick()>TakeProfitValorCompra)
         {
@@ -96,7 +96,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false &
 
 void TakeProfitVenda ()
 {
- if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true  && DeuTakeProfit == false && Operacoes!=0 && Operacoes <0 && (TakeProfit !=0 || Prop_TakeProfit !=0))
+ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true  && DeuTakeProfit == false && Operacoes!=0 && Operacoes <0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
    {
       if(daotick()<TakeProfitValorVenda)
         {

@@ -56,8 +56,9 @@ input double   Prop_PontoDeMudancaSL = 0;                                       
 input double   Prop_TakeProfit = 1;                                       //TakeProfit: Multiplicador do Delta (0 desliga)
 input double   Prop_Trailing_stop =0;                                    //Trailing Stop: Multiplicador do Delta (0 desliga)
 input double   Prop_Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
-input double   Prop_Limite_Minimo = 0;                                  //Limite Mínimo para operar
-
+input double   Prop_Limite_Minimo_Tick_Size = 0;                                  //Limite Mínimo para operar (*Tick Size)
+double Tick_Size = 0;
+double Prop_Limite_Minimo = 0;
 
 //VARS
 
@@ -119,6 +120,10 @@ int CondicaoPsar;
 
 double liquidez_inicio=0;
 
-double Prop_MoverSL_Valor = 0;
+double Prop_MoverSL_Valor = 0 ;
+double Prop_Trailing_Stop_Valor = 0 ;
+double Prop_Trailing_stop_start_Valor = 0;
+
+
 
 ///////////////////////////////////////////

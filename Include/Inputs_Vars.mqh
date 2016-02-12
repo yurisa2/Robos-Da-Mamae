@@ -102,7 +102,6 @@ double Acumulado = 0;
 uint num_ordem_tiquete;
 datetime Data_Hoje;
 
-
 double TS_ValorCompra = 0;
 double TS_ValorVenda = 999999999;
 
@@ -123,7 +122,5 @@ double liquidez_inicio=0;
 double Prop_MoverSL_Valor = 0 ;
 double Prop_Trailing_Stop_Valor = 0 ;
 double Prop_Trailing_stop_start_Valor = 0;
-
-
 
 ///////////////////////////////////////////

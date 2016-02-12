@@ -29,6 +29,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          TS_ValorVenda = 99999999;
          TS_ValorCompra = 0;
          OperacoesFeitas++;
+         Contador_SLMOVEL = 0;
          
          if(Usa_Fixos == true) CalculaStops();
          if(Usa_Prop == true) 

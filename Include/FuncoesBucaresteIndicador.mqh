@@ -258,6 +258,8 @@ void OnNewBar()
 //   if(IndicadorTempoReal == false && Usa_Fractal == true)      CalculaFractal();   
 
 //Print("Tendencia HiLo: ",DevolveHiLo());
+//DevolveHiLo();
+
 
 }
 

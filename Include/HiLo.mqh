@@ -1,13 +1,10 @@
-//+------------------------------------------------------------------+
-//|                                                         HiLo.mqh |
-//|                        Copyright 2016, MetaQuotes Software Corp. |
-//|                                             https://www.mql5.com |
-//+------------------------------------------------------------------+
-#property copyright "Copyright 2016, MetaQuotes Software Corp."
-#property link      "https://www.mql5.com"
+#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property link      "http://www.sa2.com.br"
 
-int HandleHiLoMediaAlta = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_HIGH);
-int HandleHiLoMediaBaixa = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_LOW);
+/*/ Petrokas veio com umas de ordem start, comparando com o Duran, Abandonando projeto.
+
+//Comentários para deixar leve int HandleHiLoMediaAlta = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_HIGH);
+//Comentários para deixar leve int HandleHiLoMediaBaixa = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_LOW);
 
 double RetornaTendencia = 0;
 
@@ -20,21 +17,26 @@ double MediaBaixa[];
 ArraySetAsSeries(MediaAlta,true);
 ArraySetAsSeries(MediaBaixa,true);
 
-int copiaMediaAlta = CopyBuffer(HandleHiLoMediaAlta,0,0,1,MediaAlta);
-int copiaMediaBaixa = CopyBuffer(HandleHiLoMediaBaixa,0,0,1,MediaBaixa);
+// int copiaMediaAlta = CopyBuffer(HandleHiLoMediaAlta,0,0,3,MediaAlta);
+// int copiaMediaBaixa = CopyBuffer(HandleHiLoMediaBaixa,0,0,3,MediaBaixa);
 
-if(daotick() > MediaAlta[0])
+   MqlRates rates[]; 
+   ArraySetAsSeries(rates,true);
+   int copied=CopyRates(NULL,0,0,2,rates);
+
+if(rates[0].close > MediaAlta[0])
   {
    RetornaTendencia = -1;
-   Print("Tendencia Compra");
+   //Print("Tendencia Compra");
   }
-
-if(daotick() < MediaBaixa[0])
+if(rates[0].close < MediaBaixa[0])
   {
    RetornaTendencia = 1;
-   Print("Tendencia Venda");
+   //Print("Tendencia Venda");
   }
 
 return RetornaTendencia;
 
 }
+
+*/

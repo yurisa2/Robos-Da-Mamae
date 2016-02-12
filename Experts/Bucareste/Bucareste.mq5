@@ -19,16 +19,18 @@
 #include <VerificaInit.mqh>
 #include <Operacoes.mqh>
 
-
 //int Segundos = PeriodSeconds(TimeFrame);
-
 
 int OnInit()
   {
    if(Usa_Hilo == true) CalculaHiLo();
    if(Usa_PSar == true) CalculaPSar();
-   Sleep(500);
-   
+   Sleep(1000);
+   if(Usa_Hilo == true) CalculaHiLo();
+   if(Usa_PSar == true) CalculaPSar();
+   if(Usa_Hilo == true) CalculaHiLo();
+   if(Usa_PSar == true) CalculaPSar();
+
    ObjectsDeleteAll(0,0,-1);
   
    EventSetMillisecondTimer(500);
@@ -44,7 +46,6 @@ if(Usa_Prop == true) ChartIndicatorAdd(0,0,Handle_Prop_Media_Baixa);
    TimeMagic =MathRand();
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
    
-
    if(Usa_Hilo == true)  ChartIndicatorAdd(0,0,HandleGHL);
    if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);
 //   if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);   
@@ -110,7 +111,6 @@ AtualizaLinhas();
          StopLossVenda();
          TakeProfitCompra();
          TakeProfitVenda();
-
          
 /////////////////////////////////////////////////
 
@@ -119,7 +119,7 @@ DetectaNovaBarra();
    if(IndicadorTempoReal == true && Usa_Hilo == true)      HiLo();
    if(IndicadorTempoReal == true && Usa_PSar == true)      PSar();
 
-if(ZerarFinalDoDia == true) ZerarODia();
+   if(ZerarFinalDoDia == true) ZerarODia();
 /* ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
    else
    {
@@ -130,7 +130,6 @@ if(ZerarFinalDoDia == true) ZerarODia();
    if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
    if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
 
-   
    }
 */
 

@@ -228,8 +228,6 @@ ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);
 }
 
 
-
-
 void SLMovel ()
 {
 

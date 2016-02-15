@@ -24,12 +24,12 @@ int copiaMediaBaixa = CopyBuffer(HandleHiLoMediaBaixa,0,0,3,MediaBaixa);
    ArraySetAsSeries(rates,true);
    int copied=CopyRates(NULL,0,0,2,rates);
 
-if(rates[0].close > MediaAlta[0])
+if(rates[0].close > MediaAlta[1])
   {
    RetornaTendencia = 1;
    //Print("Tendencia Compra");
   }
-if(rates[0].close < MediaBaixa[0])
+if(rates[0].close < MediaBaixa[1])
   {
    RetornaTendencia = -1;
    //Print("Tendencia Venda");

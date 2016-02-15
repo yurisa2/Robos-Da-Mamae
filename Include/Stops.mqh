@@ -1,10 +1,5 @@
-//+------------------------------------------------------------------+
-//|                                                 Proporcional.mqh |
-//|                        Copyright 2016, MetaQuotes Software Corp. |
-//|                                             https://www.mql5.com |
-//+------------------------------------------------------------------+
-#property copyright "Copyright 2016, MetaQuotes Software Corp."
-#property link      "https://www.mql5.com"
+#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property link      "http://www.sa2.com.br"
 
 int Handle_Prop_Media_Alta = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_HIGH);
 int Handle_Prop_Media_Baixa = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_LOW);

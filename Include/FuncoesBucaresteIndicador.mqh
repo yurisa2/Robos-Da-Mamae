@@ -7,7 +7,7 @@
 #property link      "http://www.sa2.com.br"
 
 //////////////////////////////////// Funcoes
-
+/*
 void CalculaHiLo ()
 {
 if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
@@ -91,6 +91,8 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    }   //FIM DO IF TaDentroDoHorario
 
 }
+
+*/
 //////////////////////////////////////////////////////
 
 ///////////////////VALORES DO PSAR

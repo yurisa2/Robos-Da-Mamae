@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-#property version   "1.28"
+#property version   "1.29"
 
 #include <basico.mqh>
 #include <OnTrade.mqh>

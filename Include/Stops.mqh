@@ -242,5 +242,4 @@ Print(Descricao_Robo+" | StopLoss Movido com sucesso, SL: "+DoubleToString(StopL
 ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);
   }
 
-
 }

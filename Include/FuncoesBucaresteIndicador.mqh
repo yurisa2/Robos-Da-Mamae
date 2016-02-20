@@ -257,6 +257,9 @@ void OnNewBar()
 {
    if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
    if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
+   if(IndicadorTempoReal == false && Usa_Ozy == true)      Print("Ozy0: ",Ozy(0)," | Ozy1: ",Ozy(1)," | Ozy2: ",Ozy(2));
+   if(IndicadorTempoReal == false && Usa_Ozy == true)     Ozy_Opera();
+   
 //   if(IndicadorTempoReal == false && Usa_Fractal == true)      CalculaFractal();   
 
 //Print("Tendencia HiLo: ",DevolveHiLo());

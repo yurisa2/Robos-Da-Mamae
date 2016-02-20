@@ -13,6 +13,7 @@
 #include <Inputs_Vars.mqh>
 #include <FuncoesBucaresteIndicador.mqh>
 #include <HiLo.mqh>
+#include <Ozy.mqh>
 #include <Stops.mqh>
 #include <Graficos.mqh>
 #include <MontarRequisicao.mqh>
@@ -37,6 +38,7 @@ int OnInit()
 
    if(Usa_Hilo == true) HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
    if(Usa_PSar == true) HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
+   if(Usa_Ozy == true) HandleOzy = iCustom(NULL,TimeFrame,"ozymandias_lite",Ozy_length,Ozy_MM,Ozy_Shift);
 //   if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
 
 
@@ -48,6 +50,7 @@ if(Usa_Prop == true) ChartIndicatorAdd(0,0,Handle_Prop_Media_Baixa);
    
    if(Usa_Hilo == true)  ChartIndicatorAdd(0,0,HandleGHL);
    if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);
+   if(Usa_Ozy == true) ChartIndicatorAdd(0,0,HandleOzy);
 //   if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);   
    
    Print("Liquidez da conta: ",conta.Equity());

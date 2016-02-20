@@ -32,6 +32,14 @@ input string Configs_HiLo = "-------------------------------------";
 input bool Usa_Hilo = 1;                                                   //Usar HiLo
 input int Periodos =  4;                                              //Periodos do HiLo
 
+
+input string Configs_Ozy = "-------------------------------------";
+input bool Usa_Ozy = 0;                                                   //Usar Ozymandias
+input ENUM_MA_METHOD Ozy_MM =  MODE_SMA;                                              //Tipo de MM Ozymandias
+input int Ozy_Shift = 0;                                                  //Shift Ozymandias
+input int Ozy_length = 2;                                                  //Length Ozymandias
+
+
 input string Configs_PSAR = "-------------------------------------";
 input bool Usa_PSar = 0;                                                   //Usar Parabolic SAR
 input double PSAR_Step = 0;                                             //Parabolic SAR Step (0.02)
@@ -115,7 +123,9 @@ int OperacoesFeitas = 0;
 int HandleGHL;
 int HandlePSar;
 int HandleFrac;
+int HandleOzy;
 int CondicaoPsar;
+
 
 double liquidez_inicio=0;
 

@@ -26,30 +26,44 @@ void OnChartEvent(const int id,
          if(Operacoes>0)  VendaStop(" Abortado pelo botão");
          if(Operacoes<0)  CompraStop(" Abortado pelo botão");   
          //--- Estado do botão - pressionado ou não 
-         bool selected=ObjectGetInteger(0,"BTN_ABORTAR",OBJPROP_STATE); 
+         // bool selected=ObjectGetInteger(0,"BTN_ABORTAR",OBJPROP_STATE); 
          //--- registrar uma mensagem de depuração 
          //Print("Botão pressionado = ",selected);
          
           
-         int customEventID; // Número do evento personalizado para enviar 
-         string message;    // Mensagem a ser enviada no caso 
+         // int customEventID; // Número do evento personalizado para enviar 
+         //string message;    // Mensagem a ser enviada no caso 
          //--- Se o botão for pressionado 
-         if(selected) 
-           { 
-            message="Botão pressionado"; 
-            customEventID=CHARTEVENT_CUSTOM+1; 
-           } 
-         else // Botão não está pressionado 
-           { 
-            message="Botão não está pressionado"; 
-            customEventID=CHARTEVENT_CUSTOM+999; 
-           } 
-         //--- Enviar um evento personalizado "nosso" gráfico 
-         //EventChartCustom(0,customEventID-CHARTEVENT_CUSTOM,0,0,message); 
-         ///--- Envie uma mensagem para todos os gráficos abertos 
-         //BroadcastEvent(ChartID(),0,"Transmissão de mensagem"); 
-         //--- Depurar mensagem 
-         //Print("Enviar um evento com ID = ",customEventID); 
+         //if(selected) 
+         //  { 
+         //   message="Botão pressionado"; 
+         //   customEventID=CHARTEVENT_CUSTOM+1; 
+         //  } 
+         //else // Botão não está pressionado 
+         //  { 
+         //   message="Botão não está pressionado"; 
+         //   customEventID=CHARTEVENT_CUSTOM+999; 
+         //  } 
+        } 
+        if(clickedChartObject=="Botao_Operar") 
+        { 
+         if(Mudanca>0)  VendaStop("Iniciado pelo botão");
+         if(Mudanca<0)  CompraStop("Iniciado pelo botão");   
+
+          
+         //int customEventID; // Número do evento personalizado para enviar 
+         //string message;    // Mensagem a ser enviada no caso 
+         //--- Se o botão for pressionado 
+         //if(selected) 
+         //  { 
+         //   message="Botão pressionado"; 
+         //   customEventID=CHARTEVENT_CUSTOM+1; 
+         //  } 
+         //else // Botão não está pressionado 
+         //  { 
+         //   message="Botão não está pressionado"; 
+         //   customEventID=CHARTEVENT_CUSTOM+999; 
+         //  } 
         } 
       ChartRedraw();// Redesenho forçado de todos os objetos de gráfico 
      } 
@@ -163,3 +177,55 @@ void Botao_Abortar ()                // prioridade para clicar no mouse
 //   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_ZORDER,1); 
 //--- sucesso na execução 
 }
+
+
+void Cria_Botao_Operar ()
+{
+//--- criar o botão 
+ObjectCreate(0,"Botao_Operar",OBJ_BUTTON,0,0,0,0,0);
+Botao_Operar();
+}
+
+void Botao_Operar ()                // prioridade para clicar no mouse 
+  {
+//--- definir coordenadas do botão 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_XDISTANCE,150); 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_YDISTANCE,0); 
+//--- definir tamanho do botão 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_XSIZE,100); 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_YSIZE,18); 
+//--- determinar o canto do gráfico onde as coordenadas do ponto são definidas 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_CORNER,CORNER_LEFT_UPPER); 
+//--- definir o texto 
+   ObjectSetString(0,"Botao_Operar",OBJPROP_TEXT,"!!!Força Trade!!!"); 
+//--- definir o texto fonte 
+   ObjectSetString(0,"Botao_Operar",OBJPROP_FONT,"Arial"); 
+//--- definir tamanho da fonte 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_FONTSIZE,8); 
+//--- definir a cor do texto 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_COLOR,clrWhite); 
+//--- definir a cor de fundo 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_BGCOLOR,clrGray); 
+//--- definir a cor da borda 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_BORDER_COLOR,clrBlack); 
+//--- exibir em primeiro plano (false) ou fundo (true) 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_BACK,false); 
+//--- set button state 
+ //  ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_STATE,false); 
+//--- habilitar (true) ou desabilitar (false) o modo do movimento do botão com o mouse 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_SELECTABLE,false); 
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_SELECTED,false); 
+//--- ocultar (true) ou exibir (false) o nome do objeto gráfico na lista de objeto  
+   ObjectSetInteger(0,"Botao_Operar",OBJPROP_HIDDEN,false); 
+//--- definir a prioridade para receber o evento com um clique do mouse no gráfico 
+//   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_ZORDER,1); 
+//--- sucesso na execução 
+}
+/*
+string Desc_Robo (string Desc_A_Mao)
+{
+
+
+
+}
+*/

@@ -7,226 +7,8 @@
 #property link      "http://www.sa2.com.br"
 
 //////////////////////////////////// Funcoes
-/*
-void CalculaHiLo ()
-{
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
-   {
-   
-   double _ma1[];
-   double NMax[];
-   double NMin[];
-   double ValorHilo[];
 
-   ArraySetAsSeries(_ma1, true);
-   ArraySetAsSeries(NMax, true);
-   ArraySetAsSeries(NMin, true);   
-   ArraySetAsSeries(ValorHilo, true);
-
-   int copied=CopyBuffer(HandleGHL,4,0,100,_ma1);
-   int copiadoNmax=CopyBuffer(HandleGHL,2,0,100,NMax);
-   int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
-   int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
-
-                    if(Mudanca!=_ma1[0]) 
-                    {
-                    //Print("Mudou Hein");
-                    DeuStopLoss = false;
-                    DeuTakeProfit = false;                   
-                    Ordem = false;
-                    }
-   Mudanca = _ma1[0];
-   Mudou = 0;
-   }   //FIM DO IF TaDentroDoHorario
-}
-
-void HiLo ()
-{
-
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
-   {
-   
-   double _ma1[];
-   double NMax[];
-   double NMin[];
-   double ValorHilo[];
-   
-   ArraySetAsSeries(_ma1, true);
-   ArraySetAsSeries(NMax, true);
-   ArraySetAsSeries(NMin, true);   
-   ArraySetAsSeries(ValorHilo, true);
-
-   int copied=CopyBuffer(HandleGHL,4,0,100,_ma1);
-   int copiadoNmax=CopyBuffer(HandleGHL,2,0,100,NMax);
-   int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
-   int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
-                    
-                    if(Mudanca!=_ma1[0]) 
-                    {
-                    //Print("Mudou Hein");
-                    DeuStopLoss = false;
-                    DeuTakeProfit = false;                   
-                    Ordem = false;
-                      
-                      
-                    if(Mudanca==1 && Ordem==false)
-                    {
-                    Print("Operações Antes da venda: ",Operacoes," VENDE! ");
-                    //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
-                    VendaIndicador("Venda por HiLo");
-                    Ordem = true;
-                    }
-                    
-                    if(Mudanca==-1 && Ordem==false) 
-                    {
-                    Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
-                    CompraIndicador("Compra por HiLo");
-                    Ordem = true;
-                    }
-                    }
-
-   Mudanca = _ma1[0];
-   Mudou = 0;
-
-   }   //FIM DO IF TaDentroDoHorario
-
-}
-
-*/
-//////////////////////////////////////////////////////
-
-///////////////////VALORES DO PSAR
-void CalculaPSar ()
-{
-
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
-   {
-   double PSar_Array[];
-   ArraySetAsSeries(PSar_Array, true);
-   int copiedPSar=CopyBuffer(HandlePSar,0,0,100,PSar_Array);
-
-  //--- Dá uns prints só pra ver //--- Print("Valor do PSAR: ",PSar_Array[0]," Preço: ",daotick());
-    if(PSar_Array[0] >daotick())     CondicaoPsar = -1;
-    if(PSar_Array[0] <daotick())     CondicaoPsar = 1;
-
-                    if(Mudanca!=CondicaoPsar) 
-                    {
-                    //Print("Mudou Hein");
-                    DeuStopLoss = false;
-                    DeuTakeProfit = false;                   
-                    Ordem = false;
-                      
-                    }
-                    
-//   Print("Operacoes: ",Operacoes);
-   Mudanca = CondicaoPsar;
-   Mudou = 0;
-
-   }   //FIM DO IF TaDentroDoHorario
-}
-
-void PSar ()
-{
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
-   {
-   double PSar_Array[];
-   ArraySetAsSeries(PSar_Array, true);
-   int copiedPSar=CopyBuffer(HandlePSar,0,0,100,PSar_Array);
-
-  //--- Dá uns prints só pra ver //--- Print("Valor do PSAR: ",PSar_Array[0]," Preço: ",daotick());
-    if(PSar_Array[0] >daotick())     CondicaoPsar = -1;
-    if(PSar_Array[0] <daotick())     CondicaoPsar = 1;
-
-                    if(Mudanca!=CondicaoPsar) 
-                    {
-                    //Print("Mudou Hein");
-                    DeuStopLoss = false;
-                    DeuTakeProfit = false;                   
-                    Ordem = false;
-                      
-                    if(Mudanca==1 && Ordem==false)  
-                    {
-                    Print("Operações Antes da venda: ",Operacoes," VENDE! ");
-                    VendaIndicador("Venda por Inversão de PSAR");
-                    Ordem = true;
-                    }
-                    
-                    if(Mudanca==-1 && Ordem==false)
-                    {
-                    Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
-                    CompraIndicador("Compra por Inversão de PSAR");
-                    Ordem = true;
-                    }
-                      
-                    }
-   Mudanca = CondicaoPsar;
-   Mudou = 0;
-
-   }   //FIM DO IF TaDentroDoHorario
-
-}
-
-//////////////////Calcula Fractals
-
-
-void CalculaFractal ()
-{
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
-   {
-   
-   double _Fractal1[];
-   double _Fractal2[];
-
-   ArraySetAsSeries(_Fractal1, true);
-   ArraySetAsSeries(_Fractal2, true);
-
-   int copied=CopyBuffer(HandleFrac,0,0,100,_Fractal1);
-   int copied2=CopyBuffer(HandleFrac,1,0,100,_Fractal2);
-
-
-for(int x=0;x<3;x++)
-       {
-           double A1 = _Fractal1[x];
-           if (A1!=EMPTY_VALUE) Print("Venda ["+IntegerToString(x)+"] = " + DoubleToString(A1));
-            //else Print("A1 ["+IntegerToString(x)+"] = EMPTY_VALUE");
-       }
-
-for(int x=0;x<3;x++)
-       {
-           double A1 = _Fractal2[x];
-           if (A1!=EMPTY_VALUE) Print("Compra ["+IntegerToString(x)+"] = " + DoubleToString(A1));
-            //else Print("A1 ["+IntegerToString(x)+"] = EMPTY_VALUE");
-       }
-
-/*
-                    if(Mudanca!=_Fractal1[0]) 
-                    {
-                    //Print("Mudou Hein");
-                    DeuStopLoss = false;
-                    DeuTakeProfit = false;                   
-                    Ordem = false;
-                    }
-   Mudanca = _Fractal[0];
-   Mudou = 0;
-   
-*/
-
-
-   }   //FIM DO IF TaDentroDoHorario
-}
-
-//////////////////////
-
-
-//////////////////////////////////
-////////////////////////// Calcula STOPS
-
-
-
-//////////////////////////// Primeira Operaçao
-
-   
-   //////////////////////////////// Primeira Operaçao
+//////////////////////////////// Primeira Operaçao
    
    void PrimeiraOperacao ()
 {
@@ -242,8 +24,6 @@ for(int x=0;x<3;x++)
        }
  }
 //////////////// Fim Primeira Operaçao
- 
-////////////// Avaliação do TS
 
 /////////////////////////////////
 void DetectaNovaBarra ()
@@ -257,24 +37,32 @@ void OnNewBar()
 {
    if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
    if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
-   if(IndicadorTempoReal == false && Usa_Ozy == true)      Print("Ozy0: ",Ozy(0)," | Ozy1: ",Ozy(1)," | Ozy2: ",Ozy(2));
    if(IndicadorTempoReal == false && Usa_Ozy == true)     Ozy_Opera();
-   
-//   if(IndicadorTempoReal == false && Usa_Fractal == true)      CalculaFractal();   
-
-//Print("Tendencia HiLo: ",DevolveHiLo());
-//DevolveHiLo();
-
+   if(IndicadorTempoReal == false && Usa_Fractal == true)     Fractal();
 
 }
+
+
+int Segundos_Fim_Barra ()
+{
+
+   int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
+   datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
+   //if(grafico_atual.isNewBar(new_time)) Segundos_Contados=0;
+   return 60-(TimeCurrent()-new_time);
+
+}
+
+
+
 
 void IniciaDia ()
 {
         if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
         {
         
-        CalculaHiLo();
-        CalculaPSar();
+   if(Usa_Hilo == true) CalculaHiLo();
+   if(Usa_PSar == true) CalculaPSar();
         
         PrecoCompra =0;
         PrecoVenda =0;
@@ -299,7 +87,7 @@ void IniciaDia ()
         SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
         
         if(Usa_Hilo == true) Print("Indicador HiLo inicio do dia: ",Mudanca);
-        if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Mudanca);        
+        if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Mudanca);    
         liquidez_inicio = conta.Equity();
         }
 Sleep(1000);
@@ -312,6 +100,7 @@ void ZerarODia ()
 {
        if(TaDentroDoHorario(HorarioFim,HorarioFimMais1)==true && JaDeuFinal==false)
          {
+            Sleep(5000);
             JaDeuFinal = true;
             JaZerou = false;
             PrimeiraOp = false;
@@ -331,7 +120,7 @@ void ZerarODia ()
                      }
                Print(Descricao_Robo+"Depois da Ultima Operaçao: ",Operacoes);
          }
-   Sleep(1000);
+   Sleep(5000);
   }  
 
 
@@ -349,4 +138,42 @@ void ArrumaMinutos ()
    HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFimMenos1,2,'0');
    HorarioFimMais1 = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim+1,2,'0');
    Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1:",HorarioFimMais1 );
+}
+
+void Inicializa_Funcs ()
+{
+
+
+   if(Usa_PSar == true) HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
+   if(Usa_Ozy == true) HandleOzy = iCustom(NULL,TimeFrame,"ozymandias_lite",Ozy_length,Ozy_MM,Ozy_Shift);
+   if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
+   if(Usa_Prop == true) Inicializa_Prop();
+   if(Usa_Hilo == true) Inicializa_HiLo();
+   if(Usa_Hilo == true) CalculaHiLo();
+   if(Usa_PSar == true) CalculaPSar();
+   if(Usa_Fractal == true) CalculaFractal();
+   if(Usa_Fractal == true) CalculaOzy();
+
+   if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);
+   if(Usa_Ozy == true) ChartIndicatorAdd(0,0,HandleOzy);
+   if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);   
+   
+   Cria_Botao_Operar();
+   
+   
+   ArrumaMinutos();
+
+}
+
+void Comentario (int ops)
+{
+
+if(ops > 0) Comment(Descricao_Robo+" COMPRADO - SL: "+DoubleToString(StopLossValorCompra)+" - TP: "+DoubleToString(TakeProfitValorCompra)+" TS: "+DoubleToString(TS_ValorCompra)+" - "+Segundos_Fim_Barra());
+if(ops < 0) Comment(Descricao_Robo+" VENDIDO- SL: "+DoubleToString(StopLossValorVenda)+" - TP: "+DoubleToString(TakeProfitValorVenda)+" TS: "+DoubleToString(TS_ValorVenda)+" - "+Segundos_Fim_Barra());
+if(ops == 0)   Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta())+" - "+Segundos_Fim_Barra());
+
+
+//Comment(Segundos_Fim_Barra());
+   
+
 }

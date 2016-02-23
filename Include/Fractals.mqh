@@ -17,7 +17,7 @@ void CalculaFractal ()
    int copied2=CopyBuffer(HandleFrac,1,0,100,_Fractal2);
 
 
-for(int x=0;x<3;x++)
+for(int x=0;x<Frac_Candles_Espera;x++)
        {
            double A1 = _Fractal1[x];
            
@@ -29,7 +29,7 @@ for(int x=0;x<3;x++)
             //else Print("A1 ["+IntegerToString(x)+"] = EMPTY_VALUE");
        }
 
-for(int x=0;x<3;x++)
+for(int x=0;x<Frac_Candles_Espera;x++)
        {
            double A1 = _Fractal2[x];
            if (A1!=EMPTY_VALUE) 
@@ -69,24 +69,24 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    int copied=CopyBuffer(HandleFrac,0,0,100,_Fractal1);
    int copied2=CopyBuffer(HandleFrac,1,0,100,_Fractal2);
 
-for(int x=0;x<3;x++)
+for(int x=0;x<Frac_Candles_Espera;x++)
        {
            double A1 = _Fractal1[x];
            
            if (A1!=EMPTY_VALUE) 
            {
-           Print("Venda ["+IntegerToString(x)+"] = " + DoubleToString(A1));
+           //Print("Venda ["+IntegerToString(x)+"] = " + DoubleToString(A1));
            EstadoFractal = 1;
            }
             //else Print("A1 ["+IntegerToString(x)+"] = EMPTY_VALUE");
        }
 
-for(int x=0;x<3;x++)
+for(int x=0;x<Frac_Candles_Espera;x++)
        {
            double A1 = _Fractal2[x];
            if (A1!=EMPTY_VALUE) 
            {
-           Print("Compra ["+IntegerToString(x)+"] = " + DoubleToString(A1));
+           //Print("Compra ["+IntegerToString(x)+"] = " + DoubleToString(A1));
            EstadoFractal = -1;          
            }
            
@@ -95,7 +95,7 @@ for(int x=0;x<3;x++)
 
                     if(Mudanca!=EstadoFractal) 
                     {
-                    Print("Mudou Hein | Estado Fractal: ",EstadoFractal);
+                    //Print("Mudou Hein | Estado Fractal: ",EstadoFractal);
                     DeuStopLoss = false;
                     DeuTakeProfit = false;                   
                     Ordem = false;

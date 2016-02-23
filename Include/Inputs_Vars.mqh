@@ -45,6 +45,10 @@ input bool Usa_PSar = 0;                                                   //Usa
 input double PSAR_Step = 0;                                             //Parabolic SAR Step (0.02)
 input double PSAR_Max_Step = 0;                                          //Parabolic SAR Max Step (0.2)
 
+input string Configs_Fractals = "-------------------------------------";
+input bool Usa_Fractal = 0;                                                   //Usar Fractals (Bill Williams)
+input int   Frac_Candles_Espera = 3;                                           //Quantos candles esperar o sinal (3)
+
 input string Limites_Fixos = "-------------------------------------";
 input bool   Usa_Fixos = true;                                             //Usar Limites Fixos
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
@@ -56,8 +60,18 @@ input double Trailing_stop_start = 0;                                      //Ini
 
 
 input string Limites_Proporcionais  = "-------------------------------------";
+enum Met_Prop
+
+  {
+
+  BB = 88,
+
+  SMA  =534
+
+  };
 input bool     Usa_Prop = true;                                                //Usar Limites Proporcionais
-input int      Prop_Periodos = 3;                                           //Períodos do cálculo proporcional (SMA)
+input Met_Prop Prop_Metodo = 534;                                             //Método utilizado para o DELTA                                              
+input int      Prop_Periodos = 3;                                           //Períodos do prop SMA(3) BB(20)
 input double   Prop_StopLoss = 0.7;                                        //StopLoss: Multiplicador do Delta (0 desliga)
 input double   Prop_MoverSL = 0;                                                  //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
 input double   Prop_PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
@@ -65,6 +79,8 @@ input double   Prop_TakeProfit = 1;                                       //Take
 input double   Prop_Trailing_stop =0;                                    //Trailing Stop: Multiplicador do Delta (0 desliga)
 input double   Prop_Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 input double   Prop_Limite_Minimo_Tick_Size = 0;                                  //Limite Mínimo para operar (*Tick Size)
+
+
 double Tick_Size = 0;
 double Prop_Limite_Minimo = 0;
 
@@ -134,3 +150,10 @@ double Prop_Trailing_Stop_Valor = 0 ;
 double Prop_Trailing_stop_start_Valor = 0;
 
 ///////////////////////////////////////////
+
+ int Handle_Prop_Media_Alta = 0;
+ int Handle_Prop_Media_Baixa = 0;
+ int Handle_Prop_BB =0;
+ int HandleHiLoMediaAlta =0;
+ int HandleHiLoMediaBaixa = 0;
+ double RetornaTendencia = 0;

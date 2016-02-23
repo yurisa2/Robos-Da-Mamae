@@ -3,11 +3,24 @@
 
 // Petrokas veio com umas de ordem start, comparando com o Duran, Abandonando projeto.
 
-int HandleHiLoMediaAlta = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_HIGH);
-int HandleHiLoMediaBaixa = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_LOW);
+void Inicializa_HiLo ()
+{
 
-double RetornaTendencia = 0;
 
+   //HandleHiLoMediaAlta = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_HIGH);
+   //HandleHiLoMediaBaixa = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_LOW);
+   HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
+   ChartIndicatorAdd(0,0,HandleGHL);
+   
+   if(HandleGHL== 0 )
+     {
+       ExpertRemove();
+     }
+}
+
+
+
+/*
 double DevolveHiLo ()
 {
 
@@ -100,4 +113,96 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
    }   //FIM DO IF TaDentroDoHorario
 
 }
+*/
 
+
+
+//HILO DE TERCEIROS
+
+
+void CalculaHiLo ()
+{
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+   {
+   
+   double _ma1[];
+   double NMax[];
+   double NMin[];
+   double ValorHilo[];
+
+   ArraySetAsSeries(_ma1, true);
+   ArraySetAsSeries(NMax, true);
+   ArraySetAsSeries(NMin, true);   
+   ArraySetAsSeries(ValorHilo, true);
+
+   int copied=CopyBuffer(HandleGHL,4,0,100,_ma1);
+   int copiadoNmax=CopyBuffer(HandleGHL,2,0,100,NMax);
+   int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
+   int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
+
+                    if(Mudanca!=_ma1[0]) 
+                    {
+                    //Print("Mudou Hein");
+                    DeuStopLoss = false;
+                    DeuTakeProfit = false;                   
+                    Ordem = false;
+                    }
+   Mudanca = _ma1[0];
+   Mudou = 0;
+   }   //FIM DO IF TaDentroDoHorario
+}
+
+void HiLo ()
+{
+
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+   {
+   
+   double _ma1[];
+   double NMax[];
+   double NMin[];
+   double ValorHilo[];
+   
+   ArraySetAsSeries(_ma1, true);
+   ArraySetAsSeries(NMax, true);
+   ArraySetAsSeries(NMin, true);   
+   ArraySetAsSeries(ValorHilo, true);
+
+   int copied=CopyBuffer(HandleGHL,4,0,100,_ma1);
+   int copiadoNmax=CopyBuffer(HandleGHL,2,0,100,NMax);
+   int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
+   int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
+                    
+                    if(Mudanca!=_ma1[0]) 
+                    {
+                    //Print("Mudou Hein");
+                    DeuStopLoss = false;
+                    DeuTakeProfit = false;                   
+                    Ordem = false;
+                      
+                      
+                    if(Mudanca==1 && Ordem==false)
+                    {
+                    Print("Operações Antes da venda: ",Operacoes," VENDE! ");
+                    //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
+                    VendaIndicador("Venda por HiLo");
+                    Ordem = true;
+                    }
+                    
+                    if(Mudanca==-1 && Ordem==false) 
+                    {
+                    Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
+                    CompraIndicador("Compra por HiLo");
+                    Ordem = true;
+                    }
+                    }
+
+   Mudanca = _ma1[0];
+   Mudou = 0;
+
+   }   //FIM DO IF TaDentroDoHorario
+
+}
+
+
+//////////////////////////////////////////////////////

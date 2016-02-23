@@ -9,8 +9,6 @@
 ENUM_INIT_RETCODE VerificaInit ()
 {
 
-
-
    if(HoraDeInicio==9 && MinutoDeInicio==0) 
    {
    MessageBox("Comece a partir de 09:01","Erro de Inicialização",MB_OK);
@@ -68,12 +66,15 @@ ENUM_INIT_RETCODE VerificaInit ()
    Print("Nem vou operar menos que 10 minutos, falou","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
-   //if(Usa_PSar == false && Usa_Hilo == false && Usa_Fractal== false)
-   // {
-   //MessageBox("Um dos indicadores c te que usar né amigão...","Erro de Inicialização",MB_OK);
-   //Print("Um dos indicadores c te que usar né amigão...","Erro de Inicialização");
-   //return(INIT_PARAMETERS_INCORRECT);
-   //}
+   
+   int Verifica_Indicadores = Usa_Fractal + Usa_Hilo + Usa_PSar + Usa_Ozy;
+   if(Verifica_Indicadores == 0 || Verifica_Indicadores > 1)
+   {
+      MessageBox("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de Inicialização",MB_OK);
+      Print("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de Inicialização");
+      return(INIT_PARAMETERS_INCORRECT);
+   }
+   
     if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || (Usa_Hilo == true && Periodos <=1) ) 
      {
    MessageBox("Erro nos parametros de grana ou técnicos","Erro de Inicialização",MB_OK); 

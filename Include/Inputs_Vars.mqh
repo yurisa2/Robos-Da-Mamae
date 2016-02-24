@@ -49,6 +49,12 @@ input string Configs_Fractals = "-------------------------------------";
 input bool Usa_Fractal = 0;                                                   //Usar Fractals (Bill Williams)
 input int   Frac_Candles_Espera = 3;                                           //Quantos candles esperar o sinal (3)
 
+input string Configs_BSI = "-------------------------------------";
+input bool Usa_BSI = 0;                                                   //Usar BSI (Wyckoff)
+input int BSI_RangePeriod = 20;                                           //Range Period
+input int BSI_Slowing = 3;                                                //Slowing
+input int BSI_Avg_Period = 3;                                             //Periodo Media
+
 input string Limites_Fixos = "-------------------------------------";
 input bool   Usa_Fixos = true;                                             //Usar Limites Fixos
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
@@ -63,11 +69,8 @@ input string Limites_Proporcionais  = "-------------------------------------";
 enum Met_Prop
 
   {
-
   BB = 88,
-
   SMA  =534
-
   };
 input bool     Usa_Prop = true;                                                //Usar Limites Proporcionais
 input Met_Prop Prop_Metodo = 534;                                             //Método utilizado para o DELTA                                              
@@ -140,7 +143,10 @@ int HandleGHL;
 int HandlePSar;
 int HandleFrac;
 int HandleOzy;
+int HandleBSI;
+
 int CondicaoPsar;
+int CondicaoBSI;
 
 
 double liquidez_inicio=0;

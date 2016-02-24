@@ -122,8 +122,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
 
 void CalculaHiLo ()
 {
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
-   {
+
    
    double _ma1[];
    double NMax[];
@@ -149,7 +148,6 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     }
    Mudanca = _ma1[0];
    Mudou = 0;
-   }   //FIM DO IF TaDentroDoHorario
 }
 
 void HiLo ()

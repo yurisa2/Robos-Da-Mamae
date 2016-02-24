@@ -67,7 +67,7 @@ ENUM_INIT_RETCODE VerificaInit ()
    return(INIT_PARAMETERS_INCORRECT);
    }
    
-   int Verifica_Indicadores = Usa_Fractal + Usa_Hilo + Usa_PSar + Usa_Ozy;
+   int Verifica_Indicadores = Usa_Fractal + Usa_Hilo + Usa_PSar + Usa_Ozy + Usa_BSI;
    if(Verifica_Indicadores == 0 || Verifica_Indicadores > 1)
    {
       MessageBox("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de Inicialização",MB_OK);

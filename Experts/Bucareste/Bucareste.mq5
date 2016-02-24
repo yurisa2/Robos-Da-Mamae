@@ -15,6 +15,7 @@
 #include <HiLo.mqh>
 #include <PSAR.mqh>
 #include <Ozy.mqh>
+#include <BSI.mqh>
 #include <Fractals.mqh>
 #include <Stops.mqh>
 #include <Graficos.mqh>
@@ -26,6 +27,7 @@
 
 int OnInit()
   {
+  expert.Init(_Symbol,TimeFrame,1,TimeMagic);
    ObjectsDeleteAll(0,0,-1);
   
    EventSetTimer(5);
@@ -33,11 +35,14 @@ int OnInit()
    TimeMagic =MathRand();
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
 
+
    Print("Liquidez da conta: ",conta.Equity());
    
    Inicializa_Funcs();
-
+   expert.Init(_Symbol,TimeFrame,true,TimeMagic);
    return(VerificaInit());
+   
+
 }
 
 void OnTimer()
@@ -45,7 +50,6 @@ void OnTimer()
 IniciaDia();
 
 
-   
    
 //Botao_Abortar(); Acho que é cagada
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
@@ -103,6 +107,8 @@ DetectaNovaBarra();
 void OnTick()
 {
 Comentario(Operacoes);
+expert.EveryTick(true);
+
 
 }
 

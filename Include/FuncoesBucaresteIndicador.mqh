@@ -37,19 +37,21 @@ void OnNewBar()
 {
    if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
    if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
-   if(IndicadorTempoReal == false && Usa_Ozy == true)     Ozy_Opera();
-   if(IndicadorTempoReal == false && Usa_Fractal == true)     Fractal();
+   if(IndicadorTempoReal == false && Usa_Ozy == true)       Ozy_Opera();
+   if(IndicadorTempoReal == false && Usa_Fractal == true)   Fractal();
+   if(IndicadorTempoReal == false && Usa_BSI == true)       BSI();   
+   
 
 }
 
 
-int Segundos_Fim_Barra ()
+string Segundos_Fim_Barra ()
 {
 
    int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
    datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
    //if(grafico_atual.isNewBar(new_time)) Segundos_Contados=0;
-   return 60-(TimeCurrent()-new_time);
+   return DoubleToString(60-(TimeCurrent()-new_time),0);
 
 }
 
@@ -149,10 +151,14 @@ void Inicializa_Funcs ()
    if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
    if(Usa_Prop == true) Inicializa_Prop();
    if(Usa_Hilo == true) Inicializa_HiLo();
+   if(Usa_BSI == true)  Inicializa_BSI();
+
    if(Usa_Hilo == true) CalculaHiLo();
    if(Usa_PSar == true) CalculaPSar();
+   if(Usa_BSI == true) CalculaBSI();   
+   
    if(Usa_Fractal == true) CalculaFractal();
-   if(Usa_Fractal == true) CalculaOzy();
+
 
    if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);
    if(Usa_Ozy == true) ChartIndicatorAdd(0,0,HandleOzy);
@@ -170,7 +176,7 @@ void Comentario (int ops)
 
 if(ops > 0) Comment(Descricao_Robo+" COMPRADO - SL: "+DoubleToString(StopLossValorCompra)+" - TP: "+DoubleToString(TakeProfitValorCompra)+" TS: "+DoubleToString(TS_ValorCompra)+" - "+Segundos_Fim_Barra());
 if(ops < 0) Comment(Descricao_Robo+" VENDIDO- SL: "+DoubleToString(StopLossValorVenda)+" - TP: "+DoubleToString(TakeProfitValorVenda)+" TS: "+DoubleToString(TS_ValorVenda)+" - "+Segundos_Fim_Barra());
-if(ops == 0)   Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta())+" - "+Segundos_Fim_Barra());
+if(ops == 0)   Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),0)+" - "+Segundos_Fim_Barra());
 
 
 //Comment(Segundos_Fim_Barra());

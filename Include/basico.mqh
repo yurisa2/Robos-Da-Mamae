@@ -11,11 +11,12 @@
 #include <Trade\AccountInfo.mqh>
 #include <Charts\Chart.mqh>
 #include <Lib_CisNewBar.mqh>
-
+#include <Expert\Expert.mqh>
 
 
 //--- object for performing trade operations
-CTrade  trade;
+CExpert expert;
+CTrade  trade2;
 CTrade  CObject;
 CSymbolInfo simbolo;
 CPositionInfo posicao;
@@ -99,7 +100,7 @@ int iniciaconexao ()
 //--- 
    Print(__FUNCTION__,"  completed");
 //---
-
+/* Tiver que comentar pq tava dando treta.
 //--- set available slippage in points when buying/selling
    int deviation=0;
    trade.SetDeviationInPoints(deviation);
@@ -110,6 +111,7 @@ int iniciaconexao ()
 //--- what function is to be used for trading: true - OrderSendAsync(), false - OrderSend()
    trade.SetAsyncMode(true);
 //---
+*/
 
    return(0);
 }

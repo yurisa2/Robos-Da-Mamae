@@ -72,7 +72,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
    if(Operacoes==0) 
    {
    ObjectsDeleteAll(0,0,-1);
-   Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta()));
+   Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),0));
    Cria_Botao_Operar();
    }
    Print("Operacoes no fim da req: ",Operacoes);

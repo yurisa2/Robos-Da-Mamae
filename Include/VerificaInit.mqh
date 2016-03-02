@@ -30,19 +30,29 @@ ENUM_INIT_RETCODE VerificaInit ()
    return(INIT_PARAMETERS_INCORRECT);
    }
    
-   if(Usa_PSar == true && Periodos>0) 
-   {
-   MessageBox("Psar Nao Usa Periodos","Erro de Inicialização",MB_OK);
-   Print("Psar Nao Usa Periodos","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-   
-   if(Usa_Hilo == true && (PSAR_Max_Step > 0 || PSAR_Step >0))
+//   if(Usa_PSar == true && Periodos>0) 
+//   {
+//   MessageBox("Psar Nao Usa Periodos","Erro de Inicialização",MB_OK);
+//   Print("Psar Nao Usa Periodos","Erro de Inicialização");
+//   return(INIT_PARAMETERS_INCORRECT);
+//   }
+//   
+   //if(Usa_Hilo == true && (PSAR_Max_Step > 0 || PSAR_Step >0))
+   //{
+   //MessageBox("HiLo Nao Usar Steps","Erro de Inicialização",MB_OK);
+   //Print("HiLo Nao Usar Steps","Erro de Inicialização");
+   //return(INIT_PARAMETERS_INCORRECT);
+   //}
+
+
+/* pensar pensar pensar
+   if(eh_otimizacao == true && (PSAR_Max_Step > 0 || PSAR_Step >0))
    {
    MessageBox("HiLo Nao Usar Steps","Erro de Inicialização",MB_OK);
    Print("HiLo Nao Usar Steps","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
+*/
 
 
    if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) 
@@ -82,13 +92,6 @@ ENUM_INIT_RETCODE VerificaInit ()
    return(INIT_PARAMETERS_INCORRECT);
    }
    
-    if(Usa_Hilo == true && Usa_PSar == true) 
-     {
-
-   MessageBox("Ainda não fazemos 2 indicadores juntos","Erro de Inicialização",MB_OK);     
-   Print("Ainda não fazemos 2 indicadores juntos","Erro de Inicialização");
-      return(INIT_PARAMETERS_INCORRECT);
-   }
    
    
    if(PontoDeMudancaSL > MoverSL || (MoverSL==0 && PontoDeMudancaSL <0)) 
@@ -120,7 +123,22 @@ ENUM_INIT_RETCODE VerificaInit ()
    return(INIT_PARAMETERS_INCORRECT);  
    }
    
- 
+   
+   if(Otimizacao)
+   {
+      if(Usa_Prop)
+      {                                            
+
+         if(Prop_StopLoss + Prop_MoverSL + Prop_PontoDeMudancaSL + Prop_TakeProfit + Prop_Trailing_stop + Prop_Trailing_stop_start ==0 )    return(INIT_PARAMETERS_INCORRECT);
+   
+   
+   }
+      if(Usa_Fixos)
+      {
+         if(StopLoss + MoverSL + PontoDeMudancaSL + TakeProfit + Trailing_stop + Trailing_stop_start ==0)    return(INIT_PARAMETERS_INCORRECT);      
+      }
+   
+   }
 return INIT_SUCCEEDED;
 
 }

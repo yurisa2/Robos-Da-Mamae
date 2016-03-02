@@ -25,45 +25,13 @@ void OnChartEvent(const int id,
         { 
          if(Operacoes>0)  VendaStop(" Abortado pelo botão");
          if(Operacoes<0)  CompraStop(" Abortado pelo botão");   
-         //--- Estado do botão - pressionado ou não 
-         // bool selected=ObjectGetInteger(0,"BTN_ABORTAR",OBJPROP_STATE); 
-         //--- registrar uma mensagem de depuração 
-         //Print("Botão pressionado = ",selected);
-         
-          
-         // int customEventID; // Número do evento personalizado para enviar 
-         //string message;    // Mensagem a ser enviada no caso 
-         //--- Se o botão for pressionado 
-         //if(selected) 
-         //  { 
-         //   message="Botão pressionado"; 
-         //   customEventID=CHARTEVENT_CUSTOM+1; 
-         //  } 
-         //else // Botão não está pressionado 
-         //  { 
-         //   message="Botão não está pressionado"; 
-         //   customEventID=CHARTEVENT_CUSTOM+999; 
-         //  } 
+  
         } 
         if(clickedChartObject=="Botao_Operar") 
         { 
-         if(Mudanca>0)  VendaStop("Iniciado pelo botão");
-         if(Mudanca<0)  CompraStop("Iniciado pelo botão");   
+         if(Mudanca<0)  VendaStop("Iniciado pelo botão");
+         if(Mudanca>0)  CompraStop("Iniciado pelo botão");   
 
-          
-         //int customEventID; // Número do evento personalizado para enviar 
-         //string message;    // Mensagem a ser enviada no caso 
-         //--- Se o botão for pressionado 
-         //if(selected) 
-         //  { 
-         //   message="Botão pressionado"; 
-         //   customEventID=CHARTEVENT_CUSTOM+1; 
-         //  } 
-         //else // Botão não está pressionado 
-         //  { 
-         //   message="Botão não está pressionado"; 
-         //   customEventID=CHARTEVENT_CUSTOM+999; 
-         //  } 
         } 
       ChartRedraw();// Redesenho forçado de todos os objetos de gráfico 
      } 
@@ -81,6 +49,8 @@ if(Operacoes<0) ObjectCreate(0,"StopLossVenda",OBJ_HLINE,0,0,StopLossValorVenda)
 if(Operacoes>0) ObjectCreate(0,"TakeProfitCompra",OBJ_HLINE,0,0,TakeProfitValorCompra);
 if(Operacoes<0) ObjectCreate(0,"TakeProfitVenda",OBJ_HLINE,0,0,TakeProfitValorVenda);
 
+if(Usa_EM && Operacoes > 0) ObjectCreate(0,"LinhaPicote",OBJ_HLINE,0,0,PrecoCompra + Valor_Escalpe);
+if(Usa_EM && Operacoes < 0) ObjectCreate(0,"LinhaPicote",OBJ_HLINE,0,0,PrecoVenda - Valor_Escalpe);
 }
 
 void CriaLinhaTS (double NivelTS)
@@ -116,6 +86,20 @@ if(Operacoes<0) ObjectSetInteger(0,"TakeProfitVenda",OBJPROP_COLOR,clrBlue);
 if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_LEVELTEXT,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
 if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_TEXT,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
 if(Operacoes<0) ObjectSetString(0,"TakeProfitVenda",OBJPROP_TOOLTIP,"TakeProfit: "+DoubleToString(TakeProfitValorVenda));
+
+
+if(Operacoes<0) ObjectSetInteger(0,"LinhaPicote",OBJPROP_STYLE,STYLE_DASHDOT); 
+if(Operacoes<0) ObjectSetInteger(0,"LinhaPicote",OBJPROP_COLOR,clrGhostWhite); 
+if(Operacoes<0) ObjectSetString(0,"LinhaPicote",OBJPROP_LEVELTEXT,"Picote: "+DoubleToString(PrecoVenda - Valor_Escalpe));
+if(Operacoes<0) ObjectSetString(0,"LinhaPicote",OBJPROP_TEXT,"Picote: "+DoubleToString(PrecoVenda - Valor_Escalpe));
+if(Operacoes<0) ObjectSetString(0,"LinhaPicote",OBJPROP_TOOLTIP,"Picote: "+DoubleToString(PrecoVenda - Valor_Escalpe));
+
+
+if(Operacoes>0) ObjectSetInteger(0,"LinhaPicote",OBJPROP_STYLE,STYLE_DASHDOT); 
+if(Operacoes>0) ObjectSetInteger(0,"LinhaPicote",OBJPROP_COLOR,clrGhostWhite); 
+if(Operacoes>0) ObjectSetString(0,"LinhaPicote",OBJPROP_LEVELTEXT,"Picote: "+DoubleToString(PrecoCompra + Valor_Escalpe));
+if(Operacoes>0) ObjectSetString(0,"LinhaPicote",OBJPROP_TEXT,"Picote: "+DoubleToString(PrecoCompra + Valor_Escalpe));
+if(Operacoes>0) ObjectSetString(0,"LinhaPicote",OBJPROP_TOOLTIP,"Picote: "+DoubleToString(PrecoCompra + Valor_Escalpe));
 
 }
 
@@ -221,11 +205,16 @@ void Botao_Operar ()                // prioridade para clicar no mouse
 //   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_ZORDER,1); 
 //--- sucesso na execução 
 }
-/*
-string Desc_Robo (string Desc_A_Mao)
+
+void Apaga_Graficos ()
 {
-
-
-
+ ObjectDelete(0,"Botao_Operar");
+ ObjectDelete(0,"BTN_ABORTAR"); 
+ ObjectDelete(0,"TS");
+ ObjectDelete(0,"StopLossCompra");
+ ObjectDelete(0,"StopLossVenda");
+ ObjectDelete(0,"TakeProfitCompra");
+ ObjectDelete(0,"TakeProfitVenda");
+ ObjectDelete(0,"LinhaPicote");
+//ChartRedraw();
 }
-*/

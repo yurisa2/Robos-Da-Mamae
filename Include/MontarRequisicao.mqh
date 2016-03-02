@@ -61,7 +61,9 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
                   }
 
          DaResultado = true;
-   ObjectsDeleteAll(0,0,-1);
+         
+         Sleep(1000);
+   Apaga_Graficos();
    if(Operacoes!=0)
    {
    CriaLinhaTS(0);
@@ -71,7 +73,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
    }
    if(Operacoes==0) 
    {
-   ObjectsDeleteAll(0,0,-1);
+   Apaga_Graficos();
    Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),0));
    Cria_Botao_Operar();
    }

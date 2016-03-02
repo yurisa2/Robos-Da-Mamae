@@ -10,12 +10,13 @@
 
 #include <basico.mqh>
 #include <OnTrade.mqh>
-#include <Inputs_Vars.mqh>
 #include <FuncoesBucaresteIndicador.mqh>
+#include <Inputs_Vars.mqh>
 #include <HiLo.mqh>
 #include <PSAR.mqh>
 #include <Ozy.mqh>
 #include <BSI.mqh>
+#include <Seccao.mqh>
 #include <Fractals.mqh>
 #include <Stops.mqh>
 #include <Graficos.mqh>
@@ -27,21 +28,19 @@
 
 int OnInit()
   {
-  expert.Init(_Symbol,TimeFrame,1,TimeMagic);
    ObjectsDeleteAll(0,0,-1);
-  
-   EventSetTimer(5);
+   EventSetMillisecondTimer(333);
 
    TimeMagic =MathRand();
+
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
-
-
    Print("Liquidez da conta: ",conta.Equity());
    
-   Inicializa_Funcs();
-   expert.Init(_Symbol,TimeFrame,true,TimeMagic);
-   return(VerificaInit());
    
+   
+   Inicializa_Funcs();
+   
+   return(VerificaInit());
 
 }
 
@@ -49,17 +48,35 @@ void OnTimer()
 {
 IniciaDia();
 
-
-   
-//Botao_Abortar(); Acho que é cagada
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
 
+Comentario(Operacoes);
+Escalpelador_Maluco();
 
 
+   if(ZerarFinalDoDia == true) ZerarODia();
+/* ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
+   else
+   {
+   
+   if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
+   if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
 
-////////////////// Fim 
+   if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
+   if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
 
-/////////////////////////////////////////////////////////
+   }
+*/
+
+//ZerarODia();
+
+
+ }
+
+void OnTick()
+{
+
+
 /////////////////////// Funçoes de STOP
          if(Usa_Fixos == true) 
          {
@@ -84,31 +101,6 @@ DetectaNovaBarra();
 
    if(IndicadorTempoReal == true && Usa_Hilo == true)      HiLo();
    if(IndicadorTempoReal == true && Usa_PSar == true)      PSar();
-
-   if(ZerarFinalDoDia == true) ZerarODia();
-/* ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
-   else
-   {
-   
-   if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
-   if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
-
-   if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
-   if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
-
-   }
-*/
-
-//ZerarODia();
-
-
- }
-
-void OnTick()
-{
-Comentario(Operacoes);
-expert.EveryTick(true);
-
 
 }
 

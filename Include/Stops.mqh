@@ -4,7 +4,6 @@
 void Inicializa_Prop ()
 {
 
-   Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
    Prop_Limite_Minimo =  Prop_Limite_Minimo_Tick_Size * Tick_Size;
    Print("Tamanho do Tick: ",Tick_Size," Delta Minimo: ",Prop_Limite_Minimo);
 
@@ -172,8 +171,6 @@ TakeProfitValorVenda = -999999999;
 //TS e TSP
 void TS ()
    {
-   
-
       if(Operacoes>0 && Trailing_stop >0 && daotick() > PrecoCompra + Trailing_stop + Trailing_stop_start)
         {
         TS_ValorCompra_atual = daotick()-Trailing_stop;
@@ -206,7 +203,6 @@ void TS ()
          Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor daotick: ",daotick());
          ObjectDelete(0,"TS");
         }   
-        
    }
 
 //////////////////////////////////////////////////////////////////////////

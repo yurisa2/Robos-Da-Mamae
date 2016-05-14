@@ -92,7 +92,7 @@ string Segundos_Fim_Barra ()
    int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
    datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
    //if(grafico_atual.isNewBar(new_time)) Segundos_Contados=0;
-   return DoubleToString(60-(TimeCurrent()-new_time),0)+"s";
+   return DoubleToString(PeriodSeconds(TimeFrame)-(TimeCurrent()-new_time),0)+"s";
 
 }
 

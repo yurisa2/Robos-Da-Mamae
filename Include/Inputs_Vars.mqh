@@ -101,6 +101,9 @@ input string _Escalpelador_Maluco  = "-------------------------------------";
 input bool Usa_EM = false;                                                       //Usa EM
 input int Tamanho_Picote = 1;                                                    //Quantos Tick Size ele picota
 
+
+
+
 double Tick_Size = 0;
 
 double Valor_Escalpe ;

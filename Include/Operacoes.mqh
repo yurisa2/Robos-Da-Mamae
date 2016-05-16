@@ -43,15 +43,15 @@ void VendaIndicador (string Desc)
 
 void StopLossCompra ()
 {
- if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes >0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
+ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes >0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
    {
       if(daotick()<=StopLossValorCompra)
         {
-         Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
-         Print(Descricao_Robo+" VENDA! ",Operacoes);
-
-         VendaStop("Venda SL: "+DoubleToString(daotick(),2));
-         DeuStopLoss = true;
+            Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
+            Print(Descricao_Robo+" VENDA! ",Operacoes);
+   
+            VendaStop("Venda SL: "+DoubleToString(daotick(),2));
+            DeuStopLoss = true;
         }
    }
 }
@@ -69,8 +69,9 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && 
         {
          Print(Descricao_Robo+" Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
          Print(Descricao_Robo+" COMPRA! ",Operacoes);
-         DeuStopLoss = true;
+
          CompraStop("Compra SL: "+DoubleToString(daotick(),2));
+         DeuStopLoss = true;
         }
    }
 }

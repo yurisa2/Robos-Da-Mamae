@@ -187,9 +187,9 @@ void ArrumaMinutos ()
 void Comentario (int ops)
 {
 
-if(ops > 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" COMPRADO - SL: "+DoubleToString(StopLossValorCompra,_Digits)+" - TP: "+DoubleToString(TakeProfitValorCompra,_Digits)+" TS: "+DoubleToString(TS_ValorCompra,_Digits)+" - "+Segundos_Fim_Barra());
-if(ops < 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" VENDIDO- SL: "+DoubleToString(StopLossValorVenda,_Digits)+" - TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+" TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - "+Segundos_Fim_Barra());
-if(ops == 0)   Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" - "+Segundos_Fim_Barra());
+if(ops > 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" COMPRADO - SL: "+DoubleToString(StopLossValorCompra,_Digits)+" - TP: "+DoubleToString(TakeProfitValorCompra,_Digits)+" TS: "+DoubleToString(TS_ValorCompra,_Digits)+" - "+Segundos_Fim_Barra()+" - sl: "+DeuStopLoss);
+if(ops < 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" VENDIDO- SL: "+DoubleToString(StopLossValorVenda,_Digits)+" - TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+" TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - "+Segundos_Fim_Barra()+" - sl: "+DeuStopLoss);
+if(ops == 0)   Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" - "+Segundos_Fim_Barra()+" - sl: "+DeuStopLoss);
    
 
 }
@@ -261,9 +261,25 @@ return Desc_Robo;
        
        PrimeiraOp = true;
        
-       if(Mudanca>0) CompraStop("Compra OperaLogoDeCara");
-       if(Mudanca<0) VendaStop("Venda OperaLogoDeCara");
+         if(Mudanca<0) 
+         { 
+         VendaStop("OperaLogoDeCara"); 
+         DeuStopLoss = false;
+         DeuTakeProfit = false;
+         }
+         if(Mudanca>0)  
+         {
+         CompraStop("OperaLogoDeCara");   
+         DeuStopLoss = false;
+         DeuTakeProfit = false;
+         }
+       
+       
        }
+       
+
+       
+       
  }
 //////////////// Fim Primeira Operaçao
 

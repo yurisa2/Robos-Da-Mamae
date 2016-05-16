@@ -34,8 +34,8 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          if(Usa_Fixos == true) CalculaStops();
          if(Usa_Prop == true) 
          {
-         Stops_Proporcional();
-         Print("Delta do Proporcional: ",Prop_Delta());
+            Stops_Proporcional();
+            Print("Delta do Proporcional: ",Prop_Delta());
          }
 
          MqlTradeRequest Req;     
@@ -55,27 +55,27 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
                if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada |",comentario_req); 
                else 
                   {
-                  Print(Descricao_Robo+" Deu Pau, Verifique com pressao");
-                  SendNotification("ERRO GRAVE, VERIFIQUE: "+IntegerToString(GetLastError()));
-                  ExpertRemove();
+                     Print(Descricao_Robo+" Deu Pau, Verifique com pressao");
+                     SendNotification("ERRO GRAVE, VERIFIQUE: "+IntegerToString(GetLastError()));
+                     ExpertRemove();
                   }
 
          DaResultado = true;
          
-         Sleep(1000);
+         Sleep(300);
    Apaga_Graficos();
    if(Operacoes!=0)
    {
-   CriaLinhaTS(0);
-   Cria_Botao_Abortar();
-   CriaLinhas();
-   AtualizaLinhas();
+      CriaLinhaTS(0);
+      Cria_Botao_Abortar();
+      CriaLinhas();
+      AtualizaLinhas();
    }
    if(Operacoes==0) 
    {
-   Apaga_Graficos();
-   Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),0));
-   Cria_Botao_Operar();
+      Apaga_Graficos();
+      Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),0));
+      Cria_Botao_Operar();
    }
    Print("Operacoes no fim da req: ",Operacoes);
    }

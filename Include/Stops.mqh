@@ -204,11 +204,7 @@ void TS ()
          ObjectDelete(0,"TS");
         }   
    }
-
 //////////////////////////////////////////////////////////////////////////
-
-
-        
 void Prop_TS ()
    {
       if(Operacoes>0 && Prop_Trailing_Stop_Valor >0 && daotick() > PrecoCompra + Prop_Trailing_Stop_Valor + Prop_Trailing_stop_start_Valor)
@@ -244,9 +240,7 @@ void Prop_TS ()
          ObjectDelete(0,"TS");
         }   
         }        
-        
-        
-        
+      
 
 void Prop_SLMovel ()
 {

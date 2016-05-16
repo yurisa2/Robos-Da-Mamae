@@ -35,9 +35,7 @@ int OnInit()
 
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
    Print("Liquidez da conta: ",conta.Equity());
-   
-   
-   
+
    Inicializa_Funcs();
    
    return(VerificaInit());
@@ -86,14 +84,14 @@ void OnTick()
 /////////////////////// Funçoes de STOP
          if(Usa_Fixos == true) 
          {
-         TS();         
-         SLMovel();
+            TS();         
+            SLMovel();
          }
         
          if(Usa_Prop == true) 
          {
-         Prop_TS();
-         Prop_SLMovel();
+            Prop_TS();
+            Prop_SLMovel();
          }
          
          StopLossCompra();

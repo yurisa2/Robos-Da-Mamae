@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-#property version   "1.29"
+#property version   "1.30"
 
 #include <basico.mqh>
 #include <OnTrade.mqh>
@@ -29,7 +29,7 @@
 int OnInit()
   {
    ObjectsDeleteAll(0,0,-1);
-   EventSetMillisecondTimer(333);
+   EventSetMillisecondTimer(500);
 
    TimeMagic =MathRand();
 
@@ -51,22 +51,28 @@ IniciaDia();
 if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
 
 Comentario(Operacoes);
-Escalpelador_Maluco();
 
 
+/*
    if(ZerarFinalDoDia == true) ZerarODia();
-/* ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
+// ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
    else
    {
    
-   if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
-   if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
+   if(Operacoes>1 && Msg_Fim == false) 
+   {
+   Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
+   Msg_Fim = true;
+   }
+   if(Operacoes<1 && Msg_Fim == false)
+   {
+   Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
+   Msg_Fim = true;
+   }
 
-   if(Operacoes>1) Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
-   if(Operacoes<1) Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
 
    }
-*/
+//*/
 
 //ZerarODia();
 
@@ -101,6 +107,8 @@ DetectaNovaBarra();
 
    if(IndicadorTempoReal == true && Usa_Hilo == true)      HiLo();
    if(IndicadorTempoReal == true && Usa_PSar == true)      PSar();
+   
+   Escalpelador_Maluco();
 
 }
 

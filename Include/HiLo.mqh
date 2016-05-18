@@ -153,7 +153,7 @@ void CalculaHiLo ()
 void HiLo ()
 {
 
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
    {
    
    double _ma1[];
@@ -183,14 +183,14 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
-                    VendaIndicador("Venda por HiLo");
+                    VendaIndicador("Venda por HiLo","Entrada");
                     Ordem = true;
                     }
                     
                     if(Mudanca==-1 && Ordem==false) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
-                    CompraIndicador("Compra por HiLo");
+                    CompraIndicador("Compra por HiLo","Entrada");
                     Ordem = true;
                     }
                     }

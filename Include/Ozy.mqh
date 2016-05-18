@@ -35,7 +35,7 @@ return retorno_ozy;
 void Ozy_Opera ()
 {
 
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
    {
    
                     if(Mudanca!=Ozy(0)) 
@@ -49,14 +49,14 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
-                    VendaIndicador("Venda por Ozy");
+                    VendaIndicador("Venda por Ozy","Entrada");
                     Ordem = true;
                     }
                     
                     if(Mudanca==-1 && Ordem==false) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
-                    CompraIndicador("Compra por Ozy");
+                    CompraIndicador("Compra por Ozy","Entrada");
                     Ordem = true;
                     }
                     }

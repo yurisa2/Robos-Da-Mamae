@@ -102,8 +102,8 @@ void IniciaDia ()
         if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
         {
         
-   if(Usa_Hilo == true) CalculaHiLo();
-   if(Usa_PSar == true) CalculaPSar();
+         if(Usa_Hilo == true) CalculaHiLo();
+         if(Usa_PSar == true) CalculaPSar();
         
         PrecoCompra =0;
         PrecoVenda =0;
@@ -151,12 +151,12 @@ void ZerarODia ()
           
                    if(Operacoes<0) 
                       {
-                      MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia");  
+                      MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia | Ops: "+Operacoes);  
                       Sleep(1000);
                       }
                    if(Operacoes>0) 
                      {
-                     MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia");
+                     MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia | Ops: "+Operacoes);
                      Sleep(1000);
                      SendMail(Descricao_Robo+"Bucareste: Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
                      }
@@ -180,16 +180,36 @@ void ArrumaMinutos ()
     
    HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFimMenos1,2,'0');
    HorarioFimMais1 = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim+1,2,'0');
-   Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1:",HorarioFimMais1 );
+   Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1: ",HorarioFimMais1 );
 }
+
 
 
 void Comentario (int ops)
 {
 
-if(ops > 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" COMPRADO - SL: "+DoubleToString(StopLossValorCompra,_Digits)+" - TP: "+DoubleToString(TakeProfitValorCompra,_Digits)+" TS: "+DoubleToString(TS_ValorCompra,_Digits)+" - "+Segundos_Fim_Barra()+" - sl: "+DeuStopLoss);
-if(ops < 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" VENDIDO- SL: "+DoubleToString(StopLossValorVenda,_Digits)+" - TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+" TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - "+Segundos_Fim_Barra()+" - sl: "+DeuStopLoss);
-if(ops == 0)   Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" - "+Segundos_Fim_Barra()+" - sl: "+DeuStopLoss);
+if(ops > 0) 
+{
+Comment(
+Descricao_Robo()+"|"+
+Desc_Se_Vazio()+"\n"+
+Descricao_Robo+
+" COMPRADO - SL: "+
+DoubleToString(StopLossValorCompra,_Digits)+
+" - TP: "+DoubleToString(TakeProfitValorCompra,_Digits)+
+" TS: "+DoubleToString(TS_ValorCompra,_Digits)+" - "+
+Segundos_Fim_Barra()+
+" - EM_Contador: "+
+
+EM_Contador_Picote
+
+);
+
+
+}
+
+if(ops < 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" VENDIDO- SL: "+DoubleToString(StopLossValorVenda,_Digits)+" - TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+" TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - "+Segundos_Fim_Barra()+" - EM_Contador: "+EM_Contador_Picote);
+if(ops == 0)   Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" - "+Segundos_Fim_Barra()+" - daotick: "+daotick());
    
 
 }
@@ -263,13 +283,13 @@ return Desc_Robo;
        
          if(Mudanca<0) 
          { 
-         VendaStop("OperaLogoDeCara"); 
+         VendaImediata("OperaLogoDeCara","Entrada"); 
          DeuStopLoss = false;
          DeuTakeProfit = false;
          }
          if(Mudanca>0)  
          {
-         CompraStop("OperaLogoDeCara");   
+         CompraImediata("OperaLogoDeCara","Entrada"); 
          DeuStopLoss = false;
          DeuTakeProfit = false;
          }

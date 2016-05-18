@@ -23,20 +23,19 @@ void OnChartEvent(const int id,
       //--- Se você clicar sobre o objeto com o nome buttonID 
       if(clickedChartObject=="BTN_ABORTAR") 
         { 
-         if(Operacoes>0)  VendaStop(" Abortado pelo botão");
-         if(Operacoes<0)  CompraStop(" Abortado pelo botão");
+         if(Operacoes>0)  VendaImediata(" Abortado pelo botão");
+         if(Operacoes<0)  CompraImediata(" Abortado pelo botão");
         } 
         if(clickedChartObject=="Botao_Operar") 
         { 
          if(Mudanca<0) 
          { 
-         VendaStop("Iniciado pelo botão"); 
-         DeuStopLoss = false;
+         VendaImediata("Iniciado pelo botão","Entrada"); 
          DeuTakeProfit = false;
          }
          if(Mudanca>0)  
          {
-         CompraStop("Iniciado pelo botão");   
+         CompraImediata("Iniciado pelo botão","Entrada"); 
          DeuStopLoss = false;
          DeuTakeProfit = false;
          }

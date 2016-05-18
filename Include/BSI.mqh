@@ -42,7 +42,7 @@ if(BSI[0] == 0) CondicaoBSI = -1;
 void BSI ()
 {
 
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
    {
    
  double BSI[];
@@ -66,14 +66,14 @@ if(BSI[0] == 0) CondicaoBSI = -1;
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
-                    VendaIndicador("Venda por BSI");
+                    VendaIndicador("Venda por BSI","Entrada");
                     Ordem = true;
                     }
                     
                     if(Mudanca==-1 && Ordem==false) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
-                    CompraIndicador("Compra por BSI");
+                    CompraIndicador("Compra por BSI","Entrada");
                     Ordem = true;
                     }
                     }

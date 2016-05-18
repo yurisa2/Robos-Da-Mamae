@@ -1,3 +1,8 @@
+//+------------------------------------------------------------------+
+//|                                                                  |
+//|                                                              Sa2 |
+//|                                             https://www.mql5.com |
+//+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
@@ -30,32 +35,32 @@ void Inicializa_Prop ()
 }
 
 double Prop_Delta ()
-{
-double retorno_Prop_Delta =0;
- if(Prop_Metodo == 534) retorno_Prop_Delta =  Prop_Delta_Media();
- if(Prop_Metodo == 88) retorno_Prop_Delta =  Prop_Delta_BB();   
+   {
+      double retorno_Prop_Delta =0;
+      if(Prop_Metodo == 534) retorno_Prop_Delta =  Prop_Delta_Media();
+      if(Prop_Metodo == 88) retorno_Prop_Delta =  Prop_Delta_BB();   
+         
+      return retorno_Prop_Delta;
    
-   return retorno_Prop_Delta;
-
-}
+   }
 
 double Prop_Delta_Media ()
-{
-    double Prop_Media_Alta[];
-    double Prop_Media_Baixa[];
+   {
+       double Prop_Media_Alta[];
+       double Prop_Media_Baixa[];
+      
+       ArraySetAsSeries(Prop_Media_Alta, true);
+       ArraySetAsSeries(Prop_Media_Baixa, true);
    
-    ArraySetAsSeries(Prop_Media_Alta, true);
-    ArraySetAsSeries(Prop_Media_Baixa, true);
-
-    int copied_Prop_Media_Alta =   CopyBuffer(Handle_Prop_Media_Alta,0,0,1,Prop_Media_Alta);
-    int copied_Prop_Media_Baixa =  CopyBuffer(Handle_Prop_Media_Baixa,0,0,1,Prop_Media_Baixa);
-
-   double Retorno_Prop_Delta = Prop_Media_Alta[0] - Prop_Media_Baixa[0];
+       int copied_Prop_Media_Alta =   CopyBuffer(Handle_Prop_Media_Alta,0,0,1,Prop_Media_Alta);
+       int copied_Prop_Media_Baixa =  CopyBuffer(Handle_Prop_Media_Baixa,0,0,1,Prop_Media_Baixa);
    
-   //Print("Delta do Proporcional: ",Retorno_Prop_Delta);
-   
-   return Retorno_Prop_Delta;
-}
+      double Retorno_Prop_Delta = Prop_Media_Alta[0] - Prop_Media_Baixa[0];
+      
+      //Print("Delta do Proporcional: ",Retorno_Prop_Delta);
+      
+      return Retorno_Prop_Delta;
+   }
 
 double Prop_Delta_BB ()
 
@@ -83,6 +88,7 @@ double retorno_BB = 0;
 
 void Stops_Proporcional ()
 {
+
 string DeclaraStops = "";
 StopLossValorCompra =-9999999999;
 TakeProfitValorCompra = 999999999;
@@ -130,6 +136,7 @@ double   Prop_Calc_TP = Prop_TakeProfit * Prop_Delta();
 
 void CalculaStops ()
 {
+
 string DeclaraStops = "";
 StopLossValorCompra =-9999999999;
 TakeProfitValorCompra = 999999999;
@@ -143,8 +150,8 @@ TakeProfitValorVenda = -999999999;
               }
            else
              {
-              StopLossValorVenda = PrecoVenda+StopLoss;
-              StopLossValorCompra = PrecoCompra-StopLoss;
+              StopLossValorVenda = PrecoVenda+(StopLoss * Tick_Size);
+              StopLossValorCompra = PrecoCompra- (StopLoss * Tick_Size);
               //Print(Descricao_Robo+" "+"SL Compra: ",StopLossValorCompra," SL Venda: ",StopLossValorVenda);
               if(Operacoes>1) DeclaraStops = DeclaraStops +" "+"SL Compra: "+DoubleToString(StopLossValorCompra);
               if(Operacoes<1) DeclaraStops = DeclaraStops +" "+"SL Venda: "+DoubleToString(StopLossValorVenda);                
@@ -156,8 +163,8 @@ TakeProfitValorVenda = -999999999;
               }
            else
              {
-              TakeProfitValorVenda = PrecoVenda-TakeProfit;
-              TakeProfitValorCompra = PrecoCompra+TakeProfit;
+              TakeProfitValorVenda = PrecoVenda- (TakeProfit * Tick_Size);
+              TakeProfitValorCompra = PrecoCompra+ (TakeProfit * Tick_Size);
               //Print(Descricao_Robo+" "+"TP Compra: ",TakeProfitValorCompra," TP Venda: ",TakeProfitValorVenda);   
               if(Operacoes>1) DeclaraStops = DeclaraStops +" "+"TP Compra: "+DoubleToString(TakeProfitValorCompra);
               if(Operacoes<1) DeclaraStops = DeclaraStops +" "+"TP Venda: "+DoubleToString(TakeProfitValorVenda);           
@@ -171,18 +178,19 @@ TakeProfitValorVenda = -999999999;
 //TS e TSP
 void TS ()
    {
-      if(Operacoes>0 && Trailing_stop >0 && daotick() > PrecoCompra + Trailing_stop + Trailing_stop_start)
+      if(Operacoes>0 && Trailing_stop >0 && daotick() > PrecoCompra + (Trailing_stop * Tick_Size) + (Trailing_stop_start * Tick_Size))
         {
-        TS_ValorCompra_atual = daotick()-Trailing_stop;
+        TS_ValorCompra_atual = daotick()- (Trailing_stop * Tick_Size);
          if(TS_ValorCompra<TS_ValorCompra_atual)
            {
             TS_ValorCompra = TS_ValorCompra_atual;
             AtualizaLinhaTS(TS_ValorCompra);
            }
         }    
-      if(Operacoes<0 && Trailing_stop >0&& daotick() < PrecoVenda - Trailing_stop - Trailing_stop_start)
+        
+      if(Operacoes<0 && Trailing_stop >0&& daotick() < PrecoVenda - (Trailing_stop * Tick_Size) - (Trailing_stop_start * Tick_Size))
         {
-        TS_ValorVenda_atual = daotick()+Trailing_stop;  
+        TS_ValorVenda_atual = daotick() + (Trailing_stop * Tick_Size);
          if(TS_ValorVenda>TS_ValorVenda_atual)
            {
             TS_ValorVenda = TS_ValorVenda_atual;
@@ -192,14 +200,14 @@ void TS ()
   
       if(Operacoes>0 && Trailing_stop >0 && daotick()<= TS_ValorCompra)      
         {
-         VendaStop("Venda TrailingStop");
+         VendaImediata("Venda TrailingStop");
          Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor daotick: ",daotick());
          ObjectDelete(0,"TS");
         }
    
       if(Operacoes<0 && Trailing_stop >0 && daotick()>= TS_ValorVenda)      
         {
-         CompraStop("Compra TrailingStop");
+         CompraImediata("Compra TrailingStop");
          Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor daotick: ",daotick());
          ObjectDelete(0,"TS");
         }   
@@ -228,14 +236,14 @@ void Prop_TS ()
   
       if(Operacoes>0 && Prop_Trailing_Stop_Valor >0 && daotick()<= TS_ValorCompra)      
         {
-         VendaStop("Venda TrailingStop (P)");
+         VendaImediata("Venda TrailingStop (P)");
          Print(Descricao_Robo+" (P) TrailingStopCompra Ativado, Valor daotick: ",daotick());
          ObjectDelete(0,"TS");
         }
    
       if(Operacoes<0 && Prop_Trailing_Stop_Valor >0 && daotick()>= TS_ValorVenda)      
         {
-         CompraStop("Compra TrailingStop (P)");
+         CompraImediata("Compra TrailingStop (P)");
          Print(Descricao_Robo+" (P) TrailingStopVenda Ativado, Valor daotick: ",daotick());
          ObjectDelete(0,"TS");
         }   
@@ -267,10 +275,11 @@ ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);
 
 void SLMovel ()
 {
+MoverSL  = RAW_MoverSL * Tick_Size;
 
 if(MoverSL !=0 && daotick() >= PrecoCompra + MoverSL &&  Operacoes > 0 && Contador_SLMOVEL==0)
   {
-   StopLossValorCompra = PrecoCompra + PontoDeMudancaSL;
+   StopLossValorCompra = PrecoCompra + (PontoDeMudancaSL * Tick_Size);
    Contador_SLMOVEL++;
    Print(Descricao_Robo+" | StopLoss Movido com sucesso, SL: "+DoubleToString(StopLossValorCompra));
    ObjectMove(0,"StopLossCompra",0,0,StopLossValorCompra);
@@ -278,7 +287,7 @@ if(MoverSL !=0 && daotick() >= PrecoCompra + MoverSL &&  Operacoes > 0 && Contad
 
 if(MoverSL !=0 && daotick() <= PrecoVenda - MoverSL &&  Operacoes < 0 && Contador_SLMOVEL==0)
   {
-   StopLossValorVenda = PrecoVenda - PontoDeMudancaSL;
+   StopLossValorVenda = PrecoVenda - (PontoDeMudancaSL * Tick_Size);
    Contador_SLMOVEL++;
 Print(Descricao_Robo+" | StopLoss Movido com sucesso, SL: "+DoubleToString(StopLossValorVenda));
 ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);

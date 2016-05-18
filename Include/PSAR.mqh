@@ -34,7 +34,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
 
 void PSar ()
 {
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
    {
    double PSar_Array[];
    ArraySetAsSeries(PSar_Array, true);
@@ -54,14 +54,14 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
                     if(Mudanca==1 && Ordem==false)  
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
-                    VendaIndicador("Venda por Inversão de PSAR");
+                    VendaIndicador("Venda por Inversão de PSAR","Entrada");
                     Ordem = true;
                     }
                     
                     if(Mudanca==-1 && Ordem==false)
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
-                    CompraIndicador("Compra por Inversão de PSAR");
+                    CompraIndicador("Compra por Inversão de PSAR","Entrada");
                     Ordem = true;
                     }
                       

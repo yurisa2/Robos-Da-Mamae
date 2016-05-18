@@ -58,7 +58,7 @@ for(int x=0;x<Frac_Candles_Espera;x++)
 
 void Fractal ()
 {
-if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true)
+if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
    {
    double _Fractal1[];
    double _Fractal2[];
@@ -105,14 +105,14 @@ for(int x=0;x<Frac_Candles_Espera;x++)
                     {
                     Print("Operações Antes da venda: ",Operacoes," VENDE! ");
                     //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
-                    VendaIndicador("Venda por Fractal");
+                    VendaIndicador("Venda por Fractal","Entrada");
                     Ordem = true;
                     }
                     
                     if(Mudanca==1 && Ordem==false) 
                     {
                     Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
-                    CompraIndicador("Compra por Fractal");
+                    CompraIndicador("Compra por Fractal","Entrada");
                     Ordem = true;
                     }
                     

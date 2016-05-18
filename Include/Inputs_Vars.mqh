@@ -15,7 +15,8 @@ input int MinutoDeInicio = 20;                                             //Min
 input int HoraDeFim = 17;                                                  //Hora de Fim
 input int MinutoDeFim = 27;                                                //Minuto de Fim
 input int Limite_Operacoes = 9999;                                         //Limite de operações
-input double lucro_dia = 1000000;                                          //Lucro da Conta desde inicio da execução
+input double lucro_dia = 1000000;                                          //Lucro MAX da Conta desde inicio da execução ($)
+input double preju_dia = 1000000;                                          //Preju MAX da Conta desde inicio da execução ($)
 
 input bool   ZerarFinalDoDia = true;                                       //Encerra operações no final do dia (execução extendida)
 input string Descricao_Robo_Alpha = "";                                    //Descrição para logs e mensagens
@@ -53,7 +54,6 @@ input ENUM_MA_METHOD Ozy_MM =  MODE_SMA;                                        
 input int Ozy_Shift = 0;                                                   //Shift Ozymandias
 input int Ozy_length = 2;                                                  //Length Ozymandias
 
-
 input string Configs_PSAR = "-------------------------------------";
 input bool Usa_PSar = 0;                                                   //Usar Parabolic SAR
 input double PSAR_Step = 0;                                                //Parabolic SAR Step (0.02)
@@ -69,19 +69,19 @@ input int BSI_RangePeriod = 20;                                           //Rang
 input int BSI_Slowing = 3;                                                //Slowing
 input int BSI_Avg_Period = 3;                                             //Periodo Media
 
-input string Limites_Fixos = "-------------------------------------";
+input string Limites_Fixos = "----------USANDO TICK SIZE-----------";
 input bool   Usa_Fixos = true;                                             //Usar Limites Fixos
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
-input double MoverSL = 0;                                                  //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
+input double RAW_MoverSL = 0;                                                  //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
 input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
 input double TakeProfit = 0;                                               //Take Profit (0 desliga)
 input double Trailing_stop =0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 
+double MoverSL = 0;
 
 input string Limites_Proporcionais  = "-------------------------------------";
 enum Met_Prop
-
   {
   BB = 88,
   SMA  =534
@@ -97,12 +97,18 @@ input double   Prop_Trailing_stop =0;                                     //Trai
 input double   Prop_Trailing_stop_start = 0;                              //Inicio do Trailing Stop (0 desliga)
 input double   Prop_Limite_Minimo_Tick_Size = 0;                          //Limite Mínimo para operar (*Tick Size)
 
-input string _Escalpelador_Maluco  = "-------------------------------------";
-input bool Usa_EM = false;                                                       //Usa EM
-input int Tamanho_Picote = 1;                                                    //Quantos Tick Size ele picota
+input string _Escalpelador_Maluco  =  "USANDO TICK SIZE E PROP - CUIDADO----";
+input bool Usa_EM = false;                                                       //Usa Escalpelador Maluco
+enum EM_Tipo_Picote
+  {
+  Fixo = 55,
+  Proporcional  = 471
+  };
+input EM_Tipo_Picote EM_Picote_Tipo = 55;  
+input double Tamanho_Picote = 1;                                                 //Tamanho do Picote (Fixo & Prop)
+input int EM_Vezes_Picote = 2;                                                   //Quantas vezes ele picota antes de esperar
 
-
-
+int EM_Contador_Picote = 0;
 
 double Tick_Size = 0;
 
@@ -187,3 +193,10 @@ double Prop_Trailing_stop_start_Valor = 0;
  int HandleHiLoMediaAlta =0;
  int HandleHiLoMediaBaixa = 0;
  double RetornaTendencia = 0;
+ 
+ 
+ ///////////
+ 
+ string Comentario_Simples = "";
+ string Comentario_Avancado = "";
+ string Comentario_Debug = "";

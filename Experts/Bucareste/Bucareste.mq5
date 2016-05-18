@@ -6,11 +6,11 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-#property version   "1.30"
+#property version   "1.31"
 
 #include <basico.mqh>
 #include <OnTrade.mqh>
-#include <FuncoesBucaresteIndicador.mqh>
+#include <FuncoesGerais.mqh>
 #include <Inputs_Vars.mqh>
 #include <HiLo.mqh>
 #include <PSAR.mqh>
@@ -72,15 +72,13 @@ Comentario(Operacoes);
    }
 //*/
 
-//ZerarODia();
+ZerarODia();
 
 
  }
 
 void OnTick()
 {
-
-
 /////////////////////// Funçoes de STOP
          if(Usa_Fixos == true) 
          {

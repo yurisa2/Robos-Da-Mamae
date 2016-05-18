@@ -8,14 +8,20 @@
 
 ///////////////// COMPRA
 
-void CompraIndicador (string Desc)
-      {
+void CompraIndicador (string Desc,string IO = "Neutro")
+{
+      if(IO == "Entrada") EM_Contador_Picote = 0;
+      
+      if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
+      if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
+
+      
       Print(Descricao_Robo+" "+Desc);
       if(Operacoes<0 && SaiPeloIndicador==true)
          {
          MontarRequisicao(ORDER_TYPE_BUY,Desc);
          }
-      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia &&  conta.Equity() > liquidez_inicio - preju_dia &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
          {
          MontarRequisicao(ORDER_TYPE_BUY,Desc);
          }
@@ -24,14 +30,19 @@ void CompraIndicador (string Desc)
 //////////////////////////
 
 ///////////// Venda
-void VendaIndicador (string Desc)
-      {
+void VendaIndicador (string Desc,string IO = "Neutro")
+{
+      if(IO == "Entrada") EM_Contador_Picote = 0;
+      
+      if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
+      if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
+      
       Print(Descricao_Robo+" "+Desc);
       if(Operacoes>0 && SaiPeloIndicador==true) 
          {
          MontarRequisicao(ORDER_TYPE_SELL,Desc);
          }
-      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia &&  conta.Equity() > liquidez_inicio - preju_dia &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
          {
          MontarRequisicao(ORDER_TYPE_SELL,Desc);
          }
@@ -45,12 +56,12 @@ void StopLossCompra ()
 {
  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes >0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
    {
-      if(daotick()<=StopLossValorCompra)
+      if(daotick() <= StopLossValorCompra)
         {
             Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
             Print(Descricao_Robo+" VENDA! ",Operacoes);
    
-            VendaStop("Venda SL: "+DoubleToString(daotick(),2));
+            VendaImediata("Venda SL: "+DoubleToString(daotick(),2));
             DeuStopLoss = true;
         }
    }
@@ -70,7 +81,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && 
          Print(Descricao_Robo+" Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
          Print(Descricao_Robo+" COMPRA! ",Operacoes);
 
-         CompraStop("Compra SL: "+DoubleToString(daotick(),2));
+         CompraImediata("Compra SL: "+DoubleToString(daotick(),2));
          DeuStopLoss = true;
         }
    }
@@ -86,7 +97,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false &
       if(daotick()>TakeProfitValorCompra)
         {
          Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
-         VendaStop("Venda TP: "+DoubleToString(daotick(),2));
+         VendaImediata("Venda TP: "+DoubleToString(daotick(),2));
          DeuTakeProfit = true;
         }
    }
@@ -102,23 +113,33 @@ void TakeProfitVenda ()
       if(daotick()<TakeProfitValorVenda)
         {
          Print(Descricao_Robo+" Deu TakeProfit VENDIDO | Compra: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
-         CompraStop("Compra TP "+DoubleToString(daotick(),2));
+         CompraImediata("Compra TP "+DoubleToString(daotick(),2));
          DeuTakeProfit = true;
         }
    }
 }
 //////////////////////////////////////////////
 ///////////// Venda Do Stop
-void VendaStop (string Desc)
+void VendaImediata (string Desc,string IO = "Neutro")
 {
+if(IO == "Entrada") EM_Contador_Picote = 0;
+
+if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
+if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
+
 Print(Descricao_Robo+" "+Desc);
 MontarRequisicao(ORDER_TYPE_SELL,Desc);
 }
 ///////////////////////////////
 
 /////////////////////////// Compra Hilo STOP
-void CompraStop (string Desc)
+void CompraImediata (string Desc,string IO = "Neutro")
 {
+if(IO == "Entrada") EM_Contador_Picote = 0;
+
+if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
+if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
+
 Print(Descricao_Robo+" "+Desc);
 MontarRequisicao(ORDER_TYPE_BUY,Desc);
 }

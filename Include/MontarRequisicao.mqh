@@ -76,6 +76,8 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
       Apaga_Graficos();
       Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),0));
       Cria_Botao_Operar();
+      
+
    }
    Print("Operacoes no fim da req: ",Operacoes);
    }

@@ -9,18 +9,25 @@
 /////////////////////////////////////// Inputs
 
 input string Parametros_Gerais = "-------------------------------------";  //Parametros Gerais
-input double Lotes = 1;                                                    //Volume negociado
+
 input int HoraDeInicio = 9;                                                //Hora de Início
 input int MinutoDeInicio = 20;                                             //Minuto de Inicio
 input int HoraDeFim = 17;                                                  //Hora de Fim
 input int MinutoDeFim = 27;                                                //Minuto de Fim
-input int Limite_Operacoes = 9999;                                         //Limite de operações
-input double lucro_dia = 1000000;                                          //Lucro MAX da Conta desde inicio da execução ($)
-input double preju_dia = 1000000;                                          //Preju MAX da Conta desde inicio da execução ($)
-
 input bool   ZerarFinalDoDia = true;                                       //Encerra operações no final do dia (execução extendida)
 input string Descricao_Robo_Alpha = "";                                    //Descrição para logs e mensagens
 //string Descricao_Robo = Descricao_Robo(); +"|"+Descricao_Robo_Alpha;
+
+
+
+input string Parametros_Financeiros = "---------OU QUASE--------------------";
+input double Lotes = 1;                                                    //Volume negociado
+input int Limite_Operacoes = 9999;                                         //Limite de operações (entrada e Saida)
+input double custo_operacao = 1.36;                                        //$ Por negocio
+input double lucro_dia = 1000000;                                          //Lucro MAX dario ($ - liq)
+input double preju_dia = 1000000;                                          //Preju MAX dario ($ - liq)
+input bool   interrompe_durante = 0;                                       //(NAO FUNCIONAL AINDA) Interrompe a operacao nos limites IMEDIATAMENTE
+
 
 string Desc_Se_Vazio ()
 {
@@ -168,6 +175,8 @@ double TS_ValorCompra_atual = 0;
 string Desc_Req = "";
 
 int OperacoesFeitas = 0;
+int OperacoesFeitasGlobais = 0;
+double Liquidez_Teste = 0;
 
 int HandleGHL;
 int HandlePSar;
@@ -179,7 +188,9 @@ int CondicaoPsar;
 int CondicaoBSI;
 
 
-double liquidez_inicio=0;
+double liquidez_inicio = 0;
+double Liquidez_Teste_fim = 0;
+double Liquidez_Teste_inicio = 0;
 
 double Prop_MoverSL_Valor = 0 ;
 double Prop_Trailing_Stop_Valor = 0 ;

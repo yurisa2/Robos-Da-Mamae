@@ -21,7 +21,7 @@ void CompraIndicador (string Desc,string IO = "Neutro")
          {
          MontarRequisicao(ORDER_TYPE_BUY,Desc);
          }
-      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia &&  conta.Equity() > liquidez_inicio - preju_dia &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
          {
          MontarRequisicao(ORDER_TYPE_BUY,Desc);
          }
@@ -42,7 +42,7 @@ void VendaIndicador (string Desc,string IO = "Neutro")
          {
          MontarRequisicao(ORDER_TYPE_SELL,Desc);
          }
-      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && conta.Equity() < liquidez_inicio + lucro_dia &&  conta.Equity() > liquidez_inicio - preju_dia &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+      if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
          {
          MontarRequisicao(ORDER_TYPE_SELL,Desc);
          }

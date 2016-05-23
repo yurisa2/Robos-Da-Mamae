@@ -29,6 +29,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          TS_ValorVenda = 99999999;
          TS_ValorCompra = 0;
          OperacoesFeitas++;
+         OperacoesFeitasGlobais++;
          Contador_SLMOVEL = 0;
          
          if(Usa_Fixos == true) CalculaStops();
@@ -79,6 +80,17 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
       
 
    }
-   Print("Operacoes no fim da req: ",Operacoes);
+   Print("Operacoes no fim da req: ",Operacoes);  
+   Print("Saldo do Dia ate o momento: ",conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao);
+//   Print("Funcao Saldo: ",Saldo_Dia());
+   
+   
+   Liquidez_Teste_fim = conta.Equity();
+//   Print("Liquides Ini - Equi: ",liquidez_inicio - conta.Equity());
+//   Print("Ops Feitas: ",OperacoesFeitas);
+//   Print("CustoOps: ",custo_operacao);
+   
+   
+   
    }
    /////////////////////////////////////////// Final da req.

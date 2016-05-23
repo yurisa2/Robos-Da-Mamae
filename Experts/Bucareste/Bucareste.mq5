@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-#property version   "1.31"
+#property version   "1.33"
 
 #include <basico.mqh>
 #include <OnTrade.mqh>
@@ -35,6 +35,8 @@ int OnInit()
 
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
    Print("Liquidez da conta: ",conta.Equity());
+   
+    Liquidez_Teste_inicio = conta.Equity();
 
    Inicializa_Funcs();
    
@@ -106,5 +108,14 @@ DetectaNovaBarra();
    
    Escalpelador_Maluco();
 
+if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!
+
 }
 
+
+double OnTester()
+{
+
+return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais*custo_operacao;
+
+}

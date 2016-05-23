@@ -294,3 +294,37 @@ ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);
   }
 
 }
+
+void Stop_Global_Imediato ()
+{
+
+/////// FUNCAO PRECISA ADICIONAR PRECISAO, EM TERPOS DE MERCADO LOUCO E LUCRO MINIMO
+
+
+   if(conta.Equity() > liquidez_inicio 
+   && 
+   lucro_dia > conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao)
+   {
+   if(Operacoes > 0) VendaImediata("Encerramento limite Global");
+   if(Operacoes < 0) CompraImediata("Encerramento limite Global");
+   }
+
+   if(conta.Equity() < liquidez_inicio 
+   && (-1 * preju_dia) < conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao)
+   {
+   
+   if(Operacoes > 0) VendaImediata("Encerramento limite Global");
+   if(Operacoes < 0) CompraImediata("Encerramento limite Global");
+   
+   }
+
+
+
+
+}
+
+
+
+
+
+

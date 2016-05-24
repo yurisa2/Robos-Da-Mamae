@@ -65,3 +65,13 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
 
    }   //FIM DO IF TaDentroDoHorario
 } 
+
+bool Zerado_Ozy ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
+{
+
+int soma_params = Ozy_Shift + Ozy_length;
+
+if(soma_params > 0) return false; else return true;
+
+
+}

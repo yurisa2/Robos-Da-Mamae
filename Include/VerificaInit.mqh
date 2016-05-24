@@ -6,6 +6,9 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
+
+
+
 ENUM_INIT_RETCODE VerificaInit ()
 {
 
@@ -30,41 +33,16 @@ ENUM_INIT_RETCODE VerificaInit ()
    return(INIT_PARAMETERS_INCORRECT);
    }
    
-//   if(Usa_PSar == true && Periodos>0) 
-//   {
-//   MessageBox("Psar Nao Usa Periodos","Erro de Inicialização",MB_OK);
-//   Print("Psar Nao Usa Periodos","Erro de Inicialização");
-//   return(INIT_PARAMETERS_INCORRECT);
-//   }
-//   
-   //if(Usa_Hilo == true && (PSAR_Max_Step > 0 || PSAR_Step >0))
-   //{
-   //MessageBox("HiLo Nao Usar Steps","Erro de Inicialização",MB_OK);
-   //Print("HiLo Nao Usar Steps","Erro de Inicialização");
-   //return(INIT_PARAMETERS_INCORRECT);
-   //}
-
-
-/* pensar pensar pensar
-   if(eh_otimizacao == true && (PSAR_Max_Step > 0 || PSAR_Step >0))
-   {
-   MessageBox("HiLo Nao Usar Steps","Erro de Inicialização",MB_OK);
-   Print("HiLo Nao Usar Steps","Erro de Inicialização");
-   return(INIT_PARAMETERS_INCORRECT);
-   }
-*/
-
 
    if(HoraDeInicio==HoraDeFim && MinutoDeInicio >= MinutoDeFim) 
     {
    MessageBox("Hora de início depois da Hora de Fim","Erro de Inicialização",MB_OK); 
    Print("Hora de início depois da Hora de Fim","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
-
    }
    
    if(SaiPeloIndicador==true && IndicadorTempoReal == true) 
-    {
+   {
    MessageBox("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização",MB_OK);
    Print("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
@@ -80,20 +58,19 @@ ENUM_INIT_RETCODE VerificaInit ()
    int Verifica_Indicadores = Usa_Fractal + Usa_Hilo + Usa_PSar + Usa_Ozy + Usa_BSI;
    if(Verifica_Indicadores == 0 || Verifica_Indicadores > 1)
    {
-      MessageBox("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de Inicialização",MB_OK);
-      Print("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de Inicialização");
-      return(INIT_PARAMETERS_INCORRECT);
+   MessageBox("Erro de Indicadores (mais de um ou nenhum escolhido)...","Erro de Inicialização",MB_OK);
+   Print("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de Inicialização");
+   return(INIT_PARAMETERS_INCORRECT);
    }
    
-    if(StopLoss <0 || TakeProfit <0|| Lotes <= 0 || (Usa_Hilo == true && Periodos <=1) ) 
-     {
+   if(StopLoss <0 || TakeProfit <0|| Lotes <= 0) 
+   {
    MessageBox("Erro nos parametros de grana ou técnicos","Erro de Inicialização",MB_OK); 
    Print("Erro nos parametros de grana ou técnicos","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
    }
    
-   
-   
+  
    if(PontoDeMudancaSL > MoverSL || (MoverSL==0 && PontoDeMudancaSL <0)) 
      {
    MessageBox("PontoDeMudancaSL > MoverSL ou Mover Desligado e PMSL menor que zero","Erro de Inicialização",MB_OK);     
@@ -102,8 +79,8 @@ ENUM_INIT_RETCODE VerificaInit ()
    }
    
    
-      if((Usa_Prop == true && Usa_Fixos == true) ||(Usa_Prop == false && Usa_Fixos == false)) 
-     {
+   if((Usa_Prop == true && Usa_Fixos == true) ||(Usa_Prop == false && Usa_Fixos == false)) 
+   {
    MessageBox("Escolha o tipo de limite novamente.","Erro de Inicialização",MB_OK);     
    Print("Escolha o tipo de limite novamente."," - Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
@@ -111,12 +88,12 @@ ENUM_INIT_RETCODE VerificaInit ()
    
    if(Prop_MoverSL > Prop_TakeProfit && Prop_TakeProfit >0)
    {
-      MessageBox("Mover SL maior que TP.","Erro de Inicialização",MB_OK);     
+   MessageBox("Mover SL maior que TP.","Erro de Inicialização",MB_OK);     
    Print("Mover SL maior que TP."," - Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);
-   
    }
-      if(Prop_Trailing_stop + Prop_Trailing_stop_start > Prop_TakeProfit && Prop_TakeProfit>0)
+   
+   if(Prop_Trailing_stop + Prop_Trailing_stop_start > Prop_TakeProfit && Prop_TakeProfit>0)
    {
    MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização",MB_OK);
    Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização");
@@ -128,11 +105,9 @@ ENUM_INIT_RETCODE VerificaInit ()
    {
       if(Usa_Prop)
       {                                            
-
          if(Prop_StopLoss + Prop_MoverSL + Prop_PontoDeMudancaSL + Prop_TakeProfit + Prop_Trailing_stop + Prop_Trailing_stop_start ==0 )    return(INIT_PARAMETERS_INCORRECT);
+      }
    
-   
-   }
       if(Usa_Fixos)
       {
          if(StopLoss + MoverSL + PontoDeMudancaSL + TakeProfit + Trailing_stop + Trailing_stop_start ==0)    return(INIT_PARAMETERS_INCORRECT);      

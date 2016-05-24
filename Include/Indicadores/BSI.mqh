@@ -20,10 +20,7 @@ void CalculaBSI ()
 
    ArraySetAsSeries(BSI, true);
 
-
-
    int copied=CopyBuffer(HandleBSI,3,0,100,BSI);
-   
    
    if(BSI[0] == 2) CondicaoBSI = 1;
 if(BSI[0] == 0) CondicaoBSI = -1;
@@ -48,7 +45,6 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
  double BSI[];
 
    ArraySetAsSeries(BSI, true);
-
    int copied=CopyBuffer(HandleBSI,3,0,100,BSI);
 
 if(BSI[0] == 2) CondicaoBSI = 1;
@@ -84,3 +80,13 @@ if(BSI[0] == 0) CondicaoBSI = -1;
    }   //FIM DO IF TaDentroDoHorario
 }
 //////////////////////////////////////////////////////
+
+bool Zerado_BSI ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
+{
+
+int soma_params = BSI_RangePeriod + BSI_Slowing + BSI_Avg_Period;
+
+if(soma_params > 0) return false; else return true;
+
+
+}

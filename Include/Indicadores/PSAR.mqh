@@ -73,4 +73,12 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
 
 }
 
+bool Zerado_PSAR ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
+{
 
+double soma_params = PSAR_Step + PSAR_Max_Step;
+
+if(soma_params > 0) return false; else return true;
+
+
+}

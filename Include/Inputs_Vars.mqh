@@ -57,14 +57,14 @@ input int Periodos =  4;                                                   //Per
 
 input string Configs_Ozy = "-------------------------------------";
 input bool Usa_Ozy = 0;                                                    //Usar Ozymandias
-input ENUM_MA_METHOD Ozy_MM =  MODE_SMA;                                              //Tipo de MM Ozymandias
+input ENUM_MA_METHOD Ozy_MM =  MODE_SMA;                                   //Tipo de MM Ozymandias (badOtim)
 input int Ozy_Shift = 0;                                                   //Shift Ozymandias
 input int Ozy_length = 2;                                                  //Length Ozymandias
 
 input string Configs_PSAR = "-------------------------------------";
 input bool Usa_PSar = 0;                                                   //Usar Parabolic SAR
-input double PSAR_Step = 0;                                                //Parabolic SAR Step (0.02)
-input double PSAR_Max_Step = 0;                                            //Parabolic SAR Max Step (0.2)
+input double PSAR_Step = 0.02;                                                //Parabolic SAR Step (0.02)
+input double PSAR_Max_Step = 0.2;                                            //Parabolic SAR Max Step (0.2)
 
 input string Configs_Fractals = "-------------------------------------";
 input bool Usa_Fractal = 0;                                                //Usar Fractals (Bill Williams)

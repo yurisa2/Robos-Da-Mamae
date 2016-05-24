@@ -6,18 +6,18 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-#property version   "1.33"
+#property version   "1.34"
 
 #include <basico.mqh>
 #include <OnTrade.mqh>
 #include <FuncoesGerais.mqh>
 #include <Inputs_Vars.mqh>
-#include <HiLo.mqh>
-#include <PSAR.mqh>
-#include <Ozy.mqh>
-#include <BSI.mqh>
+#include <Indicadores\HiLo.mqh>
+#include <Indicadores\PSAR.mqh>
+#include <Indicadores\Ozy.mqh>
+#include <Indicadores\BSI.mqh>
+#include <Indicadores\Fractals.mqh>
 #include <Seccao.mqh>
-#include <Fractals.mqh>
 #include <Stops.mqh>
 #include <Graficos.mqh>
 #include <MontarRequisicao.mqh>

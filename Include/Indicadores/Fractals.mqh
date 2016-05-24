@@ -125,3 +125,10 @@ for(int x=0;x<Frac_Candles_Espera;x++)
 }
 
 //////////////////////
+bool Zerado_Fractals ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
+{
+
+if(Frac_Candles_Espera > 0) return false; else return true;
+
+
+}

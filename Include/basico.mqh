@@ -1,9 +1,10 @@
+/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                funcoesbender.mqh |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 
@@ -33,14 +34,14 @@ bool TaDentroDoHorario (string HoraInicio, string HoraFim)
    string DiaHoraInicio;
    string DiaHoraFim;
    bool RetornoHorario =false;
-   
+
    Agora = TimeCurrent();
-   
+
    DiaHoje = TimeToString(TimeCurrent(),TIME_DATE);
 
    DiaHoraInicio = DiaHoje + " " + HoraInicio;
    DiaHoraFim = DiaHoje + " " + HoraFim;
-   
+
    // Se Agora > String Dia + String Hora OK.
    //   Print("DiaHoje ",DiaHoje);
    if(Agora>=StringToTime(DiaHoraInicio))
@@ -50,37 +51,37 @@ bool TaDentroDoHorario (string HoraInicio, string HoraFim)
       RetornoHorario = true;
       }
      }
-   
+
    return(RetornoHorario);
-   
-   
+
+
    }
 ////////////////////////////////////////////////////////////////
 
 
 //////////////////////// DAOTICK ///////////
-////// Funçao Pega Tick e devolve a hora e o valor da porra do ativo
+////// Funï¿½ao Pega Tick e devolve a hora e o valor da porra do ativo
 double daotick ()
 {
 
 double retornoTick;
 
    MqlTick last_tick;
-   
+
 if(SymbolInfoTick(_Symbol,last_tick))
      {
      // Print(last_tick.time,": Bid = ",last_tick.bid,
           //  " Ask = ",last_tick.ask,"  Volume = ",last_tick.volume); //total e completo
-    
+
      }
      else Print("SymbolInfoTick() failed, error = ",GetLastError());
-   
+
      retornoTick = last_tick.ask;
 
      return(retornoTick);
-    
+
 }
-   
+
 
 ////////////////// Fecha o PEGA O TICK
 
@@ -101,20 +102,20 @@ void IniciaDia ()
 {
         if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
         {
-        
+
          if(Usa_Hilo == true) CalculaHiLo();
          if(Usa_PSar == true) CalculaPSar();
-        
+
         PrecoCompra =0;
         PrecoVenda =0;
-        
+
         OperacoesFeitas =0;
-        
+
         StopLossValorCompra =-9999999999;
         TakeProfitValorCompra = 999999999;
         StopLossValorVenda =99999999999;
         TakeProfitValorVenda = -999999999;
-                 
+
         JaZerou = true;
         JaDeuFinal = false;
         Operacoes = 0;
@@ -123,12 +124,12 @@ void IniciaDia ()
         DeuTakeProfit = true;
         DeuStopLoss = true;
 
-        Print("Bom dia! Bucareste as ordens, segura o coraçao pq o role é monstro!!!");
-        SendMail(Descricao_Robo + "Inicio das operaçoes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
-        SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" às ordens, segura o coraçao pq o role é monstro!!!");
-        
+        Print("Bom dia! Bucareste as ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
+        SendMail(Descricao_Robo + "Inicio das operaï¿½oes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" ï¿½s ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
+        SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" ï¿½s ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
+
         if(Usa_Hilo == true) Print("Indicador HiLo inicio do dia: ",Mudanca);
-        if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Mudanca);    
+        if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Mudanca);
         liquidez_inicio = conta.Equity();
         Sleep(1000);
         }
@@ -137,7 +138,7 @@ void IniciaDia ()
 
 
 
-////////////////// Zerar o dia 
+////////////////// Zerar o dia
 void ZerarODia ()
 {
        if(TaDentroDoHorario(HorarioFim,HorarioFimMais1)==true && JaDeuFinal==false)
@@ -146,38 +147,38 @@ void ZerarODia ()
             JaDeuFinal = true;
             JaZerou = false;
             PrimeiraOp = false;
-            Print(Descricao_Robo+"Final do Dia! Operaçoes: ",Operacoes);
+            Print(Descricao_Robo+"Final do Dia! Operaï¿½oes: ",Operacoes);
             SendNotification(Descricao_Robo+" encerrando");
-          
-                   if(Operacoes<0) 
+
+                   if(Operacoes<0)
                       {
-                      MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia | Ops: "+Operacoes);  
+                      MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia | Ops: "+Operacoes);
                       Sleep(1000);
                       }
-                   if(Operacoes>0) 
+                   if(Operacoes>0)
                      {
                      MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia | Ops: "+Operacoes);
                      Sleep(1000);
                      SendMail(Descricao_Robo+"Bucareste: Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
                      }
-               Print(Descricao_Robo+"Depois da Ultima Operaçao: ",Operacoes);
+               Print(Descricao_Robo+"Depois da Ultima Operaï¿½ao: ",Operacoes);
                   Sleep(5000);
          }
 
-  }  
+  }
 
 
 void ArrumaMinutos ()
 {
-   if(MinutoDeFim == 59) 
+   if(MinutoDeFim == 59)
    {
    MinutoDeFimMenos1 = 58;
    }
-    else 
+    else
     {
-    MinutoDeFimMenos1 = MinutoDeFim; 
+    MinutoDeFimMenos1 = MinutoDeFim;
     } //Tentativa de sanar os erros de teste.
-    
+
    HorarioFim = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFimMenos1,2,'0');
    HorarioFimMais1 = IntegerToString(HoraDeFim,2,'0') + ":" + IntegerToString(MinutoDeFim+1,2,'0');
    Print("Horario inicio: ", HorarioInicio," Horario fim: ",HorarioFim, " Horario de fim mais 1: ",HorarioFimMais1 );
@@ -188,7 +189,7 @@ void ArrumaMinutos ()
 void Comentario (int ops)
 {
 
-if(ops > 0) 
+if(ops > 0)
 {
 Comment(
 Descricao_Robo()+"|"+
@@ -210,7 +211,7 @@ EM_Contador_Picote
 
 if(ops < 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" VENDIDO- SL: "+DoubleToString(StopLossValorVenda,_Digits)+" - TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+" TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - "+Segundos_Fim_Barra()+" - EM_Contador: "+EM_Contador_Picote);
 if(ops == 0)   Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" - "+Segundos_Fim_Barra()+" - daotick: "+daotick());
-   
+
 
 }
 
@@ -234,74 +235,74 @@ if(Usa_BSI) Desc_Robo = Desc_Robo+"BSI"+IntegerToString(BSI_RangePeriod)+";"+Int
 Desc_Robo = Desc_Robo + "-";
 // Fixos
 
-   if(Usa_Fixos) 
+   if(Usa_Fixos)
    {
    Desc_Robo = Desc_Robo+"Fix-";
    if(StopLoss>0) Desc_Robo = Desc_Robo+"SL"+DoubleToString(StopLoss,2);
-   if(MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(MoverSL,2); 
-   if(PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(PontoDeMudancaSL,2);  
-   if(TakeProfit>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(TakeProfit,2);     
-   if(Trailing_stop>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop,2);     
-   if(Trailing_stop_start>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop_start,2);      
+   if(MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(MoverSL,2);
+   if(PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(PontoDeMudancaSL,2);
+   if(TakeProfit>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(TakeProfit,2);
+   if(Trailing_stop>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop,2);
+   if(Trailing_stop_start>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop_start,2);
    }
-   
-// Prop   
 
-   if(Usa_Prop) 
+// Prop
+
+   if(Usa_Prop)
    {
    Desc_Robo = Desc_Robo+"Pro-";
    if(Prop_StopLoss>0) Desc_Robo = Desc_Robo+"SL"+DoubleToString(Prop_StopLoss,2);
    if(Prop_Metodo==534) Desc_Robo = Desc_Robo+"SMA"+DoubleToString(Prop_Periodos,2);
-   if(Prop_Metodo==88) Desc_Robo = Desc_Robo+"BB"+DoubleToString(Prop_Periodos,2);   
-   if(Prop_MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(Prop_MoverSL,2); 
-   if(Prop_PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(Prop_PontoDeMudancaSL,2);  
-   if(Prop_TakeProfit>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_TakeProfit,2);     
-   if(Prop_Trailing_stop>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_Trailing_stop,2);     
-   if(Prop_Trailing_stop_start>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_Trailing_stop_start,2);  
-   if(Prop_Limite_Minimo_Tick_Size>0) Desc_Robo = Desc_Robo+"MT"+DoubleToString(Prop_Limite_Minimo_Tick_Size,2);          
-   }   
-   
-   
+   if(Prop_Metodo==88) Desc_Robo = Desc_Robo+"BB"+DoubleToString(Prop_Periodos,2);
+   if(Prop_MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(Prop_MoverSL,2);
+   if(Prop_PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(Prop_PontoDeMudancaSL,2);
+   if(Prop_TakeProfit>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_TakeProfit,2);
+   if(Prop_Trailing_stop>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_Trailing_stop,2);
+   if(Prop_Trailing_stop_start>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_Trailing_stop_start,2);
+   if(Prop_Limite_Minimo_Tick_Size>0) Desc_Robo = Desc_Robo+"MT"+DoubleToString(Prop_Limite_Minimo_Tick_Size,2);
+   }
+
+
 
 return Desc_Robo;
- 
+
 }
 
 
 
 
-//////////////////////////////// Primeira Operaçao
-   
+//////////////////////////////// Primeira Operaï¿½ao
+
    void PrimeiraOperacao ()
 {
        if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && PrimeiraOp==false)
        {
        Print(Descricao_Robo+" Horario Setup: ",HorarioInicio);
        Print(Descricao_Robo+" Mudanca Inicio dia: ",Mudanca);
-       
-       PrimeiraOp = true;
-       
-         if(Mudanca<0) 
-         { 
-         VendaImediata("OperaLogoDeCara","Entrada"); 
-         DeuStopLoss = false;
-         DeuTakeProfit = false;
-         }
-         if(Mudanca>0)  
-         {
-         CompraImediata("OperaLogoDeCara","Entrada"); 
-         DeuStopLoss = false;
-         DeuTakeProfit = false;
-         }
-       
-       
-       }
-       
 
-       
-       
+       PrimeiraOp = true;
+
+         if(Mudanca<0)
+         {
+         VendaImediata("OperaLogoDeCara","Entrada");
+         DeuStopLoss = false;
+         DeuTakeProfit = false;
+         }
+         if(Mudanca>0)
+         {
+         CompraImediata("OperaLogoDeCara","Entrada");
+         DeuStopLoss = false;
+         DeuTakeProfit = false;
+         }
+
+
+       }
+
+
+
+
  }
-//////////////// Fim Primeira Operaçao
+//////////////// Fim Primeira Operaï¿½ao
 
 /////////////////////////////////
 void DetectaNovaBarra ()

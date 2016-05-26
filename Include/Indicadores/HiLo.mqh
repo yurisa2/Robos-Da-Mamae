@@ -208,7 +208,7 @@ if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
 bool Zerado_HiLo ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
 {
 
-if(Frac_Candles_Espera > 0) return false; else return true;
+if(Periodos > 0 && Usa_Hilo == false) return false; else return true;
 
 
 }

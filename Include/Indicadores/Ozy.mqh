@@ -71,7 +71,7 @@ bool Zerado_Ozy ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá
 
 int soma_params = Ozy_Shift + Ozy_length;
 
-if(soma_params > 0) return false; else return true;
+if(soma_params > 0 && Usa_Ozy == false) return false; else return true;
 
 
 }

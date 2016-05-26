@@ -56,7 +56,7 @@ ENUM_INIT_RETCODE VerificaInit ()
    }
    
    int Verifica_Indicadores = Usa_Fractal + Usa_Hilo + Usa_PSar + Usa_Ozy + Usa_BSI;
-   if(Verifica_Indicadores == 0 || Verifica_Indicadores > 1)
+   if(Verifica_Indicadores != 1)
    {
    MessageBox("Erro de Indicadores (mais de um ou nenhum escolhido)...","Erro de Inicialização",MB_OK);
    Print("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de Inicialização");
@@ -99,7 +99,10 @@ ENUM_INIT_RETCODE VerificaInit ()
    Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização");
    return(INIT_PARAMETERS_INCORRECT);  
    }
-   
+
+
+
+   // Verificador de params para otimização
    
    if(Otimizacao)
    {
@@ -112,8 +115,13 @@ ENUM_INIT_RETCODE VerificaInit ()
       {
          if(StopLoss + MoverSL + PontoDeMudancaSL + TakeProfit + Trailing_stop + Trailing_stop_start ==0)    return(INIT_PARAMETERS_INCORRECT);      
       }
+      
+      
    
    }
+   // Verificador de params para otimização
+   
+   
 return INIT_SUCCEEDED;
 
 }

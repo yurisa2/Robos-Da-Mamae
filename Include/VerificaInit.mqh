@@ -106,17 +106,91 @@ ENUM_INIT_RETCODE VerificaInit ()
    
    if(Otimizacao)
    {
+   
+   
+
+
       if(Usa_Prop)
       {                                            
-         if(Prop_StopLoss + Prop_MoverSL + Prop_PontoDeMudancaSL + Prop_TakeProfit + Prop_Trailing_stop + Prop_Trailing_stop_start ==0 )    return(INIT_PARAMETERS_INCORRECT);
+         if(Prop_StopLoss + Prop_MoverSL + Prop_PontoDeMudancaSL + Prop_TakeProfit + Prop_Trailing_stop + Prop_Trailing_stop_start ==0 )
+         {
+         MessageBox("Tá prop e tá tudo zerado","Erro de Inicialização",MB_OK);
+         Print("Tá prop e tá tudo zerado","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }
       }
    
       if(Usa_Fixos)
       {
-         if(StopLoss + MoverSL + PontoDeMudancaSL + TakeProfit + Trailing_stop + Trailing_stop_start ==0)    return(INIT_PARAMETERS_INCORRECT);      
+         if(StopLoss + MoverSL + PontoDeMudancaSL + TakeProfit + Trailing_stop + Trailing_stop_start ==0)   
+          {
+         MessageBox("Tá Fixo e tá tudo zerado","Erro de Inicialização",MB_OK);
+         Print("Tá Fixo e tá tudo zerado","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }
+         
+         
       }
       
       
+
+
+     
+      
+      if(Usa_Hilo)
+      {
+         if(Zerado_BSI()+Zerado_Fractals()+Zerado_Ozy()+Zerado_PSAR()>0)
+         {
+         MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }
+      }
+      
+      if(Usa_BSI)
+      {
+         if(Zerado_HiLo()+Zerado_Fractals()+Zerado_Ozy()+Zerado_PSAR()>0)
+         {
+         MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }
+      }
+      
+       if(Usa_Fractal)
+      {
+         if(Zerado_HiLo()+Zerado_BSI()+Zerado_Ozy()+Zerado_PSAR()>0)
+         {
+         MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }
+      }  
+   
+       if(Usa_Ozy)
+      {
+         if(Zerado_HiLo()+Zerado_BSI()+Zerado_Fractals()+Zerado_PSAR()>0)
+         {
+         MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }
+      }     
+   
+        if(Usa_PSar)
+      {
+         if(Zerado_HiLo()+Zerado_BSI()+Zerado_Fractals()+Zerado_Ozy()>0)
+         {
+         MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }
+      }    
+   
+   
+   
+   
+   
    
    }
    // Verificador de params para otimização

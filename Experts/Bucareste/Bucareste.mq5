@@ -6,7 +6,7 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-#property version   "1.34"
+#property version   "1.35"
 
 #include <basico.mqh>
 #include <OnTrade.mqh>
@@ -35,11 +35,11 @@ int OnInit()
 
    Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
    Print("Liquidez da conta: ",conta.Equity());
-   
+
     Liquidez_Teste_inicio = conta.Equity();
 
    Inicializa_Funcs();
-   
+
    return(VerificaInit());
 
 }
@@ -58,15 +58,15 @@ Comentario(Operacoes);
 // ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
    else
    {
-   
-   if(Operacoes>1 && Msg_Fim == false) 
+
+   if(Operacoes>1 && Msg_Fim == false)
    {
    Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
    Msg_Fim = true;
    }
    if(Operacoes<1 && Msg_Fim == false)
    {
-   Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");   
+   Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");
    Msg_Fim = true;
    }
 
@@ -82,30 +82,30 @@ ZerarODia();
 void OnTick()
 {
 /////////////////////// Funçoes de STOP
-         if(Usa_Fixos == true) 
+         if(Usa_Fixos == true)
          {
-            TS();         
+            TS();
             SLMovel();
          }
-        
-         if(Usa_Prop == true) 
+
+         if(Usa_Prop == true)
          {
             Prop_TS();
             Prop_SLMovel();
          }
-         
+
          StopLossCompra();
          StopLossVenda();
          TakeProfitCompra();
          TakeProfitVenda();
-         
+
 /////////////////////////////////////////////////
 
 DetectaNovaBarra();
 
    if(IndicadorTempoReal == true && Usa_Hilo == true)      HiLo();
    if(IndicadorTempoReal == true && Usa_PSar == true)      PSar();
-   
+
    Escalpelador_Maluco();
 
 if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!

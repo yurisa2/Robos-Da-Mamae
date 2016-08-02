@@ -29,25 +29,21 @@
 
 int OnInit()
 {
-
   Init_Padrao();
 
   //Especifico Bucareste Mezzo Mezzo
-
   Inicializa_Funcs();
 
   if(VerificaInit() == INIT_PARAMETERS_INCORRECT ||
-  InitBucareste() == INIT_PARAMETERS_INCORRECT
-)
-{
-  return(INIT_PARAMETERS_INCORRECT);
-}
-else
-{
-  return INIT_SUCCEEDED;
-}
-//Fim do Especifico Bucareste
-
+  InitBucareste() == INIT_PARAMETERS_INCORRECT)
+  {
+    return(INIT_PARAMETERS_INCORRECT);
+  }
+  else
+  {
+    return INIT_SUCCEEDED;
+  }
+  //Fim do Especifico Bucareste
 }
 
 void OnTimer()
@@ -56,12 +52,9 @@ void OnTimer()
 
   Comentario(Operacoes);
 
-
   //Especifico Bucareste
-
   if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
   //Fim do Especifico Bucareste
-
 
   ZerarODia();
 }
@@ -76,10 +69,9 @@ void OnTick()
   //Fim do Especifico Bucareste
 }
 
-
 double OnTester()
 {
-  return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais*custo_operacao;
+  return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais * custo_operacao;
 }
 
 void OnNewBar()

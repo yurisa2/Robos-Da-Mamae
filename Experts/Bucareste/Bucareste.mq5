@@ -11,6 +11,7 @@
 #include <basico.mqh>
 #include <OnTrade.mqh>
 #include <FuncoesGerais.mqh>
+#include <Bucareste\FuncoesBucareste.mqh>
 #include <Inputs_Vars.mqh>
 #include <Indicadores\HiLo.mqh>
 #include <Indicadores\PSAR.mqh>

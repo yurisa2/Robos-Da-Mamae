@@ -145,6 +145,14 @@ ENUM_INIT_RETCODE VerificaInit ()
          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
          return(INIT_PARAMETERS_INCORRECT);  
          }
+         
+         if(Periodos < 2)
+         {
+         MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }         
+         
       }
       
       if(Usa_BSI)
@@ -155,6 +163,14 @@ ENUM_INIT_RETCODE VerificaInit ()
          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
          return(INIT_PARAMETERS_INCORRECT);  
          }
+         
+         if(BSI_RangePeriod==0 || BSI_Slowing ==0 || BSI_Avg_Period == 0)
+         {
+         MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }   
+         
       }
       
        if(Usa_Fractal)
@@ -165,6 +181,14 @@ ENUM_INIT_RETCODE VerificaInit ()
          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
          return(INIT_PARAMETERS_INCORRECT);  
          }
+         
+         if(Frac_Candles_Espera == 0)
+         {
+         MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }   
+         
       }  
    
        if(Usa_Ozy)
@@ -175,6 +199,14 @@ ENUM_INIT_RETCODE VerificaInit ()
          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
          return(INIT_PARAMETERS_INCORRECT);  
          }
+         
+         if(Ozy_length == 0)
+         {
+         MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }           
+         
       }     
    
         if(Usa_PSar)
@@ -185,6 +217,14 @@ ENUM_INIT_RETCODE VerificaInit ()
          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
          return(INIT_PARAMETERS_INCORRECT);  
          }
+         
+         if(PSAR_Step == 0 || PSAR_Max_Step == 0)
+         {
+         MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
+         Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+         return(INIT_PARAMETERS_INCORRECT);  
+         }   
+         
       }    
    
    

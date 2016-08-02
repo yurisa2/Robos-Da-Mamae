@@ -86,7 +86,7 @@ bool Zerado_BSI ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá
 
 int soma_params = BSI_RangePeriod + BSI_Slowing + BSI_Avg_Period;
 
-if(soma_params > 0 && Usa_BSI==false) return false; else return true;
+if(soma_params > 0) return true; else return false ;
 
 
 }

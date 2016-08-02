@@ -77,7 +77,7 @@ bool Zerado_PSAR ()   //Se o switch estiver FALSE e a soma for maior que 0 ele d
 {
 
 double soma_params = PSAR_Step + PSAR_Max_Step;
-if(soma_params > 0 && Usa_PSar == false) return false; else return true;
+if(soma_params > 0) return true; else return false ;
 
 
 }

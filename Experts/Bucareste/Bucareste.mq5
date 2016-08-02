@@ -119,3 +119,12 @@ double OnTester()
 return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais*custo_operacao;
 
 }
+
+void OnNewBar()
+{
+   if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
+   if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
+   if(IndicadorTempoReal == false && Usa_Ozy == true)       Ozy_Opera();
+   if(IndicadorTempoReal == false && Usa_Fractal == true)   Fractal();
+   if(IndicadorTempoReal == false && Usa_BSI == true)       BSI();
+}

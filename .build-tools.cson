@@ -8,7 +8,7 @@ providers: [
           source: "C:\\Users\\Administrator\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075\\MQL5\\.build-tools.cson"
           name: "Compila"
           command: "\"C:\\Program Files\\Metatrader 5\\metaeditor64.exe\" /compile:\"C:\\Users\\Administrator\\AppData\\Roaming\\MetaQuotes\\Terminal\\D0E8209F77C8CF37AD8BF550E51FF075\\MQL5\\Experts\\Bucareste\\Bucareste.mq5\""
-          wd: "\"C:\\Program Files\\Metatrader 5\\\""
+          wd: "."
           env: {}
           modifier:
             wildcards: {}
@@ -31,12 +31,17 @@ providers: [
             ]
           output:
             console:
-              close_success: true
+              close_success: false
               queue_in_buffer: true
               colors: true
-              stdin: true
+              stdin: false
           version: 2
         }
       ]
+  }
+  {
+    key: "bt"
+    config:
+      commands: []
   }
 ]

@@ -219,3 +219,47 @@ void DetectaNovaBarra ()
   datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
   if(grafico_atual.isNewBar(new_time)) OnNewBar();
 }
+
+void Operacoes_No_tick ()
+{
+  /////////////////////// Funçoes de STOP
+  if(Usa_Fixos == true)
+  {
+    TS();
+    SLMovel();
+  }
+
+  if(Usa_Prop == true)
+  {
+    Prop_TS();
+    Prop_SLMovel();
+  }
+
+  StopLossCompra();
+  StopLossVenda();
+  TakeProfitCompra();
+  TakeProfitVenda();
+
+  /////////////////////////////////////////////////
+
+  DetectaNovaBarra();
+
+  Escalpelador_Maluco();
+
+  if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!
+
+}
+
+void Init_Padrao ()
+{
+  ObjectsDeleteAll(0,0,-1);
+  EventSetMillisecondTimer(500);
+
+  TimeMagic =MathRand();
+
+  Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
+  Print("Liquidez da conta: ",conta.Equity());
+
+  Liquidez_Teste_inicio = conta.Equity();
+
+}

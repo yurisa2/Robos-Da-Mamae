@@ -12,6 +12,7 @@
 #include <OnTrade.mqh>
 #include <FuncoesGerais.mqh>
 #include <Bucareste\FuncoesBucareste.mqh>
+#include <Bucareste\inputs_bucareste.mqh>
 #include <Inputs_Vars.mqh>
 #include <Indicadores\HiLo.mqh>
 #include <Indicadores\PSAR.mqh>
@@ -22,110 +23,79 @@
 #include <Stops.mqh>
 #include <Graficos.mqh>
 #include <MontarRequisicao.mqh>
+#include <Bucareste\InitBucareste.mqh>
 #include <VerificaInit.mqh>
 #include <Operacoes.mqh>
 
 //int Segundos = PeriodSeconds(TimeFrame);
 
 int OnInit()
+{
+
+Init_Padrao();
+
+//Especifico Bucareste
+
+  Inicializa_Funcs();
+
+  if(VerificaInit() == INIT_PARAMETERS_INCORRECT ||
+    InitBucareste() == INIT_PARAMETERS_INCORRECT
+  )
   {
-   ObjectsDeleteAll(0,0,-1);
-   EventSetMillisecondTimer(500);
-
-   TimeMagic =MathRand();
-
-   Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
-   Print("Liquidez da conta: ",conta.Equity());
-
-    Liquidez_Teste_inicio = conta.Equity();
-
-   Inicializa_Funcs();
-
-   return(VerificaInit());
+    return(INIT_PARAMETERS_INCORRECT);
+  }
+  else
+  {
+    return INIT_SUCCEEDED;
+  }
+  //Fim do Especifico Bucareste
 
 }
 
 void OnTimer()
 {
-IniciaDia();
+  IniciaDia();
 
-if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
-
-Comentario(Operacoes);
+  Comentario(Operacoes);
 
 
-/*
-   if(ZerarFinalDoDia == true) ZerarODia();
-// ---- Deprecado pois estava dando pau em tudo, isso não é vantagem e não será usado por enquanto
-   else
-   {
+  //Especifico Bucareste
 
-   if(Operacoes>1 && Msg_Fim == false)
-   {
-   Print("Finalizaçao do Dia. Finalizamos o dia COMPRADOS");
-   Msg_Fim = true;
-   }
-   if(Operacoes<1 && Msg_Fim == false)
-   {
-   Print("Finalizaçao do Dia. Finalizamos o dia VENDIDOS");
-   Msg_Fim = true;
-   }
+  if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
+  //Fim do Especifico Bucareste
 
-
-   }
-//*/
 
 ZerarODia();
 
 
- }
+}
 
 void OnTick()
 {
-/////////////////////// Funçoes de STOP
-         if(Usa_Fixos == true)
-         {
-            TS();
-            SLMovel();
-         }
+  Operacoes_No_tick();
 
-         if(Usa_Prop == true)
-         {
-            Prop_TS();
-            Prop_SLMovel();
-         }
-
-         StopLossCompra();
-         StopLossVenda();
-         TakeProfitCompra();
-         TakeProfitVenda();
-
-/////////////////////////////////////////////////
-
-DetectaNovaBarra();
-
-   if(IndicadorTempoReal == true && Usa_Hilo == true)      HiLo();
-   if(IndicadorTempoReal == true && Usa_PSar == true)      PSar();
-
-   Escalpelador_Maluco();
-
-if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!
-
+//Especifico Bucareste
+    if(IndicadorTempoReal == true && Usa_Hilo == true)      HiLo();
+    if(IndicadorTempoReal == true && Usa_PSar == true)      PSar();
+//Fim do Especifico Bucareste
 }
 
 
 double OnTester()
 {
 
-return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais*custo_operacao;
+  return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais*custo_operacao;
 
 }
 
 void OnNewBar()
 {
-   if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
-   if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
-   if(IndicadorTempoReal == false && Usa_Ozy == true)       Ozy_Opera();
-   if(IndicadorTempoReal == false && Usa_Fractal == true)   Fractal();
-   if(IndicadorTempoReal == false && Usa_BSI == true)       BSI();
+  //Especifico Bucareste
+  if(IndicadorTempoReal == false && Usa_Hilo == true)      HiLo();
+  if(IndicadorTempoReal == false && Usa_PSar == true)      PSar();
+  if(IndicadorTempoReal == false && Usa_Ozy == true)       Ozy_Opera();
+  if(IndicadorTempoReal == false && Usa_Fractal == true)   Fractal();
+  if(IndicadorTempoReal == false && Usa_BSI == true)       BSI();
+  //Fim do Especifico Bucareste
+
 }

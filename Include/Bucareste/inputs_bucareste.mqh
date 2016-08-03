@@ -5,7 +5,6 @@ input bool OperacaoLogoDeCara = false;                                     //Ope
 
 
 input string Indicadores = "-------------------------------------";
-input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
 input bool SaiPeloIndicador = true;                                        //Saida pelo indicador
 input bool IndicadorTempoReal = false;                                     //Indicador em tempo real
 

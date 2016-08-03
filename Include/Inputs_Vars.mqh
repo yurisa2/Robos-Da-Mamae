@@ -9,6 +9,7 @@
 /////////////////////////////////////// Inputs
 
 input string Parametros_Gerais = "-------------------------------------";  //Parametros Gerais
+input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
 
 input int HoraDeInicio = 9;                                                //Hora de Início
 input int MinutoDeInicio = 20;                                             //Minuto de Inicio

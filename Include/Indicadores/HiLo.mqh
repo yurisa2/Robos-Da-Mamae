@@ -70,7 +70,6 @@ void HiLo ()
       DeuTakeProfit = false;
       Ordem = false;
 
-
       if(Mudanca==1 && Ordem==false)
       {
         Print("Operações Antes da venda: ",Operacoes," VENDE! ");
@@ -90,9 +89,7 @@ void HiLo ()
     Mudanca = _ma1[0];
 
   }   //FIM DO IF TaDentroDoHorario
-
 }
-
 
 //////////////////////////////////////////////////////
 

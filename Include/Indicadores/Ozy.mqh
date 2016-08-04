@@ -27,13 +27,13 @@ double Ozy (int candle)
 
 bool Calcula_Ozy ()
 {
-  if(Mudanca!=Ozy(0))
+  if(Direcao!=Ozy(0))
   {
     //Print("Mudou Hein");
 
     return true;
 
-    // if(Mudanca==1 && Ordem==false)
+    // if(Direcao==1 && Ordem==false)
     // {
     //   Print("Operações Antes da venda: ",Operacoes," VENDE! ");
     //   //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -41,14 +41,14 @@ bool Calcula_Ozy ()
     //   Ordem = true;
     // }
     //
-    // if(Mudanca==-1 && Ordem==false)
+    // if(Direcao==-1 && Ordem==false)
     // {
     //   Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
     //   return true;
     //   Ordem = true;
     // }
   }
-  Mudanca = Ozy(0);
+  Direcao = Ozy(0);
   return false;
 }
 
@@ -58,14 +58,14 @@ void Ozy_Opera ()
   if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
   {
 
-    if(Mudanca!=Ozy(0))
+    if(Direcao!=Ozy(0))
     {
       //Print("Mudou Hein");
       DeuStopLoss = false;
       DeuTakeProfit = false;
       Ordem = false;
 
-      if(Mudanca==1 && Ordem==false)
+      if(Direcao==1 && Ordem==false)
       {
         Print("Operações Antes da venda: ",Operacoes," VENDE! ");
         //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -73,14 +73,14 @@ void Ozy_Opera ()
         Ordem = true;
       }
 
-      if(Mudanca==-1 && Ordem==false)
+      if(Direcao==-1 && Ordem==false)
       {
         Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por Ozy","Entrada");
         Ordem = true;
       }
     }
-    Mudanca = Ozy(0);
+    Direcao = Ozy(0);
 
   }   //FIM DO IF TaDentroDoHorario
 }

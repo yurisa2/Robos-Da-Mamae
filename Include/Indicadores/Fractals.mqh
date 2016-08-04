@@ -38,7 +38,7 @@ bool CalculaFractal ()
     //else Print("A1 ["+IntegerToString(x)+"] = EMPTY_VALUE");
   }
 
-  if(Mudanca!=EstadoFractal)
+  if(Direcao!=EstadoFractal)
   {
     //Print("Mudou Hein");
     return true;
@@ -85,7 +85,7 @@ void Fractal ()
       //else Print("A1 ["+IntegerToString(x)+"] = EMPTY_VALUE");
     }
 
-    if(Mudanca!=EstadoFractal)
+    if(Direcao!=EstadoFractal)
     {
       //Print("Mudou Hein | Estado Fractal: ",EstadoFractal);
       DeuStopLoss = false;
@@ -93,7 +93,7 @@ void Fractal ()
       Ordem = false;
 
 
-      if(Mudanca==-1 && Ordem==false)
+      if(Direcao==-1 && Ordem==false)
       {
         Print("Operações Antes da venda: ",Operacoes," VENDE! ");
         //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -101,7 +101,7 @@ void Fractal ()
         Ordem = true;
       }
 
-      if(Mudanca==1 && Ordem==false)
+      if(Direcao==1 && Ordem==false)
       {
         Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por Fractal","Entrada");
@@ -110,7 +110,7 @@ void Fractal ()
 
     }
 
-    Mudanca =EstadoFractal;
+    Direcao =EstadoFractal;
 
 
   }   //FIM DO IF TaDentroDoHorario

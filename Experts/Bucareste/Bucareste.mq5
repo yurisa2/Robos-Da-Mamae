@@ -34,8 +34,6 @@
 int OnInit()
 {
   Init_Padrao();
-  Inicializa_Geral();
-
 
   //Especifico Bucareste Mezzo Mezzo
   Inicializa_Funcs();
@@ -56,10 +54,11 @@ void OnTimer()
 {
   IniciaDia();
 
-  Comentario(Operacoes);
+  Comentario();
 
   //Especifico Bucareste
   if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
+  Comentario_Bucareste();
   //Fim do Especifico Bucareste
 
   ZerarODia();

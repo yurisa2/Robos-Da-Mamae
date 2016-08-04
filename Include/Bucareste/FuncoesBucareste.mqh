@@ -13,7 +13,6 @@ void Inicializa_Funcs ()
   if(Usa_PSar == true) HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
   if(Usa_Ozy == true) HandleOzy = iCustom(NULL,TimeFrame,"ozymandias_lite",Ozy_length,Ozy_MM,Ozy_Shift);
   if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
-  if(Usa_Prop == true) Inicializa_Prop();
   if(Usa_Hilo == true) Inicializa_HiLo();
   if(Usa_BSI == true)  Inicializa_BSI();
 
@@ -27,8 +26,8 @@ void Inicializa_Funcs ()
   if(Usa_Ozy == true) ChartIndicatorAdd(0,0,HandleOzy);
   if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);
 
-  if(Usa_Hilo == true) Print("Indicador HiLo inicio do dia: ",Mudanca);
-  if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Mudanca);
+  if(Usa_Hilo == true) Print("Indicador HiLo inicio do dia: ",Direcao);
+  if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Direcao);
 
 }
 
@@ -39,17 +38,17 @@ void PrimeiraOperacao ()
   if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && PrimeiraOp==false)
   {
     Print(Descricao_Robo+" Horario Setup: ",HorarioInicio);
-    Print(Descricao_Robo+" Mudanca Inicio dia: ",Mudanca);
+    Print(Descricao_Robo+" Direcao Inicio dia: ",Direcao);
 
     PrimeiraOp = true;
 
-    if(Mudanca<0)
+    if(Direcao<0)
     {
       VendaImediata("OperaLogoDeCara","Entrada");
       DeuStopLoss = false;
       DeuTakeProfit = false;
     }
-    if(Mudanca>0)
+    if(Direcao>0)
     {
       CompraImediata("OperaLogoDeCara","Entrada");
       DeuStopLoss = false;
@@ -100,4 +99,13 @@ void VendaIndicador (string Desc,string IO = "Neutro")
   {
     MontarRequisicao(ORDER_TYPE_SELL,Desc);
   }
+}
+
+void Comentario_Bucareste ()
+{
+if(Usa_Hilo) Comentario_Robo = Comentario_Robo+"HiLo"+IntegerToString(Periodos);
+if(Usa_Ozy) Comentario_Robo = Comentario_Robo+"Ozy"+IntegerToString(Ozy_MM)+";"+IntegerToString(Ozy_Shift)+"."+IntegerToString(Ozy_length);
+if(Usa_PSar) Comentario_Robo = Comentario_Robo+"PSAR"+DoubleToString(PSAR_Step,2)+";"+DoubleToString(PSAR_Max_Step,1);
+if(Usa_Fractal) Comentario_Robo = Comentario_Robo+"Frac"+IntegerToString(Frac_Candles_Espera);
+if(Usa_BSI) Comentario_Robo = Comentario_Robo+"BSI"+IntegerToString(BSI_RangePeriod)+";"+IntegerToString(BSI_Slowing)+"."+IntegerToString(BSI_Avg_Period);
 }

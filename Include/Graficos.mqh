@@ -30,12 +30,12 @@ void OnChartEvent(const int id,
       // ARRUMAR ISSO, esta com heranca do buca
       if(clickedChartObject=="Botao_Operar")
       {
-        if(Mudanca<0)
+        if(Direcao<0)
         {
           VendaImediata("Iniciado pelo botão","Entrada");
           DeuTakeProfit = false;
         }
-        if(Mudanca>0)
+        if(Direcao>0)
         {
           CompraImediata("Iniciado pelo botão","Entrada");
           DeuStopLoss = false;

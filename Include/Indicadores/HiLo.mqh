@@ -31,13 +31,13 @@ bool CalculaHiLo ()
   int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
   int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
 
-  if(Mudanca!=_ma1[0])
+  if(Direcao!=_ma1[0])
   {
     //Print("Mudou Hein");
     return true;
   }
 
-  Mudanca = _ma1[0];
+  Direcao = _ma1[0];
   return false;
 
 }
@@ -63,14 +63,14 @@ void HiLo ()
     int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
     int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
 
-    if(Mudanca!=_ma1[0])
+    if(Direcao!=_ma1[0])
     {
       //Print("Mudou Hein");
       DeuStopLoss = false;
       DeuTakeProfit = false;
       Ordem = false;
 
-      if(Mudanca==1 && Ordem==false)
+      if(Direcao==1 && Ordem==false)
       {
         Print("Operações Antes da venda: ",Operacoes," VENDE! ");
         //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -78,7 +78,7 @@ void HiLo ()
         Ordem = true;
       }
 
-      if(Mudanca==-1 && Ordem==false)
+      if(Direcao==-1 && Ordem==false)
       {
         Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por HiLo","Entrada");
@@ -86,7 +86,7 @@ void HiLo ()
       }
     }
 
-    Mudanca = _ma1[0];
+    Direcao = _ma1[0];
 
   }   //FIM DO IF TaDentroDoHorario
 }

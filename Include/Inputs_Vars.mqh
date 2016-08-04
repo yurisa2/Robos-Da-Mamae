@@ -46,7 +46,7 @@ input bool Otimizacao = false;                                          //Parame
 
 
 input string Limites_Fixos = "----------USANDO TICK SIZE-----------";
-input bool   Usa_Fixos = true;                                             //Usar Limites Fixos
+input bool   Usa_Fixos = false;                                             //Usar Limites Fixos
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
 input double RAW_MoverSL = 0;                                              //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
 input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
@@ -110,7 +110,7 @@ string HorarioFimMais1;
 datetime Agora;
 string DiaHoje ;
 
-double   Mudanca = 0;
+double   Direcao = 0;
 bool     Ordem = false;
 int      Operacoes = 0;
 
@@ -178,3 +178,5 @@ double Prop_Trailing_stop_start_Valor = 0;
  string Comentario_Simples = "";
  string Comentario_Avancado = "";
  string Comentario_Debug = "";
+
+ string Comentario_Robo = "";

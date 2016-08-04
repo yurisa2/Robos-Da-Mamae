@@ -25,7 +25,6 @@
 int OnInit()
 {
   Init_Padrao();
-  Inicializa_Geral();
 
   //Especifico Fermat Mezzo Mezzo
   Inicializa_iMAs();
@@ -45,9 +44,10 @@ void OnTimer()
 {
   IniciaDia();
 
-  Comentario(Operacoes);
+  Comentario();
 
   //Especifico Fermat
+  Comentario_Fermat();
 
   //Fim do Especifico Fermat
 

@@ -24,12 +24,12 @@ bool CalculaBSI ()
   if(BSI[0] == 2) CondicaoBSI = 1;
   if(BSI[0] == 0) CondicaoBSI = -1;
 
-  if(Mudanca!=CondicaoBSI)
+  if(Direcao!=CondicaoBSI)
   {
     //Print("Mudou Hein");
     return true;
   }
-  Mudanca = CondicaoBSI;
+  Direcao = CondicaoBSI;
   return false;
 }
 
@@ -47,7 +47,7 @@ void BSI ()
     if(BSI[0] == 2) CondicaoBSI = 1;
     if(BSI[0] == 0) CondicaoBSI = -1;
 
-    if(Mudanca!=CondicaoBSI)
+    if(Direcao!=CondicaoBSI)
     {
       //Print("Mudou Hein");
       DeuStopLoss = false;
@@ -55,7 +55,7 @@ void BSI ()
       Ordem = false;
 
 
-      if(Mudanca==1 && Ordem==false)
+      if(Direcao==1 && Ordem==false)
       {
         Print("Operações Antes da venda: ",Operacoes," VENDE! ");
         //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
@@ -63,7 +63,7 @@ void BSI ()
         Ordem = true;
       }
 
-      if(Mudanca==-1 && Ordem==false)
+      if(Direcao==-1 && Ordem==false)
       {
         Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por BSI","Entrada");
@@ -71,7 +71,7 @@ void BSI ()
       }
     }
 
-    Mudanca = CondicaoBSI;
+    Direcao = CondicaoBSI;
 
   }   //FIM DO IF TaDentroDoHorario
 }

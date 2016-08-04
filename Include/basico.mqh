@@ -140,7 +140,6 @@ void ArrumaMinutos ()
 
 void Comentario (int ops)
 {
-
   if(ops > 0)
   {
     Comment(
@@ -155,7 +154,6 @@ void Comentario (int ops)
       " - EM_Contador: "+
 
       IntegerToString(EM_Contador_Picote)
-
     );
   }
   if(ops < 0) Comment(Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+" VENDIDO- SL: "+DoubleToString(StopLossValorVenda,_Digits)+" - TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+" TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - "+Segundos_Fim_Barra()+" - EM_Contador: "+IntegerToString(EM_Contador_Picote));
@@ -172,13 +170,13 @@ string Descricao_Robo ()
   Desc_Robo = Desc_Robo + _Symbol;
   Desc_Robo = Desc_Robo + "-";
   //Indicadores -- Falta Os Parametros de Cada
-
+  /* ESPECIFICO BUCARESTE MAS EH RUIM DE SEPARAR AGORA FAZER DEPOIS
   if(Usa_Hilo) Desc_Robo = Desc_Robo+"HiLo"+IntegerToString(Periodos);
   if(Usa_Ozy) Desc_Robo = Desc_Robo+"Ozy"+IntegerToString(Ozy_MM)+";"+IntegerToString(Ozy_Shift)+"."+IntegerToString(Ozy_length);
   if(Usa_PSar) Desc_Robo = Desc_Robo+"PSAR"+DoubleToString(PSAR_Step,2)+";"+DoubleToString(PSAR_Max_Step,1);
   if(Usa_Fractal) Desc_Robo = Desc_Robo+"Frac"+IntegerToString(Frac_Candles_Espera);
   if(Usa_BSI) Desc_Robo = Desc_Robo+"BSI"+IntegerToString(BSI_RangePeriod)+";"+IntegerToString(BSI_Slowing)+"."+IntegerToString(BSI_Avg_Period);
-
+  */
   Desc_Robo = Desc_Robo + "-";
   // Fixos
 
@@ -262,4 +260,46 @@ void Init_Padrao ()
 
   Liquidez_Teste_inicio = conta.Equity();
 
+}
+
+void IniciaDia ()
+{
+  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
+  {
+
+    PrecoCompra =0;
+    PrecoVenda =0;
+
+    OperacoesFeitas =0;
+
+    StopLossValorCompra =-9999999999;
+    TakeProfitValorCompra = 999999999;
+    StopLossValorVenda =99999999999;
+    TakeProfitValorVenda = -999999999;
+
+    JaZerou = true;
+    JaDeuFinal = false;
+    Operacoes = 0;
+    Ordem = false;
+    PrimeiraOp = false;
+    DeuTakeProfit = true;
+    DeuStopLoss = true;
+
+    // Print("Bom dia! Robo as ordens, segura o cora�ao pq o role � monstro!!!");
+    // SendMail(Descricao_Robo + "Inicio das opera�oes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" �s ordens, segura o cora�ao pq o role � monstro!!!");
+    // SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" �s ordens, segura o cora�ao pq o role � monstro!!!");
+
+    liquidez_inicio = conta.Equity();
+    Sleep(1000);
+  }
+}
+
+void Inicializa_Geral ()
+{
+
+  Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
+
+//  Cria_Botao_Operar();  // Heranca bucareste, pensando na vida
+
+  ArrumaMinutos();
 }

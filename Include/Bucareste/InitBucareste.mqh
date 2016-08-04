@@ -8,6 +8,14 @@
 
 ENUM_INIT_RETCODE InitBucareste () {
 
+
+    if(SaiPeloIndicador==true && IndicadorTempoReal == true)
+    {
+      MessageBox("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização",MB_OK);
+      Print("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização");
+      return(INIT_PARAMETERS_INCORRECT);
+    }
+
   int Verifica_Indicadores = Usa_Fractal + Usa_Hilo + Usa_PSar + Usa_Ozy + Usa_BSI;
   if(Verifica_Indicadores != 1)
   {

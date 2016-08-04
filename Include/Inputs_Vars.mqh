@@ -9,7 +9,7 @@
 /////////////////////////////////////// Inputs
 
 input string Parametros_Gerais = "-------------------------------------";  //Parametros Gerais
-input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;
+input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;                              //TimeFrame base
 
 input int HoraDeInicio = 9;                                                //Hora de Início
 input int MinutoDeInicio = 20;                                             //Minuto de Inicio
@@ -40,7 +40,7 @@ return TM;
 }
 
 string Descricao_Robo = Desc_Se_Vazio()+Descricao_Robo_Alpha;
-input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;          //Tipo de ordem (teste)
+input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;       //Tipo de ordem (teste)
 input bool Otimizacao = false;                                          //Parametro para otimização
 
 

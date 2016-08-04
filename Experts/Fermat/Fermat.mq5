@@ -6,14 +6,15 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-#property version   "0.01"
+#property version   "1.00"
 
 #include <basico.mqh>
 #include <OnTrade.mqh>
 #include <FuncoesGerais.mqh>
-#include <Fermat\funcoes_fermat.mqh>
 #include <Fermat\inputs_fermat.mqh>
 #include <Inputs_Vars.mqh>
+#include <Fermat\funcoes_fermat.mqh>
+
 #include <Seccao.mqh>
 #include <Stops.mqh>
 #include <Graficos.mqh>
@@ -24,12 +25,12 @@
 int OnInit()
 {
   Init_Padrao();
+  Inicializa_Geral();
 
-  /*/Especifico Fermat Mezzo Mezzo
-  Inicializa_Funcs();
+  //Especifico Fermat Mezzo Mezzo
+  Inicializa_iMAs();
 
-  if(VerificaInit() == INIT_PARAMETERS_INCORRECT ||
-  InitBucareste() == INIT_PARAMETERS_INCORRECT)
+  if(VerificaInit() == INIT_PARAMETERS_INCORRECT)
   {
     return(INIT_PARAMETERS_INCORRECT);
   }
@@ -37,7 +38,7 @@ int OnInit()
   {
     return INIT_SUCCEEDED;
   }
-  //Fim do Especifico Fermat*/
+  //Fim do Especifico Fermat
 }
 
 void OnTimer()

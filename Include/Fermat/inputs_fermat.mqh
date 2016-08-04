@@ -11,5 +11,11 @@ input int N_Ma1 = 5;                                                //Periodos M
 input int N_Ma2 = 8;                                                //Periodos MA2
 input int N_Ma3 = 13;                                               //Periodos MA3
 
+input int Distancia_m1_m3 = 2;                                       //Distanca da M1 a M3
+
 input ENUM_MA_METHOD Metodo = MODE_SMA;                             //Metodo MA
 input ENUM_APPLIED_PRICE Preco_Aplicado = PRICE_CLOSE;              //Preço Aplicado
+
+int HandleMA1 = 0;
+int HandleMA2 = 0;
+int HandleMA3 = 0;

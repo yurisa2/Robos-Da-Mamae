@@ -38,12 +38,6 @@ ENUM_INIT_RETCODE VerificaInit ()
     return(INIT_PARAMETERS_INCORRECT);
   }
 
-  if(SaiPeloIndicador==true && IndicadorTempoReal == true)
-  {
-    MessageBox("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização",MB_OK);
-    Print("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização");
-    return(INIT_PARAMETERS_INCORRECT);
-  }
 
   if(HoraDeInicio == HoraDeFim && (MinutoDeFim-MinutoDeInicio<10))
   {

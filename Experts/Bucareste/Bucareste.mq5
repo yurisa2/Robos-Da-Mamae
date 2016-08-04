@@ -11,14 +11,18 @@
 #include <basico.mqh>
 #include <OnTrade.mqh>
 #include <FuncoesGerais.mqh>
+
 #include <Bucareste\FuncoesBucareste.mqh>
 #include <Bucareste\inputs_bucareste.mqh>
+
 #include <Inputs_Vars.mqh>
+
 #include <Indicadores\HiLo.mqh>
 #include <Indicadores\PSAR.mqh>
 #include <Indicadores\Ozy.mqh>
 #include <Indicadores\BSI.mqh>
 #include <Indicadores\Fractals.mqh>
+
 #include <Seccao.mqh>
 #include <Stops.mqh>
 #include <Graficos.mqh>
@@ -30,6 +34,8 @@
 int OnInit()
 {
   Init_Padrao();
+  Inicializa_Geral();
+
 
   //Especifico Bucareste Mezzo Mezzo
   Inicializa_Funcs();

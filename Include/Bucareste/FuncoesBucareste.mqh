@@ -9,7 +9,6 @@
 
 void Inicializa_Funcs ()
 {
-  Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
 
   if(Usa_PSar == true) HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
   if(Usa_Ozy == true) HandleOzy = iCustom(NULL,TimeFrame,"ozymandias_lite",Ozy_length,Ozy_MM,Ozy_Shift);
@@ -28,47 +27,8 @@ void Inicializa_Funcs ()
   if(Usa_Ozy == true) ChartIndicatorAdd(0,0,HandleOzy);
   if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);
 
-  Cria_Botao_Operar();
-
-  ArrumaMinutos();
-}
-
-
-void IniciaDia ()
-{
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
-  {
-
-    if(Usa_Hilo == true) CalculaHiLo();
-    if(Usa_PSar == true) CalculaPSar();
-
-    PrecoCompra =0;
-    PrecoVenda =0;
-
-    OperacoesFeitas =0;
-
-    StopLossValorCompra =-9999999999;
-    TakeProfitValorCompra = 999999999;
-    StopLossValorVenda =99999999999;
-    TakeProfitValorVenda = -999999999;
-
-    JaZerou = true;
-    JaDeuFinal = false;
-    Operacoes = 0;
-    Ordem = false;
-    PrimeiraOp = false;
-    DeuTakeProfit = true;
-    DeuStopLoss = true;
-
-    Print("Bom dia! Bucareste as ordens, segura o cora�ao pq o role � monstro!!!");
-    SendMail(Descricao_Robo + "Inicio das opera�oes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" �s ordens, segura o cora�ao pq o role � monstro!!!");
-    SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" �s ordens, segura o cora�ao pq o role � monstro!!!");
-
-    if(Usa_Hilo == true) Print("Indicador HiLo inicio do dia: ",Mudanca);
-    if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Mudanca);
-    liquidez_inicio = conta.Equity();
-    Sleep(1000);
-  }
+  if(Usa_Hilo == true) Print("Indicador HiLo inicio do dia: ",Mudanca);
+  if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Mudanca);
 
 }
 
@@ -95,8 +55,49 @@ void PrimeiraOperacao ()
       DeuStopLoss = false;
       DeuTakeProfit = false;
     }
-
-
   }
 }
-//////////////// Fim Primeira Opera�ao
+//////////////// Fim Primeira Operacao
+
+
+///////////////// COMPRA
+
+void CompraIndicador (string Desc,string IO = "Neutro")
+{
+  if(IO == "Entrada") EM_Contador_Picote = 0;
+
+  if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
+  if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
+
+  Print(Descricao_Robo+" "+Desc);
+
+  if(Operacoes<0 && SaiPeloIndicador==true)
+  {
+    MontarRequisicao(ORDER_TYPE_BUY,Desc);
+  }
+  if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+  {
+    MontarRequisicao(ORDER_TYPE_BUY,Desc);
+  }
+}
+
+//////////////////////////
+
+///////////// Venda
+void VendaIndicador (string Desc,string IO = "Neutro")
+{
+  if(IO == "Entrada") EM_Contador_Picote = 0;
+
+  if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
+  if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
+
+  Print(Descricao_Robo+" "+Desc);
+  if(Operacoes>0 && SaiPeloIndicador==true)
+  {
+    MontarRequisicao(ORDER_TYPE_SELL,Desc);
+  }
+  if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+  {
+    MontarRequisicao(ORDER_TYPE_SELL,Desc);
+  }
+}

@@ -10,7 +10,12 @@
 
 void StopLossCompra ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes >0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
+  if(
+  TaDentroDoHorario(HorarioInicio,HorarioFim)==true &&
+  DeuStopLoss == false &&
+  Operacoes >0 &&
+  ((Usa_Fixos == true && StopLoss != 0) ||
+  (Usa_Prop == true && Prop_StopLoss != 0)))
   {
     if(daotick() <= StopLossValorCompra)
     {

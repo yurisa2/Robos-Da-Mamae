@@ -73,6 +73,7 @@ void OnNewBar()
 {
   //Especifico Fermat
 
+  Operacoes_Fermat();
 
   //Fim do Especifico Fermat
 }

@@ -33,6 +33,7 @@ void OnChartEvent(const int id,
         if(Direcao<0)
         {
           VendaImediata("Iniciado pelo botão","Entrada");
+          DeuStopLoss = false;    
           DeuTakeProfit = false;
         }
         if(Direcao>0)

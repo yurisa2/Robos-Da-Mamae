@@ -17,9 +17,9 @@ void Inicializa_iMAs ()
     ExpertRemove();
   }
 
-    ChartIndicatorAdd(0,0,HandleMA1);
-    ChartIndicatorAdd(0,0,HandleMA2);
-    ChartIndicatorAdd(0,0,HandleMA3);
+  ChartIndicatorAdd(0,0,HandleMA1);
+  ChartIndicatorAdd(0,0,HandleMA2);
+  ChartIndicatorAdd(0,0,HandleMA3);
 
 }
 
@@ -47,33 +47,63 @@ double MA3 ()
   return ValorMA[0];
 }
 
-int Avalia_MAs () //True se cumpre os quesitos de maior menor e distancia e da o sentido, ZERO (0) e igual a nao cumpre
+int Direcao_Fermat () //True se cumpre os quesitos de maior menor e distancia e da o sentido, ZERO (0) e igual a nao cumpre
 {
-if(MA3() < MA1() && MA2() < MA1() && MA1()-MA3() >= Tick_Size*Distancia_m1_m3)
-{
-Direcao = 1;
-return 1;
-}
-else
-if(MA3() > MA1() && MA2() > MA1() && MA3()-MA1() >= Tick_Size*Distancia_m1_m3)
-{
-Direcao = -1;
-return -1;
-}
-else
-{
-Direcao = 0;
-return 0;
-}
+  if(MA3() < MA1() && MA2() < MA1() && MA1()-MA3() >= Tick_Size*Distancia_m1_m3)
+  {
+    Direcao = 1;
+    return 1;
+  }
+  else
+  if(MA3() > MA1() && MA2() > MA1() && MA3()-MA1() >= Tick_Size*Distancia_m1_m3)
+  {
+    Direcao = -1;
+    return -1;
+  }
+  else
+  {
+    Direcao = 0;
+    return 0;
+  }
 }
 
 void Comentario_Fermat ()
 {
-Comentario_Robo =
-"MA1: "+DoubleToString(MA1(),_Digits)+
-" | MA2: "+DoubleToString(MA2(),_Digits)+
-" | MA3: "+DoubleToString(MA3(),_Digits)+
-" | Distancia M1 M3: "+DoubleToString(MathAbs(MA3()-MA1()))+
-" | Direcao: "+IntegerToString(Avalia_MAs())
-;
+  Comentario_Robo =
+  "MA1: "+DoubleToString(MA1(),_Digits)+
+  " | MA2: "+DoubleToString(MA2(),_Digits)+
+  " | MA3: "+DoubleToString(MA3(),_Digits)+
+  " | Distancia M1 M3: "+DoubleToString(MathAbs(MA3()-MA1()))+
+  " | Direcao: "+IntegerToString(Direcao_Fermat())
+  ;
+}
+
+void Operacoes_Fermat ()
+{
+  if(Direcao_Fermat()<0 &&
+  Operacoes==0 &&
+  OperacoesFeitas < (Limite_Operacoes*2) &&
+  Saldo_Dia() == true &&
+
+  ((Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) ||
+  Usa_Fixos == true ))
+  {
+    DeuStopLoss = false;
+    DeuTakeProfit = false;
+    VendaImediata("Entrada Fermat","Entrada");
+  }
+
+  if(Direcao_Fermat()>0 &&
+  Operacoes==0 &&
+  OperacoesFeitas < (Limite_Operacoes*2) &&
+  Saldo_Dia() == true &&
+
+  ((Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) ||
+  Usa_Fixos == true ))
+  {
+    DeuStopLoss = false;
+    DeuTakeProfit = false;
+    CompraImediata("Entrada Fermat","Entrada");
+  }
+
 }

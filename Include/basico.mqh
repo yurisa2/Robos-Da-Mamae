@@ -175,7 +175,18 @@ void Comentario ()
   Comentario_Robo
   ;
 
-Comment(Comentario_Avancado);
+Comentario_Debug_funcao();
+
+switch(Tipo_Comentario)
+{
+case 0:  Comment(Comentario_Simples);
+case 1:  Comment(Comentario_Avancado);
+case 2:  Comment(Comentario_Debug);
+
+
+}
+
+
 
 }
 
@@ -314,4 +325,20 @@ void IniciaDia ()
     liquidez_inicio = conta.Equity();
     Sleep(1000);
   }
+}
+
+void Comentario_Debug_funcao ()
+{
+Comentario_Debug = Comentario_Avancado +
+
+"\n JaZerou: "+JaZerou+
+"\n JaDeuFinal: "+JaDeuFinal+
+"\n Operacoes: "+Operacoes+
+"\n DeuTakeProfit: "+DeuTakeProfit+
+"\n DeuStopLoss: "+DeuStopLoss+
+"\n Operacoes: "+Operacoes+
+"\n Usa_Fixos: "+Usa_Fixos+
+"\n TaDentroDoHorario: "+TaDentroDoHorario(HorarioInicio,HorarioFim)
+
+;
 }

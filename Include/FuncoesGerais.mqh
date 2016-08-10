@@ -9,7 +9,7 @@
 //////////////////////////////////// Funcoes
 
 
-bool Saldo_Dia ()
+bool Saldo_Dia_Permite ()
 {
    if(conta.Equity() == liquidez_inicio) return true;
    if(
@@ -19,6 +19,31 @@ bool Saldo_Dia ()
    ) return true;
 
 return false;
+}
+
+double Saldo_Dia_Valor ()
+{
+
+return conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao;
+
+}
+
+double Saldo_Operacao_Atual ()
+{
+  double Retorno_Saldo = 0;
+
+  if(Operacoes > 0)
+  {
+    Retorno_Saldo =   daotick() - PrecoCompra;
+   }
+
+   if(Operacoes < 0)
+   {
+     Retorno_Saldo =   PrecoVenda - daotick();
+    }
+
+
+return Retorno_Saldo;
 
 
 }

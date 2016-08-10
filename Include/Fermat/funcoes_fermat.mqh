@@ -23,39 +23,39 @@ void Inicializa_iMAs ()
 
 }
 
-double MA1 ()
+double MA1 (int candle = 0)
 {
   double ValorMA[];
   ArraySetAsSeries(ValorMA, true);
   int copied=CopyBuffer(HandleMA1,0,0,100,ValorMA);
-  return ValorMA[0];
+  return ValorMA[candle];
 }
 
-double MA2 ()
+double MA2 (int candle = 0)
 {
   double ValorMA[];
   ArraySetAsSeries(ValorMA, true);
   int copied=CopyBuffer(HandleMA2,0,0,100,ValorMA);
-  return ValorMA[0];
+  return ValorMA[candle];
 }
 
-double MA3 ()
+double MA3 (int candle = 0)
 {
   double ValorMA[];
   ArraySetAsSeries(ValorMA, true);
   int copied=CopyBuffer(HandleMA3,0,0,100,ValorMA);
-  return ValorMA[0];
+  return ValorMA[candle];
 }
 
-int Direcao_Fermat () //True se cumpre os quesitos de maior menor e distancia e da o sentido, ZERO (0) e igual a nao cumpre
+int Direcao_Fermat (int candle = 0) //True se cumpre os quesitos de maior menor e distancia e da o sentido, ZERO (0) e igual a nao cumpre
 {
-  if(MA3() < MA1() && MA2() < MA1() && MA1()-MA3() >= Tick_Size*Distancia_m1_m3)
+  if(MA3(candle) < MA1(candle) && MA2(candle) < MA1(candle) && MA1(candle)-MA3(candle) >= Tick_Size*Distancia_m1_m3)
   {
     Direcao = 1;
     return 1;
   }
   else
-  if(MA3() > MA1() && MA2() > MA1() && MA3()-MA1() >= Tick_Size*Distancia_m1_m3)
+  if(MA3(candle) && MA2(candle) > MA1(candle) && MA3(candle)-MA1(candle) >= Tick_Size*Distancia_m1_m3)
   {
     Direcao = -1;
     return -1;
@@ -83,7 +83,9 @@ void Operacoes_Fermat ()
   if(Direcao_Fermat()<0 &&
   Operacoes==0 &&
   OperacoesFeitas < (Limite_Operacoes*2) &&
-  Saldo_Dia() == true &&
+  Saldo_Dia_Permite() == true &&
+  Direcao_Fermat(0)!= Direcao_Fermat(1) &&
+  TaDentroDoHorario(HorarioInicio,HorarioFim) &&
 
   ((Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) ||
   Usa_Fixos == true ))
@@ -96,7 +98,9 @@ void Operacoes_Fermat ()
   if(Direcao_Fermat()>0 &&
   Operacoes==0 &&
   OperacoesFeitas < (Limite_Operacoes*2) &&
-  Saldo_Dia() == true &&
+  Saldo_Dia_Permite() == true &&
+  Direcao_Fermat(0)!= Direcao_Fermat(1) &&
+  TaDentroDoHorario(HorarioInicio,HorarioFim) &&
 
   ((Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) ||
   Usa_Fixos == true ))
@@ -104,6 +108,17 @@ void Operacoes_Fermat ()
     DeuStopLoss = false;
     DeuTakeProfit = false;
     CompraImediata("Entrada Fermat","Entrada");
+  }
+
+// Programando uma saida
+  if(Direcao_Fermat(0)!= Direcao_Fermat(1) &&
+  Operacoes!=0 &&
+  TaDentroDoHorario(HorarioInicio,HorarioFim) &&
+  Saldo_Operacao_Atual() < 0)
+  {
+    DeuStopLoss = true;
+    if(Operacoes>0) VendaImediata("Saida Fermat - sem direcao","Saida");
+    if(Operacoes<0) CompraImediata("Saida Fermat - sem direcao","Saida");
   }
 
 }

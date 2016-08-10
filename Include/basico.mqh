@@ -4,16 +4,14 @@
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-
 
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
 //#include <Charts\Chart.mqh>
 #include <Lib_CisNewBar.mqh>
 //#include <Expert\Expert.mqh>
-
 
 //--- object for performing trade operations
 //CExpert expert;
@@ -25,8 +23,6 @@ CDealInfo negocio;
 //CChart grafico;
 CAccountInfo conta;
 CisNewBar grafico_atual; // instance of the CisNewBar class: current chart
-
-
 
 ////////////////////  TaDentroDoHorario //////////////
 bool TaDentroDoHorario (string HoraInicio, string HoraFim)
@@ -51,13 +47,9 @@ bool TaDentroDoHorario (string HoraInicio, string HoraFim)
       RetornoHorario = true;
     }
   }
-
   return(RetornoHorario);
-
-
 }
 ////////////////////////////////////////////////////////////////
-
 
 //////////////////////// DAOTICK ///////////
 ////// Funï¿½ao Pega Tick e devolve a hora e o valor da porra do ativo
@@ -72,7 +64,6 @@ double daotick ()
   {
     // Print(last_tick.time,": Bid = ",last_tick.bid,
     //  " Ask = ",last_tick.ask,"  Volume = ",last_tick.volume); //total e completo
-
   }
   else Print("SymbolInfoTick() failed, error = ",GetLastError());
 
@@ -89,7 +80,6 @@ string Segundos_Fim_Barra ()
   datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
   //if(grafico_atual.isNewBar(new_time)) Segundos_Contados=0;
   return DoubleToString(PeriodSeconds(TimeFrame)-(TimeCurrent()-new_time),0)+"s";
-
 }
 
 ////////////////// Zerar o dia
@@ -115,12 +105,10 @@ void ZerarODia ()
       Sleep(1000);
       SendMail(Descricao_Robo+"Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
     }
-    Print(Descricao_Robo+"Depois da Ultima Operaï¿½ao: ",IntegerToString(Operacoes));
+    Print(Descricao_Robo+"Depois da Ultima Operação: ",IntegerToString(Operacoes));
     Sleep(5000);
   }
-
 }
-
 
 void ArrumaMinutos ()
 {
@@ -144,33 +132,41 @@ void Comentario ()
   if(Operacoes > 0)
   {
     Comentario_Simples =
-    " COMPRADO - SL: "+DoubleToString(StopLossValorCompra,_Digits)+
-    " - TP: "+DoubleToString(TakeProfitValorCompra,_Digits)+
-    " TS: "+DoubleToString(TS_ValorCompra,_Digits)+" - ";
+    " COMPRADO | SL: "+DoubleToString(StopLossValorCompra,_Digits)+
+    " | TP: "+DoubleToString(TakeProfitValorCompra,_Digits)+
+    " TS: "+DoubleToString(TS_ValorCompra,_Digits)+" - "+
+     "Delta op Atual:" + DoubleToString(Saldo_Operacao_Atual(),_Digits)
+
+    ;
   }
   if(Operacoes < 0)
   {
     Comentario_Simples =
-    " VENDIDO- SL: "+DoubleToString(StopLossValorVenda,_Digits)+
-    " - TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+
-    " TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - ";
+    " VENDIDO | SL: "+DoubleToString(StopLossValorVenda,_Digits)+
+    " | TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+
+    " TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - "+
+    "Delta op Atual: " + DoubleToString(Saldo_Operacao_Atual(),_Digits)
+
+    ;
   }
 
   if(Operacoes == 0)
   {
     Comentario_Simples =
-    "Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" - "+
-    Segundos_Fim_Barra()+" - daotick: "+DoubleToString(daotick());
+    "Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" | "+
+    " | daotick: "+DoubleToString(daotick(),_Digits);
   }
 
   Comentario_Avancado =
-  Descricao_Robo()+"|"+Desc_Se_Vazio()+"\n"+Descricao_Robo+
+  Descricao_Robo()+" | "+Desc_Se_Vazio()+"\n"+Descricao_Robo+
 
   Comentario_Simples+   //AQUI EH O ESPECIFICO DA ORDEM
 
-  " - EM_Contador: "+IntegerToString(EM_Contador_Picote)+" - "+
+  " | Picotes: "+IntegerToString(EM_Contador_Picote)+" | "+
 
-  Segundos_Fim_Barra() + "\n" +
+  Segundos_Fim_Barra() +
+  " | Saldo exec: " + DoubleToString(Saldo_Dia_Valor(),2) +
+  " | Operacoes: " + IntegerToString(OperacoesFeitas) + "\n" +
 
   Comentario_Robo
   ;
@@ -182,11 +178,7 @@ switch(Tipo_Comentario)
 case 0:  Comment(Comentario_Simples);
 case 1:  Comment(Comentario_Avancado);
 case 2:  Comment(Comentario_Debug);
-
-
 }
-
-
 
 }
 
@@ -200,12 +192,12 @@ string Descricao_Robo ()
   Desc_Robo = Desc_Robo + "-";
   //Indicadores -- Falta Os Parametros de Cada
 
-  Desc_Robo = Desc_Robo + "-";
+  Desc_Robo = Desc_Robo + " | ";
   // Fixos
 
   if(Usa_Fixos)
   {
-    Desc_Robo = Desc_Robo+"Fix-";
+    Desc_Robo = Desc_Robo+"Fixo | ";
     if(StopLoss>0) Desc_Robo = Desc_Robo+"SL"+DoubleToString(StopLoss,2);
     if(MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(MoverSL,2);
     if(PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(PontoDeMudancaSL,2);
@@ -218,7 +210,7 @@ string Descricao_Robo ()
 
   if(Usa_Prop)
   {
-    Desc_Robo = Desc_Robo+"Pro-";
+    Desc_Robo = Desc_Robo+"Proporcionais | ";
     if(Prop_StopLoss>0) Desc_Robo = Desc_Robo+"SL"+DoubleToString(Prop_StopLoss,2);
     if(Prop_Metodo==534) Desc_Robo = Desc_Robo+"SMA"+DoubleToString(Prop_Periodos,2);
     if(Prop_Metodo==88) Desc_Robo = Desc_Robo+"BB"+DoubleToString(Prop_Periodos,2);
@@ -275,31 +267,24 @@ void Init_Padrao ()
 {
   ObjectsDeleteAll(0,0,-1);
   EventSetMillisecondTimer(500);
-
   TimeMagic =MathRand();
 
   Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
 
   Liquidez_Teste_inicio = conta.Equity();
-
-
   Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
 
-  Cria_Botao_Operar();  // Heranca bucareste, pensando na vida
-
+  Cria_Botao_Operar();  // Heranca bucareste, FERMAT calculou com a func DIRECAO(), mas ainda assim, pensando na vida...
   ArrumaMinutos();
 
   if(Usa_Prop == true) Inicializa_Prop();
-
-
 }
 
 void IniciaDia ()
 {
   if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
   {
-
     PrecoCompra =0;
     PrecoVenda =0;
 
@@ -313,7 +298,7 @@ void IniciaDia ()
     JaZerou = true;
     JaDeuFinal = false;
     Operacoes = 0;
-    Ordem = false;
+    Ordem = false;      //Bucareste
     PrimeiraOp = false;
     DeuTakeProfit = true;
     DeuStopLoss = true;
@@ -331,14 +316,14 @@ void Comentario_Debug_funcao ()
 {
 Comentario_Debug = Comentario_Avancado +
 
-"\n JaZerou: "+JaZerou+
-"\n JaDeuFinal: "+JaDeuFinal+
-"\n Operacoes: "+Operacoes+
-"\n DeuTakeProfit: "+DeuTakeProfit+
-"\n DeuStopLoss: "+DeuStopLoss+
-"\n Operacoes: "+Operacoes+
-"\n Usa_Fixos: "+Usa_Fixos+
-"\n TaDentroDoHorario: "+TaDentroDoHorario(HorarioInicio,HorarioFim)
+"\n       JaZerou: "+IntegerToString(JaZerou)+
+"\n    JaDeuFinal: "+IntegerToString(JaDeuFinal)+
+"\n     Operacoes: "+IntegerToString(Operacoes)+
+"\n DeuTakeProfit: "+IntegerToString(DeuTakeProfit)+
+"\n   DeuStopLoss: "+IntegerToString(DeuStopLoss)+
+"\n     Operacoes: "+IntegerToString(Operacoes)+
+"\n     Usa_Fixos: "+IntegerToString(Usa_Fixos)+
+"\n      TaDentro: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))
 
 ;
 }

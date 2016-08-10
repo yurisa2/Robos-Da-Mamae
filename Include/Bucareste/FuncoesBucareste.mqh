@@ -3,7 +3,7 @@
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 
@@ -74,7 +74,7 @@ void CompraIndicador (string Desc,string IO = "Neutro")
   {
     MontarRequisicao(ORDER_TYPE_BUY,Desc);
   }
-  if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+  if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
   {
     MontarRequisicao(ORDER_TYPE_BUY,Desc);
   }
@@ -95,7 +95,7 @@ void VendaIndicador (string Desc,string IO = "Neutro")
   {
     MontarRequisicao(ORDER_TYPE_SELL,Desc);
   }
-  if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+  if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
   {
     MontarRequisicao(ORDER_TYPE_SELL,Desc);
   }

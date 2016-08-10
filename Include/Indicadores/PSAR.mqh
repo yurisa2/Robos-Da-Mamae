@@ -12,7 +12,7 @@ bool CalculaPSar ()
   if(PSar_Array[0] >daotick())     CondicaoPsar = -1;
   if(PSar_Array[0] <daotick())     CondicaoPsar = 1;
 
-  if(Mudanca!=CondicaoPsar)
+  if(Direcao!=CondicaoPsar)
   {
     //Print("Mudou Hein");
     return true;
@@ -35,7 +35,7 @@ void PSar ()
     if(PSar_Array[0] >daotick())     CondicaoPsar = -1;
     if(PSar_Array[0] <daotick())     CondicaoPsar = 1;
 
-    if(Mudanca!=CondicaoPsar)
+    if(Direcao!=CondicaoPsar)
     {
       //Print("Mudou Hein");
       DeuStopLoss = false;

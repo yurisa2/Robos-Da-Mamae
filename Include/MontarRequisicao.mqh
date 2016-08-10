@@ -11,17 +11,17 @@
 
 void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
    {
-         if(order_type==ORDER_TYPE_SELL) 
+         if(order_type==ORDER_TYPE_SELL)
          {
             PrecoVenda = daotick();
             Operacoes = Operacoes -1;
          }
-         if(order_type==ORDER_TYPE_BUY)  
+         if(order_type==ORDER_TYPE_BUY)
          {
-            PrecoCompra = daotick();   
+            PrecoCompra = daotick();
             Operacoes = Operacoes +1;
-         }   
-            
+         }
+
          StopLossValorCompra =-9999999999;
          TakeProfitValorCompra = 999999999;
          StopLossValorVenda =99999999999;
@@ -31,30 +31,30 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          OperacoesFeitas++;
          OperacoesFeitasGlobais++;
          Contador_SLMOVEL = 0;
-         
+
          if(Usa_Fixos == true) CalculaStops();
-         if(Usa_Prop == true) 
+         if(Usa_Prop == true)
          {
             Stops_Proporcional();
             Print("Delta do Proporcional: ",Prop_Delta());
          }
 
-         MqlTradeRequest Req;     
-         MqlTradeResult Res;     
-         ZeroMemory(Req);     
-         ZeroMemory(Res);     
+         MqlTradeRequest Req;
+         MqlTradeResult Res;
+         ZeroMemory(Req);
+         ZeroMemory(Res);
          Req.symbol       = Symbol();
          Req.volume       = Lotes;
          Req.magic = TimeMagic;
-         Req.type_filling = TipoDeOrdem;                 
-         Req.action=TRADE_ACTION_DEAL; 
-         Req.type=order_type; 
-         Req.comment=Descricao_Robo+" "+comentario_req;     
+         Req.type_filling = TipoDeOrdem;
+         Req.action=TRADE_ACTION_DEAL;
+         Req.type=order_type;
+         Req.comment=Descricao_Robo+" "+comentario_req;
          Req.tp=0;
          Req.sl=0;
-         
-               if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada |",comentario_req); 
-               else 
+
+               if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada |",comentario_req);
+               else
                   {
                      Print(Descricao_Robo+" Deu Pau, Verifique com pressao");
                      SendNotification("ERRO GRAVE, VERIFIQUE: "+IntegerToString(GetLastError()));
@@ -62,7 +62,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
                   }
 
          DaResultado = true;
-         
+
          Sleep(300);
    Apaga_Graficos();
    if(Operacoes!=0)
@@ -72,25 +72,25 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
       CriaLinhas();
       AtualizaLinhas();
    }
-   if(Operacoes==0) 
+   if(Operacoes==0)
    {
       Apaga_Graficos();
       Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),0));
       Cria_Botao_Operar();
-      
+
 
    }
-   Print("Operacoes no fim da req: ",Operacoes);  
+   Print("Operacoes no fim da req: ",Operacoes);
    Print("Saldo do Dia ate o momento: ",conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao);
-//   Print("Funcao Saldo: ",Saldo_Dia());
-   
-   
+//   Print("Funcao Saldo: ",Saldo_Dia_Permite());
+
+
    Liquidez_Teste_fim = conta.Equity();
 //   Print("Liquides Ini - Equi: ",liquidez_inicio - conta.Equity());
 //   Print("Ops Feitas: ",OperacoesFeitas);
 //   Print("CustoOps: ",custo_operacao);
-   
-   
-   
+
+
+
    }
    /////////////////////////////////////////// Final da req.

@@ -1,23 +1,62 @@
 # README #
-         _______  _______ _________ _______  _______  _______  _______ 
-        (  ____ )(  ____ \\__   __/(  ____ )(  ___  )(  ____ \(  ___  )
-        | (    )|| (    \/   ) (   | (    )|| (   ) || (    \/| (   ) |
-        | (____)|| (__       | |   | (____)|| |   | || (_____ | (___) |
-        |  _____)|  __)      | |   |     __)| |   | |(_____  )|  ___  |
-        | (      | (         | |   | (\ (   | |   | |      ) || (   ) |
-        | )      | (____/\   | |   | ) \ \__| (___) |/\____) || )   ( |
-        |/       (_______/   )_(   |/   \__/(_______)\_______)|/     \|
-                                                                       
-https://bitbucket.org/petrosa/petrosa-bots
 
-Tudo o que vocÃª precisa estÃ¡ nesse GIT. AtÃ© mesmo se vocÃª quiser dar um COMITT...
 
-### TODOS OS ROBÃ”S ESTÃƒO NA MASTER ###
+                      .-.
+                     (   )
+                      '-'
+                      J L
+                      | |
+                     J   L
+                     |   |
+                    J     L
+                  .-'.___.'-.
+                 /___________\
+            _.-""'           `bmw._
+          .'                       `.
+        J                            `.
+       F                               L
+      J                                 J
+     J                                  `
+     |                                   L
+     |                                   |
+     |                                   |
+     |                                   J
+     |                                    L
+     |                                    |
+     |             ,.___          ___....--._
+     |           ,'     `""""""""'           `-._
+     |          J           _____________________`-.
+     |         F         .-'   `-88888-'    `Y8888b.`.
+     |         |       .'         `P'         `88888b \
+     |         |      J       #     L      #    q8888b L
+     |         |      |             |           )8888D )
+     |         J      \             J           d8888P P
+     |          L      `.         .b.         ,88888P /
+     |           `.      `-.___,o88888o.___,o88888P'.'
+     |             `-.__________________________..-'
+     |                                    |
+     |         .-----.........____________J
+     |       .' |       |      |       |
+     |      J---|-----..|...___|_______|
+     |      |   |       |      |       |
+     |      Y---|-----..|...___|_______|
+     |       `. |       |      |       |
+     |         `'-------:....__|______.J
+     |                                  |
+      L___                              |
+          """----...______________....--'
 
-* Cada robÃ´ tem sua prÃ³pria Branch, mas o Master continua o mesmo. SEMPRE
-* Todos os EX5 tem o mesmo nome, sempre, tome cuidado com o que vocÃª PULLa
+
+https://bitbucket.org/yurisa2/rob-s-da-mam-e
+
+Tudo o que você precisa está nesse GIT. Até mesmo se você quiser dar um COMMIT...
+
+### TODOS OS ROBÔS ESTÃO NA MASTER ###
+
+* Nem é mais daquele jeito, está tudo junto!
+* Mudou o esquema
 * Um dia eu ligo o Wiki
 
-Em caso de dÃºvida, sempre fale com o YurÃ£o primeiro.
+Em caso de dúvida, sempre fale com o Yurão primeiro. Solitário aqui.
 
-### Pode-se e deve-se adicionar bugs e resolver o mÃ¡ximo de tretas (Issues) por aqui, fica documentado e trampo Ã© zero ###
+### Pode-se e deve-se adicionar bugs e resolver o máximo de tretas (Issues) por aqui, fica documentado e trampo é zero ###

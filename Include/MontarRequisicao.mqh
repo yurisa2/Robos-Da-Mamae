@@ -22,11 +22,11 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
             Operacoes = Operacoes +1;
          }
 
-         StopLossValorCompra =-9999999999;
-         TakeProfitValorCompra = 999999999;
-         StopLossValorVenda =99999999999;
-         TakeProfitValorVenda = -999999999;
-         TS_ValorVenda = 99999999;
+         StopLossValorCompra =   -999999999;
+         TakeProfitValorCompra =  999999999;
+         StopLossValorVenda =     999999999;
+         TakeProfitValorVenda =  -999999999;
+         TS_ValorVenda =          999999999;
          TS_ValorCompra = 0;
          OperacoesFeitas++;
          OperacoesFeitasGlobais++;

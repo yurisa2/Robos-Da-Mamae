@@ -19,7 +19,7 @@ bool CalculaPSar ()
   }
 
   //   Print("Operacoes: ",Operacoes);
-  Mudanca = CondicaoPsar;
+  Direcao = CondicaoPsar;
   return false;
 }
 
@@ -42,14 +42,14 @@ void PSar ()
       DeuTakeProfit = false;
       Ordem = false;
 
-      if(Mudanca==1 && Ordem==false)
+      if(Direcao==1 && Ordem==false)
       {
         Print("Operações Antes da venda: ",Operacoes," VENDE! ");
         VendaIndicador("Venda por Inversão de PSAR","Entrada");
         Ordem = true;
       }
 
-      if(Mudanca==-1 && Ordem==false)
+      if(Direcao==-1 && Ordem==false)
       {
         Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por Inversão de PSAR","Entrada");
@@ -57,7 +57,7 @@ void PSar ()
       }
 
     }
-    Mudanca = CondicaoPsar;
+    Direcao = CondicaoPsar;
 
   }   //FIM DO IF TaDentroDoHorario
 

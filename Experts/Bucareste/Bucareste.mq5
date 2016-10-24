@@ -58,7 +58,6 @@ void OnTimer()
 
   //Especifico Bucareste
   if(OperacaoLogoDeCara==true &&  JaZerou==true && TaDentroDoHorario(HorarioInicio,HorarioFim)==true) PrimeiraOperacao();
-  Comentario_Bucareste();
   //Fim do Especifico Bucareste
 
   ZerarODia();

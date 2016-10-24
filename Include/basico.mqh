@@ -57,9 +57,7 @@ double daotick ()
 {
 
   double retornoTick;
-
   MqlTick last_tick;
-
   if(SymbolInfoTick(_Symbol,last_tick))
   {
     // Print(last_tick.time,": Bid = ",last_tick.bid,
@@ -68,14 +66,12 @@ double daotick ()
   else Print("SymbolInfoTick() failed, error = ",GetLastError());
 
   retornoTick = last_tick.ask;
-
   return(retornoTick);
 }
 ////////////////// Fecha o PEGA O TICK
 
 string Segundos_Fim_Barra ()
 {
-
   int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
   datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
   //if(grafico_atual.isNewBar(new_time)) Segundos_Contados=0;
@@ -316,14 +312,15 @@ void Comentario_Debug_funcao ()
 {
 Comentario_Debug = Comentario_Avancado +
 
-"\n       JaZerou: "+IntegerToString(JaZerou)+
-"\n    JaDeuFinal: "+IntegerToString(JaDeuFinal)+
-"\n     Operacoes: "+IntegerToString(Operacoes)+
-"\n DeuTakeProfit: "+IntegerToString(DeuTakeProfit)+
-"\n   DeuStopLoss: "+IntegerToString(DeuStopLoss)+
-"\n     Operacoes: "+IntegerToString(Operacoes)+
-"\n     Usa_Fixos: "+IntegerToString(Usa_Fixos)+
-"\n      TaDentro: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))
+"\n           JaZerou: "+IntegerToString(JaZerou)+
+"\n        JaDeuFinal: "+IntegerToString(JaDeuFinal)+
+"\n         Operacoes: "+IntegerToString(Operacoes)+
+"\n     DeuTakeProfit: "+IntegerToString(DeuTakeProfit)+
+"\n       DeuStopLoss: "+IntegerToString(DeuStopLoss)+
+"\n         Operacoes: "+IntegerToString(Operacoes)+
+"\n         Usa_Fixos: "+IntegerToString(Usa_Fixos)+
+"\n          TaDentro: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
+"\n Saldo_Dia_Permite: "+Saldo_Dia_Permite()
 
 ;
 }

@@ -9,6 +9,8 @@
 
 void Inicializa_Funcs ()
 {
+  Comentario_Bucareste();
+
 
   if(Usa_PSar == true) HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
   if(Usa_Ozy == true) HandleOzy = iCustom(NULL,TimeFrame,"ozymandias_lite",Ozy_length,Ozy_MM,Ozy_Shift);
@@ -103,7 +105,7 @@ void VendaIndicador (string Desc,string IO = "Neutro")
 
 void Comentario_Bucareste ()
 {
-if(Usa_Hilo) Comentario_Robo = Comentario_Robo+"HiLo"+IntegerToString(Periodos);
+if(Usa_Hilo) Comentario_Robo = Comentario_Robo+"HiLo - M"+TimeFrame+"N"+IntegerToString(Periodos)+"\n";
 if(Usa_Ozy) Comentario_Robo = Comentario_Robo+"Ozy"+IntegerToString(Ozy_MM)+";"+IntegerToString(Ozy_Shift)+"."+IntegerToString(Ozy_length);
 if(Usa_PSar) Comentario_Robo = Comentario_Robo+"PSAR"+DoubleToString(PSAR_Step,2)+";"+DoubleToString(PSAR_Max_Step,1);
 if(Usa_Fractal) Comentario_Robo = Comentario_Robo+"Frac"+IntegerToString(Frac_Candles_Espera);

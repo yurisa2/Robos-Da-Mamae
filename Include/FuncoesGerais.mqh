@@ -13,9 +13,9 @@ bool Saldo_Dia_Permite ()
 {
    if(conta.Equity() == liquidez_inicio) return true;
    if(
-   (conta.Equity() > liquidez_inicio && lucro_dia >= conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao)
+   (conta.Equity() > liquidez_inicio && lucro_dia >= Saldo_Dia_Valor())
    ||
-   (conta.Equity() < liquidez_inicio && (-1 * preju_dia) <= conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao)
+   (conta.Equity() < liquidez_inicio && (-1 * preju_dia) <= Saldo_Dia_Valor())
    ) return true;
 
 return false;

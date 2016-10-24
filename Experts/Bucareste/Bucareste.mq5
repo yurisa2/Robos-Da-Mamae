@@ -31,9 +31,15 @@
 #include <VerificaInit.mqh>
 #include <Operacoes.mqh>
 
+
+#include <oop\oop.mqh>
+
+
 int OnInit()
 {
   Init_Padrao();
+
+  CPerson teste;
 
   //Especifico Bucareste Mezzo Mezzo
   Inicializa_Funcs();

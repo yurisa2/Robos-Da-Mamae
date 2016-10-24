@@ -1,0 +1,12 @@
+/dictionary.mqh
+/fuzzyrule.mqh
+/fuzzyterm.mqh
+/fuzzyvariable.mqh
+/genericfuzzysystem.mqh
+/helper.mqh
+/inferencemethod.mqh
+/mamdanifuzzysystem.mqh
+/membershipfunction.mqh
+/ruleparser.mqh
+/sugenofuzzysystem.mqh
+/sugenovariable.mqh

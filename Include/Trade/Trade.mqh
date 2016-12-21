@@ -1214,6 +1214,7 @@ string CTrade::FormatRequestResult(string &str,const MqlTradeRequest &request,co
       case TRADE_RETCODE_LIMIT_VOLUME      : str="limit volume";                    break;
       case TRADE_RETCODE_POSITION_CLOSED   : str="position closed";                 break;
       case TRADE_RETCODE_INVALID_ORDER     : str="invalid order";                   break;
+      case TRADE_RETCODE_CLOSE_ORDER_EXIST : str="close order already exists";      break;
 
       default:
          str="unknown retcode "+(string)result.retcode;

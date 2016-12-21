@@ -1,6 +1,6 @@
 //+------------------------------------------------------------------+
 //|                                                        Array.mqh |
-//|                   Copyright 2009-2015, MetaQuotes Software Corp. |
+//|                   Copyright 2009-2016, MetaQuotes Software Corp. |
 //|                                              http://www.mql5.com |
 //+------------------------------------------------------------------+
 #include <Object.mqh>
@@ -132,14 +132,20 @@ template<typename T>
 int CArray::Minimum(const T &data[],const int start,const int count) const
   {
    int real_count;
-//--- check
+//--- check for empty array
    if(m_data_total<1)
      {
       SetUserError(ERR_USER_ARRAY_IS_EMPTY);
       return(-1);
      }
+   //--- check for start is out of range
+   if(start<0 || start>=m_data_total)
+     {
+      SetUserError(ERR_USER_ITEM_NOT_FOUND);
+      return(-1);
+     }
 //--- compute count of elements
-   real_count=(count==WHOLE_ARRAY || count>m_data_total) ? m_data_total : count;
+   real_count=(count==WHOLE_ARRAY || start+count>m_data_total) ? m_data_total-start : count;
 #ifdef __MQL5__
    return(ArrayMinimum(data,start,real_count));
 #else
@@ -153,14 +159,20 @@ template<typename T>
 int CArray::Maximum(const T &data[],const int start,const int count) const
   {
    int real_count;
-//--- check
+//--- check for empty array
    if(m_data_total<1)
      {
       SetUserError(ERR_USER_ARRAY_IS_EMPTY);
       return(-1);
      }
+   //--- check for start is out of range
+   if(start<0 || start>=m_data_total)
+     {
+      SetUserError(ERR_USER_ITEM_NOT_FOUND);
+      return(-1);
+     }
 //--- compute count of elements
-   real_count=(count==WHOLE_ARRAY || count>m_data_total) ? m_data_total : count;
+   real_count=(count==WHOLE_ARRAY || start+count>m_data_total) ? m_data_total-start : count;
 #ifdef __MQL5__
    return(ArrayMaximum(data,start,real_count));
 #else

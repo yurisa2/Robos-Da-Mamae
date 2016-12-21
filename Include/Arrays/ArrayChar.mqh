@@ -65,7 +65,7 @@ public:
 protected:
    virtual void      QuickSort(int beg,int end,const int mode=0);
    int               QuickSearch(const char element) const;
-   int               MemMove(const int dest,const int src,const int count);
+   int               MemMove(const int dest,const int src,int count);
   };
 //+------------------------------------------------------------------+
 //| Constructor                                                      |
@@ -86,21 +86,27 @@ CArrayChar::~CArrayChar(void)
 //+------------------------------------------------------------------+
 //| Moving the memory within a single array                          |
 //+------------------------------------------------------------------+
-int CArrayChar::MemMove(const int dest,const int src,const int count)
+int CArrayChar::MemMove(const int dest,const int src,int count)
   {
    int i;
-//--- check
+//--- check parameters
    if(dest<0 || src<0 || count<0)
       return(-1);
-   if(dest+count>m_data_total)
-     {
-      if(Available()<dest+count)
-         return(-1);
-      m_data_total=dest+count;
-     }
+//--- check count
+   if(src+count>m_data_total)
+      count=m_data_total-src;
+   if(count<0)
+      return(-1);
 //--- no need to copy
    if(dest==src || count==0)
       return(dest);
+//--- check data total
+   if(dest+count>m_data_total)
+     {
+      if(m_data_max<dest+count)
+         return(-1);
+      m_data_total=dest+count;
+     }
 //--- copy
    if(dest<src)
      {
@@ -243,7 +249,8 @@ bool CArrayChar::Insert(const char element,const int pos)
    m_data_total++;
    if(pos<m_data_total-1)
      {
-      MemMove(pos+1,pos,m_data_total-pos-1);
+      if(MemMove(pos+1,pos,m_data_total-pos-1)<0)
+         return(false);
       m_data[pos]=element;
      }
    else
@@ -262,7 +269,8 @@ bool CArrayChar::InsertArray(const char &src[],const int pos)
    if(!Reserve(num))
       return(false);
 //--- insert
-   MemMove(num+pos,pos,m_data_total-pos);
+   if(MemMove(num+pos,pos,m_data_total-pos)<0)
+      return(false);
    for(int i=0;i<num;i++)
       m_data[i+pos]=src[i];
    m_sort_mode=-1;
@@ -283,7 +291,8 @@ bool CArrayChar::InsertArray(const CArrayChar *src,const int pos)
    if(!Reserve(num))
       return(false);
 //--- insert
-   MemMove(num+pos,pos,m_data_total-pos);
+   if(MemMove(num+pos,pos,m_data_total-pos)<0)
+      return(false);
    for(int i=0;i<num;i++)
       m_data[i+pos]=src.m_data[i];
    m_sort_mode=-1;
@@ -384,9 +393,15 @@ bool CArrayChar::Shift(const int index,const int shift)
 //--- move
    tmp_char=m_data[index];
    if(shift>0)
-      MemMove(index,index+1,shift);
+     {
+      if(MemMove(index,index+1,shift)<0)
+         return(false);
+     }
    else
-      MemMove(index+shift+1,index+shift,-shift);
+     {
+      if(MemMove(index+shift+1,index+shift,-shift)<0)
+         return(false);
+     }
    m_data[index+shift]=tmp_char;
    m_sort_mode=-1;
 //--- successful
@@ -401,8 +416,8 @@ bool CArrayChar::Delete(const int index)
    if(index<0 || index>=m_data_total)
       return(false);
 //--- delete
-   if(index<m_data_total-1)
-      MemMove(index,index+1,m_data_total-index-1);
+   if(index<m_data_total-1 && MemMove(index,index+1,m_data_total-index-1)<0)
+      return(false);
    m_data_total--;
 //--- successful
    return(true);
@@ -420,7 +435,8 @@ bool CArrayChar::DeleteRange(int from,int to)
 //--- delete
    if(to>=m_data_total-1)
       to=m_data_total-1;
-   MemMove(from,to+1,m_data_total-to-1);
+   if(MemMove(from,to+1,m_data_total-to-1)<0)
+      return(false);
    m_data_total-=to-from+1;
 //--- successful
    return(true);

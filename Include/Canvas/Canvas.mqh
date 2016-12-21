@@ -50,7 +50,7 @@ protected:
 public:
                      CCanvas(void);
                     ~CCanvas(void);
-   //--- create/destroy
+   //--- create/attach/destroy
    virtual bool      Create(const string name,const int width,const int height,ENUM_COLOR_FORMAT clrfmt=COLOR_FORMAT_XRGB_NOALPHA);
    bool              CreateBitmap(const string name,const datetime time,const double price,
                                   const int width,const int height,ENUM_COLOR_FORMAT clrfmt=COLOR_FORMAT_XRGB_NOALPHA);
@@ -62,6 +62,8 @@ public:
    bool              CreateBitmapLabel(const long chart_id,const int subwin,const string name,
                                        const int x,const int y,const int width,const int height,
                                        ENUM_COLOR_FORMAT clrfmt=COLOR_FORMAT_XRGB_NOALPHA);
+   bool              Attach(const long chart_id,const string objname,ENUM_COLOR_FORMAT clrfmt=COLOR_FORMAT_XRGB_NOALPHA);
+   bool              Attach(const long chart_id,const string objname,const int width,const int height,ENUM_COLOR_FORMAT clrfmt=COLOR_FORMAT_XRGB_NOALPHA);
    void              Destroy(void);
    //--- properties
    string            ChartObjectName(void)          const { return(m_objname); }
@@ -98,6 +100,7 @@ public:
    void              FillCircle(int x,int y,int r,const uint clr);
    void              FillEllipse(int x1,int y1,int x2,int y2,const uint clr);
    void              Fill(int x,int y,const uint clr);
+   void              Fill(int x,int y,const uint clr,const uint threshould);
    //--- draw primitives with antialiasing
    void              PixelSetAA(const double x,const double y,const uint clr);
    void              LineAA(const int x1,const int y1,const int x2,const int y2,const uint clr,const uint style=UINT_MAX);
@@ -105,7 +108,15 @@ public:
    void              PolygonAA(int &x[],int &y[],const uint clr,const uint style=UINT_MAX);
    void              TriangleAA(const int x1,const int y1,const int x2,const int y2,const int x3,const int y3,
                                 const uint clr,const uint style=UINT_MAX);
-   void              CircleAA(const int x,const int y,const double r,const uint clr);
+   void              CircleAA(const int x,const int y,const double r,const uint clr,const uint style=UINT_MAX);
+   void              EllipseAA(const double x1,const double y1,const double x2,const double y2,const uint clr,const uint style=UINT_MAX);
+   //--- draw primitives with antialiasing by Wu's algorithm                              
+   void              LineWu(int x1,int y1,int x2,int y2,const uint clr,const uint style=UINT_MAX);
+   void              PolylineWu(int &x[],int &y[],const uint clr,const uint style=UINT_MAX);
+   void              PolygonWu(int &x[],int &y[],const uint clr,const uint style=UINT_MAX);
+   void              TriangleWu(const int x1,const int y1,const int x2,const int y2,const int x3,const int y3,const uint clr,const uint style=UINT_MAX);
+   void              CircleWu(const int x,const int y,const double r,const uint clr,const uint style=UINT_MAX);
+   void              EllipseWu(const int x1,const int y1,const int x2,const int y2,const uint clr,const uint style=UINT_MAX);
    //--- for text
    bool              FontSet(const string name,const int size,const uint flags=0,const uint angle=0);
    bool              FontNameSet(string name);
@@ -131,6 +142,12 @@ private:
    void              LineStyleSet(const uint style);
    bool              FontSet(void);
    void              TextOutFast(int x,int y,string text,const uint clr,uint alignment=0);
+   bool              PixelsSimilar(const uint clr0,const uint clr1,const uint threshould);
+   //--- for Wu's algorithm
+   void              PixelTransform(const int x,const int y,const uint clr,double alpha);
+   //--- for circle and ellipse
+   void              PixelTransform4(const int x,const int y,const int dx,const int dy,const uint clr,const double alpha);
+   void              PixelSet4AA(const double x,const double y,const double dx,const double dy,const uint clr);
    //--- for pie
    double            AngleCalc(int x1,int y1,int x2,int y2);
    //--- for polygon
@@ -144,15 +161,18 @@ private:
 //+------------------------------------------------------------------+
 //| Initialize static array                                          |
 //+------------------------------------------------------------------+
-uint CCanvas::m_default_colors[9]={ XRGB(0,0,255),     // blue
-                                    XRGB(255,0,0),     // red
-                                    XRGB(0,128,0),     // green
-                                    XRGB(255,242,0),   // yellow
-                                    XRGB(255,0,128),   // pink
-                                    XRGB(0,255,0),     // lime
-                                    XRGB(185,0,61),    // crimson
-                                    XRGB(0,183,239),   // sky blue
-                                    XRGB(255,128,0)};  // orange
+uint CCanvas::m_default_colors[9]=
+  {
+   XRGB(0,0,255),     // blue
+   XRGB(255,0,0),     // red
+   XRGB(0,128,0),     // green
+   XRGB(255,242,0),   // yellow
+   XRGB(255,0,128),   // pink
+   XRGB(0,255,0),     // lime
+   XRGB(185,0,61),    // crimson
+   XRGB(0,183,239),   // sky blue
+   XRGB(255,128,0)    // orange
+  };
 //+------------------------------------------------------------------+
 //| Constructor                                                      |
 //+------------------------------------------------------------------+
@@ -285,6 +305,56 @@ bool CCanvas::CreateBitmapLabel(const long chart_id,const int subwin,const strin
    return(false);
   }
 //+------------------------------------------------------------------+
+//| Attach new object with bitmap resource                           |
+//+------------------------------------------------------------------+
+bool CCanvas::Attach(const long chart_id,const string objname,ENUM_COLOR_FORMAT clrfmt=COLOR_FORMAT_XRGB_NOALPHA)
+  {
+   if(OBJ_BITMAP_LABEL==ObjectGetInteger(chart_id,objname,OBJPROP_TYPE))
+     {
+      string rcname=ObjectGetString(chart_id,objname,OBJPROP_BMPFILE);
+      rcname=StringSubstr(rcname,StringFind(rcname,"::"));
+      if(ResourceReadImage(rcname,m_pixels,m_width,m_height))
+        {
+         m_objname=objname;
+         m_rcname=rcname;
+         m_format=clrfmt;
+         m_objtype=OBJ_BITMAP_LABEL;
+         //--- success
+         return(true);
+        }
+     }
+//--- failed
+   return(false);
+  }
+//+------------------------------------------------------------------+
+//| Attach new object without bitmap resource                        |
+//+------------------------------------------------------------------+
+bool CCanvas::Attach(const long chart_id,const string objname,const int width,const int height,ENUM_COLOR_FORMAT clrfmt=COLOR_FORMAT_XRGB_NOALPHA)
+  {
+   if(OBJ_BITMAP_LABEL==ObjectGetInteger(chart_id,objname,OBJPROP_TYPE))
+     {
+      string rcname=ObjectGetString(chart_id,objname,OBJPROP_BMPFILE);
+      if(StringLen(rcname)==0 && width>0 && height>0 && ArrayResize(m_pixels,width*height)>0)
+        {
+         ZeroMemory(m_pixels);
+         if(ResourceCreate("::"+objname,m_pixels,width,height,0,0,0,clrfmt) && 
+            ObjectSetString(chart_id,objname,OBJPROP_BMPFILE,"::"+objname))
+           {
+            m_width=width;
+            m_height=height;
+            m_objname=objname;
+            m_rcname="::"+objname;
+            m_format=clrfmt;
+            m_objtype=OBJ_BITMAP_LABEL;
+            //--- success
+            return(true);
+           }
+        }
+     }
+//--- failed
+   return(false);
+  }
+//+------------------------------------------------------------------+
 //| Remove object from chart and deallocate data array               |
 //+------------------------------------------------------------------+
 void CCanvas::Destroy(void)
@@ -319,7 +389,7 @@ void CCanvas::Update(const bool redraw)
       return;
 //--- update resource and redraw
    if(ResourceCreate(m_rcname,m_pixels,m_width,m_height,0,0,0,m_format) && redraw)
-      ChartRedraw();
+      ChartRedraw(this.m_chart_id);
   }
 //+------------------------------------------------------------------+
 //| Resize                                                           |
@@ -425,6 +495,71 @@ void CCanvas::Fill(int x,int y,const uint clr)
       //--- bottom adjacent point
       idx=index+m_width;
       if(idx<total && m_pixels[idx]==old_clr)
+        {
+         m_pixels[idx]=clr;
+         stack[count++]=idx;
+        }
+     }
+//--- deallocate memory
+   ArrayFree(stack);
+  }
+//+------------------------------------------------------------------+
+//| Fill closed region with color                                    |
+//+------------------------------------------------------------------+
+void CCanvas::Fill(int x,int y,const uint clr,const uint threshould)
+  {
+//--- check
+   if(threshould==0.0)
+     {
+      Fill(x,y,clr);
+      return;
+     }
+   if(x<0 || x>=m_width || y<0 || y>=m_height || threshould>255)
+      return;
+//---
+   int  index=y*m_width+x;
+   uint old_clr=m_pixels[index];
+//--- check if replacement is necessary
+   if(old_clr==clr)
+      return;
+//--- use pseudo stack to emulate deeply-nested recursive calls
+   int  stack[];
+   uint count=1;
+   int  idx;
+   int  total=ArraySize(m_pixels);
+//--- allocate memory for stack
+   if(ArrayResize(stack,total)==-1)
+      return;
+   stack[0]=index;
+   m_pixels[index]=clr;
+   for(uint i=0;i<count;i++)
+     {
+      index=stack[i];
+      x=index%m_width;
+      //--- left adjacent point
+      idx=index-1;
+      if(x>0 && PixelsSimilar(m_pixels[idx],old_clr,threshould) && m_pixels[idx]!=clr)
+        {
+         m_pixels[idx]=clr;
+         stack[count++]=idx;
+        }
+      //--- top adjacent point
+      idx=index-m_width;
+      if(idx>=0 && PixelsSimilar(m_pixels[idx],old_clr,threshould) && m_pixels[idx]!=clr)
+        {
+         m_pixels[idx]=clr;
+         stack[count++]=idx;
+        }
+      //--- right adjacent point
+      idx=index+1;
+      if(x<m_width-1 && PixelsSimilar(m_pixels[idx],old_clr,threshould) && m_pixels[idx]!=clr)
+        {
+         m_pixels[idx]=clr;
+         stack[count++]=idx;
+        }
+      //--- bottom adjacent point
+      idx=index+m_width;
+      if(idx<total && PixelsSimilar(m_pixels[idx],old_clr,threshould) && m_pixels[idx]!=clr)
         {
          m_pixels[idx]=clr;
          stack[count++]=idx;
@@ -910,7 +1045,7 @@ void CCanvas::Arc(int x,int y,int rx,int ry,double fi3,double fi4,int &x3,int &y
    fi=MathMod(fi4,2*M_PI);
    if((fi3<M_PI && fi3>0) ||  // ray 3 is in the 1st or 2nd quadrant
       (fi<M_PI && fi>0)   ||  // ray 4 is in the 1st or 2nd quadrant
-       fi4-fi3>=M_PI)         // arc will pass through the top of the ellipse
+      (fi4-fi3>=M_PI))        // arc will pass through the top of the ellipse
      {
       dx=0;
       dy=ry;
@@ -1069,7 +1204,7 @@ void CCanvas::Arc(int x,int y,int rx,int ry,double fi3,double fi4,int &x3,int &y
    fi=MathMod(fi4,2*M_PI);
    if((fi3>M_PI_2 && fi3<3*M_PI_2) ||  // ray 3 is in the 2nd or 3rd quadrant
       (fi>M_PI_2 && fi<3*M_PI_2)   ||  // ray 4 is in the 2nd or 3rd quadrant
-       fi4-fi3>=M_PI)                  // arc will pass through the left part of the ellipse
+      (fi4-fi3>=M_PI))                 // arc will pass through the left part of the ellipse
      {
       dx=rx;
       dy=0;
@@ -1228,7 +1363,7 @@ void CCanvas::Arc(int x,int y,int rx,int ry,double fi3,double fi4,int &x3,int &y
    fi=MathMod(fi4,2*M_PI);
    if((fi3>M_PI && fi3<2*M_PI) ||  // ray 3 is in the 3rd or 4th quadrant
       (fi>M_PI && fi<2*M_PI)   ||  // ray 4 is in the 3rd or 4th quadrant
-       fi4-fi3>=M_PI)              // arc will pass through the bottom of the ellipse
+      (fi4-fi3>=M_PI))             // arc will pass through the bottom of the ellipse
      {
       dx=0;
       dy=ry;
@@ -1385,9 +1520,9 @@ void CCanvas::Arc(int x,int y,int rx,int ry,double fi3,double fi4,int &x3,int &y
 //---
 //--- if arc is obviously not within the rays range, don't draw
    fi=MathMod(fi4,2*M_PI);
-   if((fi3<M_PI_2 || fi3>3*M_PI_2) ||  // луч 3 попадает в 1 или 4 квадрант
-      (fi<M_PI_2 || fi>3*M_PI_2)   ||  // луч 4 попадает в 1 или 4 квадрант
-       fi4-fi3>=M_PI)                  // дуга пройдет через правую часть эллипса
+   if((fi3<M_PI_2 || fi3>3*M_PI_2) ||  // ray 3 is 1 or 4 quadrant
+      (fi<M_PI_2 || fi>3*M_PI_2)   ||  // ray 4 is 1 or 4 quadrant
+      (fi4-fi3>=M_PI))                 // arc will pass through the right side of the ellipse
      {
       dx=rx;
       dy=0;
@@ -1752,9 +1887,10 @@ void CCanvas::FillRectangle(int x1,int y1,int x2,int y2,const uint clr)
       x2=m_width -1;
    if(y2>=m_height)
       y2=m_height-1;
+   int len=(x2-x1)+1;
 //--- set pixels
    for(;y1<=y2;y1++)
-      ArrayFill(m_pixels,y1*m_width+x1,x2-x1,clr);
+      ArrayFill(m_pixels,y1*m_width+x1,len,clr);
   }
 //+------------------------------------------------------------------+
 //| Draw filled triangle                                             |
@@ -1969,7 +2105,9 @@ void CCanvas::LineStyleSet(const uint style)
       default:
          //--- high-order bit must be set then custom style
          if((style&0x80000000)!=0)
+           {
             m_style=style;
+           }
          break;
      }
    m_style_idx=0;
@@ -2008,7 +2146,9 @@ void CCanvas::LineAA(const int x1,const int y1,const int x2,const int y2,const u
    do
      {
       if((m_style&mask)==mask)
+        {
          PixelSetAA(xx,yy,clr);
+        }
       xx+=dx;
       yy+=dy;
       mask<<=1;
@@ -2018,15 +2158,15 @@ void CCanvas::LineAA(const int x1,const int y1,const int x2,const int y2,const u
    while(fabs(x2-xx)>=fabs(dx) && fabs(y2-yy)>=fabs(dy));
 //--- set last pixel
    if((m_style&mask)==mask)
+     {
       PixelSetAA(x2,y2,clr);
+     }
   }
 //+------------------------------------------------------------------+
 //| Draw polyline with antialiasing (with style)                     |
 //+------------------------------------------------------------------+
 void CCanvas::PolylineAA(int &x[],int &y[],const uint clr,const uint style)
   {
-//--- set the line style
-   LineStyleSet(style);
 //--- check arrays
    int total=ArraySize(x);
    if(total>ArraySize(y))
@@ -2035,17 +2175,67 @@ void CCanvas::PolylineAA(int &x[],int &y[],const uint clr,const uint style)
    if(total<2)
       return;
    total--;
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
 //--- draw
    for(int i=0;i<total;i++)
-      LineAA(x[i],y[i],x[i+1],y[i+1],clr);
+     {
+      int x1=x[i];
+      int y1=y[i];
+      int x2=x[i+1];
+      int y2=y[i+1];
+      //--- line is out of image boundaries
+      if((x1<0 && x2<0) || (y1<0 && y2<0))
+         return;
+      if(x1>=m_width && x2>=m_width)
+         return;
+      if(y1>=m_height && y2>=m_height)
+         return;
+      //--- check
+      if(x1==x2 && y1==y2)
+        {
+         PixelSet(x1,y1,clr);
+         return;
+        }
+      //--- preliminary calculations
+      double dx=x2-x1;
+      double dy=y2-y1;
+      double xy=sqrt(dx*dx+dy*dy);
+      double xx=x1;
+      double yy=y1;
+      //--- set pixels
+      dx/=xy;
+      dy/=xy;
+      do
+        {
+         if((m_style&mask)==mask)
+           {
+            PixelSetAA(xx,yy,clr);
+           }
+         xx+=dx;
+         yy+=dy;
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+        }
+      while(fabs(x2-xx)>=fabs(dx) && fabs(y2-yy)>=fabs(dy));
+      //--- set last pixel
+      if((m_style&mask)==mask)
+        {
+         PixelSetAA(x2,y2,clr);
+        }
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
   }
 //+------------------------------------------------------------------+
 //| Draw polygon with antialiasing (with style)                      |
 //+------------------------------------------------------------------+
 void CCanvas::PolygonAA(int &x[],int &y[],const uint clr,const uint style)
   {
-//--- set the line style
-   LineStyleSet(style);
 //--- check arrays
    int total=ArraySize(x);
    if(total>ArraySize(y))
@@ -2053,29 +2243,79 @@ void CCanvas::PolygonAA(int &x[],int &y[],const uint clr,const uint style)
 //--- check
    if(total<2)
       return;
-   total--;
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
 //--- draw
    for(int i=0;i<total;i++)
-      LineAA(x[i],y[i],x[i+1],y[i+1],clr);
-//--- close the outline
-   LineAA(x[total],y[total],x[0],y[0],clr);
+     {
+      int x1=x[i];
+      int y1=y[i];
+      int x2=(i+1!=total) ? x[i+1] : x[0];
+      int y2=(i+1!=total) ? y[i+1] : y[0];
+      //--- line is out of image boundaries
+      if((x1<0 && x2<0) || (y1<0 && y2<0))
+         return;
+      if(x1>=m_width && x2>=m_width)
+         return;
+      if(y1>=m_height && y2>=m_height)
+         return;
+      //--- check
+      if(x1==x2 && y1==y2)
+        {
+         PixelSet(x1,y1,clr);
+         return;
+        }
+      //--- preliminary calculations
+      double dx=x2-x1;
+      double dy=y2-y1;
+      double xy=sqrt(dx*dx+dy*dy);
+      double xx=x1;
+      double yy=y1;
+      //--- set pixels
+      dx/=xy;
+      dy/=xy;
+      do
+        {
+         if((m_style&mask)==mask)
+           {
+            PixelSetAA(xx,yy,clr);
+           }
+         xx+=dx;
+         yy+=dy;
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+        }
+      while(fabs(x2-xx)>=fabs(dx) && fabs(y2-yy)>=fabs(dy));
+      //--- set last pixel
+      if((m_style&mask)==mask)
+        {
+         PixelSetAA(x2,y2,clr);
+        }
+     }
   }
 //+------------------------------------------------------------------+
 //| Draw triangle with antialiasing                                  |
 //+------------------------------------------------------------------+
 void CCanvas::TriangleAA(const int x1,const int y1,const int x2,const int y2,const int x3,const int y3,const uint clr,const uint style)
   {
-//--- set the line style
-   LineStyleSet(style);
 //--- draw
-   LineAA(x1,y1,x2,y2,clr);
-   LineAA(x2,y2,x3,y3,clr);
-   LineAA(x3,y3,x1,y1,clr);
+   int x[3];
+   int y[3];
+   x[0] = x1;
+   x[1] = x2;
+   x[2] = x3;
+   y[0] = y1;
+   y[1] = y2;
+   y[2] = y3;
+   PolygonAA(x,y,clr,style);
   }
 //+------------------------------------------------------------------+
 //| Draw circle with antialiasing                                    |
 //+------------------------------------------------------------------+
-void CCanvas::CircleAA(const int x,const int y,const double r,const uint clr)
+void CCanvas::CircleAA(const int x,const int y,const double r,const uint clr,const uint style=UINT_MAX)
   {
    if(r<=0)
       return;
@@ -2084,6 +2324,10 @@ void CCanvas::CircleAA(const int x,const int y,const double r,const uint clr)
    double yy=y;
    double fi=0;
    double df=M_PI_2/MathCeil(r);
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
 //--- draw
    if(r>M_PI)
       df/=2;
@@ -2091,10 +2335,52 @@ void CCanvas::CircleAA(const int x,const int y,const double r,const uint clr)
      {
       xx=x+r*cos(fi);
       yy=y-r*sin(fi);
-      PixelSetAA(xx,yy,clr);
+      if((m_style&mask)==mask)
+         PixelSetAA(xx,yy,clr);
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
       fi+=df;
      }
    while(fabs(2*M_PI-fi)>=df/2);
+  }
+//+------------------------------------------------------------------+
+//| Draw ellipse with antialiasing                                   |
+//+------------------------------------------------------------------+
+void CCanvas::EllipseAA(const double x1,const double y1,const double x2,const double y2,const uint clr,const uint style=UINT_MAX)
+  {
+   double rx = (x2-x1)/2;
+   double ry = (y2-y1)/2;
+//--- preliminary calculations
+   double x=(x2>x1) ? x1+rx : x2+rx;
+   double y=(y2>y1) ? y1+ry : y2+ry;
+   double rx2=rx*rx;
+   double ry2=ry*ry;
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
+//--- draw   
+   double quarter=round(rx2/sqrt(rx2+ry2));
+   for(double dx=0; dx<=quarter; dx++)
+     {
+      double dy=ry*sqrt(1-dx*dx/rx2);
+      if((m_style&mask)==mask)
+         PixelSet4AA(x,y,dx,dy,clr);
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
+   quarter=round(ry2/sqrt(rx2+ry2));
+   for(double dy=0; dy<=quarter; dy++)
+     {
+      double dx=rx*sqrt(1-dy*dy/ry2);
+      if((m_style&mask)==mask)
+         PixelSet4AA(x,y,dx,dy,clr);
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
   }
 //+------------------------------------------------------------------+
 //| Gets default color                                               |
@@ -2272,7 +2558,8 @@ bool CCanvas::LoadFromFile(const string filename)
       uint              imgYPelsPerMeter;
       uint              imgClrUsed;
       uint              imgClrImportant;
-     }      header;
+     };
+   BitmapHeader header;
    bool     result=true;
    CFileBin file;
    uchar    a,r,g,b;
@@ -2588,5 +2875,736 @@ void CCanvas::PolygonFill(CPoint &p[],const uint clr)
       LineHorizontal((int)MathCeil(xl),(int)MathFloor(xr),yy,clr);
      }
    while(il>=ir && ir!=0);
+  }
+//+------------------------------------------------------------------+
+//| Draw line according to Wu's algorithm                            |
+//+------------------------------------------------------------------+
+void CCanvas::LineWu(int x1,int y1,int x2,int y2,const uint clr,const uint style=UINT_MAX)
+  {
+//--- calculating the variation of the coordinates
+   int dx = (x2 > x1) ? (x2 - x1) : (x1 - x2);
+   int dy = (y2 > y1) ? (y2 - y1) : (y1 - y2);
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
+   int tmp;
+//--- check if dx==0 then draw vertical line
+   if(dx==0)
+     {
+      //--- sort by Y
+      if(y1>y2)
+        {
+         tmp=y1;
+         y1 =y2;
+         y2 =tmp;
+        }
+      //--- line is out of image boundaries
+      if(y2<0 || y1>=m_height || x1<0 || x1>=m_width)
+         return;
+      //--- stay withing image boundaries
+      if(y1<0)
+         y1=0;
+      if(y2>=m_height-1)
+         y2=m_height-1;
+      //--- draw line
+      int index=y1*m_width+x1;
+      for(int i=y1;i<=y2;i++,index+=m_width)
+        {
+         if((m_style&mask)==mask)
+            m_pixels[index]=clr;
+
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+        }
+      //--- success
+      return;
+     }
+//--- check if dy==0 then draw horizontal line
+   if(dy==0)
+     {
+      //--- sort by X
+      if(x1>x2)
+        {
+         tmp=x1;
+         x1 =x2;
+         x2 =tmp;
+        }
+      //--- line is out of image boundaries
+      if(x2<0 || x1>=m_width || y1<0 || y1>=m_height)
+         return;
+      //--- stay withing image boundaries
+      if(x1<0)
+         x1=0;
+      if(x2>=m_width)
+         x2=m_width-1;
+      //--- draw line
+      for(int i=0,index=y1*m_width+x1; i<x2-x1; i++,index++)
+        {
+         if((m_style&mask)==mask)
+            m_pixels[index]=clr;
+
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+        }
+      //--- success
+      return;
+     }
+//--- check if dx==0 and dy==0 then draw point
+   if(dx==0 && dy==0)
+     {
+      PixelSet(x1,y1,clr);
+      //--- success
+      return;
+     }
+//--- for the X-line (slope < 1)
+   if(dy<dx)
+     {
+      //--- first point has to have a smaller X coordinate
+      if(x2<x1)
+        {
+         x2 += x1; x1 = x2 - x1; x2 -= x1;
+         y2 += y1; y1 = y2 - y1; y2 -= y1;
+        }
+      if(y2<y1)
+        {
+         dy*=-1;
+        }
+      //--- relative change of the Y
+      float grad=(float)dy/dx;
+      //--- intermediate variable for Y
+      float intery=y1+grad;
+      //--- first point
+      if((m_style&mask)==mask)
+         PixelSet(x1,y1,clr);
+
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+      for(int x=x1+1; x<x2; x++)
+        {
+         double alpha1=1-(intery-(int)intery);
+         double alpha2=(intery-(int)intery);
+         if((m_style&mask)==mask)
+           {
+            //--- high point
+            PixelTransform(x,(int)(intery),clr,alpha1);
+            //--- low point
+            PixelTransform(x,(int)(intery)+1,clr,alpha2);
+           }
+         //--- change the Y coordinate
+         intery+=grad;
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+        }
+      //--- last point
+      if((m_style&mask)==mask)
+         PixelSet(x2,y2,clr);
+     }
+//--- for the Y-line (slope > 1)
+   else
+     {
+      //--- first point has to have a smaller Y coordinate
+      if(y2<y1)
+        {
+         x2 += x1; x1 = x2 - x1; x2 -= x1;
+         y2 += y1; y1 = y2 - y1; y2 -= y1;
+        }
+      if(x2<x1)
+        {
+         dx*=-1;
+        }
+      //--- relative change of the X
+      float grad=(float)dx/dy;
+      //--- intermediate variable for X
+      float interx=x1+grad;
+      //--- first point
+      if((m_style&mask)==mask)
+         PixelSet(x1,y1,clr);
+
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+      for(int y=y1+1; y<y2; y++)
+        {
+         double alpha1=1-(interx-(int)interx);
+         double alpha2=(interx-(int)interx);
+         if((m_style&mask)==mask)
+           {
+            //--- high point
+            PixelTransform((int)(interx),y,clr,alpha1);
+            //--- low point
+            PixelTransform((int)(interx)+1,y,clr,alpha2);
+           }
+         //--- change the X coordinate
+         interx+=grad;
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+        }
+      //--- last point
+      if((m_style&mask)==mask)
+         PixelSet(x2,y2,clr);
+     }
+  }
+//+------------------------------------------------------------------+
+//| Draw Wu's polyline                                               |
+//+------------------------------------------------------------------+
+void CCanvas::PolylineWu(int &x[],int &y[],const uint clr,const uint style=UINT_MAX)
+  {
+//--- check arrays
+   int total=ArraySize(x);
+   if(total>ArraySize(y))
+      total=ArraySize(y);
+//--- check
+   if(total<2)
+      return;
+   total--;
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
+//--- draw
+   for(int i=0;i<total;i++)
+     {
+      int x1=x[i];
+      int x2=x[i+1];
+      int y1=y[i];
+      int y2=y[i+1];
+      //--- calculating the variation of the coordinates
+      int dx = (x2 > x1) ? (x2 - x1) : (x1 - x2);
+      int dy = (y2 > y1) ? (y2 - y1) : (y1 - y2);
+      int tmp;
+      //--- check if dx==0 then draw vertical line
+      if(dx==0)
+        {
+         //--- sort by Y
+         if(y1>y2)
+           {
+            tmp=y1;
+            y1 =y2;
+            y2 =tmp;
+           }
+         //--- line is out of image boundaries
+         if(y2<0 || y1>=m_height || x1<0 || x1>=m_width)
+            continue;
+         //--- stay withing image boundaries
+         if(y1<0)
+            y1=0;
+         if(y2>=m_height-1)
+            y2=m_height-1;
+         //--- draw line
+         int index=y1*m_width+x1;
+         for(int j=y1;j<=y2;j++,index+=m_width)
+           {
+            if((m_style&mask)==mask)
+               m_pixels[index]=clr;
+
+            mask<<=1;
+            if(mask==0x1000000)
+               mask=1;
+           }
+         continue;
+        }
+      //--- check if dy==0 then draw horizontal line
+      if(dy==0)
+        {
+         //--- sort by X
+         if(x1>x2)
+           {
+            tmp=x1;
+            x1 =x2;
+            x2 =tmp;
+           }
+         //--- line is out of image boundaries
+         if(x2<0 || x1>=m_width || y1<0 || y1>=m_height)
+            continue;
+         //--- stay withing image boundaries
+         if(x1<0)
+            x1=0;
+         if(x2>=m_width)
+            x2=m_width-1;
+         //--- draw line
+         for(int j=0,index=y1*m_width+x1; j<x2-x1; j++,index++)
+           {
+            if((m_style&mask)==mask)
+               m_pixels[index]=clr;
+
+            mask<<=1;
+            if(mask==0x1000000)
+               mask=1;
+           }
+         continue;
+        }
+      //--- check if dx==0 and dy==0 then draw point
+      if(dx==0 && dy==0)
+        {
+         PixelSet(x1,y1,clr);
+
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+         continue;
+        }
+      //--- for the X-line (slope < 1)
+      if(dy<dx)
+        {
+         //--- first point has to have a smaller X coordinate
+         if(x2<x1)
+           {
+            x2 += x1; x1 = x2 - x1; x2 -= x1;
+            y2 += y1; y1 = y2 - y1; y2 -= y1;
+           }
+         if(y2<y1)
+           {
+            dy*=-1;
+           }
+         //--- relative change of the Y
+         float grad=(float)dy/dx;
+         //--- intermediate variable for Y
+         float intery=y1+grad;
+         //--- first point
+         if((m_style&mask)==mask)
+            PixelSet(x1,y1,clr);
+
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+         for(int xc=x1+1; xc<x2; xc++)
+           {
+            double alpha1=1-(intery-(int)intery);
+            double alpha2=(intery-(int)intery);
+            if((m_style&mask)==mask)
+              {
+               //--- high point
+               PixelTransform(xc,(int)(intery),clr,alpha1);
+               //--- low point
+               PixelTransform(xc,(int)(intery)+1,clr,alpha2);
+              }
+            //--- change the Y coordinate
+            intery+=grad;
+            mask<<=1;
+            if(mask==0x1000000)
+               mask=1;
+           }
+         //--- last point
+         if((m_style&mask)==mask)
+            PixelSet(x2,y2,clr);
+        }
+      //--- for the Y-line (slope > 1)
+      else
+        {
+         //--- first point has to have a smaller Y coordinate
+         if(y2<y1)
+           {
+            x2 += x1; x1 = x2 - x1; x2 -= x1;
+            y2 += y1; y1 = y2 - y1; y2 -= y1;
+           }
+         if(x2<x1)
+           {
+            dx*=-1;
+           }
+         //--- relative change of the X
+         float grad=(float)dx/dy;
+         //--- intermediate variable for X
+         float interx=x1+grad;
+         //--- first point
+         if((m_style&mask)==mask)
+            PixelSet(x1,y1,clr);
+
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+         for(int yc=y1+1; yc<y2; yc++)
+           {
+            double alpha1=1-(interx-(int)interx);
+            double alpha2=(interx-(int)interx);
+            if((m_style&mask)==mask)
+              {
+               //--- high point
+               PixelTransform((int)(interx),yc,clr,alpha1);
+               //--- low point
+               PixelTransform((int)(interx)+1,yc,clr,alpha2);
+              }
+            //--- change the X coordinate
+            interx+=grad;
+            mask<<=1;
+            if(mask==0x1000000)
+               mask=1;
+           }
+         //--- last point
+         if((m_style&mask)==mask)
+            PixelSet(x2,y2,clr);
+        }
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
+  }
+//+------------------------------------------------------------------+
+//| Draw Wu's polygon                                                |
+//+------------------------------------------------------------------+
+void CCanvas::PolygonWu(int &x[],int &y[],const uint clr,const uint style=UINT_MAX)
+  {
+//--- check arrays
+   int total=ArraySize(x);
+   if(total>ArraySize(y))
+      total=ArraySize(y);
+//--- check
+   if(total<2)
+      return;
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
+//--- draw
+   for(int i=0;i<total;i++)
+     {
+      int x1=x[i];
+      int y1=y[i];
+      int x2=(i+1!=total) ? x[i+1] : x[0];
+      int y2=(i+1!=total) ? y[i+1] : y[0];
+      //--- calculating the variation of the coordinates
+      int dx = (x2 > x1) ? (x2 - x1) : (x1 - x2);
+      int dy = (y2 > y1) ? (y2 - y1) : (y1 - y2);
+      int tmp;
+      //--- check if dx==0 then draw vertical line
+      if(dx==0)
+        {
+         //--- sort by Y
+         if(y1>y2)
+           {
+            tmp=y1;
+            y1 =y2;
+            y2 =tmp;
+           }
+         //--- line is out of image boundaries
+         if(y2<0 || y1>=m_height || x1<0 || x1>=m_width)
+            continue;
+         //--- stay withing image boundaries
+         if(y1<0)
+            y1=0;
+         if(y2>=m_height-1)
+            y2=m_height-1;
+         //--- draw line
+         int index=y1*m_width+x1;
+         for(int j=y1;j<=y2;j++,index+=m_width)
+           {
+            if((m_style&mask)==mask)
+               m_pixels[index]=clr;
+
+            mask<<=1;
+            if(mask==0x1000000)
+               mask=1;
+           }
+         continue;
+        }
+      //--- check if dy==0 then draw horizontal line
+      if(dy==0)
+        {
+         //--- sort by X
+         if(x1>x2)
+           {
+            tmp=x1;
+            x1 =x2;
+            x2 =tmp;
+           }
+         //--- line is out of image boundaries
+         if(x2<0 || x1>=m_width || y1<0 || y1>=m_height)
+            continue;
+         //--- stay withing image boundaries
+         if(x1<0)
+            x1=0;
+         if(x2>=m_width)
+            x2=m_width-1;
+         //--- draw line
+         for(int j=0,index=y1*m_width+x1; j<x2-x1; j++,index++)
+           {
+            if((m_style&mask)==mask)
+               m_pixels[index]=clr;
+
+            mask<<=1;
+            if(mask==0x1000000)
+               mask=1;
+           }
+         continue;
+        }
+      //--- check if dx==0 and dy==0 then draw point
+      if(dx==0 && dy==0)
+        {
+         PixelSet(x1,y1,clr);
+
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+         continue;
+        }
+      //--- for the X-line (slope < 1)
+      if(dy<dx)
+        {
+         //--- first point has to have a smaller X coordinate
+         if(x2<x1)
+           {
+            x2 += x1; x1 = x2 - x1; x2 -= x1;
+            y2 += y1; y1 = y2 - y1; y2 -= y1;
+           }
+         if(y2<y1)
+           {
+            dy*=-1;
+           }
+         //--- relative change of the Y
+         float grad=(float)dy/dx;
+         //--- intermediate variable for Y
+         float intery=y1+grad;
+         //--- first point
+         if((m_style&mask)==mask)
+            PixelSet(x1,y1,clr);
+
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+         for(int xc=x1+1; xc<x2; xc++)
+           {
+            double alpha1=1-(intery-(int)intery);
+            double alpha2=(intery-(int)intery);
+            if((m_style&mask)==mask)
+              {
+               //--- high point
+               PixelTransform(xc,(int)(intery),clr,alpha1);
+               //--- low point
+               PixelTransform(xc,(int)(intery)+1,clr,alpha2);
+              }
+            //--- change the Y coordinate
+            intery+=grad;
+            mask<<=1;
+            if(mask==0x1000000)
+               mask=1;
+           }
+         //--- last point
+         if((m_style&mask)==mask)
+            PixelSet(x2,y2,clr);
+        }
+      //--- for the Y-line (slope > 1)
+      else
+        {
+         //--- first point has to have a smaller Y coordinate
+         if(y2<y1)
+           {
+            x2 += x1; x1 = x2 - x1; x2 -= x1;
+            y2 += y1; y1 = y2 - y1; y2 -= y1;
+           }
+         if(x2<x1)
+           {
+            dx*=-1;
+           }
+         //--- relative change of the X
+         float grad=(float)dx/dy;
+         //--- intermediate variable for X
+         float interx=x1+grad;
+         //--- first point
+         if((m_style&mask)==mask)
+            PixelSet(x1,y1,clr);
+
+         mask<<=1;
+         if(mask==0x1000000)
+            mask=1;
+         for(int yc=y1+1; yc<y2; yc++)
+           {
+            double alpha1=1-(interx-(int)interx);
+            double alpha2=(interx-(int)interx);
+            if((m_style&mask)==mask)
+              {
+               //--- high point
+               PixelTransform((int)(interx),yc,clr,alpha1);
+               //--- low point
+               PixelTransform((int)(interx)+1,yc,clr,alpha2);
+              }
+            //--- change the X coordinate
+            interx+=grad;
+            mask<<=1;
+            if(mask==0x1000000)
+               mask=1;
+           }
+         //--- last point
+         if((m_style&mask)==mask)
+            PixelSet(x2,y2,clr);
+        }
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
+  }
+//+------------------------------------------------------------------+
+//| Draw triangle with Wu's lines                                    |
+//+------------------------------------------------------------------+
+void CCanvas::TriangleWu(const int x1,const int y1,const int x2,const int y2,const int x3,const int y3,const uint clr,const uint style=UINT_MAX)
+  {
+//--- draw
+   int x[3];
+   int y[3];
+   x[0] = x1;
+   x[1] = x2;
+   x[2] = x3;
+   y[0] = y1;
+   y[1] = y2;
+   y[2] = y3;
+   PolygonWu(x,y,clr,style);
+  }
+//+------------------------------------------------------------------+
+//| Draw circle according to Wu's algorithm                          |
+//+------------------------------------------------------------------+
+void CCanvas::CircleWu(const int x,const int y,const double r,const uint clr,const uint style=UINT_MAX)
+  {
+   if(r<=0)
+      return;
+//--- preliminary calculations
+   double r2=r*r;
+   double quarter=round(r/sqrt(2.0));
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
+//--- draw
+   for(int dx=0; dx<=quarter; dx++)
+     {
+      double dy=sqrt(r2-dx*dx);
+      double alpha1=dy-floor(dy);
+      double alpha2=1-alpha1;
+      if((m_style&mask)==mask)
+        {
+         PixelTransform4(x,y,dx,(int)(dy)+1,clr,alpha1);
+         PixelTransform4(x,y,dx,(int)(dy),clr,alpha2);
+        }
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
+   for(int dy=0; dy<=quarter; dy++)
+     {
+      double dx=sqrt(r2-dy*dy);
+      double alpha1=dx-floor(dx);
+      double alpha2=1-alpha1;
+      if((m_style&mask)==mask)
+        {
+         PixelTransform4(x,y,(int)(dx)+1,dy,clr,alpha1);
+         PixelTransform4(x,y,(int)(dx),dy,clr,alpha2);
+        }
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
+  }
+//+------------------------------------------------------------------+
+//| Draw ellipse according to Wu's algorithm                         |
+//+------------------------------------------------------------------+ 
+void CCanvas::EllipseWu(const int x1,const int y1,const int x2,const int y2,const uint clr,const uint style=UINT_MAX)
+  {
+   int rx=(int)(x2-x1)/2;
+   int ry=(int)(y2-y1)/2;
+   int x=(x2>x1) ? x1+rx : x2+rx;
+   int y=(y2>y1) ? y1+ry : y2+ry;
+   if(rx<=0 || ry<=0)
+      return;
+//--- set the line style
+   if(style!=UINT_MAX)
+      LineStyleSet(style);
+   uint mask=1<<m_style_idx;
+//--- preliminary calculations
+   double rx2=rx*rx;
+   double ry2=ry*ry;
+   double quarter=round(rx2/sqrt(rx2+ry2));
+//--- draw
+   for(int dx=0; dx<=quarter; dx++)
+     {
+      double dy=ry*sqrt(1-dx*dx/rx2);
+      double alpha1=dy-floor(dy);
+      double alpha2=1-alpha1;
+      if((m_style&mask)==mask)
+        {
+         PixelTransform4(x,y,dx,(int)(dy)+1,clr,alpha1);
+         PixelTransform4(x,y,dx,(int)(dy),clr,alpha2);
+        }
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
+   quarter=round(ry2/sqrt(rx2+ry2));
+   for(int dy=0; dy<=quarter; dy++)
+     {
+      double dx=rx*sqrt(1-dy*dy/ry2);
+      double alpha1=dx-floor(dx);
+      double alpha2=1-alpha1;
+      if((m_style&mask)==mask)
+        {
+         PixelTransform4(x,y,(int)(dx)+1,dy,clr,alpha1);
+         PixelTransform4(x,y,(int)(dx),dy,clr,alpha2);
+        }
+      mask<<=1;
+      if(mask==0x1000000)
+         mask=1;
+     }
+  }
+//+------------------------------------------------------------------+
+//| Parametric method of color comparison                            |
+//+------------------------------------------------------------------+
+bool CCanvas::PixelsSimilar(const uint clr0,const uint clr1,const uint threshould)
+  {
+   uint dr=MathAbs(uint((clr0>>16) &0xff) -
+                   uint((clr1>>16) &0xff));
+   uint dg=MathAbs(uint((clr0>>8) &0xff) -
+                   uint((clr1>>8) &0xff));
+   uint db=MathAbs(uint((clr0>>0) &0xff) -
+                   uint((clr1>>0) &0xff));
+//--- return 
+   return (dr<=threshould || dg<=threshould || db<=threshould);
+  }
+//+------------------------------------------------------------------+
+//| Calculate and set new color                                      |
+//+------------------------------------------------------------------+
+void CCanvas::PixelTransform(const int x,const int y,const uint clr,double alpha)
+  {
+   int index=y*m_width+x;
+//--- check
+   if(x<0 || y<0 || x>m_width || y>m_height || index>=ArraySize(m_pixels))
+      return;
+//--- get pixel color         
+   uint clr0=m_pixels[index];
+//--- transform  of color component for the background
+   double r0 = ((clr0>>16) & 0xFF) * (1.0-(double)alpha);
+   double g0 = ((clr0>>8) & 0xFF) * (1.0-(double)alpha);
+   double b0 = ((clr0>>0) & 0xFF) * (1.0-(double)alpha);
+//--- transform  of color component 
+   double r1 = ((clr>>16) & 0xFF) * ((double)alpha);
+   double g1 = ((clr>>8) & 0xFF) * ((double)alpha);
+   double b1 = ((clr>>0) & 0xFF) * ((double)alpha);
+//--- components of the new color
+   int r = (int)(r0+r1);
+   int g = (int)(g0+g1);
+   int b = (int)(b0+b1);
+//--- set new color
+   m_pixels[y*m_width+x]=(r<<16|g<<8|b<<0|255<<24) &0xffffffff;
+  }
+//+------------------------------------------------------------------+
+//| Draw 4 pixel with PixelTransform method                          |
+//+------------------------------------------------------------------+
+void CCanvas::PixelTransform4(const int x,const int y,const int dx,const int dy,const uint clr,const double alpha)
+  {
+   PixelTransform(x+dx,y+dy,clr,alpha);
+   PixelTransform(x-dx,y+dy,clr,alpha);
+   PixelTransform(x+dx,y-dy,clr,alpha);
+   PixelTransform(x-dx,y-dy,clr,alpha);
+  }
+//+------------------------------------------------------------------+
+//| Draw 4 pixel with antialiasing                                   |
+//+------------------------------------------------------------------+
+void CCanvas::PixelSet4AA(const double x,const double y,const double dx,const double dy,const uint clr)
+  {
+   PixelSetAA(x+dx,y+dy,clr);
+   PixelSetAA(x-dx,y+dy,clr);
+   PixelSetAA(x+dx,y-dy,clr);
+   PixelSetAA(x-dx,y-dy,clr);
   }
 //+------------------------------------------------------------------+

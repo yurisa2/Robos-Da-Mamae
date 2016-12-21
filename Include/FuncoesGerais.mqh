@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             FuncoesBenderDef.mqh |
 //|                        Copyright 2015, MetaQuotes Software Corp. |

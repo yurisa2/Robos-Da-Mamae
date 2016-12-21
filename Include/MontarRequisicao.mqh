@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             MontarRequisicao.mqh |
 //|                                                              Sa2 |
@@ -11,14 +12,16 @@
 
 void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
    {
+     if(FX) spread = Calcula_Spread();
+
          if(order_type==ORDER_TYPE_SELL)
          {
-            PrecoVenda = daotick();
+            PrecoVenda = daotick() + spread;
             Operacoes = Operacoes -1;
          }
          if(order_type==ORDER_TYPE_BUY)
          {
-            PrecoCompra = daotick();
+            PrecoCompra = daotick() - spread;
             Operacoes = Operacoes +1;
          }
 

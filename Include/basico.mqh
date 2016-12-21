@@ -171,9 +171,9 @@ Comentario_Debug_funcao();
 
 switch(Tipo_Comentario)
 {
-case 0:  Comment(Comentario_Simples);
-case 1:  Comment(Comentario_Avancado);
-case 2:  Comment(Comentario_Debug);
+  case 0:  Comment(Comentario_Simples);
+  case 1:  Comment(Comentario_Avancado);
+  case 2:  Comment(Comentario_Debug);
 }
 
 }
@@ -256,7 +256,6 @@ void Operacoes_No_tick ()
   Escalpelador_Maluco();
 
   if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!
-
 }
 
 void Init_Padrao ()
@@ -312,15 +311,17 @@ void Comentario_Debug_funcao ()
 {
 Comentario_Debug = Comentario_Avancado +
 
-"\n           JaZerou: "+IntegerToString(JaZerou)+
-"\n        JaDeuFinal: "+IntegerToString(JaDeuFinal)+
-"\n         Operacoes: "+IntegerToString(Operacoes)+
-"\n     DeuTakeProfit: "+IntegerToString(DeuTakeProfit)+
-"\n       DeuStopLoss: "+IntegerToString(DeuStopLoss)+
-"\n         Operacoes: "+IntegerToString(Operacoes)+
-"\n         Usa_Fixos: "+IntegerToString(Usa_Fixos)+
-"\n          TaDentro: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
-"\n Saldo_Dia_Permite: "+Saldo_Dia_Permite()
+"\nJaZerou: "+IntegerToString(JaZerou)+
+"\nJaDeuFinal: "+IntegerToString(JaDeuFinal)+
+"\nOperacoes: "+IntegerToString(Operacoes)+
+"\nDeuTakeProfit: "+IntegerToString(DeuTakeProfit)+
+"\nDeuStopLoss: "+IntegerToString(DeuStopLoss)+
+"\nOperacoes: "+IntegerToString(Operacoes)+
+"\nUsa_Fixos: "+IntegerToString(Usa_Fixos)+
+"\nTaDentro: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
+"\nSaldo_Dia_Permite: "+IntegerToString(Saldo_Dia_Permite())+
+"\n Spread:" + Calcula_Spread()
+
 
 ;
 }

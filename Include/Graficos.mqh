@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                     Graficos.mqh |
 //|                        Copyright 2016, MetaQuotes Software Corp. |
@@ -33,7 +34,7 @@ void OnChartEvent(const int id,
         if(Direcao<0)
         {
           VendaImediata("Iniciado pelo botão","Entrada");
-          DeuStopLoss = false;    
+          DeuStopLoss = false;
           DeuTakeProfit = false;
         }
         if(Direcao>0)

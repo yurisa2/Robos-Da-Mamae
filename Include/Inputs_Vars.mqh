@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                       Inputs.mqh |
 //|                                                              Sa2 |
@@ -41,7 +42,8 @@ return TM;
 
 string Descricao_Robo = Desc_Se_Vazio()+Descricao_Robo_Alpha;
 input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;       //Tipo de ordem (teste)
-input int Tipo_Comentario = 1;       //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
+input bool FX = false;                                                  // É Forex
+input int Tipo_Comentario = 1;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
 input bool Otimizacao = false;                                          //Parametro para otimização
 
 
@@ -96,15 +98,12 @@ double Prop_Limite_Minimo = 0;
 
 //VARS
 
-
-
 int Contador_SLMOVEL = 0;
 
 string HorarioInicio = IntegerToString(HoraDeInicio,2,'0') + ":" + IntegerToString(MinutoDeInicio,2,'0');
 int MinutoDeFimMenos1;
 string HorarioFim;
 string HorarioFimMais1;
-
 
 ///////////////////////////////// Variaveis
 
@@ -152,9 +151,7 @@ int HandleFrac;
 int HandleOzy;
 int HandleBSI;
 
-int CondicaoPsar;
 int CondicaoBSI;
-
 
 double liquidez_inicio = 0;
 double Liquidez_Teste_fim = 0;
@@ -173,11 +170,12 @@ double Prop_Trailing_stop_start_Valor = 0;
  int HandleHiLoMediaBaixa = 0;
  double RetornaTendencia = 0;
 
-
- ///////////
+ ///////////////////////////////////////////
 
  string Comentario_Simples = "";
  string Comentario_Avancado = "";
  string Comentario_Debug = "";
 
  string Comentario_Robo = "";
+
+ int spread = 0;

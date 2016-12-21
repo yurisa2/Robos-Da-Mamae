@@ -1,1 +1,8 @@
 *.log
+/Libraries/
+/Presets/
+/Projects/
+/Scripts/
+/Logs/
+/Images/
+/Files/

@@ -10,6 +10,7 @@
 /////////////////////////////////////// Inputs
 
 input string Parametros_Gerais = "-------------------------------------";  //Parametros Gerais
+// input bool  multi_op = false;                                              //Multi Operacao (define o método de operacao)
 input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;                              //TimeFrame base
 
 input int HoraDeInicio = 9;                                                //Hora de Início
@@ -178,4 +179,4 @@ double Prop_Trailing_stop_start_Valor = 0;
 
  string Comentario_Robo = "";
 
- int spread = 0;
+ double spread = 0;

@@ -12,17 +12,17 @@
 
 void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
    {
-     if(FX) spread = Calcula_Spread();
-
          if(order_type==ORDER_TYPE_SELL)
          {
-            PrecoVenda = daotick() + spread;
-            Operacoes = Operacoes -1;
+            PrecoVenda = daotick(-1);
+            Operacoes = Operacoes - 1;
+            Print("Valor da VENDA: ",PrecoVenda);
          }
          if(order_type==ORDER_TYPE_BUY)
          {
-            PrecoCompra = daotick() - spread;
-            Operacoes = Operacoes +1;
+            PrecoCompra = daotick(1);
+            Operacoes = Operacoes + 1;
+            Print("Valor da Compra: ",PrecoCompra);
          }
 
          StopLossValorCompra =   -999999999;
@@ -53,8 +53,25 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          Req.action=TRADE_ACTION_DEAL;
          Req.type=order_type;
          Req.comment=Descricao_Robo+" "+comentario_req;
+
+        //  if(!multi_op)
+        //  {
+        //    if(Operacoes > 0)
+        //    {
+        //      Req.sl = StopLossValorCompra;
+        //      Req.tp = TakeProfitValorCompra;
+        //    }
+         //
+        //    if(Operacoes < 0)
+        //    {
+        //      Req.sl = 50;
+        //      Req.tp = 50;
+        //    }
+        //  }
+
          Req.tp=0;
          Req.sl=0;
+
 
                if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada |",comentario_req);
                else
@@ -63,6 +80,9 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
                      SendNotification("ERRO GRAVE, VERIFIQUE: "+IntegerToString(GetLastError()));
                      ExpertRemove();
                   }
+
+
+
 
          DaResultado = true;
 
@@ -80,8 +100,6 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
       Apaga_Graficos();
       Comment(Descricao_Robo+" - Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),0));
       Cria_Botao_Operar();
-
-
    }
    Print("Operacoes no fim da req: ",Operacoes);
    Print("Saldo do Dia ate o momento: ",conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao);
@@ -92,8 +110,5 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
 //   Print("Liquides Ini - Equi: ",liquidez_inicio - conta.Equity());
 //   Print("Ops Feitas: ",OperacoesFeitas);
 //   Print("CustoOps: ",custo_operacao);
-
-
-
    }
    /////////////////////////////////////////// Final da req.

@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                    Operacoes.mqh |
 //|                                                              Sa2 |
@@ -17,12 +18,12 @@ void StopLossCompra ()
   ((Usa_Fixos == true && StopLoss != 0) ||
   (Usa_Prop == true && Prop_StopLoss != 0)))
   {
-    if(daotick() <= StopLossValorCompra)
+    if(daotick(-1) <= StopLossValorCompra)
     {
-      Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick()," Valor do StopLoss: ",StopLossValorCompra);
+      Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick(-1)," Valor do StopLoss: ",StopLossValorCompra);
       Print(Descricao_Robo+" VENDA! ",Operacoes);
 
-      VendaImediata("Venda SL: "+DoubleToString(daotick(),2));
+      VendaImediata("Venda SL: "+DoubleToString(daotick(-1),_Digits));
       DeuStopLoss = true;
     }
   }
@@ -37,12 +38,12 @@ void StopLossVenda ()
 {
   if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
   {
-    if(daotick()>=StopLossValorVenda)
+    if(daotick(1)>=StopLossValorVenda)
     {
-      Print(Descricao_Robo+" Deu StopLoss VENDIDO | Compra r: ",daotick()," Valor do Stop: ",StopLossValorVenda);
+      Print(Descricao_Robo+" Deu StopLoss VENDIDO | Compra r: ",daotick(1)," Valor do Stop: ",StopLossValorVenda);
       Print(Descricao_Robo+" COMPRA! ",Operacoes);
 
-      CompraImediata("Compra SL: "+DoubleToString(daotick(),2));
+      CompraImediata("Compra SL: "+DoubleToString(daotick(1),_Digits));
       DeuStopLoss = true;
     }
   }
@@ -55,10 +56,10 @@ void TakeProfitCompra ()
 {
   if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
   {
-    if(daotick()>TakeProfitValorCompra)
+    if(daotick(-1)>TakeProfitValorCompra)
     {
-      Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick()," Valor do TakeProfit: ",TakeProfitValorCompra);
-      VendaImediata("Venda TP: "+DoubleToString(daotick(),2));
+      Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick(-1)," Valor do TakeProfit: ",TakeProfitValorCompra);
+      VendaImediata("Venda TP: "+DoubleToString(daotick(-1),_Digits));
       DeuTakeProfit = true;
     }
   }
@@ -71,10 +72,10 @@ void TakeProfitVenda ()
 {
   if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true  && DeuTakeProfit == false && Operacoes!=0 && Operacoes <0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
   {
-    if(daotick()<TakeProfitValorVenda)
+    if(daotick(1)<TakeProfitValorVenda)
     {
-      Print(Descricao_Robo+" Deu TakeProfit VENDIDO | Compra: ",daotick()," Valor do TakeProfit: ",TakeProfitValorVenda);
-      CompraImediata("Compra TP "+DoubleToString(daotick(),2));
+      Print(Descricao_Robo+" Deu TakeProfit VENDIDO | Compra: ",daotick(1)," Valor do TakeProfit: ",TakeProfitValorVenda);
+      CompraImediata("Compra TP "+DoubleToString(daotick(1),_Digits));
       DeuTakeProfit = true;
     }
   }

@@ -15,7 +15,7 @@
 
 //--- object for performing trade operations
 //CExpert expert;
-//CTrade  trade2;
+// CTrade  trade;
 //CTrade  CObject;
 //CSymbolInfo simbolo;
 //CPositionInfo posicao;
@@ -53,10 +53,9 @@ bool TaDentroDoHorario (string HoraInicio, string HoraFim)
 
 //////////////////////// DAOTICK ///////////
 ////// Funï¿½ao Pega Tick e devolve a hora e o valor da porra do ativo
-double daotick ()
+double daotick (int tipo = 0)
 {
-
-  double retornoTick;
+  double retornoTick = 0;
   MqlTick last_tick;
   if(SymbolInfoTick(_Symbol,last_tick))
   {
@@ -65,7 +64,15 @@ double daotick ()
   }
   else Print("SymbolInfoTick() failed, error = ",GetLastError());
 
-  retornoTick = last_tick.ask;
+  retornoTick = last_tick.ask; // ASK eh bom pra compra, pra venda é bid
+
+  if(tipo == -1)
+  {
+  retornoTick = last_tick.bid;
+  // MessageBox("Pegou o bid","bid",MB_OK); //DEBUG
+  }
+  if(tipo == 1)  retornoTick = last_tick.ask;
+
   return(retornoTick);
 }
 ////////////////// Fecha o PEGA O TICK
@@ -320,7 +327,13 @@ Comentario_Debug = Comentario_Avancado +
 "\nUsa_Fixos: "+IntegerToString(Usa_Fixos)+
 "\nTaDentro: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
 "\nSaldo_Dia_Permite: "+IntegerToString(Saldo_Dia_Permite())+
-"\n Spread:" + Calcula_Spread()
+"\nDirecao: " + DoubleToString(Direcao,0) +
+"\nBid: " + DoubleToString(daotick(-1)) +
+"\nAsk: " + DoubleToString(daotick(1)) +
+
+
+"\nSpread: " + DoubleToString(Calcula_Spread())
+
 
 
 ;

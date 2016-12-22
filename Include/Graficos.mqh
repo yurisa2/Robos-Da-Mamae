@@ -57,6 +57,9 @@ void OnChartEvent(const int id,
     if(Operacoes<0) ObjectCreate(0,"StopLossVenda",OBJ_HLINE,0,0,StopLossValorVenda);
     if(Operacoes>0) ObjectCreate(0,"TakeProfitCompra",OBJ_HLINE,0,0,TakeProfitValorCompra);
     if(Operacoes<0) ObjectCreate(0,"TakeProfitVenda",OBJ_HLINE,0,0,TakeProfitValorVenda);
+    if(Operacoes>0) ObjectCreate(0,"PrecoCompra",OBJ_HLINE,0,0,PrecoCompra);
+    if(Operacoes<0) ObjectCreate(0,"PrecoVenda",OBJ_HLINE,0,0,PrecoVenda);
+
 
     if(Usa_EM && Operacoes > 0) ObjectCreate(0,"LinhaPicote",OBJ_HLINE,0,0,PrecoCompra + Valor_Escalpe);
     if(Usa_EM && Operacoes < 0) ObjectCreate(0,"LinhaPicote",OBJ_HLINE,0,0,PrecoVenda - Valor_Escalpe);
@@ -103,13 +106,17 @@ void OnChartEvent(const int id,
     if(Operacoes<0) ObjectSetString(0,"LinhaPicote",OBJPROP_TEXT,"Picote: "+DoubleToString(PrecoVenda - Valor_Escalpe));
     if(Operacoes<0) ObjectSetString(0,"LinhaPicote",OBJPROP_TOOLTIP,"Picote: "+DoubleToString(PrecoVenda - Valor_Escalpe));
 
+    if(Operacoes>0) ObjectSetInteger(0,"PrecoCompra",OBJPROP_STYLE,STYLE_DASHDOT);
+    if(Operacoes>0) ObjectSetInteger(0,"PrecoCompra",OBJPROP_COLOR,clrGhostWhite);
+    if(Operacoes>0) ObjectSetString(0,"PrecoCompra",OBJPROP_LEVELTEXT,"PrecoCompra: "+DoubleToString(PrecoCompra));
+    if(Operacoes>0) ObjectSetString(0,"PrecoCompra",OBJPROP_TEXT,"PrecoCompra: "+DoubleToString(PrecoCompra));
+    if(Operacoes>0) ObjectSetString(0,"PrecoCompra",OBJPROP_TOOLTIP,"PrecoCompra: "+DoubleToString(PrecoCompra));
 
-    if(Operacoes>0) ObjectSetInteger(0,"LinhaPicote",OBJPROP_STYLE,STYLE_DASHDOT);
-    if(Operacoes>0) ObjectSetInteger(0,"LinhaPicote",OBJPROP_COLOR,clrGhostWhite);
-    if(Operacoes>0) ObjectSetString(0,"LinhaPicote",OBJPROP_LEVELTEXT,"Picote: "+DoubleToString(PrecoCompra + Valor_Escalpe));
-    if(Operacoes>0) ObjectSetString(0,"LinhaPicote",OBJPROP_TEXT,"Picote: "+DoubleToString(PrecoCompra + Valor_Escalpe));
-    if(Operacoes>0) ObjectSetString(0,"LinhaPicote",OBJPROP_TOOLTIP,"Picote: "+DoubleToString(PrecoCompra + Valor_Escalpe));
-
+    if(Operacoes<0) ObjectSetInteger(0,"PrecoVenda",OBJPROP_STYLE,STYLE_DASHDOT);
+    if(Operacoes<0) ObjectSetInteger(0,"PrecoVenda",OBJPROP_COLOR,clrGhostWhite);
+    if(Operacoes<0) ObjectSetString(0,"PrecoVenda",OBJPROP_LEVELTEXT,"PrecoVenda: "+DoubleToString(PrecoVenda));
+    if(Operacoes<0) ObjectSetString(0,"PrecoVenda",OBJPROP_TEXT,"PrecoVenda: "+DoubleToString(PrecoVenda));
+    if(Operacoes<0) ObjectSetString(0,"PrecoVenda",OBJPROP_TOOLTIP,"PrecoVenda: "+DoubleToString(PrecoVenda));
   }
 
   void AtualizaLinhaTS (double NivelTS)
@@ -225,5 +232,9 @@ void OnChartEvent(const int id,
     ObjectDelete(0,"TakeProfitCompra");
     ObjectDelete(0,"TakeProfitVenda");
     ObjectDelete(0,"LinhaPicote");
+    ObjectDelete(0,"PrecoCompra");
+    ObjectDelete(0,"PrecoVenda");
+
+
     //ChartRedraw();
   }

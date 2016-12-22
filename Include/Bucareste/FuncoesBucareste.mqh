@@ -116,5 +116,13 @@ if(Usa_BSI) Comentario_Robo = Comentario_Robo+"BSI"+IntegerToString(BSI_RangePer
 double Calcula_Spread ()
 {
   double retorno = SymbolInfoInteger(_Symbol,SYMBOL_SPREAD) * SymbolInfoDouble(_Symbol,SYMBOL_POINT);
-  return  retorno;
+ return  retorno;
+  // return  0; // DEBUG
+}
+
+void Calcula_Direcao ()
+{
+  // if(Usa_Hilo) CalculaHiLo(); // Futuro com mais calma eu "refatoro"
+  // if(Usa_PSar) CalculaPSar();
+
 }

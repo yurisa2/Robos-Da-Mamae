@@ -1,3 +1,4 @@
+/* -*- C++ -*- */
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
@@ -39,7 +40,6 @@ bool CalculaHiLo ()
 
   Direcao = _ma1[0];
   return false;
-
 }
 
 void HiLo ()
@@ -63,7 +63,7 @@ void HiLo ()
     int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
     int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
 
-    if(Direcao!=_ma1[0])
+    if(_ma1[1]!=_ma1[0])
     {
       //Print("Mudou Hein");
       DeuStopLoss = false;

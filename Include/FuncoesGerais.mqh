@@ -35,16 +35,57 @@ double Saldo_Operacao_Atual ()
 
   if(Operacoes > 0)
   {
-    Retorno_Saldo =   daotick(1) - PrecoCompra;
+    Retorno_Saldo =   daotick(-1) - PrecoCompra;
    }
 
    if(Operacoes < 0)
    {
-     Retorno_Saldo =   PrecoVenda - daotick(-1);
+     Retorno_Saldo =   PrecoVenda - daotick(1);
     }
 
 
 return Retorno_Saldo;
+}
 
+void Pega_Valor ()
+{
+      Data_Hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+HorarioInicio+":00");
+      HistorySelect(Data_Hoje,TimeCurrent());
 
+      uint     total=HistoryDealsTotal();
+      ulong    ticket=0;
+
+      for(uint i = 0; i < total; i++)
+      {
+        ticket=HistoryDealGetTicket(i);
+        negocio.Ticket(ticket);
+
+        if(negocio.Magic() == TimeMagic)
+        {
+          num_ordem_tiquete=i;
+        }
+      }
+
+    if((ticket == HistoryDealGetTicket(num_ordem_tiquete)) > 0 && DaResultado == true)
+      {
+        negocio.Ticket(ticket);
+
+        if(negocio.Magic() == TimeMagic)
+        {
+          DaResultado = false;
+          PrecoNegocio = DoubleToString(negocio.Price());
+
+          if(negocio.DealType() == DEAL_TYPE_BUY)
+          {
+            num_ordem_tiquete=0;
+          }
+
+          if(negocio.DealType() == DEAL_TYPE_SELL)
+          {
+            num_ordem_tiquete=0;
+          }
+        }
+      }
+      //      }  //Bracket do FOR
+      // PARA DESLIGAR O SISTEMA DE E_MAILS
 }

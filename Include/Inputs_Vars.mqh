@@ -180,3 +180,5 @@ double Prop_Trailing_stop_start_Valor = 0;
  string Comentario_Robo = "";
 
  double spread = 0;
+
+ string PrecoNegocio = 0;

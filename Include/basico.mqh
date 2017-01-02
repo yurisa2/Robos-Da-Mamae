@@ -325,16 +325,14 @@ Comentario_Debug = Comentario_Avancado +
 "\nDeuStopLoss: "+IntegerToString(DeuStopLoss)+
 "\nOperacoes: "+IntegerToString(Operacoes)+
 "\nUsa_Fixos: "+IntegerToString(Usa_Fixos)+
-"\nTaDentro: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
+"\nTaDentroDoHorario: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
 "\nSaldo_Dia_Permite: "+IntegerToString(Saldo_Dia_Permite())+
 "\nDirecao: " + DoubleToString(Direcao,0) +
 "\nBid: " + DoubleToString(daotick(-1)) +
 "\nAsk: " + DoubleToString(daotick(1)) +
-
-
 "\nSpread: " + DoubleToString(Calcula_Spread())
-
-
+// "\nMagic #: " + IntegerToString(TimeMagic)
+// "\nUltimo Valor: " + PrecoNegocio //NAO FUNFA NEM NA RICO NEM NA XP.... FX OK
 
 ;
 }

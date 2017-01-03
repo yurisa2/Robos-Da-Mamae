@@ -49,7 +49,7 @@
 
 https://bitbucket.org/yurisa2/rob-s-da-mam-e
 
-Em caso de dúvida, sempre fale com o Yuri primeiro.
+Em caso de dúvida, sempre fale com o Yuri primeiro (https://about.me/yuri.sa).
 
 Se quiser dar Merge, manda o request, a gente testa e publica. Seria bom ter mais alguém aqui.
 

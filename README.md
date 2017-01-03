@@ -49,14 +49,18 @@
 
 https://bitbucket.org/yurisa2/rob-s-da-mam-e
 
-Tudo o que você precisa está nesse GIT. Até mesmo se você quiser dar um COMMIT...
+Em caso de dúvida, sempre fale com o Yuri primeiro.
 
-### TODOS OS ROBÔS ESTÃO NA MASTER ###
+Se quiser dar Merge, manda o request, a gente testa e publica. Seria bom ter mais alguém aqui.
 
-* Nem é mais daquele jeito, está tudo junto!
-* Mudou o esquema
-* Um dia eu ligo o Wiki
+Se vier falar de "patterns", "estruturas", "objetos" etc... Nem gasta, por favor, forka e faz o seu. Aliás, você nem estaria procurando códigos por aí se você fosse tão pica.
 
-Em caso de dúvida, sempre fale com o Yurão primeiro. Solitário aqui.
+Fiz funcional mesmo, é XGH mesmo, to nem ae.
 
-### Pode-se e deve-se adicionar bugs e resolver o máximo de tretas (Issues) por aqui, fica documentado e trampo é zero ###
+Falando em estrutura de código, lembre-se, vários "métodos alternativos" foram feitos para se adequar à realidade das corretoras e da Bovespa, porém eu também opero FX e tento fazer um coringão que funcione nos dois... Tem dado certo.
+
+Também tenho muito código legado, vindo de outras versões e de outros robôs... Arrumando a bagunça, mas eu tenho mesmo é que tirar dinheiro disso aqui. Então eu troco código bonito por grana, parece bom...
+
+Solitário aqui.
+
+### Pode-se e deve-se adicionar bugs e resolver o máximo de tretas (Issues) por aqui, fica documentado e trampo de organizar é zero ###

@@ -141,7 +141,7 @@ void Comentario ()
      "Delta op Atual:" + DoubleToString(Saldo_Operacao_Atual(),_Digits)
 
     ;
-  }
+
   if(Operacoes < 0)
   {
     Comentario_Simples =

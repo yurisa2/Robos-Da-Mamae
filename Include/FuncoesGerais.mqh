@@ -42,8 +42,7 @@ double Saldo_Operacao_Atual ()
    {
      Retorno_Saldo =   PrecoVenda - daotick(1);
     }
-
-
+    
 return Retorno_Saldo;
 }
 

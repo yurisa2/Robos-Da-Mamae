@@ -151,6 +151,7 @@ int HandlePSar;
 int HandleFrac;
 int HandleOzy;
 int HandleBSI;
+int HandleRSI;
 
 int CondicaoBSI;
 
@@ -181,4 +182,4 @@ double Prop_Trailing_stop_start_Valor = 0;
 
  double spread = 0;
 
- string PrecoNegocio = 0;
+ string PrecoNegocio = "0";

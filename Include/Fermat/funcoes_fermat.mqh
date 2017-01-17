@@ -1,3 +1,5 @@
+/* -*- C++ -*- */
+
 //+------------------------------------------------------------------+
 //|                                            Fermat , o antigo ... |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
@@ -47,7 +49,7 @@ double MA3 (int candle = 0)
   return ValorMA[candle];
 }
 
-int Direcao_Fermat (int candle = 0) //True se cumpre os quesitos de maior menor e distancia e da o sentido, ZERO (0) e igual a nao cumpre
+int Direcao_Fermat (int candle = 0) //True se cumpre os quesitos de maior menor e distancia e dá o sentido, ZERO (0) e igual a nao cumpre
 {
   if(MA3(candle) < MA1(candle) && MA2(candle) < MA1(candle) && MA1(candle)-MA3(candle) >= Tick_Size*Distancia_m1_m3)
   {

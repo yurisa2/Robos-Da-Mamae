@@ -42,7 +42,7 @@ double Saldo_Operacao_Atual ()
    {
      Retorno_Saldo =   PrecoVenda - daotick(1);
     }
-    
+
 return Retorno_Saldo;
 }
 
@@ -87,4 +87,11 @@ void Pega_Valor ()
       }
       //      }  //Bracket do FOR
       // PARA DESLIGAR O SISTEMA DE E_MAILS
+}
+
+double Calcula_Spread ()
+{
+  double retorno = SymbolInfoInteger(_Symbol,SYMBOL_SPREAD) * SymbolInfoDouble(_Symbol,SYMBOL_POINT);
+ return  retorno;
+  // return  0; // DEBUG
 }

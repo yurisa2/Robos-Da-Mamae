@@ -133,13 +133,6 @@ if(Usa_RSI) Comentario_Robo = Comentario_Robo+"RSI: (Compra: "+RSI_compra+" Vend
 
 }
 
-double Calcula_Spread ()
-{
-  double retorno = SymbolInfoInteger(_Symbol,SYMBOL_SPREAD) * SymbolInfoDouble(_Symbol,SYMBOL_POINT);
- return  retorno;
-  // return  0; // DEBUG
-}
-
 void Calcula_Direcao ()
 {
   // if(Usa_Hilo) CalculaHiLo(); // Futuro com mais calma eu "refatoro"

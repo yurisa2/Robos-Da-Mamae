@@ -43,7 +43,6 @@ return TM;
 
 string Descricao_Robo = Desc_Se_Vazio()+Descricao_Robo_Alpha;
 input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;       //Tipo de ordem (teste)
-input bool FX = false;                                                  // É Forex
 input int Tipo_Comentario = 1;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
 input bool Otimizacao = false;                                          //Parametro para otimização
 

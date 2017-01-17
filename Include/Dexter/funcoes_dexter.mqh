@@ -121,13 +121,15 @@ void VendaIndicador (string Desc,string IO = "Neutro")
 
 void Comentario_Dexter ()
 {
+  Comentario_Robo = ""; //Para não repetir a porra toda
+
 if(Usa_Hilo) Comentario_Robo = Comentario_Robo+"HiLo - M"+EnumToString(TimeFrame)+"N"+IntegerToString(Periodos)+"\n";
 if(Usa_Ozy) Comentario_Robo = Comentario_Robo+"Ozy"+IntegerToString(Ozy_MM)+";"+IntegerToString(Ozy_Shift)+"."+IntegerToString(Ozy_length);
-if(Usa_PSar) Comentario_Robo = Comentario_Robo+"PSAR"+DoubleToString(PSAR_Step,2)+";"+DoubleToString(PSAR_Max_Step,1);
+if(Usa_PSar) Comentario_Robo = Comentario_Robo+"PSAR"+DoubleToString(PSAR_Step,2)+";"+DoubleToString(PSAR_Max_Step,1)+"\n";
 if(Usa_Fractal) Comentario_Robo = Comentario_Robo+"Frac"+IntegerToString(Frac_Candles_Espera);
-if(Usa_BSI) Comentario_Robo = Comentario_Robo+"BSI"+IntegerToString(BSI_RangePeriod)+";"+IntegerToString(BSI_Slowing)+"."+IntegerToString(BSI_Avg_Period);
-if(Usa_RSI) Comentario_Robo = Comentario_Robo+"RSI"+DoubleToString(CalculaRSI())+"\n";
-Comentario_Robo = Comentario_Robo+"Handle RSI"+IntegerToString(HandleRSI)+"\n";
+if(Usa_BSI) Comentario_Robo = Comentario_Robo+"BSI"+IntegerToString(BSI_RangePeriod)+";"+IntegerToString(BSI_Slowing)+"."+IntegerToString(BSI_Avg_Period)+"\n";
+if(Usa_RSI) Comentario_Robo = Comentario_Robo+"RSI: (Compra: "+RSI_compra+" Venda: "+RSI_venda+") "+DoubleToString(CalculaRSI(),2)+"\n"; //Colocar Parametros
+
 
 }
 

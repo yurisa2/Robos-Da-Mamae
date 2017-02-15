@@ -7,6 +7,9 @@
 #include <OnTrade.mqh>
 #include <FuncoesGerais.mqh>
 
+#include <Trade\Trade.mqh>
+CTrade opera;
+
 
 #include <Inputs_Vars.mqh>
 
@@ -20,6 +23,7 @@
 #include <MontarRequisicao.mqh>
 #include <VerificaInit.mqh>
 #include <Operacoes.mqh>
+
 
 
 
@@ -53,7 +57,7 @@ void OnTimer()
 
 void OnTick()
 {
-  Operacoes_No_tick();
+  //  Operacoes_No_tick();
 
 
 }

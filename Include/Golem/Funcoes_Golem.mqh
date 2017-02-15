@@ -5,7 +5,6 @@
 
 void Inicializa_Funcs ()
 {
-
   MarketBookAdd(Symbol());
 }
 
@@ -53,6 +52,11 @@ void Evento_Book ()
       // Comentario_Robo += "\n";
     }
 
+    Comentario_Robo += "Trade Ativa: " +  PositionSelect(Symbol());
+    Comentario_Robo += "\n";
+
+
+
 Comentario_Robo += "soma_negativo: " + DoubleToString(soma_negativo,1);
 Comentario_Robo += "\n";
 Comentario_Robo += "soma_positivo: " + DoubleToString(soma_positivo,1);
@@ -65,8 +69,69 @@ Comentario_Robo += "soma_diferenca: " + DoubleToString(soma_diferenca,1);
 Comentario_Robo += "\n";
 Direcao = soma_direcao;   //Achar lugar melhor pra isso, outro pedaço do objeto
 
-if(Operacoes == 0 && soma_direcao < 0 && soma_diferenca > golem_limite_de_operacao) Venda_Golem("Diferenca de negocios " + soma_diferenca);
-if(Operacoes == 0 && soma_direcao > 0 && soma_diferenca > golem_limite_de_operacao) Compra_Golem("Diferenca de negocios " + soma_diferenca);
+Comentario_Robo += "\n";
+Comentario_Robo += "\n";
+
+
+
+int Array_Mais_Um = ArraySize(golem_media_array) + 1;
+
+ArrayResize(golem_media_array,Array_Mais_Um);
+
+for(int i=0; i < ArraySize(golem_media_array)-1; i++)
+{
+golem_media_array[i] = golem_media_array[i+1];
+}
+
+golem_media_array[Array_Mais_Um-1] = soma_diferenca;
+
+ArrayResize(golem_media_array,golem_tamanho_lista);
+
+double soma_array = 0;
+
+for(int i = 0; i < ArraySize(golem_media_array); i++)
+{
+  soma_array = soma_array + golem_media_array[i];
+  // Comentario_Robo += "\n";
+  // Comentario_Robo += i + " = " + golem_media_array[i];
+}
+
+double media_array = soma_array/ArraySize(golem_media_array);
+
+// Comentario_Robo += "\n";
+// Comentario_Robo += " soma_array = " + soma_array;
+// Comentario_Robo += "\n";
+// Comentario_Robo += " Media_Array = " + DoubleToString(media_array,0);
+
+
+double desvio_cima = 0;
+double desvio_padrao = 0;
+
+for(int i = 0; i < ArraySize(golem_media_array); i++)
+{
+  double conta_elemento =  (golem_media_array[i] - media_array)*(golem_media_array[i] - media_array);
+  desvio_cima = desvio_cima + conta_elemento;
+  // Comentario_Robo += "\n";
+  // Comentario_Robo += i + " = " + golem_media_array[i];
+}
+desvio_padrao = MathSqrt(desvio_cima/(ArraySize(golem_media_array)-1)) ;
+
+Comentario_Robo += "\n";
+Comentario_Robo += "desvio_padrao: " + DoubleToString(desvio_padrao,0);
+
+int itens_acima_do_desvio = 0;
+for(int i = 0; i < ArraySize(golem_media_array); i++)
+{
+  if(golem_media_array[i] > (media_array + desvio_padrao)) itens_acima_do_desvio++;
+}
+Comentario_Robo += "\n";
+Comentario_Robo += " Acima do desvio: " + itens_acima_do_desvio;
+
+Comentario_Robo += "\n";
+Comentario_Robo += "\n";
+
+// if(soma_direcao < 0 && soma_diferenca > golem_limite_de_operacao && PositionSelect(Symbol()) == 0) Venda_Golem("Diferenca de negocios " + soma_diferenca);
+// if(soma_direcao > 0 && soma_diferenca > golem_limite_de_operacao && PositionSelect(Symbol()) == 0) Compra_Golem("Diferenca de negocios " + soma_diferenca);
 
   }
 
@@ -74,42 +139,47 @@ if(Operacoes == 0 && soma_direcao > 0 && soma_diferenca > golem_limite_de_operac
 
   void Compra_Golem (string Desc,string IO = "Neutro")
   {
-    if(IO == "Entrada") EM_Contador_Picote = 0;
 
-    if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
-    if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
+        Print(Descricao_Robo+" "+Desc);
 
-    Print(Descricao_Robo+" "+Desc);
-
-    if(Operacoes<0)
+    if(OperacoesFeitas < (Limite_Operacoes*2) &&
+      Saldo_Dia_Permite() == true &&
+      (
+      (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo)
+      || Usa_Fixos == true
+    )
+  )
     {
-      MontarRequisicao(ORDER_TYPE_BUY,Desc);
-    }
-    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
-    {
-      MontarRequisicao(ORDER_TYPE_BUY,Desc);
-      DeuStopLoss = false;
-      DeuTakeProfit = false;
+      MontarPosicao(ORDER_TYPE_BUY,Desc);
+      OperacoesFeitas = OperacoesFeitas + 2;
+
     }
   }
 
   void Venda_Golem (string Desc,string IO = "Neutro")
 {
-  if(IO == "Entrada") EM_Contador_Picote = 0;
 
-  if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
-  if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
+      Print(Descricao_Robo+" "+Desc);
 
-  Print(Descricao_Robo+" "+Desc);
-  if(Operacoes>0)
-  {
-    MontarRequisicao(ORDER_TYPE_SELL,Desc);
+      if(OperacoesFeitas < (Limite_Operacoes*2) &&
+        Saldo_Dia_Permite() == true &&
+        (
+        (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo)
+        || Usa_Fixos == true
+      ))
+      {
+        MontarPosicao(ORDER_TYPE_SELL,Desc);
+        OperacoesFeitas = OperacoesFeitas + 2;
 
-  }
-  if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
-  {
-    MontarRequisicao(ORDER_TYPE_SELL,Desc);
-    DeuStopLoss = false;
-    DeuTakeProfit = false;
-  }
+      }
+}
+
+double Constroi_Media_Book (int soma_diferenca)
+{
+  ArraySetAsSeries(golem_media_array,true);
+
+return 0;
+
+
+
 }

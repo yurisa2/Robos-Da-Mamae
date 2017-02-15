@@ -112,3 +112,70 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
 //   Print("CustoOps: ",custo_operacao);
    }
    /////////////////////////////////////////// Final da req.
+
+void MontarPosicao(ENUM_ORDER_TYPE order_type,string comentario_req)
+{
+
+  double sl = 0;
+  double tp = 0;
+  double price = 0;
+
+  if(order_type == ORDER_TYPE_SELL)
+  {
+     PrecoVenda = daotick(-1);
+     sl = PrecoVenda + (StopLoss * Tick_Size);
+     tp = PrecoVenda - (TakeProfit * Tick_Size);
+     price = PrecoVenda;
+     Operacoes = Operacoes - 1;
+
+     Print("Valor da VENDA: ",PrecoVenda);
+  }
+  if(order_type == ORDER_TYPE_BUY)
+  {
+     PrecoCompra = daotick(1);
+     sl = PrecoCompra - (StopLoss * Tick_Size);
+     tp = PrecoCompra + (TakeProfit * Tick_Size);
+     price = PrecoCompra;
+     Operacoes = Operacoes + 1;
+     Print("Valor da Compra: ",PrecoCompra);
+  }
+
+  opera.PositionOpen(Symbol(),         // symbol
+   order_type,     // order type to open position
+   Lotes,         // position volume
+  price,          // execution price
+  sl,             // Stop Loss price
+  tp,             // Take Profit price
+   comentario_req      // comment
+ );
+
+ Sleep(300);
+
+ PositionSelect(Symbol());
+ double Ultimo_Preco = opera.ResultPrice();
+
+ Print("Ultimo_Preco: " + Ultimo_Preco); //DEBUG
+
+ if(order_type == ORDER_TYPE_SELL)
+ {
+    PrecoVenda = daotick(-1);
+    sl = Ultimo_Preco + (StopLoss * Tick_Size);
+    tp = Ultimo_Preco - (TakeProfit * Tick_Size);
+ }
+ if(order_type == ORDER_TYPE_BUY)
+ {
+    PrecoCompra = daotick(1);
+    sl = Ultimo_Preco - (StopLoss * Tick_Size);
+    tp = Ultimo_Preco + (TakeProfit * Tick_Size);
+ }
+
+ opera.PositionModify(
+    Symbol(),     // symbol
+    sl,         // Stop Loss price
+    tp          // Take Profit price
+  );
+
+// Print("SL: " + sl); //DEBUG
+// Print("TP: " + tp); //DEBUG
+
+}

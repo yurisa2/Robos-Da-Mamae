@@ -124,14 +124,16 @@ for(int i = 0; i < ArraySize(golem_media_array); i++)
 {
   if(golem_media_array[i] > (media_array + desvio_padrao)) itens_acima_do_desvio++;
 }
+double itens_acima_do_desvio_pcent = (itens_acima_do_desvio*100)/golem_tamanho_lista;
+
+Comentario_Robo += "\n";
+Comentario_Robo += " Acima do desvio %: " + DoubleToString(itens_acima_do_desvio_pcent,_Digits);
 Comentario_Robo += "\n";
 Comentario_Robo += " Acima do desvio: " + itens_acima_do_desvio;
-
-Comentario_Robo += "\n";
 Comentario_Robo += "\n";
 
-// if(soma_direcao < 0 && soma_diferenca > golem_limite_de_operacao && PositionSelect(Symbol()) == 0) Venda_Golem("Diferenca de negocios " + soma_diferenca);
-// if(soma_direcao > 0 && soma_diferenca > golem_limite_de_operacao && PositionSelect(Symbol()) == 0) Compra_Golem("Diferenca de negocios " + soma_diferenca);
+if(soma_direcao < 0 && itens_acima_do_desvio_pcent > golem_limite_de_operacao && PositionSelect(Symbol()) == 0) Venda_Golem("% acima do desvio " + itens_acima_do_desvio_pcent);
+if(soma_direcao > 0 && itens_acima_do_desvio_pcent > golem_limite_de_operacao && PositionSelect(Symbol()) == 0) Compra_Golem("% acima do desvio " + itens_acima_do_desvio_pcent);
 
   }
 

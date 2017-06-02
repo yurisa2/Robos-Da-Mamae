@@ -63,7 +63,7 @@ void HiLo ()
     int copiadoNmin=CopyBuffer(HandleGHL,3,0,100,NMin);
     int copiadoValorHilo=CopyBuffer(HandleGHL,0,0,100,ValorHilo);
 
-    if(_ma1[1]!=_ma1[0])
+    if(_ma1[1]!=_ma1[2])
     {
       //Print("Mudou Hein");
       DeuStopLoss = false;

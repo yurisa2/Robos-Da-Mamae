@@ -25,7 +25,7 @@ return false;
 double Saldo_Dia_Valor ()
 {
 
-return conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao;
+return conta.Equity() - liquidez_inicio -  OperacoesFeitasGlobais * custo_operacao;
 
 }
 

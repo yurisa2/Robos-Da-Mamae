@@ -21,9 +21,7 @@ void Inicializa_RSI ()
 double CalculaRSI ()
 {
      double _RSI[];
-
      ArraySetAsSeries(_RSI, true);
-
      int ifr_copied=CopyBuffer(HandleRSI,0,0,100,_RSI);
 
      return(_RSI[0]);

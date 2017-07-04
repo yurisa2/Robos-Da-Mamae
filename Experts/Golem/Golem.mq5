@@ -57,14 +57,14 @@ void OnTimer()
 
 void OnTick()
 {
-  //  Operacoes_No_tick();
+  Operacoes_No_tick();
 
 
 }
 
 double OnTester()
 {
-  return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais * custo_operacao;
+  return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais * custo_operacao * Lotes;
 }
 
 void OnNewBar()

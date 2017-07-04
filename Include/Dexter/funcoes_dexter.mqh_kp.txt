@@ -1,0 +1,259 @@
+// + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - + 
+// |                                                                                           F u n c o e s B e n d e r D e f . m q h   | 
+// |                                                 C o p y r i g h t   2 0 1 5 ,   M e t a Q u o t e s   S o f t w a r e   C o r p .   | 
+// |                                                                                           h t t p s : / / w w w . m q l 5 . c o m   | 
+// + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - + 
+
+# p r o p e r t y   c o p y r i g h t   " P e t r o S a ,   R o b ï ¿ ½ s   f e i t o s   n a   h o r a ,   q u e n t i n h o s ,   t r a g a m   v a s i l h a s . " 
+# p r o p e r t y   l i n k             " h t t p : / / w w w . s a 2 . c o m . b r " 
+  
+ v o i d   I n i c i a l i z a _ F u n c s   ( ) 
+ 
+ { 
+      C o m e n t a r i o _ D e x t e r ( ) ; 
+      i f ( U s a _ P S a r   = =   t r u e )   H a n d l e P S a r   =   i S A R ( N U L L , T i m e F r a m e , P S A R _ S t e p , P S A R _ M a x _ S t e p ) ; 
+      i f ( U s a _ O z y   = =   t r u e )   H a n d l e O z y   =   i C u s t o m ( N U L L , T i m e F r a m e , " o z y m a n d i a s _ l i t e " , O z y _ l e n g t h , O z y _ M M , O z y _ S h i f t ) ; 
+      i f ( U s a _ F r a c t a l   = =   t r u e )   H a n d l e F r a c   =   i F r a c t a l s ( N U L L , T i m e F r a m e ) ; 
+      i f ( U s a _ H i l o   = =   t r u e )   I n i c i a l i z a _ H i L o ( ) ; 
+      i f ( U s a _ B S I   = =   t r u e )     I n i c i a l i z a _ B S I ( ) ; 
+      i f ( U s a _ R S I   = =   t r u e )     I n i c i a l i z a _ R S I ( ) ; 
+  
+     i f ( U s a _ H i l o   = =   t r u e )   C a l c u l a H i L o ( ) ; 
+      i f ( U s a _ P S a r   = =   t r u e )   C a l c u l a P S a r ( ) ; 
+      i f ( U s a _ B S I   = =   t r u e )   C a l c u l a B S I ( ) ; 
+      i f ( U s a _ R S I   = =   t r u e )   C a l c u l a R S I ( ) ; 
+  
+     i f ( U s a _ F r a c t a l   = =   t r u e )   C a l c u l a F r a c t a l ( ) ; 
+ 
+ 
+ 
+     i f ( U s a _ P S a r   = =   t r u e )     C h a r t I n d i c a t o r A d d ( 0 , 0 , H a n d l e P S a r ) ; 
+ 
+     i f ( U s a _ O z y   = =   t r u e )   C h a r t I n d i c a t o r A d d ( 0 , 0 , H a n d l e O z y ) ; 
+ 
+     i f ( U s a _ F r a c t a l   = =   t r u e )   C h a r t I n d i c a t o r A d d ( 0 , 0 , H a n d l e F r a c ) ; 
+ 
+ 
+ 
+     i f ( U s a _ H i l o   = =   t r u e )   P r i n t ( " I n d i c a d o r   H i L o   i n i c i o   d o   d i a :   " , D i r e c a o ) ; 
+ 
+     i f ( U s a _ P S a r   = =   t r u e )   P r i n t ( " I n d i c a d o r   P S A R   i n i c i o   d o   d i a :   " , D i r e c a o ) ; 
+ 
+ 
+ 
+ } 
+ 
+ 
+ 
+ / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /   P r i m e i r a   O p e r a ï ¿ ½ a o 
+ 
+ 
+ 
+ v o i d   P r i m e i r a O p e r a c a o   ( ) 
+ 
+ { 
+ 
+     i f ( T a D e n t r o D o H o r a r i o ( H o r a r i o I n i c i o , H o r a r i o F i m ) = = t r u e   & &   P r i m e i r a O p = = f a l s e ) 
+ 
+     { 
+ 
+         P r i n t ( D e s c r i c a o _ R o b o + "   H o r a r i o   S e t u p :   " , H o r a r i o I n i c i o ) ; 
+ 
+         P r i n t ( D e s c r i c a o _ R o b o + "   D i r e c a o   I n i c i o   d i a :   " , D i r e c a o ) ; 
+ 
+ 
+ 
+         P r i m e i r a O p   =   t r u e ; 
+ 
+ 
+ 
+         i f ( D i r e c a o < 0 ) 
+ 
+         { 
+ 
+             V e n d a I m e d i a t a ( " O p e r a L o g o D e C a r a " , " E n t r a d a " ) ; 
+ 
+             D e u S t o p L o s s   =   f a l s e ; 
+ 
+             D e u T a k e P r o f i t   =   f a l s e ; 
+ 
+         } 
+ 
+         i f ( D i r e c a o > 0 ) 
+ 
+         { 
+ 
+             C o m p r a I m e d i a t a ( " O p e r a L o g o D e C a r a " , " E n t r a d a " ) ; 
+ 
+             D e u S t o p L o s s   =   f a l s e ; 
+ 
+             D e u T a k e P r o f i t   =   f a l s e ; 
+ 
+         } 
+ 
+     } 
+ 
+ } 
+ 
+ / / / / / / / / / / / / / / / /   F i m   P r i m e i r a   O p e r a c a o 
+ 
+ 
+ 
+ 
+ 
+ / / / / / / / / / / / / / / / / /   C O M P R A 
+ 
+ 
+ 
+ v o i d   C o m p r a I n d i c a d o r   ( s t r i n g   D e s c , s t r i n g   I O   =   " N e u t r o " ) 
+ 
+ { 
+ 
+     i f ( I O   = =   " E n t r a d a " )   E M _ C o n t a d o r _ P i c o t e   =   0 ; 
+ 
+ 
+ 
+     i f ( E M _ P i c o t e _ T i p o = = 5 5 )   V a l o r _ E s c a l p e   =   T i c k _ S i z e   *   T a m a n h o _ P i c o t e ;         / / P a r a   f a z e r   f u n c i o n a r   o   E M       -   f i x o 
+ 
+     i f ( E M _ P i c o t e _ T i p o = = 4 7 1 )   V a l o r _ E s c a l p e   =   P r o p _ D e l t a ( )   *   T a m a n h o _ P i c o t e ;     / / P a r a   f a z e r   f u n c i o n a r   o   E M   -   p r o p o r c i o n a l 
+ 
+ 
+ 
+     P r i n t ( D e s c r i c a o _ R o b o + "   " + D e s c ) ; 
+ 
+     P r i n t ( " R S I   n a   v i r a d a "   +   D o u b l e T o S t r i n g ( C a l c u l a R S I ( ) ) ) ; 
+ 
+     i f ( O p e r a c o e s < 0   & &   S a i P e l o I n d i c a d o r = = t r u e ) 
+ 
+     { 
+ 
+         M o n t a r R e q u i s i c a o ( O R D E R _ T Y P E _ B U Y , D e s c ) ; 
+ 
+     } 
+ 
+     i f ( O p e r a c o e s = = 0   & & 
+ 
+         O p e r a c o e s F e i t a s   <   ( L i m i t e _ O p e r a c o e s * 2 )   & & 
+ 
+         S a l d o _ D i a _ P e r m i t e ( )   = =   t r u e   & & 
+ 
+         ( ( U s a _ P r o p   = =   t r u e   & &   P r o p _ D e l t a ( )   >   P r o p _ L i m i t e _ M i n i m o )   | |   U s a _ F i x o s   = =   t r u e ) 
+ 
+         & &   C a l c u l a R S I ( )   <   R S I _ c o m p r a 
+ 
+         ) 
+ 
+     { 
+ 
+         M o n t a r R e q u i s i c a o ( O R D E R _ T Y P E _ B U Y , D e s c ) ; 
+ 
+     } 
+ 
+ } 
+ 
+ 
+ 
+ / / / / / / / / / / / / / / / / / / / / / / / / / / 
+ 
+ 
+ 
+ / / / / / / / / / / / / /   V e n d a 
+ 
+ v o i d   V e n d a I n d i c a d o r   ( s t r i n g   D e s c , s t r i n g   I O   =   " N e u t r o " ) 
+ 
+ { 
+ 
+     i f ( I O   = =   " E n t r a d a " )   E M _ C o n t a d o r _ P i c o t e   =   0 ; 
+ 
+ 
+ 
+     i f ( E M _ P i c o t e _ T i p o = = 5 5 )   V a l o r _ E s c a l p e   =   T i c k _ S i z e   *   T a m a n h o _ P i c o t e ;         / / P a r a   f a z e r   f u n c i o n a r   o   E M       -   f i x o 
+ 
+     i f ( E M _ P i c o t e _ T i p o = = 4 7 1 )   V a l o r _ E s c a l p e   =   P r o p _ D e l t a ( )   *   T a m a n h o _ P i c o t e ;     / / P a r a   f a z e r   f u n c i o n a r   o   E M   -   p r o p o r c i o n a l 
+ 
+ 
+ 
+     P r i n t ( D e s c r i c a o _ R o b o + "   " + D e s c ) ; 
+ 
+     P r i n t ( " R S I   n a   v i r a d a "   +   D o u b l e T o S t r i n g ( C a l c u l a R S I ( ) ) ) ; 
+ 
+ 
+ 
+     i f ( O p e r a c o e s > 0   & &   S a i P e l o I n d i c a d o r = = t r u e ) 
+ 
+     { 
+ 
+         M o n t a r R e q u i s i c a o ( O R D E R _ T Y P E _ S E L L , D e s c ) ; 
+ 
+     } 
+ 
+     i f ( O p e r a c o e s = = 0   & & 
+ 
+         O p e r a c o e s F e i t a s   <   ( L i m i t e _ O p e r a c o e s * 2 )   & & 
+ 
+         S a l d o _ D i a _ P e r m i t e ( )   = =   t r u e   & & 
+ 
+         ( ( U s a _ P r o p   = =   t r u e   & &   P r o p _ D e l t a ( )   >   P r o p _ L i m i t e _ M i n i m o )   | |   U s a _ F i x o s   = =   t r u e   )   & & 
+ 
+         C a l c u l a R S I ( )   >   R S I _ v e n d a 
+ 
+     ) 
+ 
+     { 
+ 
+         M o n t a r R e q u i s i c a o ( O R D E R _ T Y P E _ S E L L , D e s c ) ; 
+ 
+     } 
+ 
+ } 
+ 
+ 
+ 
+ v o i d   C o m e n t a r i o _ D e x t e r   ( ) 
+ 
+ { 
+ 
+     C o m e n t a r i o _ R o b o   =   " " ;   / / P a r a   n ã o   r e p e t i r   a   p o r r a   t o d a 
+ 
+ 
+ 
+ i f ( U s a _ H i l o )   C o m e n t a r i o _ R o b o   =   C o m e n t a r i o _ R o b o + " H i L o   -   M " + E n u m T o S t r i n g ( T i m e F r a m e ) + " N " + I n t e g e r T o S t r i n g ( P e r i o d o s ) + " \ n " ; 
+ 
+ i f ( U s a _ O z y )   C o m e n t a r i o _ R o b o   =   C o m e n t a r i o _ R o b o + " O z y " + I n t e g e r T o S t r i n g ( O z y _ M M ) + " ; " + I n t e g e r T o S t r i n g ( O z y _ S h i f t ) + " . " + I n t e g e r T o S t r i n g ( O z y _ l e n g t h ) ; 
+ 
+ i f ( U s a _ P S a r )   C o m e n t a r i o _ R o b o   =   C o m e n t a r i o _ R o b o + " P S A R " + D o u b l e T o S t r i n g ( P S A R _ S t e p , 2 ) + " ; " + D o u b l e T o S t r i n g ( P S A R _ M a x _ S t e p , 1 ) + " \ n " ; 
+ 
+ i f ( U s a _ F r a c t a l )   C o m e n t a r i o _ R o b o   =   C o m e n t a r i o _ R o b o + " F r a c " + I n t e g e r T o S t r i n g ( F r a c _ C a n d l e s _ E s p e r a ) ; 
+ 
+ i f ( U s a _ B S I )   C o m e n t a r i o _ R o b o   =   C o m e n t a r i o _ R o b o + " B S I " + I n t e g e r T o S t r i n g ( B S I _ R a n g e P e r i o d ) + " ; " + I n t e g e r T o S t r i n g ( B S I _ S l o w i n g ) + " . " + I n t e g e r T o S t r i n g ( B S I _ A v g _ P e r i o d ) + " \ n " ; 
+ 
+ i f ( U s a _ R S I )   C o m e n t a r i o _ R o b o   =   C o m e n t a r i o _ R o b o + " R S I :   ( C o m p r a :   " + D o u b l e T o S t r i n g ( R S I _ c o m p r a , 2 ) + "   V e n d a :   " + D o u b l e T o S t r i n g ( R S I _ v e n d a , 2 ) + " )   " + D o u b l e T o S t r i n g ( C a l c u l a R S I ( ) , 2 ) + " \ n " ;   / / C o l o c a r   P a r a m e t r o s 
+ 
+ 
+ 
+ 
+ 
+ } 
+ 
+ 
+ 
+ v o i d   C a l c u l a _ D i r e c a o   ( ) 
+ 
+ { 
+
+     / /   i f ( U s a _ H i l o )   C a l c u l a H i L o ( ) ;   / /   F u t u r o   c o m   m a i s   c a l m a   e u   " r e f a t o r o " 
+     / /   i f ( U s a _ P S a r )   C a l c u l a P S a r ( ) ; 
+ 
+ } 
+ v o i d   A v a l i a _ D e x t e r   ( ) 
+ 
+ {
+     i f ( U s a _ H i l o   = =  t r u e )             H i L o ( ) ;
+     i f ( U s a _ P S a r   = =   t r u e )             P S a r ( ) ; 
+     i f ( U s a _ O z y   = =   t r u e )               O z y _ O p e r a ( ) ; 
+     i f ( U s a _ F r a c t a l   = =   t r u e )       F r a c t a l ( ) ;
+     i f ( U s a _ B S I   = =   t r u e )               B S I ( ) ; 
+ 
+ } 
+ 
+ 

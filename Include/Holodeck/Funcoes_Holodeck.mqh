@@ -2,12 +2,15 @@
 //+------------------------------------------------------------------+
 //|                                             SA2 - Investment soft|
 //+------------------------------------------------------------------+
-#property copyright "Sa2, pq são só dois na empresa agora."
+#property copyright "Sa2, pq saum soh dois na empresa agora."
 #property link      "http://www.sa2.com.br"
 
 
 int   Handle_Holo_BB = iBands(NULL,TimeFrame,Holo_Periodos_BB,0,2,PRICE_CLOSE);
 double Holo_Valor_Rompimento = 0;
+double Holo_Vlr_Min = 0;
+double Holo_Vlr_Max = 0;
+
 
 double Holo_BB_Mediana ()
 {
@@ -105,12 +108,25 @@ void Holo_Compra (string Desc,string IO = "Neutro")
   }
 }
 
+void Holo_Avalia ()
+{
+  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao > 0 && Operacoes == 0) Holo_Compra("Compra HOLO");
+  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao < 0 && Operacoes == 0) Holo_Venda("Venda HOLO");
+
+  if(Holo_Distancia > 0)
+  {
+    if(Direcao > 0 && daotick() >= Holo_Valor_Rompimento + Holo_Distancia && Operacoes == 0) Holo_Compra("Compra HOLO");
+    if(Direcao < 0 && daotick() <= Holo_Valor_Rompimento - Holo_Distancia && Operacoes == 0) Holo_Venda("Venda HOLO");
+
+
+  }
+
+}
+
 void Holo_No_Tick ()
 {
   Holo_Direcao();
-
-  if(Holo_Toque_Mediana() && Direcao > 0 && Operacoes == 0) Holo_Compra("Compra HOLO");
-  if(Holo_Toque_Mediana() && Direcao < 0 && Operacoes == 0) Holo_Venda("Venda HOLO");
+  Holo_Avalia();
 
   Comentario_Robo = "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana(),_Digits);
   Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana());

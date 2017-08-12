@@ -14,20 +14,20 @@ void Inicializa_Funcs ()
 
 
   if(Usa_PSar == true) HandlePSar = iSAR(NULL,TimeFrame,PSAR_Step,PSAR_Max_Step);
-  if(Usa_Ozy == true) HandleOzy = iCustom(NULL,TimeFrame,"ozymandias_lite",Ozy_length,Ozy_MM,Ozy_Shift);
-  if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame);
+  // if(Usa_Ozy == true) HandleOzy = iCustom(NULL,TimeFrame,"ozymandias_lite",Ozy_length,Ozy_MM,Ozy_Shift); //STRIPPED
+  // if(Usa_Fractal == true) HandleFrac = iFractals(NULL,TimeFrame); //STRIPPED
   if(Usa_Hilo == true) Inicializa_HiLo();
-  if(Usa_BSI == true)  Inicializa_BSI();
+  // if(Usa_BSI == true)  Inicializa_BSI(); //STRIPPED
 
   if(Usa_Hilo == true) CalculaHiLo();
   if(Usa_PSar == true) CalculaPSar();
-  if(Usa_BSI == true) CalculaBSI();
+  // if(Usa_BSI == true) CalculaBSI(); //STRIPPED
 
-  if(Usa_Fractal == true) CalculaFractal();
+  // if(Usa_Fractal == true) CalculaFractal(); //STRIPPED
 
   if(Usa_PSar == true)  ChartIndicatorAdd(0,0,HandlePSar);
-  if(Usa_Ozy == true) ChartIndicatorAdd(0,0,HandleOzy);
-  if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac);
+  // if(Usa_Ozy == true) ChartIndicatorAdd(0,0,HandleOzy); //STRIPPED
+  // if(Usa_Fractal == true) ChartIndicatorAdd(0,0,HandleFrac); //STRIPPED
 
   if(Usa_Hilo == true) Print("Indicador HiLo inicio do dia: ",Direcao);
   if(Usa_PSar == true) Print("Indicador PSAR inicio do dia: ",Direcao);
@@ -107,10 +107,10 @@ void VendaIndicador (string Desc,string IO = "Neutro")
 void Comentario_Bucareste ()
 {
 if(Usa_Hilo) Comentario_Robo = Comentario_Robo+"HiLo - M"+EnumToString(TimeFrame)+"N"+IntegerToString(Periodos)+"\n";
-if(Usa_Ozy) Comentario_Robo = Comentario_Robo+"Ozy"+IntegerToString(Ozy_MM)+";"+IntegerToString(Ozy_Shift)+"."+IntegerToString(Ozy_length);
+// if(Usa_Ozy) Comentario_Robo = Comentario_Robo+"Ozy"+IntegerToString(Ozy_MM)+";"+IntegerToString(Ozy_Shift)+"."+IntegerToString(Ozy_length); //STRIPPED
 if(Usa_PSar) Comentario_Robo = Comentario_Robo+"PSAR"+DoubleToString(PSAR_Step,2)+";"+DoubleToString(PSAR_Max_Step,1);
-if(Usa_Fractal) Comentario_Robo = Comentario_Robo+"Frac"+IntegerToString(Frac_Candles_Espera);
-if(Usa_BSI) Comentario_Robo = Comentario_Robo+"BSI"+IntegerToString(BSI_RangePeriod)+";"+IntegerToString(BSI_Slowing)+"."+IntegerToString(BSI_Avg_Period);
+// if(Usa_Fractal) Comentario_Robo = Comentario_Robo+"Frac"+IntegerToString(Frac_Candles_Espera); //STRIPPED
+// if(Usa_BSI) Comentario_Robo = Comentario_Robo+"BSI"+IntegerToString(BSI_RangePeriod)+";"+IntegerToString(BSI_Slowing)+"."+IntegerToString(BSI_Avg_Period); //STRIPPED
 }
 
 

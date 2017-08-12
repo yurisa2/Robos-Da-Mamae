@@ -43,6 +43,7 @@ bool Holo_Toque_Mediana ()
 {
   bool retorno = false;
   if(Holo_BB_Mediana() >= daotick() - Tick_Size && Holo_BB_Mediana() <= daotick() + Tick_Size) retorno = true;
+  // Direcao = 0; // FAZER DIREITO (PENSA SE VAI PRECISAR)
   return retorno;
 }
 
@@ -79,6 +80,7 @@ void Holo_Venda (string Desc,string IO = "Neutro")
       DeuStopLoss = false;
       DeuTakeProfit = false;
       Ordem = false;
+      Direcao = 0;
       MontarRequisicao(ORDER_TYPE_SELL,Desc);
     }
   }
@@ -103,6 +105,7 @@ void Holo_Compra (string Desc,string IO = "Neutro")
       DeuStopLoss = false;
       DeuTakeProfit = false;
       Ordem = false;
+      Direcao = 0;
       MontarRequisicao(ORDER_TYPE_BUY,Desc);
     }
   }
@@ -129,7 +132,8 @@ void Holo_No_Tick ()
   Holo_Avalia();
 
   Comentario_Robo = "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana(),_Digits);
-  Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana());
+  Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana(),0);
+  Comentario_Robo = Comentario_Robo + "\n\n\n";
 }
 
 void Init_Holo ()

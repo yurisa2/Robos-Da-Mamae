@@ -4,26 +4,26 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 /////////////////////////////////////// Inputs
 
 input string Parametros_Gerais = "-------------------------------------";  //Parametros Gerais
-// input bool  multi_op = false;                                              //Multi Operacao (define o método de operacao)
+// input bool  multi_op = false;                                              //Multi Operacao (define o mï¿½todo de operacao)
 input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;                              //TimeFrame base
 
-input int HoraDeInicio = 9;                                                //Hora de Início
+input int HoraDeInicio = 9;                                                //Hora de Inï¿½cio
 input int MinutoDeInicio = 20;                                             //Minuto de Inicio
 input int HoraDeFim = 17;                                                  //Hora de Fim
 input int MinutoDeFim = 27;                                                //Minuto de Fim
-input bool   ZerarFinalDoDia = true;                                       //Encerra operações no final do dia (execução extendida)
-input string Descricao_Robo_Alpha = "";                                    //Descrição para logs e mensagens
+input bool   ZerarFinalDoDia = true;                                       //Encerra operaï¿½ï¿½es no final do dia (execuï¿½ï¿½o extendida)
+input string Descricao_Robo_Alpha = "";                                    //Descriï¿½ï¿½o para logs e mensagens
 //string Descricao_Robo = Descricao_Robo(); +"|"+Descricao_Robo_Alpha;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
 input double Lotes = 1;                                                    //Volume negociado
-input int Limite_Operacoes = 9999;                                         //Limite de operações (entrada e Saida)
+input int Limite_Operacoes = 9999;                                         //Limite de operaï¿½ï¿½es (entrada e Saida)
 input double custo_operacao = 1.36;                                        //$ Por negocio
 input double lucro_dia = 1000000;                                          //Lucro MAX dario ($ - liq)
 input double preju_dia = 1000000;                                          //Preju MAX dario ($ - liq)
@@ -44,15 +44,15 @@ return TM;
 string Descricao_Robo = Desc_Se_Vazio()+Descricao_Robo_Alpha;
 input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;       //Tipo de ordem (teste)
 input int Tipo_Comentario = 1;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
-input bool Otimizacao = false;                                          //Parametro para otimização
+input bool Otimizacao = false;                                          //Parametro para otimizaï¿½ï¿½o
 
 
 
 input string Limites_Fixos = "----------USANDO TICK SIZE-----------";
-input bool   Usa_Fixos = false;                                             //Usar Limites Fixos
+input bool   Usa_Fixos = false;                                            //Usar Limites Fixos
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
-input double RAW_MoverSL = 0;                                              //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
-input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
+input double RAW_MoverSL = 0;                                              //Mover o StopLoss DELTA (distï¿½ncia da entrada, 0 desliga)
+input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direï¿½ï¿½o do Lucro, 0 = Preco da Operaï¿½ï¿½o)
 input double TakeProfit = 0;                                               //Take Profit (0 desliga)
 input double Trailing_stop =0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
@@ -66,15 +66,15 @@ enum Met_Prop
   SMA  =534
   };
 input bool     Usa_Prop = true;                                           //Usar Limites Proporcionais
-input Met_Prop Prop_Metodo = 534;                                         //Método utilizado para o DELTA
-input int      Prop_Periodos = 3;                                         //Períodos do prop SMA(3) BB(20)
+input Met_Prop Prop_Metodo = 534;                                         //Mï¿½todo utilizado para o DELTA
+input int      Prop_Periodos = 3;                                         //Perï¿½odos do prop SMA(3) BB(20)
 input double   Prop_StopLoss = 0.7;                                       //StopLoss: Multiplicador do Delta (0 desliga)
-input double   Prop_MoverSL = 0;                                          //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
-input double   Prop_PontoDeMudancaSL = 0;                                 //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operação)
+input double   Prop_MoverSL = 0;                                          //Mover o StopLoss DELTA (distï¿½ncia da entrada, 0 desliga)
+input double   Prop_PontoDeMudancaSL = 0;                                 //Distancia da entrada DELTA (Direï¿½ï¿½o do Lucro, 0 = Preco da Operaï¿½ï¿½o)
 input double   Prop_TakeProfit = 1;                                       //TakeProfit: Multiplicador do Delta (0 desliga)
 input double   Prop_Trailing_stop =0;                                     //Trailing Stop: Multiplicador do Delta (0 desliga)
 input double   Prop_Trailing_stop_start = 0;                              //Inicio do Trailing Stop (0 desliga)
-input double   Prop_Limite_Minimo_Tick_Size = 0;                          //Limite Mínimo para operar (*Tick Size)
+input double   Prop_Limite_Minimo_Tick_Size = 0;                          //Limite Mï¿½nimo para operar (*Tick Size)
 
 input string _Escalpelador_Maluco  =  "USANDO TICK SIZE E PROP - CUIDADO----";
 input bool Usa_EM = false;                                                       //Usa Escalpelador Maluco

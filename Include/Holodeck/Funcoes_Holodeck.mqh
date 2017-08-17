@@ -120,8 +120,6 @@ void Holo_Avalia ()
   {
     if(Direcao > 0 && daotick() >= Holo_Valor_Rompimento + Holo_Distancia && Operacoes == 0) Holo_Compra("Compra HOLO");
     if(Direcao < 0 && daotick() <= Holo_Valor_Rompimento - Holo_Distancia && Operacoes == 0) Holo_Venda("Venda HOLO");
-
-
   }
 
 }
@@ -131,32 +129,59 @@ void Holo_No_Tick ()
   Holo_Direcao();
   Holo_Avalia();
 
-//Passar os comentários para um objeto elegante
-  if(Holo_Mediana) Comentario_Robo = "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana(),_Digits);
+  //Passar os comentários para um objeto elegante
+  Comentario_Robo = "\n Linha Superior da BB: " + DoubleToString(Holo_BB_High(),_Digits);
+  if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana(),_Digits);
+  Comentario_Robo = Comentario_Robo + "\n Linha Inferior da BB: " + DoubleToString(Holo_BB_Low(),_Digits);
+
   if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana(),0);
-  Comentario_Robo = Comentario_Robo + "\n Valor Rompimento: " + DoubleToString(Holo_Valor_Rompimento,_Digits);
+  Comentario_Robo = Comentario_Robo + "\n\n Valor Rompimento: " + DoubleToString(Holo_Valor_Rompimento,_Digits);
   Comentario_Robo = Comentario_Robo + "\n\n\n";
+
+  //Comeca as avaliações de TP Movel
+  if(Holo_Menor_TP && Operacoes != 0) {    //Feito assim para tentar diminuir memoria
+    if(Operacoes > 0)
+    {
+      TakeProfitValorCompra = MathMin(Holo_BB_High(),TakeProfitValorCompra);
+      AtualizaLinhaTP(TakeProfitValorCompra);
+    }
+    if(Operacoes < 0)
+    {
+      TakeProfitValorVenda = MathMax(Holo_BB_Low(),TakeProfitValorVenda);
+      AtualizaLinhaTP(TakeProfitValorVenda);
+    }
+  }
+
+  //Fim do TP MOVEL
 }
 
 void Init_Holo ()
 {
 
   ChartIndicatorAdd(0,0,Handle_Holo_BB);
-  Verifica_Init_Holo();
 }
 
 ENUM_INIT_RETCODE Verifica_Init_Holo ()
 {
-
-
       if(Holo_Mediana && Holo_Distancia > 0)
+      {
+        MessageBox("Mais de um método de entrada","Erro de Inicialização",MB_OK);
+        Print("Mais de um método de entrada","Erro de Inicialização");
+        return(INIT_PARAMETERS_INCORRECT);
+      }
+
+      if(!Holo_Mediana && Holo_Distancia < 1)
       {
         MessageBox("Nao foi escolhido um método de entrada","Erro de Inicialização",MB_OK);
         Print("Nao foi escolhido um método de entrada","Erro de Inicialização");
         return(INIT_PARAMETERS_INCORRECT);
       }
 
+      if(Holo_Menor_TP && Usa_Prop){
+        MessageBox("Mexe Com isso agora nao vai...","Erro de Inicialização",MB_OK);
+        Print("Mexe Com isso agora nao vai...","Erro de Inicialização");
+        return(INIT_PARAMETERS_INCORRECT);
+      }
 
       return INIT_SUCCEEDED;
-
 }

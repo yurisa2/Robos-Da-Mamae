@@ -96,10 +96,8 @@ TakeProfitValorCompra = 999999999;
 StopLossValorVenda =99999999999;
 TakeProfitValorVenda = -999999999;
 
-
 double   Prop_Calc_SL = Prop_StopLoss * Prop_Delta();
 double   Prop_Calc_TP = Prop_TakeProfit * Prop_Delta();
-
 
             Prop_MoverSL_Valor = Prop_MoverSL * Prop_Delta();
             Prop_Trailing_Stop_Valor = Prop_Trailing_stop * Prop_Delta();

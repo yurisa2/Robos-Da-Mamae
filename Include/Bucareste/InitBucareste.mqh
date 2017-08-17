@@ -17,7 +17,7 @@ ENUM_INIT_RETCODE InitBucareste () {
     }
 
 //  int Verifica_Indicadores = Usa_Fractal + Usa_Hilo + Usa_PSar + Usa_Ozy + Usa_BSI; //STRIPPED
-  int Verifica_Indicadores =   Usa_Hilo + Usa_PSar ;
+  int Verifica_Indicadores = Usa_Hilo + Usa_PSar ;
   if(Verifica_Indicadores != 1)
   {
     MessageBox("Erro de Indicadores (mais de um ou nenhum escolhido)...","Erro de Inicialização",MB_OK);

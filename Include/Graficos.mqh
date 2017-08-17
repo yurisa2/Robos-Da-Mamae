@@ -130,6 +130,20 @@ void OnChartEvent(const int id,
     ObjectSetString(0,"TS",OBJPROP_TOOLTIP,"TS: "+DoubleToString(NivelTS));
   }
 
+  void AtualizaLinhaTP (double NivelTP)
+  {
+      string Obj_grafico = "";
+      if(Operacoes>0) Obj_grafico = "TakeProfitCompra";
+      if(Operacoes<0) Obj_grafico = "TakeProfitVenda";
+
+    ObjectMove(0,Obj_grafico,0,0,NivelTP);
+    ObjectSetInteger(0,Obj_grafico,OBJPROP_STYLE,STYLE_DASHDOT);
+    ObjectSetInteger(0,Obj_grafico,OBJPROP_COLOR,clrBlue);
+    ObjectSetString(0,Obj_grafico,OBJPROP_LEVELTEXT,"TP: "+DoubleToString(NivelTP));
+    ObjectSetString(0,Obj_grafico,OBJPROP_TEXT,"TP: "+DoubleToString(NivelTP));
+    ObjectSetString(0,Obj_grafico,OBJPROP_TOOLTIP,"TP: "+DoubleToString(NivelTP));
+  }
+
 
   ///////////////////// FIM DOS GRAFICOS
 

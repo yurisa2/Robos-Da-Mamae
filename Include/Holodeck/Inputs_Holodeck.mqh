@@ -8,6 +8,6 @@
 
 input string Indicadores = "-------------------------------------";
 input int   Holo_Periodos_BB = 20;                                        //Periodos da BB (20)
-input int   Histerese_Media = 0;                                     //Histerese (da Média) (0)
+// input int   Histerese_Media = 0;                                     //Histerese (da Média) (0)
 input bool  Holo_Mediana = false;
 input int   Holo_Distancia = 0;

@@ -51,12 +51,12 @@ void Holo_Direcao ()
 {
   if(daotick() >= Holo_BB_High())
   {
-    Holo_Valor_Rompimento = daotick();
+    if(daotick() > Holo_Valor_Rompimento) Holo_Valor_Rompimento = daotick();
     Direcao = -1;
   }
   if(daotick() <= Holo_BB_Low())
   {
-    Holo_Valor_Rompimento = daotick();
+    if(daotick() < Holo_Valor_Rompimento) Holo_Valor_Rompimento = daotick();
     Direcao = 1;
   }
 }
@@ -131,8 +131,10 @@ void Holo_No_Tick ()
   Holo_Direcao();
   Holo_Avalia();
 
-  Comentario_Robo = "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana(),_Digits);
-  Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana(),0);
+//Passar os comentários para um objeto elegante
+  if(Holo_Mediana) Comentario_Robo = "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana(),_Digits);
+  if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana(),0);
+  Comentario_Robo = Comentario_Robo + "\n Valor Rompimento: " + DoubleToString(Holo_Valor_Rompimento,_Digits);
   Comentario_Robo = Comentario_Robo + "\n\n\n";
 }
 
@@ -140,5 +142,21 @@ void Init_Holo ()
 {
 
   ChartIndicatorAdd(0,0,Handle_Holo_BB);
+  Verifica_Init_Holo();
+}
+
+ENUM_INIT_RETCODE Verifica_Init_Holo ()
+{
+
+
+      if(Holo_Mediana && Holo_Distancia > 0)
+      {
+        MessageBox("Nao foi escolhido um método de entrada","Erro de Inicialização",MB_OK);
+        Print("Nao foi escolhido um método de entrada","Erro de Inicialização");
+        return(INIT_PARAMETERS_INCORRECT);
+      }
+
+
+      return INIT_SUCCEEDED;
 
 }

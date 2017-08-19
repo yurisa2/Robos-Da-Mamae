@@ -126,9 +126,17 @@ void Holo_Avalia ()
 
   if(Holo_Distancia > 0)
   {
-    if(Direcao > 0 && Holo_daotick >= Holo_Valor_Rompimento + Holo_Distancia && Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q && Operacoes == 0) Holo_Compra("Compra HOLO");
-    if(Direcao < 0 && Holo_daotick <= Holo_Valor_Rompimento - Holo_Distancia && Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q && Operacoes == 0) Holo_Venda("Venda HOLO");
+    if(Direcao > 0 && Holo_daotick >= Holo_Valor_Rompimento + Holo_Distancia && Holo_BB_Delta_Permite() && Operacoes == 0) Holo_Compra("Compra HOLO");
+    if(Direcao < 0 && Holo_daotick <= Holo_Valor_Rompimento - Holo_Distancia && Holo_BB_Delta_Permite() && Operacoes == 0) Holo_Venda("Venda HOLO");
   }
+}
+
+bool Holo_BB_Delta_Permite ()
+{
+
+
+  if(Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q) return true;
+  else return false;
 }
 
 void Holo_No_Tick ()
@@ -142,6 +150,7 @@ void Holo_No_Tick ()
   if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana_Var,_Digits);
   Comentario_Robo = Comentario_Robo + "\n Linha Inferior da BB: " + DoubleToString(Holo_BB_Low_Var,_Digits);
   Comentario_Robo = Comentario_Robo + "\n Delta da BB: " + DoubleToString(Holo_BB_Delta,_Digits);
+  Comentario_Robo = Comentario_Robo + "\n DeltaPermite: " + DoubleToString(Holo_BB_Delta_Permite(),0) ;
 
   if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana(),0);
   Comentario_Robo = Comentario_Robo + "\n\n Valor Rompimento: " + DoubleToString(Holo_Valor_Rompimento,_Digits);

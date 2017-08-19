@@ -10,7 +10,20 @@ int   Handle_Holo_BB = iBands(NULL,TimeFrame,Holo_Periodos_BB,0,2,PRICE_CLOSE);
 double Holo_Valor_Rompimento = 0;
 double Holo_Vlr_Min = 0;
 double Holo_Vlr_Max = 0;
+double Holo_BB_Mediana_Var = 0;
+double Holo_BB_High_Var = 0;
+double Holo_BB_Low_Var = 0;
+double Holo_daotick = 0;
 
+
+void Holo_Var_Banda ()
+{
+  Holo_BB_Mediana_Var = Holo_BB_Mediana();
+  Holo_BB_High_Var = Holo_BB_High();
+  Holo_BB_Low_Var = Holo_BB_Low();
+  Holo_daotick = daotick();
+
+}
 
 double Holo_BB_Mediana ()
 {
@@ -42,21 +55,21 @@ double Holo_BB_High ()
 bool Holo_Toque_Mediana ()
 {
   bool retorno = false;
-  if(Holo_BB_Mediana() >= daotick() - Tick_Size && Holo_BB_Mediana() <= daotick() + Tick_Size) retorno = true;
+  if(Holo_BB_Mediana_Var >= Holo_daotick - Tick_Size && Holo_BB_Mediana_Var <= Holo_daotick + Tick_Size) retorno = true;
   // Direcao = 0; // FAZER DIREITO (PENSA SE VAI PRECISAR)
   return retorno;
 }
 
 void Holo_Direcao ()
 {
-  if(daotick() >= Holo_BB_High())
+  if(Holo_daotick >= Holo_BB_High_Var)
   {
-    if(daotick() > Holo_Valor_Rompimento) Holo_Valor_Rompimento = daotick();
+    if(Holo_daotick > Holo_Valor_Rompimento) Holo_Valor_Rompimento = Holo_daotick;
     Direcao = -1;
   }
-  if(daotick() <= Holo_BB_Low())
+  if(Holo_daotick <= Holo_BB_Low_Var)
   {
-    if(daotick() < Holo_Valor_Rompimento) Holo_Valor_Rompimento = daotick();
+    if(Holo_daotick < Holo_Valor_Rompimento) Holo_Valor_Rompimento = Holo_daotick;
     Direcao = 1;
   }
 }
@@ -71,10 +84,7 @@ void Holo_Venda (string Desc,string IO = "Neutro")
     if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
 
     Print(Descricao_Robo+" "+Desc);
-    // if(Operacoes>0 && SaiPeloIndicador==true)
-    // {
-    //   MontarRequisicao(ORDER_TYPE_SELL,Desc);
-    // }
+
     if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
     {
       DeuStopLoss = false;
@@ -95,11 +105,7 @@ void Holo_Compra (string Desc,string IO = "Neutro")
     if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
 
     Print(Descricao_Robo+" "+Desc);
-    //
-    // if(Operacoes<0 && SaiPeloIndicador==true)
-    // {
-    //   MontarRequisicao(ORDER_TYPE_BUY,Desc);
-    // }
+
     if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
     {
       DeuStopLoss = false;
@@ -118,14 +124,14 @@ void Holo_Avalia ()
 
   if(Holo_Distancia > 0)
   {
-    if(Direcao > 0 && daotick() >= Holo_Valor_Rompimento + Holo_Distancia && Operacoes == 0) Holo_Compra("Compra HOLO");
-    if(Direcao < 0 && daotick() <= Holo_Valor_Rompimento - Holo_Distancia && Operacoes == 0) Holo_Venda("Venda HOLO");
+    if(Direcao > 0 && Holo_daotick >= Holo_Valor_Rompimento + Holo_Distancia && Operacoes == 0) Holo_Compra("Compra HOLO");
+    if(Direcao < 0 && Holo_daotick <= Holo_Valor_Rompimento - Holo_Distancia && Operacoes == 0) Holo_Venda("Venda HOLO");
   }
-
 }
 
 void Holo_No_Tick ()
 {
+  Holo_Var_Banda();
   Holo_Direcao();
   Holo_Avalia();
 
@@ -138,7 +144,14 @@ void Holo_No_Tick ()
   Comentario_Robo = Comentario_Robo + "\n\n Valor Rompimento: " + DoubleToString(Holo_Valor_Rompimento,_Digits);
   Comentario_Robo = Comentario_Robo + "\n\n\n";
 
-  //Comeca as avaliações de TP Movel
+  //Avaliações de END Movel
+  Holo_TP_Movel();
+  Holo_SL_Movel();
+  //Fim do EN MOVEL
+}
+
+void Holo_TP_Movel ()
+{
   if(Holo_Menor_TP && Operacoes != 0) {    //Feito assim para tentar diminuir memoria
     if(Operacoes > 0)
     {
@@ -151,6 +164,20 @@ void Holo_No_Tick ()
       AtualizaLinhaTP(TakeProfitValorVenda);
     }
   }
+}
 
-  //Fim do TP MOVEL
+void Holo_SL_Movel ()
+{
+  if(Holo_Menor_SL && Operacoes != 0) {    //Feito assim para tentar diminuir memoria
+    if(Operacoes > 0)
+    {
+      StopLossValorCompra = MathMax(Holo_BB_Low_Var,StopLossValorCompra);
+      AtualizaLinhaSL(StopLossValorCompra);
+    }
+    if(Operacoes < 0)
+    {
+      StopLossValorVenda = MathMin(Holo_BB_High_Var,StopLossValorVenda);
+      AtualizaLinhaSL(StopLossValorVenda);
+    }
+  }
 }

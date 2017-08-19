@@ -144,6 +144,20 @@ void OnChartEvent(const int id,
     ObjectSetString(0,Obj_grafico,OBJPROP_TOOLTIP,"TP: "+DoubleToString(NivelTP));
   }
 
+  void AtualizaLinhaSL (double NivelSL)
+  {
+      string Obj_grafico = "";
+      if(Operacoes>0) Obj_grafico = "StopLossCompra";
+      if(Operacoes<0) Obj_grafico = "StopLossVenda";
+
+    ObjectMove(0,Obj_grafico,0,0,NivelSL);
+    ObjectSetInteger(0,Obj_grafico,OBJPROP_STYLE,STYLE_DASHDOT);
+    ObjectSetInteger(0,Obj_grafico,OBJPROP_COLOR,clrRed);
+    ObjectSetString(0,Obj_grafico,OBJPROP_LEVELTEXT,"SL: "+DoubleToString(NivelSL));
+    ObjectSetString(0,Obj_grafico,OBJPROP_TEXT,"SL: "+DoubleToString(NivelSL));
+    ObjectSetString(0,Obj_grafico,OBJPROP_TOOLTIP,"SL: "+DoubleToString(NivelSL));
+  }
+
 
   ///////////////////// FIM DOS GRAFICOS
 

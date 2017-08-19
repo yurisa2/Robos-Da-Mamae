@@ -66,8 +66,8 @@ enum Met_Prop
   SMA  =534
   };
 input bool     Usa_Prop = true;                                           //Usar Limites Proporcionais
-input Met_Prop Prop_Metodo = 534;                                         //Mï¿½todo utilizado para o DELTA
-input int      Prop_Periodos = 3;                                         //Perï¿½odos do prop SMA(3) BB(20)
+input Met_Prop Prop_Metodo = 534;                                         //Método utilizado para o DELTA
+input int      Prop_Periodos = 3;                                         //Períodos do prop SMA(3) BB(20)
 input double   Prop_StopLoss = 0.7;                                       //StopLoss: Multiplicador do Delta (0 desliga)
 input double   Prop_MoverSL = 0;                                          //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
 input double   Prop_PontoDeMudancaSL = 0;                                 //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operaï¿½ï¿½o)

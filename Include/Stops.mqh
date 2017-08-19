@@ -4,7 +4,7 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 void Inicializa_Prop ()
@@ -13,7 +13,7 @@ void Inicializa_Prop ()
    Prop_Limite_Minimo =  Prop_Limite_Minimo_Tick_Size * Tick_Size;
    Print("Tamanho do Tick: ",Tick_Size," Delta Minimo: ",Prop_Limite_Minimo);
 
-// Delta com duas médias
+// Delta com duas mï¿½dias
    if(Prop_Metodo == 534)
    {
       Handle_Prop_Media_Alta = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_HIGH);
@@ -177,13 +177,13 @@ TakeProfitValorVenda = -999999999;
 //TS e TSP
 void TS ()
    {
-     double Tick_Spread_Compra = daotick(-1);
-     double Tick_Spread_Venda = daotick(1);
+     double Tick_Spread_Compra = daotick_venda;
+     double Tick_Spread_Venda = daotick_compra;
 
     //  if(FX)
     //  {
-    //    Tick_Spread_Compra = daotick() - Calcula_Spread();
-    //    Tick_Spread_Venda = daotick() + Calcula_Spread();
+    //    Tick_Spread_Compra = daotick_geral - Calcula_Spread();
+    //    Tick_Spread_Venda = daotick_geral + Calcula_Spread();
     //  }
 
       if(Operacoes>0 && Trailing_stop >0 && Tick_Spread_Compra > PrecoCompra + (Trailing_stop * Tick_Size) + (Trailing_stop_start * Tick_Size))
@@ -209,28 +209,28 @@ void TS ()
       if(Operacoes>0 && Trailing_stop > 0 && Tick_Spread_Compra <= TS_ValorCompra)
         {
          VendaImediata("Venda TrailingStop");
-         Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor daotick: ",daotick());
+         Print(Descricao_Robo+" TrailingStopCompra Ativado, Valor daotick: ",daotick_geral);
          ObjectDelete(0,"TS");
         }
 
       if(Operacoes<0 && Trailing_stop >0 && Tick_Spread_Venda>= TS_ValorVenda)
         {
          CompraImediata("Compra TrailingStop");
-         Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor daotick: ",daotick());
+         Print(Descricao_Robo+" TrailingStopVenda Ativado, Valor daotick: ",daotick_geral);
          ObjectDelete(0,"TS");
         }
    }
 //////////////////////////////////////////////////////////////////////////
 void Prop_TS ()
    {
-     double Tick_Spread_Compra = daotick(-1);
-     double Tick_Spread_Venda = daotick(1);
+     double Tick_Spread_Compra = daotick_venda;
+     double Tick_Spread_Venda = daotick_compra;
 
 
     //  if(FX)
     //  {
-    //    Tick_Spread_Compra = daotick() - Calcula_Spread();
-    //    Tick_Spread_Venda = daotick() + Calcula_Spread();
+    //    Tick_Spread_Compra = daotick_geral - Calcula_Spread();
+    //    Tick_Spread_Venda = daotick_geral + Calcula_Spread();
     //  }
 
       if(Operacoes > 0 && Prop_Trailing_Stop_Valor > 0 &&Tick_Spread_Compra > PrecoCompra + Prop_Trailing_Stop_Valor + Prop_Trailing_stop_start_Valor)
@@ -255,14 +255,14 @@ void Prop_TS ()
       if(Operacoes>0 && Prop_Trailing_Stop_Valor >0 && Tick_Spread_Compra <= TS_ValorCompra)
         {
          VendaImediata("Venda TrailingStop (P)");
-         Print(Descricao_Robo+" (P) TrailingStopCompra Ativado, Valor daotick: ",daotick());
+         Print(Descricao_Robo+" (P) TrailingStopCompra Ativado, Valor daotick: ",daotick_geral);
          ObjectDelete(0,"TS");
         }
 
       if(Operacoes < 0 && Prop_Trailing_Stop_Valor > 0 && Tick_Spread_Venda >= TS_ValorVenda)
         {
          CompraImediata("Compra TrailingStop (P)");
-         Print(Descricao_Robo + " (P) TrailingStopVenda Ativado, Valor daotick: ",daotick());
+         Print(Descricao_Robo + " (P) TrailingStopVenda Ativado, Valor daotick: ",daotick_geral);
          ObjectDelete(0,"TS");
         }
         }
@@ -270,14 +270,14 @@ void Prop_TS ()
 
 void Prop_SLMovel ()
 {
-  double Tick_Spread_Compra = daotick(-1);
-  double Tick_Spread_Venda = daotick(1);
+  double Tick_Spread_Compra = daotick_venda;
+  double Tick_Spread_Venda = daotick_compra;
 
 
   // if(FX)
   // {
-  //   Tick_Spread_Compra = daotick() - Calcula_Spread();
-  //   Tick_Spread_Venda = daotick() + Calcula_Spread();
+  //   Tick_Spread_Compra = daotick_geral - Calcula_Spread();
+  //   Tick_Spread_Venda = daotick_geral + Calcula_Spread();
   // }
 
 if(Prop_MoverSL !=0 && Tick_Spread_Compra >= PrecoCompra + Prop_MoverSL_Valor &&  Operacoes > 0 && Contador_SLMOVEL==0)
@@ -302,13 +302,13 @@ ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);
 
 void SLMovel ()
 {
-  double Tick_Spread_Compra = daotick(-1);
-  double Tick_Spread_Venda = daotick(1);
+  double Tick_Spread_Compra = daotick_venda;
+  double Tick_Spread_Venda = daotick_compra;
 
   // if(FX)
   // {
-  //   Tick_Spread_Compra = daotick() - Calcula_Spread();
-  //   Tick_Spread_Venda = daotick() + Calcula_Spread();
+  //   Tick_Spread_Compra = daotick_geral - Calcula_Spread();
+  //   Tick_Spread_Venda = daotick_geral + Calcula_Spread();
   // }
 
 MoverSL  = RAW_MoverSL * Tick_Size;

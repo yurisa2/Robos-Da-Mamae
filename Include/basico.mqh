@@ -158,7 +158,7 @@ void Comentario ()
   {
     Comentario_Simples =
     "Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" | "+
-    " | daotick: "+DoubleToString(daotick(),_Digits);
+    " | daotick: "+DoubleToString(daotick_geral,_Digits);
   }
 
   Comentario_Avancado =
@@ -237,6 +237,15 @@ void DetectaNovaBarra ()
 
 void Operacoes_No_tick ()
 {
+
+  //Variaveis Atualizadas Globalmente
+
+  daotick_geral = daotick_geral; //Legacy
+  daotick_venda = daotick(-1);
+  daotick_compra = daotick(1);
+
+  //Fim das Vars Atualizadas Globalmente
+
   /////////////////////// Funçoes de STOP
   if(Usa_Fixos == true)
   {
@@ -327,8 +336,8 @@ Comentario_Debug = Comentario_Avancado +
 "\nTaDentroDoHorario: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
 "\nSaldo_Dia_Permite: "+IntegerToString(Saldo_Dia_Permite())+
 "\nDirecao: " + DoubleToString(Direcao,0) +
-"\nBid: " + DoubleToString(daotick(-1)) +
-"\nAsk: " + DoubleToString(daotick(1)) +
+"\nBid: " + DoubleToString(daotick_venda) +
+"\nAsk: " + DoubleToString(daotick_compra) +
 "\nSpread: " + DoubleToString(Calcula_Spread())
 // "\nMagic #: " + IntegerToString(TimeMagic)
 // "\nUltimo Valor: " + PrecoNegocio //NAO FUNFA NEM NA RICO NEM NA XP.... FX OK

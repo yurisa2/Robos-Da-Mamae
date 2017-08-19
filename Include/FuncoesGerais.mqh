@@ -35,12 +35,12 @@ double Saldo_Operacao_Atual ()
 
   if(Operacoes > 0)
   {
-    Retorno_Saldo =   daotick(-1) - PrecoCompra;
+    Retorno_Saldo =   daotick_venda - PrecoCompra;
    }
 
    if(Operacoes < 0)
    {
-     Retorno_Saldo =   PrecoVenda - daotick(1);
+     Retorno_Saldo =   PrecoVenda - daotick_compra;
     }
 
 return Retorno_Saldo;

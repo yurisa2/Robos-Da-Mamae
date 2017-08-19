@@ -14,6 +14,7 @@ double Holo_BB_Mediana_Var = 0;
 double Holo_BB_High_Var = 0;
 double Holo_BB_Low_Var = 0;
 double Holo_daotick = 0;
+double Holo_BB_Delta = 0;
 
 
 void Holo_Var_Banda ()
@@ -21,7 +22,8 @@ void Holo_Var_Banda ()
   Holo_BB_Mediana_Var = Holo_BB_Mediana();
   Holo_BB_High_Var = Holo_BB_High();
   Holo_BB_Low_Var = Holo_BB_Low();
-  Holo_daotick = daotick();
+  Holo_daotick = daotick_geral;
+  Holo_BB_Delta = (Holo_BB_High_Var - Holo_BB_Low_Var)/Tick_Size;
 
 }
 
@@ -119,13 +121,13 @@ void Holo_Compra (string Desc,string IO = "Neutro")
 
 void Holo_Avalia ()
 {
-  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao > 0 && Operacoes == 0) Holo_Compra("Compra HOLO");
-  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao < 0 && Operacoes == 0) Holo_Venda("Venda HOLO");
+  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao > 0 && Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q && Operacoes == 0 ) Holo_Compra("Compra HOLO");
+  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao < 0 && Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q && Operacoes == 0) Holo_Venda("Venda HOLO");
 
   if(Holo_Distancia > 0)
   {
-    if(Direcao > 0 && Holo_daotick >= Holo_Valor_Rompimento + Holo_Distancia && Operacoes == 0) Holo_Compra("Compra HOLO");
-    if(Direcao < 0 && Holo_daotick <= Holo_Valor_Rompimento - Holo_Distancia && Operacoes == 0) Holo_Venda("Venda HOLO");
+    if(Direcao > 0 && Holo_daotick >= Holo_Valor_Rompimento + Holo_Distancia && Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q && Operacoes == 0) Holo_Compra("Compra HOLO");
+    if(Direcao < 0 && Holo_daotick <= Holo_Valor_Rompimento - Holo_Distancia && Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q && Operacoes == 0) Holo_Venda("Venda HOLO");
   }
 }
 
@@ -135,16 +137,17 @@ void Holo_No_Tick ()
   Holo_Direcao();
   Holo_Avalia();
 
-  //Passar os comentários para um objeto elegante
-  Comentario_Robo = "\n Linha Superior da BB: " + DoubleToString(Holo_BB_High(),_Digits);
-  if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana(),_Digits);
-  Comentario_Robo = Comentario_Robo + "\n Linha Inferior da BB: " + DoubleToString(Holo_BB_Low(),_Digits);
+  //Passar os comentï¿½rios para um objeto elegante
+  Comentario_Robo = "\n Linha Superior da BB: " + DoubleToString(Holo_BB_High_Var,_Digits);
+  if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana_Var,_Digits);
+  Comentario_Robo = Comentario_Robo + "\n Linha Inferior da BB: " + DoubleToString(Holo_BB_Low_Var,_Digits);
+  Comentario_Robo = Comentario_Robo + "\n Delta da BB: " + DoubleToString(Holo_BB_Delta,_Digits);
 
   if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana(),0);
   Comentario_Robo = Comentario_Robo + "\n\n Valor Rompimento: " + DoubleToString(Holo_Valor_Rompimento,_Digits);
   Comentario_Robo = Comentario_Robo + "\n\n\n";
 
-  //Avaliações de END Movel
+  //Avaliaï¿½ï¿½es de END Movel
   Holo_TP_Movel();
   Holo_SL_Movel();
   //Fim do EN MOVEL

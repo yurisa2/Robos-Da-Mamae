@@ -182,3 +182,10 @@ double Prop_Trailing_stop_start_Valor = 0;
  double spread = 0;
 
  string PrecoNegocio = "0";
+
+//Variaveis Definidas Globalmente
+double daotick_geral = 0;
+double daotick_venda = 0;
+double daotick_compra = 0;
+
+//FIM DAS VDG

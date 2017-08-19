@@ -4,7 +4,7 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 ////////////////////////// StopLoss
@@ -18,12 +18,12 @@ void StopLossCompra ()
   ((Usa_Fixos == true && StopLoss != 0) ||
   (Usa_Prop == true && Prop_StopLoss != 0)))
   {
-    if(daotick(-1) <= StopLossValorCompra)
+    if(daotick_venda <= StopLossValorCompra)
     {
-      Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick(-1)," Valor do StopLoss: ",StopLossValorCompra);
+      Print(Descricao_Robo+" Deu StopLoss COMPRADO | Venda: ",daotick_venda," Valor do StopLoss: ",StopLossValorCompra);
       Print(Descricao_Robo+" VENDA! ",Operacoes);
 
-      VendaImediata("Venda SL: "+DoubleToString(daotick(-1),_Digits));
+      VendaImediata("Venda SL: "+DoubleToString(daotick_venda,_Digits));
       DeuStopLoss = true;
     }
   }
@@ -56,10 +56,10 @@ void TakeProfitCompra ()
 {
   if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
   {
-    if(daotick(-1)>TakeProfitValorCompra)
+    if(daotick_venda>TakeProfitValorCompra)
     {
-      Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick(-1)," Valor do TakeProfit: ",TakeProfitValorCompra);
-      VendaImediata("Venda TP: "+DoubleToString(daotick(-1),_Digits));
+      Print(Descricao_Robo+" Deu TakeProfit COMPRADO | VENDA: ",daotick_venda," Valor do TakeProfit: ",TakeProfitValorCompra);
+      VendaImediata("Venda TP: "+DoubleToString(daotick_venda,_Digits));
       DeuTakeProfit = true;
     }
   }

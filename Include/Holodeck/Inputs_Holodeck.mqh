@@ -12,4 +12,5 @@ input int   Holo_Periodos_BB = 20;                                        //Peri
 input bool  Holo_Mediana = false;
 input int   Holo_Distancia = 0;
 
-input bool Holo_Menor_TP = true;  //Pega o Menor TP (defindo ou banda)
+input bool Holo_Menor_TP = true;  //Usa o Menor TP (defindo ou banda)
+input bool Holo_Menor_SL = true;  //Usa o Menor SL (defindo ou banda)

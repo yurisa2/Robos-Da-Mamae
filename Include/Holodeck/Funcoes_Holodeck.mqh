@@ -87,7 +87,7 @@ void Holo_Venda (string Desc,string IO = "Neutro")
 
     Print(Descricao_Robo+" "+Desc);
 
-    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes * 2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
     {
       DeuStopLoss = false;
       DeuTakeProfit = false;
@@ -121,13 +121,17 @@ void Holo_Compra (string Desc,string IO = "Neutro")
 
 void Holo_Avalia ()
 {
-  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao > 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Compra("Compra HOLO");
-  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao < 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Venda("Venda HOLO");
+  double Holo_Nova_Direcao = Direcao;
+
+    if(Holo_Inverte) Holo_Nova_Direcao = Direcao * -1;
+
+  if(Holo_Mediana && Holo_Toque_Mediana() && Holo_Nova_Direcao > 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Compra("Compra HOLO");
+  if(Holo_Mediana && Holo_Toque_Mediana() && Holo_Nova_Direcao < 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Venda("Venda HOLO");
 
   if(Holo_Distancia > 0)
   {
-    if(Direcao > 0 && Holo_daotick >= Holo_Valor_Rompimento + Holo_Distancia && Holo_BB_Delta_Permite() && Operacoes == 0) Holo_Compra("Compra HOLO");
-    if(Direcao < 0 && Holo_daotick <= Holo_Valor_Rompimento - Holo_Distancia && Holo_BB_Delta_Permite() && Operacoes == 0) Holo_Venda("Venda HOLO");
+    if(Holo_Nova_Direcao > 0 && Holo_daotick >= Holo_Valor_Rompimento + Holo_Distancia && Holo_BB_Delta_Permite() && Operacoes == 0) Holo_Compra("Compra HOLO");
+    if(Holo_Nova_Direcao < 0 && Holo_daotick <= Holo_Valor_Rompimento - Holo_Distancia && Holo_BB_Delta_Permite() && Operacoes == 0) Holo_Venda("Venda HOLO");
   }
 }
 

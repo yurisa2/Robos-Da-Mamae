@@ -13,6 +13,7 @@ input bool  Holo_Mediana = false;
 input int   Holo_Distancia = 0;
 
 input bool Holo_Menor_TP = true;  //Usa o Menor TP (defindo ou banda)
+input bool Holo_Inverte = false;  //Inverte o Universo!
 input bool Holo_Menor_SL = true;  //Usa o Menor SL (defindo ou banda)
 input double Holo_Delta_Menor_q = 9999; //Delta Menor Que (Tick_Size)
 input double Holo_Delta_Maior_q = 0;    //Delta Maior Que (Tick_Size)

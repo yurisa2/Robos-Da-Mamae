@@ -34,5 +34,11 @@ ENUM_INIT_RETCODE Verifica_Init_Holo ()
         return(INIT_PARAMETERS_INCORRECT);
       }
 
+      if(Holo_Delta_Menor_q >= Holo_Delta_Maior_q){
+        MessageBox("Holo Range Delta Errado","Erro de Inicialização",MB_OK);
+        Print("Holo Range Delta Errado","Erro de Inicialização");
+        return(INIT_PARAMETERS_INCORRECT);
+      }
+
       return INIT_SUCCEEDED;
 }

@@ -121,8 +121,8 @@ void Holo_Compra (string Desc,string IO = "Neutro")
 
 void Holo_Avalia ()
 {
-  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao > 0 && Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q && Operacoes == 0 ) Holo_Compra("Compra HOLO");
-  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao < 0 && Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q && Operacoes == 0) Holo_Venda("Venda HOLO");
+  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao > 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Compra("Compra HOLO");
+  if(Holo_Mediana && Holo_Toque_Mediana() && Direcao < 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Venda("Venda HOLO");
 
   if(Holo_Distancia > 0)
   {

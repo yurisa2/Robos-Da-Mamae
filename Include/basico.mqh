@@ -49,10 +49,10 @@ bool TaDentroDoHorario (string HoraInicio, string HoraFim)
   }
   return(RetornoHorario);
 }
-////////////////////////////////////////////////////////////////
+////////////////////////////////////////////
 
 //////////////////////// DAOTICK ///////////
-////// Funï¿½ao Pega Tick e devolve a hora e o valor da porra do ativo
+////// Função Pega Tick e devolve a hora e o valor da porra do ativo
 double daotick (int tipo = 0)
 {
   double retornoTick = 0;
@@ -240,7 +240,7 @@ void Operacoes_No_tick ()
 
   //Variaveis Atualizadas Globalmente
 
-  daotick_geral = daotick_geral; //Legacy
+  daotick_geral = daotick(); //Legacy
   daotick_venda = daotick(-1);
   daotick_compra = daotick(1);
 
@@ -332,11 +332,14 @@ Comentario_Debug = Comentario_Avancado +
 "\nDeuTakeProfit: "+IntegerToString(DeuTakeProfit)+
 "\nDeuStopLoss: "+IntegerToString(DeuStopLoss)+
 "\nOperacoes: "+IntegerToString(Operacoes)+
+"\n---------------------- " +
 "\nUsa_Fixos: "+IntegerToString(Usa_Fixos)+
 "\nTaDentroDoHorario: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
 "\nSaldo_Dia_Permite: "+IntegerToString(Saldo_Dia_Permite())+
 "\nDirecao: " + DoubleToString(Direcao,0) +
+"\n---------------------- " +
 "\nBid: " + DoubleToString(daotick_venda) +
+"\nTick Size: "+ DoubleToString(Tick_Size)+
 "\nAsk: " + DoubleToString(daotick_compra) +
 "\nSpread: " + DoubleToString(Calcula_Spread())
 // "\nMagic #: " + IntegerToString(TimeMagic)

@@ -85,8 +85,6 @@ double retorno_BB = 0;
    return(retorno_BB);
 }
 
-
-
 void Stops_Proporcional ()
 {
 

@@ -326,16 +326,17 @@ void Comentario_Debug_funcao ()
 {
 Comentario_Debug = Comentario_Avancado +
 
-"\nJaZerou: "+IntegerToString(JaZerou)+
-"\nJaDeuFinal: "+IntegerToString(JaDeuFinal)+
-"\nOperacoes: "+IntegerToString(Operacoes)+
-"\nDeuTakeProfit: "+IntegerToString(DeuTakeProfit)+
-"\nDeuStopLoss: "+IntegerToString(DeuStopLoss)+
-"\nOperacoes: "+IntegerToString(Operacoes)+
-"\n---------------------- " +
-"\nUsa_Fixos: "+IntegerToString(Usa_Fixos)+
-"\nTaDentroDoHorario: "+IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim))+
-"\nSaldo_Dia_Permite: "+IntegerToString(Saldo_Dia_Permite())+
+"\nJaZerou: " + IntegerToString(JaZerou) + 
+"\nJaDeuFinal: " + IntegerToString(JaDeuFinal) + 
+"\nOperacoes: " + IntegerToString(Operacoes) + 
+"\nDeuTakeProfit: " + IntegerToString(DeuTakeProfit) + 
+"\nDeuStopLoss: " + IntegerToString(DeuStopLoss) + 
+"\nOperacoes: " + IntegerToString(Operacoes) + 
+"\n---------------------- "  + 
+"\nUsa_Fixos: " + IntegerToString(Usa_Fixos) + 
+"\nTaDentroDoHorario: " + IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim)) + 
+"\nSaldo_Dia_Permite: " + IntegerToString(Saldo_Dia_Permite()) + 
+"\nProp_Permite: " + IntegerToString(Prop_Permite()) + 
 "\nDirecao: " + DoubleToString(Direcao,0) +
 "\n---------------------- " +
 "\nBid: " + DoubleToString(daotick_venda) +

@@ -97,6 +97,7 @@ void Holo_Venda (string Desc,string IO = "Neutro")
     }
   }
 }
+
 void Holo_Compra (string Desc,string IO = "Neutro")
 {
   if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
@@ -123,7 +124,7 @@ void Holo_Avalia ()
 {
   double Holo_Nova_Direcao = Direcao;
 
-    if(Holo_Inverte) Holo_Nova_Direcao = Direcao * -1;
+  if(Holo_Inverte) Holo_Nova_Direcao = Direcao * -1;
 
   if(Holo_Mediana && Holo_Toque_Mediana() && Holo_Nova_Direcao > 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Compra("Compra HOLO");
   if(Holo_Mediana && Holo_Toque_Mediana() && Holo_Nova_Direcao < 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Venda("Venda HOLO");

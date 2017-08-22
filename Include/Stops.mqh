@@ -351,3 +351,18 @@ void Stop_Global_Imediato ()
 
    }
 }
+
+bool Prop_Permite ()
+{
+  bool retorno = false;
+
+  if(Usa_Fixos == true) return true;
+  else
+  if(Usa_Prop == true)
+  {
+    if(Prop_Delta() > Prop_Limite_Minimo) retorno = true;
+  }
+
+  return retorno;
+
+}

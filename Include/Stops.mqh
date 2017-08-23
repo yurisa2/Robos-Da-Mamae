@@ -331,25 +331,25 @@ ObjectMove(0,"StopLossVenda",0,0,StopLossValorVenda);
 
 void Stop_Global_Imediato ()
 {
+  /////// FUNCAO PRECISA ADICIONAR PRECISAO, EM TERPOS DE MERCADO LOUCO E LUCRO MINIMO
 
-/////// FUNCAO PRECISA ADICIONAR PRECISAO, EM TERPOS DE MERCADO LOUCO E LUCRO MINIMO
+  if(conta.Equity() > liquidez_inicio
+  &&
+  // lucro_dia > (Saldo_Do_Dia_RT - (custo_operacao * Lotes)) )
+  lucro_dia <= Saldo_Do_Dia_RT + (custo_operacao * Lotes) ) // O erro Ta Aqui seu burro
+  {
+    if(Operacoes > 0) VendaImediata("Encerramento limite Global - Lucro");
+    if(Operacoes < 0) CompraImediata("Encerramento limite Global- Lucro");
+  }
 
-   if(conta.Equity() > liquidez_inicio
-   &&
-   lucro_dia > conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao)
-   {
-   if(Operacoes > 0) VendaImediata("Encerramento limite Global");
-   if(Operacoes < 0) CompraImediata("Encerramento limite Global");
-   }
-
-   if(conta.Equity() < liquidez_inicio
-   && (-1 * preju_dia) < conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao)
-   {
-
-   if(Operacoes > 0) VendaImediata("Encerramento limite Global");
-   if(Operacoes < 0) CompraImediata("Encerramento limite Global");
-
-   }
+  if(conta.Equity() < liquidez_inicio
+  &&
+  (-1 * preju_dia) >= Saldo_Do_Dia_RT - (custo_operacao * Lotes) )
+  // (-1 * preju_dia) < (Saldo_Do_Dia_RT - (custo_operacao * Lotes)) )
+  {
+    if(Operacoes > 0) VendaImediata("Encerramento limite Global - Preju");
+    if(Operacoes < 0) CompraImediata("Encerramento limite Global- Preju");
+  }
 }
 
 bool Prop_Permite ()

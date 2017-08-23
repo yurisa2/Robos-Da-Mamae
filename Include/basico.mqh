@@ -169,7 +169,7 @@ void Comentario ()
   " | Picotes: "+IntegerToString(EM_Contador_Picote)+" | "+
 
   Segundos_Fim_Barra() +
-  " | Saldo exec: " + DoubleToString(Saldo_Dia_Valor(),2) +
+  " | Saldo exec: " + DoubleToString(Saldo_Do_Dia_RT,2) +
   " | Operacoes: " + IntegerToString(OperacoesFeitas) + "\n" +
 
   Comentario_Robo
@@ -243,6 +243,8 @@ void Operacoes_No_tick ()
   daotick_geral = daotick(); //Legacy
   daotick_venda = daotick(-1);
   daotick_compra = daotick(1);
+  Saldo_Do_Dia_RT = Saldo_Dia_Valor();
+
 
   //Fim das Vars Atualizadas Globalmente
 
@@ -326,23 +328,27 @@ void Comentario_Debug_funcao ()
 {
 Comentario_Debug = Comentario_Avancado +
 
-"\nJaZerou: " + IntegerToString(JaZerou) + 
-"\nJaDeuFinal: " + IntegerToString(JaDeuFinal) + 
-"\nOperacoes: " + IntegerToString(Operacoes) + 
-"\nDeuTakeProfit: " + IntegerToString(DeuTakeProfit) + 
-"\nDeuStopLoss: " + IntegerToString(DeuStopLoss) + 
-"\nOperacoes: " + IntegerToString(Operacoes) + 
-"\n---------------------- "  + 
-"\nUsa_Fixos: " + IntegerToString(Usa_Fixos) + 
-"\nTaDentroDoHorario: " + IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim)) + 
-"\nSaldo_Dia_Permite: " + IntegerToString(Saldo_Dia_Permite()) + 
-"\nProp_Permite: " + IntegerToString(Prop_Permite()) + 
+"\nJaZerou: " + IntegerToString(JaZerou) +
+"\nJaDeuFinal: " + IntegerToString(JaDeuFinal) +
+"\nOperacoes: " + IntegerToString(Operacoes) +
+"\nDeuTakeProfit: " + IntegerToString(DeuTakeProfit) +
+"\nDeuStopLoss: " + IntegerToString(DeuStopLoss) +
+"\nOperacoes: " + IntegerToString(Operacoes) +
+"\n---------------------- "  +
+"\nUsa_Fixos: " + IntegerToString(Usa_Fixos) +
+"\nTaDentroDoHorario: " + IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim)) +
+"\nSaldo_Dia_Permite: " + IntegerToString(Saldo_Dia_Permite()) +
+"\nProp_Permite: " + IntegerToString(Prop_Permite()) +
 "\nDirecao: " + DoubleToString(Direcao,0) +
 "\n---------------------- " +
 "\nBid: " + DoubleToString(daotick_venda) +
-"\nTick Size: "+ DoubleToString(Tick_Size)+
+"\nTick Size: "+ DoubleToString(Tick_Size) +
 "\nAsk: " + DoubleToString(daotick_compra) +
-"\nSpread: " + DoubleToString(Calcula_Spread())
+"\nSpread: " + DoubleToString(Calcula_Spread()) +
+"\n---------------------- " +
+"\nliquidez_inicio: " + DoubleToString(liquidez_inicio) +
+"\nLiq Project: " + DoubleToString(Saldo_Do_Dia_RT - (custo_operacao * Lotes))
+
 // "\nMagic #: " + IntegerToString(TimeMagic)
 // "\nUltimo Valor: " + PrecoNegocio //NAO FUNFA NEM NA RICO NEM NA XP.... FX OK
 

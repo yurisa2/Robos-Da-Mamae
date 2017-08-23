@@ -2,7 +2,7 @@
 //+------------------------------------------------------------------+
 //|                                             SA2 - Investment soft|
 //+------------------------------------------------------------------+
-#property copyright "Sa2, pq saum soh dois na empresa agora."
+#property copyright "Sa2, pq saum soh dois (mas ta aumentando) na empresa agora."
 #property link      "http://www.sa2.com.br"
 
 

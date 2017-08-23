@@ -187,5 +187,6 @@ double Prop_Trailing_stop_start_Valor = 0;
 double daotick_geral = 0;
 double daotick_venda = 0;
 double daotick_compra = 0;
+double Saldo_Do_Dia_RT = 0;
 
 //FIM DAS VDG

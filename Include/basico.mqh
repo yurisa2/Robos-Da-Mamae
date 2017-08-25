@@ -88,29 +88,32 @@ string Segundos_Fim_Barra ()
 ////////////////// Zerar o dia
 void ZerarODia ()
 {
-  if(TaDentroDoHorario(HorarioFim,HorarioFimMais1)==true && JaDeuFinal==false)
+  if(JaDeuFinal == false)
   {
-    Sleep(5000);
-    JaDeuFinal = true;
-    JaZerou = false;
-    PrimeiraOp = false;
-    Print(Descricao_Robo+"Final do Dia! Operacoes: ",Operacoes);
-    SendNotification(Descricao_Robo+" encerrando");
+    if(TaDentroDoHorario(HorarioFim,HorarioFimMais1) == true)
+    {
+      Sleep(5000);
+      JaDeuFinal = true;
+      JaZerou = false;
+      PrimeiraOp = false;
+      Print(Descricao_Robo+"Final do Dia! Operacoes: ",Operacoes);
+      SendNotification(Descricao_Robo+" encerrando");
 
-    if(Operacoes<0)
-    {
-      MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia | Ops: "+IntegerToString(Operacoes));
-      Sleep(1000);
-    }
-    if(Operacoes>0)
-    {
-      MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia | Ops: "+IntegerToString(Operacoes));
-      Sleep(1000);
-      SendMail(Descricao_Robo+"Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
-    }
-    Print(Descricao_Robo+"Depois da Ultima Operação: ",IntegerToString(Operacoes));
-    Sleep(5000);
-  }
+      if(Operacoes<0)
+      {
+        MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia | Ops: "+IntegerToString(Operacoes));
+        Sleep(1000);
+      }
+      if(Operacoes>0)
+      {
+        MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia | Ops: "+IntegerToString(Operacoes));
+        Sleep(1000);
+        SendMail(Descricao_Robo+"Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
+      }
+      Print(Descricao_Robo+"Depois da Ultima Operação: ",IntegerToString(Operacoes));
+      Sleep(5000);
+    } // Fim do ta dentro do horario
+  } // Fim do JaDeuFinal
 }
 
 void ArrumaMinutos ()
@@ -251,26 +254,26 @@ void Operacoes_No_tick ()
   /////////////////////// Funçoes de STOP
   if(Usa_Fixos == true)
   {
-    TS();
-    SLMovel();
+    if(Trailing_stop > 0) TS();
+    if(RAW_MoverSL > 0) SLMovel();
   }
 
   if(Usa_Prop == true)
   {
-    Prop_TS();
-    Prop_SLMovel();
+    if(Prop_Trailing_stop > 0) Prop_TS();
+    if(Prop_MoverSL > 0) Prop_SLMovel();
   }
 
-  StopLossCompra();
-  StopLossVenda();
-  TakeProfitCompra();
-  TakeProfitVenda();
+  if(Prop_StopLoss > 0 || StopLoss > 0) StopLossCompra();
+  if(Prop_StopLoss > 0 || StopLoss > 0) StopLossVenda();
+  if(TakeProfit > 0 || Prop_TakeProfit > 0) TakeProfitCompra();
+  if(TakeProfit > 0 || Prop_TakeProfit > 0) TakeProfitVenda();
 
   /////////////////////////////////////////////////
 
   DetectaNovaBarra();
 
-  Escalpelador_Maluco();
+  if(Usa_EM) Escalpelador_Maluco();
 
   if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!
 }
@@ -295,33 +298,36 @@ void Init_Padrao ()
 
 void IniciaDia ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
+  if(JaZerou==false)
   {
-    PrecoCompra =0;
-    PrecoVenda =0;
+    if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
+    {
+      PrecoCompra =0;
+      PrecoVenda =0;
 
-    OperacoesFeitas =0;
+      OperacoesFeitas =0;
 
-    StopLossValorCompra =-9999999999;
-    TakeProfitValorCompra = 999999999;
-    StopLossValorVenda =99999999999;
-    TakeProfitValorVenda = -999999999;
+      StopLossValorCompra =-9999999999;
+      TakeProfitValorCompra = 999999999;
+      StopLossValorVenda =99999999999;
+      TakeProfitValorVenda = -999999999;
 
-    JaZerou = true;
-    JaDeuFinal = false;
-    Operacoes = 0;
-    Ordem = false;      //Bucareste
-    PrimeiraOp = false;
-    DeuTakeProfit = true;
-    DeuStopLoss = true;
+      JaZerou = true;
+      JaDeuFinal = false;
+      Operacoes = 0;
+      Ordem = false;      //Bucareste
+      PrimeiraOp = false;
+      DeuTakeProfit = true;
+      DeuStopLoss = true;
 
-    // Print("Bom dia! Robo as ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
-    // SendMail(Descricao_Robo + "Inicio das operaï¿½oes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" ï¿½s ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
-    // SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" ï¿½s ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
+      // Print("Bom dia! Robo as ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
+      // SendMail(Descricao_Robo + "Inicio das operaï¿½oes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" ï¿½s ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
+      // SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" ï¿½s ordens, segura o coraï¿½ao pq o role ï¿½ monstro!!!");
 
-    liquidez_inicio = conta.Equity();
-    Sleep(1000);
-  }
+      liquidez_inicio = conta.Equity();
+      Sleep(1000);
+    } //If do Horario
+  } //If do Ja zerou
 }
 
 void Comentario_Debug_funcao ()

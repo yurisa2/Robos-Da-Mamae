@@ -240,7 +240,6 @@ void DetectaNovaBarra ()
 
 void Operacoes_No_tick ()
 {
-
   //Variaveis Atualizadas Globalmente
 
   daotick_geral = daotick(); //Legacy

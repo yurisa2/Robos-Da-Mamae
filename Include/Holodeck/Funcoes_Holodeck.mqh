@@ -15,6 +15,7 @@ double Holo_BB_High_Var = 0;
 double Holo_BB_Low_Var = 0;
 double Holo_daotick = 0;
 double Holo_BB_Delta = 0;
+int   Holo_Contador_De_Barra = 0;
 
 
 void Holo_Var_Banda ()
@@ -68,11 +69,13 @@ void Holo_Direcao ()
   {
     if(Holo_daotick > Holo_Valor_Rompimento) Holo_Valor_Rompimento = Holo_daotick;
     Direcao = -1;
+    Holo_Contador_De_Barra = 0;
   }
   if(Holo_daotick <= Holo_BB_Low_Var)
   {
     if(Holo_daotick < Holo_Valor_Rompimento) Holo_Valor_Rompimento = Holo_daotick;
     Direcao = 1;
+    Holo_Contador_De_Barra = 0;
   }
 }
 
@@ -126,8 +129,8 @@ void Holo_Avalia ()
 
   if(Holo_Inverte) Holo_Nova_Direcao = Direcao * -1;
 
-  if(Holo_Mediana && Holo_Toque_Mediana() && Holo_Nova_Direcao > 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Compra("Compra HOLO");
-  if(Holo_Mediana && Holo_Toque_Mediana() && Holo_Nova_Direcao < 0 && Holo_BB_Delta_Permite() &&  Operacoes == 0) Holo_Venda("Venda HOLO");
+  if(Holo_Nova_Direcao > 0 && Holo_Condicoes()) Holo_Compra("Compra HOLO");
+  if(Holo_Nova_Direcao < 0 && Holo_Condicoes()) Holo_Venda("Venda HOLO");
 
   if(Holo_Distancia > 0)
   {
@@ -136,10 +139,24 @@ void Holo_Avalia ()
   }
 }
 
+bool Holo_Condicoes ()
+{
+  //Ver se nao precisa de uma subfuncao, so esta o metodo de entrada modificando
+  if(Holo_Mediana &&
+    Holo_Toque_Mediana() &&
+    Holo_BB_Delta_Permite() &&
+    Holo_Contador_De_Barra <= Holo_Max_Contador_Barras &&
+    Operacoes == 0)
+  {
+    return true;
+  }
+
+return false;
+
+}
+
 bool Holo_BB_Delta_Permite ()
 {
-
-
   if(Holo_BB_Delta < Holo_Delta_Menor_q && Holo_BB_Delta > Holo_Delta_Maior_q) return true;
   else return false;
 }
@@ -156,6 +173,7 @@ void Holo_No_Tick ()
   Comentario_Robo = Comentario_Robo + "\n Linha Inferior da BB: " + DoubleToString(Holo_BB_Low_Var,_Digits);
   Comentario_Robo = Comentario_Robo + "\n Delta da BB: " + DoubleToString(Holo_BB_Delta,_Digits);
   Comentario_Robo = Comentario_Robo + "\n DeltaPermite: " + DoubleToString(Holo_BB_Delta_Permite(),0) ;
+  Comentario_Robo = Comentario_Robo + "\n Holo_Contador_De_Barra: " + IntegerToString(Holo_Contador_De_Barra) ;
 
   if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Tocou: " + DoubleToString(Holo_Toque_Mediana(),0);
   Comentario_Robo = Comentario_Robo + "\n\n Valor Rompimento: " + DoubleToString(Holo_Valor_Rompimento,_Digits);
@@ -197,4 +215,12 @@ void Holo_SL_Movel ()
       AtualizaLinhaSL(StopLossValorVenda);
     }
   }
+}
+
+void Holo_Acao_Barra ()
+{
+  Holo_Contador_De_Barra = Holo_Contador_De_Barra + 1;
+
+
+
 }

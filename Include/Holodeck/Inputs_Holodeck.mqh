@@ -17,3 +17,4 @@ input bool Holo_Inverte = false;  //Inverte o Universo!
 input bool Holo_Menor_SL = true;  //Usa o Menor SL (defindo ou banda)
 input double Holo_Delta_Menor_q = 9999; //Delta Menor Que (Tick_Size)
 input double Holo_Delta_Maior_q = 0;    //Delta Maior Que (Tick_Size)
+input int Holo_Max_Contador_Barras = 999; //Contador De Barras Max

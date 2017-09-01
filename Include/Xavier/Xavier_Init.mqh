@@ -14,31 +14,6 @@ void Init_Xav ()
 
 ENUM_INIT_RETCODE Verifica_Init_Xav ()
 {
-      if(Holo_Mediana && Holo_Distancia > 0)
-      {
-        MessageBox("Mais de um método de entrada","Erro de Inicialização",MB_OK);
-        Print("Mais de um método de entrada","Erro de Inicialização");
-        return(INIT_PARAMETERS_INCORRECT);
-      }
-
-      if(!Holo_Mediana && Holo_Distancia < 1)
-      {
-        MessageBox("Nao foi escolhido um método de entrada","Erro de Inicialização",MB_OK);
-        Print("Nao foi escolhido um método de entrada","Erro de Inicialização");
-        return(INIT_PARAMETERS_INCORRECT);
-      }
-
-      if(Holo_Menor_TP && Usa_Prop){
-        MessageBox("Mexe Com isso agora nao vai...","Erro de Inicialização",MB_OK);
-        Print("Mexe Com isso agora nao vai...","Erro de Inicialização");
-        return(INIT_PARAMETERS_INCORRECT);
-      }
-
-      if(Holo_Delta_Menor_q <= Holo_Delta_Maior_q){
-        MessageBox("Holo Range Delta Errado","Erro de Inicialização",MB_OK);
-        Print("Holo Range Delta Errado","Erro de Inicialização");
-        return(INIT_PARAMETERS_INCORRECT);
-      }
-
+    
       return INIT_SUCCEEDED;
 }

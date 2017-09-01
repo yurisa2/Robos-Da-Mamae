@@ -55,7 +55,7 @@
 //+------------------------------------------------------------------+
 double Fuzzy_Respo(double Banda, double Rsi)
   {
-    if(Banda < -140) Banda = 0;
+    if(Banda < -49) Banda = 0;
     if(Banda > 149) Banda = 149;
 //--- Mamdani Fuzzy System
    CMamdaniFuzzySystem *fsIpsus=new CMamdaniFuzzySystem();

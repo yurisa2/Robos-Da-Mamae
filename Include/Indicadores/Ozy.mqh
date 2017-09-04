@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 int retorno_ozy = 0;
@@ -36,7 +36,7 @@ bool Calcula_Ozy ()
 
     // if(Direcao==1 && Ordem==false)
     // {
-    //   Print("Operações Antes da venda: ",Operacoes," VENDE! ");
+    //   Print("Operaï¿½ï¿½es Antes da venda: ",Operacoes," VENDE! ");
     //   //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
     //   return true;
     //   Ordem = true;
@@ -44,7 +44,7 @@ bool Calcula_Ozy ()
     //
     // if(Direcao==-1 && Ordem==false)
     // {
-    //   Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
+    //   Print("Operaï¿½ï¿½es Antes da compra: ",Operacoes," COMPRA! ");
     //   return true;
     //   Ordem = true;
     // }
@@ -56,7 +56,7 @@ bool Calcula_Ozy ()
 void Ozy_Opera ()
 {
 
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
+  if(TaDentroDoHorario_RT==true && JaZerou)
   {
 
     if(Direcao!=Ozy(0))
@@ -68,7 +68,7 @@ void Ozy_Opera ()
 
       if(Direcao==1 && Ordem==false)
       {
-        Print("Operações Antes da venda: ",Operacoes," VENDE! ");
+        Print("Operaï¿½ï¿½es Antes da venda: ",Operacoes," VENDE! ");
         //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
         VendaIndicador("Venda por Ozy","Entrada");
         Ordem = true;
@@ -76,7 +76,7 @@ void Ozy_Opera ()
 
       if(Direcao==-1 && Ordem==false)
       {
-        Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
+        Print("Operaï¿½ï¿½es Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por Ozy","Entrada");
         Ordem = true;
       }
@@ -86,7 +86,7 @@ void Ozy_Opera ()
   }   //FIM DO IF TaDentroDoHorario
 }
 
-bool Zerado_Ozy ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
+bool Zerado_Ozy ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dï¿½ false
 {
 
   int soma_params = Ozy_Shift + Ozy_length;

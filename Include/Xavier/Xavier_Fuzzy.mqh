@@ -55,8 +55,14 @@
 //+------------------------------------------------------------------+
 double Fuzzy_Respo(double Banda, double Rsi)
   {
+    double retorno = 0;
+
     if(Banda < -49) Banda = 0;
     if(Banda > 149) Banda = 149;
+
+  if(Condicoes_Basicas_Gerais())
+  {
+
 //--- Mamdani Fuzzy System
    CMamdaniFuzzySystem *fsIpsus=new CMamdaniFuzzySystem();
 //--- Create first input variables for the system
@@ -100,12 +106,12 @@ double Fuzzy_Respo(double Banda, double Rsi)
    p_od_Ipsus=result.GetNodeAtIndex(0);
 //   Print("Ipsus, escala: ",p_od_Ipsus.Value());
 
-double retorno = p_od_Ipsus.Value();
+retorno = p_od_Ipsus.Value();
 
 delete in;
 delete result;
 delete fsIpsus;
-
+} // fim do Basico Permite
 return retorno;
 
   }

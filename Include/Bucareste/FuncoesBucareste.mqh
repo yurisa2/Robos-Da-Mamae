@@ -38,7 +38,7 @@ void Inicializa_Funcs ()
 
 void PrimeiraOperacao ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && PrimeiraOp==false)
+  if(TaDentroDoHorario_RT==true && PrimeiraOp==false)
   {
     Print(Descricao_Robo+" Horario Setup: ",HorarioInicio);
     Print(Descricao_Robo+" Direcao Inicio dia: ",Direcao);

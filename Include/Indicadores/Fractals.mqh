@@ -1,4 +1,4 @@
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 int EstadoFractal = 0;
@@ -50,7 +50,7 @@ bool CalculaFractal ()
 
 void Fractal ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
+  if(TaDentroDoHorario_RT==true && JaZerou)
   {
     double _Fractal1[];
     double _Fractal2[];
@@ -95,7 +95,7 @@ void Fractal ()
 
       if(Direcao==-1 && Ordem==false)
       {
-        Print("Operações Antes da venda: ",Operacoes," VENDE! ");
+        Print("Operaï¿½ï¿½es Antes da venda: ",Operacoes," VENDE! ");
         //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
         VendaIndicador("Venda por Fractal","Entrada");
         Ordem = true;
@@ -103,7 +103,7 @@ void Fractal ()
 
       if(Direcao==1 && Ordem==false)
       {
-        Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
+        Print("Operaï¿½ï¿½es Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por Fractal","Entrada");
         Ordem = true;
       }
@@ -117,7 +117,7 @@ void Fractal ()
 }
 
 //////////////////////
-bool Zerado_Fractals ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
+bool Zerado_Fractals ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dï¿½ false
 {
   if(Frac_Candles_Espera > 0) return true; else return false ;
 }

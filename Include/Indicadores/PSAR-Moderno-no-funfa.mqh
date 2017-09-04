@@ -30,7 +30,7 @@ bool CalculaPSar ()
 
 void PSar ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
+  if(TaDentroDoHorario_RT==true && JaZerou)
   {
     if(CalculaPSar())
     {

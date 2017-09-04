@@ -41,7 +41,7 @@ void Inicializa_Funcs ()
 
 void PrimeiraOperacao ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && PrimeiraOp==false)
+  if(TaDentroDoHorario_RT==true && PrimeiraOp==false)
   {
     Print(Descricao_Robo+" Horario Setup: ",HorarioInicio);
     Print(Descricao_Robo+" Direcao Inicio dia: ",Direcao);
@@ -121,7 +121,7 @@ void VendaIndicador (string Desc,string IO = "Neutro")
 
 void Comentario_Dexter ()
 {
-  Comentario_Robo = ""; //Para não repetir a porra toda
+  Comentario_Robo = ""; //Para nï¿½o repetir a porra toda
 
 if(Usa_Hilo) Comentario_Robo = Comentario_Robo+"HiLo - M"+EnumToString(TimeFrame)+"N"+IntegerToString(Periodos)+"\n";
 if(Usa_Ozy) Comentario_Robo = Comentario_Robo+"Ozy"+IntegerToString(Ozy_MM)+";"+IntegerToString(Ozy_Shift)+"."+IntegerToString(Ozy_length);

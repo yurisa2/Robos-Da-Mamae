@@ -10,7 +10,7 @@
 //////////////////////////////////// Funcoes
 
 
-bool Saldo_Dia_Permite ()
+bool Saldo_Dia_Permite()
 {
    if(conta.Equity() == liquidez_inicio) return true;
    if(
@@ -22,10 +22,10 @@ bool Saldo_Dia_Permite ()
 return false;
 }
 
-double Saldo_Dia_Valor ()
+double Saldo_Dia_Valor()
 {
 
-return conta.Equity() - liquidez_inicio -  (OperacoesFeitasGlobais * custo_operacao * Lotes);
+return conta.Equity() - liquidez_inicio -  (OperacoesFeitas * custo_operacao * Lotes);
 
 }
 
@@ -46,7 +46,7 @@ double Saldo_Operacao_Atual ()
 return Retorno_Saldo;
 }
 
-void Pega_Valor ()
+void Pega_Valor()
 {
       Data_Hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+HorarioInicio+":00");
       HistorySelect(Data_Hoje,TimeCurrent());
@@ -89,7 +89,7 @@ void Pega_Valor ()
       // PARA DESLIGAR O SISTEMA DE E_MAILS
 }
 
-double Calcula_Spread ()
+double Calcula_Spread()
 {
   double retorno = SymbolInfoInteger(_Symbol,SYMBOL_SPREAD) * SymbolInfoDouble(_Symbol,SYMBOL_POINT);
  return  retorno;

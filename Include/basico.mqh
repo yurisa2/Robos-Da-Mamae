@@ -247,6 +247,7 @@ void Operacoes_No_tick ()
   daotick_compra = daotick(1);
   Saldo_Do_Dia_RT = Saldo_Dia_Valor();
 
+  Saldo_Dia_Permite_RT = Saldo_Dia_Permite();
 
   //Fim das Vars Atualizadas Globalmente
 
@@ -277,6 +278,14 @@ void Operacoes_No_tick ()
   if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!
 }
 
+void Operacoes_No_Timer()
+{
+
+    TaDentroDoHorario_RT = TaDentroDoHorario(HorarioInicio,HorarioFim);
+
+
+}
+
 void Init_Padrao ()
 {
   ObjectsDeleteAll(0,0,-1);
@@ -299,12 +308,12 @@ void IniciaDia ()
 {
   if(JaZerou==false)
   {
-    if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou==false)
+    if(TaDentroDoHorario_RT==true && JaZerou==false)
     {
-      PrecoCompra =0;
-      PrecoVenda =0;
+      PrecoCompra = 0;
+      PrecoVenda = 0;
 
-      OperacoesFeitas =0;
+      OperacoesFeitas = 0;
 
       StopLossValorCompra =-9999999999;
       TakeProfitValorCompra = 999999999;
@@ -333,16 +342,16 @@ void Comentario_Debug_funcao ()
 {
 Comentario_Debug = Comentario_Avancado +
 
+"\n\nCondicoes_Basicas_Gerais: " + IntegerToString(Condicoes_Basicas_Gerais()) +
 "\nJaZerou: " + IntegerToString(JaZerou) +
 "\nJaDeuFinal: " + IntegerToString(JaDeuFinal) +
 "\nOperacoes: " + IntegerToString(Operacoes) +
 "\nDeuTakeProfit: " + IntegerToString(DeuTakeProfit) +
 "\nDeuStopLoss: " + IntegerToString(DeuStopLoss) +
-"\nOperacoes: " + IntegerToString(Operacoes) +
 "\n---------------------- "  +
 "\nUsa_Fixos: " + IntegerToString(Usa_Fixos) +
-"\nTaDentroDoHorario: " + IntegerToString(TaDentroDoHorario(HorarioInicio,HorarioFim)) +
-"\nSaldo_Dia_Permite: " + IntegerToString(Saldo_Dia_Permite()) +
+"\nTaDentroDoHorario: " + IntegerToString(TaDentroDoHorario_RT) +
+"\nSaldo_Dia_Permite: " + IntegerToString(Saldo_Dia_Permite_RT) +
 "\nProp_Permite: " + IntegerToString(Prop_Permite()) +
 "\nDirecao: " + DoubleToString(Direcao,0) +
 "\n---------------------- " +
@@ -358,4 +367,16 @@ Comentario_Debug = Comentario_Avancado +
 // "\nUltimo Valor: " + PrecoNegocio //NAO FUNFA NEM NA RICO NEM NA XP.... FX OK
 
 ;
+}
+
+bool Condicoes_Basicas_Gerais()
+{
+  double retorno = true;
+  double Operacoes_Feitas_Permite = false;
+
+  if(OperacoesFeitas < (Limite_Operacoes*2)) Operacoes_Feitas_Permite = true;
+
+  if(!JaZerou || !Operacoes_Feitas_Permite || !TaDentroDoHorario_RT || ! Saldo_Dia_Permite_RT) retorno = false;
+
+return retorno;
 }

@@ -29,7 +29,7 @@ bool CalculaPSar ()
 
 void PSar ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
+  if(TaDentroDoHorario_RT==true && JaZerou)
   {
     double PSar_Array[];
     ArraySetAsSeries(PSar_Array, true);

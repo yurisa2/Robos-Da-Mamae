@@ -188,5 +188,7 @@ double daotick_geral = 0;
 double daotick_venda = 0;
 double daotick_compra = 0;
 double Saldo_Do_Dia_RT = 0;
+bool Saldo_Dia_Permite_RT = 0;
+bool TaDentroDoHorario_RT = 0;
 
 //FIM DAS VDG

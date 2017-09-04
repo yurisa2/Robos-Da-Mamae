@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 void Inicializa_HiLo ()
@@ -45,7 +45,7 @@ bool CalculaHiLo ()
 void HiLo ()
 {
 
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
+  if(TaDentroDoHorario_RT==true && JaZerou)
   {
 
     double _ma1[];
@@ -72,7 +72,7 @@ void HiLo ()
 
       if(Direcao==1 && Ordem==false)
       {
-        Print("Operações Antes da venda: ",Operacoes," VENDE! ");
+        Print("Operaï¿½ï¿½es Antes da venda: ",Operacoes," VENDE! ");
         //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
         VendaIndicador("Venda por HiLo","Entrada");
         Ordem = true;
@@ -80,7 +80,7 @@ void HiLo ()
 
       if(Direcao==-1 && Ordem==false)
       {
-        Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
+        Print("Operaï¿½ï¿½es Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por HiLo","Entrada");
         Ordem = true;
       }
@@ -93,7 +93,7 @@ void HiLo ()
 
 //////////////////////////////////////////////////////
 
-bool Zerado_HiLo ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
+bool Zerado_HiLo ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dï¿½ false
 {
   if(Periodos > 0) return true; else return false ;
 }

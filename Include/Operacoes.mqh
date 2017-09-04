@@ -12,7 +12,7 @@
 void StopLossCompra ()
 {
   if(
-  TaDentroDoHorario(HorarioInicio,HorarioFim)==true &&
+  TaDentroDoHorario_RT==true &&
   DeuStopLoss == false &&
   Operacoes >0 &&
   ((Usa_Fixos == true && StopLoss != 0) ||
@@ -36,7 +36,7 @@ void StopLossCompra ()
 
 void StopLossVenda ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
+  if(TaDentroDoHorario_RT==true && DeuStopLoss == false && Operacoes!=0 && Operacoes <0 && ((Usa_Fixos == true && StopLoss != 0) || (Usa_Prop == true && Prop_StopLoss !=0)))
   {
     if(daotick(1)>=StopLossValorVenda)
     {
@@ -54,7 +54,7 @@ void StopLossVenda ()
 
 void TakeProfitCompra ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
+  if(TaDentroDoHorario_RT==true && DeuTakeProfit == false && Operacoes!=0 && Operacoes >0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
   {
     if(daotick_venda>TakeProfitValorCompra)
     {
@@ -70,7 +70,7 @@ void TakeProfitCompra ()
 
 void TakeProfitVenda ()
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true  && DeuTakeProfit == false && Operacoes!=0 && Operacoes <0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
+  if(TaDentroDoHorario_RT==true  && DeuTakeProfit == false && Operacoes!=0 && Operacoes <0 && ((Usa_Fixos == true && TakeProfit != 0) || (Usa_Prop == true && Prop_TakeProfit !=0)))
   {
     if(daotick(1)<TakeProfitValorVenda)
     {

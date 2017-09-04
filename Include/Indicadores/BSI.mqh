@@ -1,4 +1,4 @@
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 void Inicializa_BSI ()
@@ -36,7 +36,7 @@ bool CalculaBSI ()
 void BSI ()
 {
 
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
+  if(TaDentroDoHorario_RT==true && JaZerou)
   {
 
     double BSI[];
@@ -57,7 +57,7 @@ void BSI ()
 
       if(Direcao==1 && Ordem==false)
       {
-        Print("Operações Antes da venda: ",Operacoes," VENDE! ");
+        Print("Operaï¿½ï¿½es Antes da venda: ",Operacoes," VENDE! ");
         //Print("Periodo: ",ChartPeriod()," Estranho", PeriodSeconds());
         VendaIndicador("Venda por BSI","Entrada");
         Ordem = true;
@@ -65,7 +65,7 @@ void BSI ()
 
       if(Direcao==-1 && Ordem==false)
       {
-        Print("Operações Antes da compra: ",Operacoes," COMPRA! ");
+        Print("Operaï¿½ï¿½es Antes da compra: ",Operacoes," COMPRA! ");
         CompraIndicador("Compra por BSI","Entrada");
         Ordem = true;
       }
@@ -77,7 +77,7 @@ void BSI ()
 }
 //////////////////////////////////////////////////////
 
-bool Zerado_BSI ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dá false
+bool Zerado_BSI ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dï¿½ false
 {
 
   int soma_params = BSI_RangePeriod + BSI_Slowing + BSI_Avg_Period;

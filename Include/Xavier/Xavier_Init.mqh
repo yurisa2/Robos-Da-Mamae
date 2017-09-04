@@ -9,11 +9,14 @@
 void Init_Xav ()
 {
   Inicializa_RSI();
+
+  ChartIndicatorAdd(0,0,Xavier_Handle_BB);
+
 //  Print("Valor da Banda: ",Xavier_BB_Tamanho_Porcent());
 }
 
 ENUM_INIT_RETCODE Verifica_Init_Xav ()
 {
-    
+
       return INIT_SUCCEEDED;
 }

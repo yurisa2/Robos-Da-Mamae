@@ -5,7 +5,7 @@
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 void Inicializa_iMAs ()
@@ -49,7 +49,7 @@ double MA3 (int candle = 0)
   return ValorMA[candle];
 }
 
-int Direcao_Fermat (int candle = 0) //True se cumpre os quesitos de maior menor e distancia e dá o sentido, ZERO (0) e igual a nao cumpre
+int Direcao_Fermat (int candle = 0) //True se cumpre os quesitos de maior menor e distancia e dï¿½ o sentido, ZERO (0) e igual a nao cumpre
 {
   if(MA3(candle) < MA1(candle) && MA2(candle) < MA1(candle) && MA1(candle)-MA3(candle) >= Tick_Size*Distancia_m1_m3)
   {
@@ -87,7 +87,7 @@ void Operacoes_Fermat ()
   OperacoesFeitas < (Limite_Operacoes*2) &&
   Saldo_Dia_Permite() == true &&
   Direcao_Fermat(0)!= Direcao_Fermat(1) &&
-  TaDentroDoHorario(HorarioInicio,HorarioFim) &&
+  TaDentroDoHorario_RT &&
 
   ((Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) ||
   Usa_Fixos == true ))
@@ -102,7 +102,7 @@ void Operacoes_Fermat ()
   OperacoesFeitas < (Limite_Operacoes*2) &&
   Saldo_Dia_Permite() == true &&
   Direcao_Fermat(0)!= Direcao_Fermat(1) &&
-  TaDentroDoHorario(HorarioInicio,HorarioFim) &&
+  TaDentroDoHorario_RT &&
 
   ((Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) ||
   Usa_Fixos == true ))
@@ -115,7 +115,7 @@ void Operacoes_Fermat ()
 // Programando uma saida
   if(Direcao_Fermat(0)!= Direcao_Fermat(1) &&
   Operacoes!=0 &&
-  TaDentroDoHorario(HorarioInicio,HorarioFim) &&
+  TaDentroDoHorario_RT &&
   Saldo_Operacao_Atual() < 0)
   {
     DeuStopLoss = true;

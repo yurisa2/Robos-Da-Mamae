@@ -81,7 +81,7 @@ void Holo_Direcao ()
 
 void Holo_Venda (string Desc,string IO = "Neutro")
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
+  if(TaDentroDoHorario_RT==true && JaZerou)
   {
     if(IO == "Entrada") EM_Contador_Picote = 0;
 
@@ -103,7 +103,7 @@ void Holo_Venda (string Desc,string IO = "Neutro")
 
 void Holo_Compra (string Desc,string IO = "Neutro")
 {
-  if(TaDentroDoHorario(HorarioInicio,HorarioFim)==true && JaZerou)
+  if(TaDentroDoHorario_RT==true && JaZerou)
   {
     if(IO == "Entrada") EM_Contador_Picote = 0;
 

@@ -51,8 +51,8 @@ void Pega_Valor()
       Data_Hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+HorarioInicio+":00");
       HistorySelect(Data_Hoje,TimeCurrent());
 
-      uint     total=HistoryDealsTotal();
-      ulong    ticket=0;
+      uint     total = HistoryDealsTotal();
+      ulong    ticket = 0;
 
       for(uint i = 0; i < total; i++)
       {
@@ -76,7 +76,7 @@ void Pega_Valor()
 
           if(negocio.DealType() == DEAL_TYPE_BUY)
           {
-            num_ordem_tiquete=0;
+            num_ordem_tiquete = 0;
           }
 
           if(negocio.DealType() == DEAL_TYPE_SELL)

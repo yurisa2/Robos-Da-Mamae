@@ -100,7 +100,13 @@ double Fuzzy_Respo(double Banda, double Rsi)
    p_od_Ipsus=result.GetNodeAtIndex(0);
 //   Print("Ipsus, escala: ",p_od_Ipsus.Value());
 
-return p_od_Ipsus.Value();
+double retorno = p_od_Ipsus.Value();
+
+delete in;
+delete result;
+delete fsIpsus;
+
+return retorno;
 
   }
 //+------------------------------------------------------------------+

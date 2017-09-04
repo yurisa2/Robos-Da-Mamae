@@ -8,6 +8,11 @@ int   Xavier_Handle_BB = iBands(NULL,PERIOD_CURRENT,20,0,2,PRICE_CLOSE);
 
 void Xav_No_Tick()
 {
+
+}
+
+void Xav_No_Timer()
+{
   //
   // Banda = Xavier_BB_Tamanho_Porcent();
   // Rsi = CalculaRSI();
@@ -65,7 +70,10 @@ double Xavier_BB_Tamanho_Porcent()
 
 void Xavier_Avalia()
 {
-  double Valor_Fuzzy = Fuzzy_Respo(Xavier_BB_Tamanho_Porcent(),CalculaRSI());
+  double Valor_Fuzzy = 0;
+
+  if(TaDentroDoHorario(HorarioInicio,HorarioFim)) Valor_Fuzzy = Fuzzy_Respo(Xavier_BB_Tamanho_Porcent(),CalculaRSI());
+
 
   if(Valor_Fuzzy > Xavier_Valor_Venda && Operacoes == 0)  Xavier_Venda("Xavier Compra, Fuzzy: " + DoubleToString(Valor_Fuzzy) ) ;
   if(Valor_Fuzzy < Xavier_Valor_Compra && Operacoes == 0) Xavier_Compra("Xavier Compra, Fuzzy: " + DoubleToString(Valor_Fuzzy) ) ;

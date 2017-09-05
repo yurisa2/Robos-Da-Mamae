@@ -25,7 +25,7 @@ CAccountInfo conta;
 CisNewBar grafico_atual; // instance of the CisNewBar class: current chart
 
 ////////////////////  TaDentroDoHorario //////////////
-bool TaDentroDoHorario (string HoraInicio, string HoraFim)
+bool TaDentroDoHorario(string HoraInicio, string HoraFim)
 {
   string DiaHoraInicio;
   string DiaHoraFim;
@@ -53,7 +53,7 @@ bool TaDentroDoHorario (string HoraInicio, string HoraFim)
 
 //////////////////////// DAOTICK ///////////
 ////// Função Pega Tick e devolve a hora e o valor da porra do ativo
-double daotick (int tipo = 0)
+double daotick(int tipo = 0)
 {
   double retornoTick = 0;
   MqlTick last_tick;
@@ -77,7 +77,7 @@ double daotick (int tipo = 0)
 }
 ////////////////// Fecha o PEGA O TICK
 
-string Segundos_Fim_Barra ()
+string Segundos_Fim_Barra()
 {
   int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
   datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
@@ -86,7 +86,7 @@ string Segundos_Fim_Barra ()
 }
 
 ////////////////// Zerar o dia
-void ZerarODia ()
+void ZerarODia()
 {
   if(JaDeuFinal == false)
   {
@@ -187,7 +187,7 @@ if(Tipo_Comentario == 2) Comment(Comentario_Debug);
 }
 
 
-string Descricao_Robo ()
+string Descricao_Robo()
 {
   string Desc_Robo = "";
 
@@ -230,7 +230,7 @@ string Descricao_Robo ()
 }
 
 /////////////////////////////////
-void DetectaNovaBarra ()
+void DetectaNovaBarra()
 {
   //---
   int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
@@ -238,11 +238,12 @@ void DetectaNovaBarra ()
   if(grafico_atual.isNewBar(new_time)) OnNewBar();
 }
 
-void Operacoes_No_tick ()
+void Operacoes_No_tick()
 {
   //Variaveis Atualizadas Globalmente
 
-  daotick_geral = daotick(); //Legacy
+  Calcula_Spread_RT = Calcula_Spread();
+  daotick_geral = daotick()-Calcula_Spread_RT; //Legacy
   daotick_venda = daotick(-1);
   daotick_compra = daotick(1);
   Saldo_Do_Dia_RT = Saldo_Dia_Valor();
@@ -358,7 +359,7 @@ Comentario_Debug = Comentario_Avancado +
 "\nBid: " + DoubleToString(daotick_venda) +
 "\nTick Size: "+ DoubleToString(Tick_Size) +
 "\nAsk: " + DoubleToString(daotick_compra) +
-"\nSpread: " + DoubleToString(Calcula_Spread()) +
+"\nSpread: " + DoubleToString(Calcula_Spread_RT) +
 "\n---------------------- " +
 "\nliquidez_inicio: " + DoubleToString(liquidez_inicio) +
 "\nLiq Project: " + DoubleToString(Saldo_Do_Dia_RT - (custo_operacao * Lotes))

@@ -62,7 +62,7 @@ double Xavier_BB_Tamanho_Porcent()
   double trans_size = 0;
 
   delta_BB = Xavier_BB_High() - Xavier_BB_Low();
-  trans_size = daotick_compra - Xavier_BB_Low();
+  trans_size = daotick_geral - Xavier_BB_Low();
   retorno = trans_size/delta_BB*100;
 
   return retorno;

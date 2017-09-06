@@ -207,14 +207,14 @@ void OnChartEvent(const int id,
   }
 
 
-  void Cria_Botao_Operar ()
+  void Cria_Botao_Operar()
   {
     //--- criar o botão
     ObjectCreate(0,"Botao_Operar",OBJ_BUTTON,0,0,0,0,0);
     Botao_Operar();
   }
 
-  void Botao_Operar ()                // prioridade para clicar no mouse
+  void Botao_Operar()                // prioridade para clicar no mouse
   {
     //--- definir coordenadas do botão
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_XDISTANCE,150);

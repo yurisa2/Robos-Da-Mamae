@@ -19,6 +19,7 @@ input int HoraDeFim = 17;                                                  //Hor
 input int MinutoDeFim = 27;                                                //Minuto de Fim
 input bool   ZerarFinalDoDia = true;                                       //Encerra operações no final do dia (execução extendida)
 input string Descricao_Robo_Alpha = "";                                    //Descriçõo para logs e mensagens
+input bool Usar_Posicoes = false;                                    //Sistema de Stops
 //string Descricao_Robo = Descricao_Robo(); +"|"+Descricao_Robo_Alpha;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
@@ -104,6 +105,8 @@ string HorarioInicio = IntegerToString(HoraDeInicio,2,'0') + ":" + IntegerToStri
 int MinutoDeFimMenos1;
 string HorarioFim;
 string HorarioFimMais1;
+datetime data_inicio_execucao = TimeCurrent();
+
 
 ///////////////////////////////// Variaveis
 

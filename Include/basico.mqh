@@ -10,7 +10,15 @@
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
 //#include <Charts\Chart.mqh>
+
+#include <OnTrade.mqh>
+#include <Posicao.mqh>
+#include <Totalizador.mqh>
+
 #include <Lib_CisNewBar.mqh>
+#include <Operacoes_No_tick.mqh>
+#include <Stops_OO.mqh>
+#include <Comentario.mqh>
 //#include <Expert\Expert.mqh>
 
 //--- object for performing trade operations
@@ -18,8 +26,8 @@
 // CTrade  trade;
 //CTrade  CObject;
 //CSymbolInfo simbolo;
-CPositionInfo posicao;
-CDealInfo negocio;
+// CPositionInfo posicao;
+// CDealInfo negocio;
 //CChart grafico;
 CAccountInfo conta;
 CisNewBar grafico_atual; // instance of the CisNewBar class: current chart
@@ -97,7 +105,7 @@ void ZerarODia()
       JaZerou = false;
       PrimeiraOp = false;
       Print(Descricao_Robo+"Final do Dia! Operacoes: ",Operacoes);
-      SendNotification(Descricao_Robo+" encerrando");
+      // SendNotification(Descricao_Robo+" encerrando");
 
       if(Operacoes<0)
       {
@@ -238,47 +246,6 @@ void DetectaNovaBarra()
   if(grafico_atual.isNewBar(new_time)) OnNewBar();
 }
 
-void Operacoes_No_tick()
-{
-  //Variaveis Atualizadas Globalmente
-
-  Calcula_Spread_RT = Calcula_Spread();
-  daotick_geral = daotick()-Calcula_Spread_RT; //Legacy
-  daotick_venda = daotick(-1);
-  daotick_compra = daotick(1);
-  Saldo_Do_Dia_RT = Saldo_Dia_Valor();
-
-  Saldo_Dia_Permite_RT = Saldo_Dia_Permite();
-
-  //Fim das Vars Atualizadas Globalmente
-
-  /////////////////////// Funçoes de STOP
-  if(Usa_Fixos == true)
-  {
-    if(Trailing_stop > 0) TS();
-    if(RAW_MoverSL > 0) SLMovel();
-  }
-
-  if(Usa_Prop == true)
-  {
-    if(Prop_Trailing_stop > 0) Prop_TS();
-    if(Prop_MoverSL > 0) Prop_SLMovel();
-  }
-
-  if(Prop_StopLoss > 0 || StopLoss > 0) StopLossCompra();
-  if(Prop_StopLoss > 0 || StopLoss > 0) StopLossVenda();
-  if(TakeProfit > 0 || Prop_TakeProfit > 0) TakeProfitCompra();
-  if(TakeProfit > 0 || Prop_TakeProfit > 0) TakeProfitVenda();
-
-  /////////////////////////////////////////////////
-
-  DetectaNovaBarra();
-
-  if(Usa_EM) Escalpelador_Maluco();
-
-  if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!
-}
-
 void Operacoes_No_Timer()
 {
 
@@ -292,6 +259,9 @@ void Init_Padrao ()
   ObjectsDeleteAll(0,0,-1);
   EventSetMillisecondTimer(500);
   TimeMagic =MathRand();
+
+  data_inicio_execucao = TimeCurrent();
+
 
   Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
@@ -340,39 +310,6 @@ void IniciaDia ()
       Sleep(1000);
     } //If do Horario
   } //If do Ja zerou
-}
-
-void Comentario_Debug_funcao ()
-{
-Comentario_Debug = Comentario_Avancado +
-
-"\n\nCondicoes_Basicas_Gerais: " + IntegerToString(Condicoes_Basicas_Gerais()) +
-"\nJaZerou: " + IntegerToString(JaZerou) +
-"\nJaDeuFinal: " + IntegerToString(JaDeuFinal) +
-"\nOperacoes: " + IntegerToString(Operacoes) +
-"\nDeuTakeProfit: " + IntegerToString(DeuTakeProfit) +
-"\nDeuStopLoss: " + IntegerToString(DeuStopLoss) +
-"\n---------------------- "  +
-"\nUsa_Fixos: " + IntegerToString(Usa_Fixos) +
-"\nTaDentroDoHorario: " + IntegerToString(TaDentroDoHorario_RT) +
-"\nSaldo_Dia_Permite: " + IntegerToString(Saldo_Dia_Permite_RT) +
-"\nProp_Permite: " + IntegerToString(Prop_Permite()) +
-"\nDirecao: " + DoubleToString(Direcao,0) +
-"\n---------------------- " +
-"\nBid: " + DoubleToString(daotick_venda) +
-"\nTick Size: "+ DoubleToString(Tick_Size) +
-"\nAsk: " + DoubleToString(daotick_compra) +
-"\nSpread: " + DoubleToString(Calcula_Spread_RT) +
-"\n---------------------- " +
-"\nliquidez_inicio: " + DoubleToString(liquidez_inicio) +
-"\nLiq Project: " + DoubleToString(Saldo_Do_Dia_RT - (custo_operacao * Lotes)) +
-"\nMagic #: " + IntegerToString(TimeMagic) +
-"\n---------------------- " +
-// "\nTipo Posicao: " +  posicao.EnumToString(PositionType());
-
-// "\nUltimo Valor: " + PrecoNegocio //NAO FUNFA NEM NA RICO NEM NA XP.... FX OK
-"\n---------------------- "
-;
 }
 
 bool Condicoes_Basicas_Gerais()

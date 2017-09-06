@@ -54,35 +54,16 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
          Req.type=order_type;
          Req.comment=Descricao_Robo+" "+comentario_req;
 
-        //  if(!multi_op)
-        //  {
-        //    if(Operacoes > 0)
-        //    {
-        //      Req.sl = StopLossValorCompra;
-        //      Req.tp = TakeProfitValorCompra;
-        //    }
-         //
-        //    if(Operacoes < 0)
-        //    {
-        //      Req.sl = 50;
-        //      Req.tp = 50;
-        //    }
-        //  }
-
          Req.tp=0;
          Req.sl=0;
-
 
                if(OrderSend(Req,Res)) Print(Descricao_Robo," - Ordem Enviada |",comentario_req);
                else
                   {
                      Print(Descricao_Robo+" Deu Pau, Verifique com pressao");
-                     SendNotification("ERRO GRAVE, VERIFIQUE: "+IntegerToString(GetLastError()));
+                    //  SendNotification("ERRO GRAVE, VERIFIQUE: "+IntegerToString(GetLastError()));
                      ExpertRemove();
                   }
-
-
-
 
          DaResultado = true;
 
@@ -105,6 +86,10 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
    Print("Saldo do Dia ate o momento: ",conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao);
 //   Print("Funcao Saldo: ",Saldo_Dia_Permite());
 
+Stops *Obj_Stops = new Stops;
+if(Usar_Posicoes) Obj_Stops.Setar_Ordens_Vars();
+delete(Obj_Stops);
+
 
    Liquidez_Teste_fim = conta.Equity();
 //   Print("Liquides Ini - Equi: ",liquidez_inicio - conta.Equity());
@@ -112,71 +97,3 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
 //   Print("CustoOps: ",custo_operacao);
    }
    /////////////////////////////////////////// Final da req.
-/*
-void MontarPosicao(ENUM_ORDER_TYPE order_type,string comentario_req)
-{
-
-  double sl = 0;
-  double tp = 0;
-  double price = 0;
-
-  if(order_type == ORDER_TYPE_SELL)
-  {
-     PrecoVenda = daotick(-1);
-     sl = PrecoVenda + (StopLoss * Tick_Size);
-     tp = PrecoVenda - (TakeProfit * Tick_Size);
-     price = PrecoVenda;
-     Operacoes = Operacoes - 1;
-
-     Print("Valor da VENDA: ",PrecoVenda);
-  }
-  if(order_type == ORDER_TYPE_BUY)
-  {
-     PrecoCompra = daotick(1);
-     sl = PrecoCompra - (StopLoss * Tick_Size);
-     tp = PrecoCompra + (TakeProfit * Tick_Size);
-     price = PrecoCompra;
-     Operacoes = Operacoes + 1;
-     Print("Valor da Compra: ",PrecoCompra);
-  }
-
-  opera.PositionOpen(Symbol(),         // symbol
-   order_type,     // order type to open position
-   Lotes,         // position volume
-  price,          // execution price
-  sl,             // Stop Loss price
-  tp,             // Take Profit price
-   comentario_req      // comment
- );
-
- Sleep(300);
-
- PositionSelect(Symbol());
- double Ultimo_Preco = opera.ResultPrice();
-
- Print("Ultimo_Preco: " + Ultimo_Preco); //DEBUG
-
- if(order_type == ORDER_TYPE_SELL)
- {
-    PrecoVenda = daotick(-1);
-    sl = Ultimo_Preco + (StopLoss * Tick_Size);
-    tp = Ultimo_Preco - (TakeProfit * Tick_Size);
- }
- if(order_type == ORDER_TYPE_BUY)
- {
-    PrecoCompra = daotick(1);
-    sl = Ultimo_Preco - (StopLoss * Tick_Size);
-    tp = Ultimo_Preco + (TakeProfit * Tick_Size);
- }
-
- opera.PositionModify(
-    Symbol(),     // symbol
-    sl,         // Stop Loss price
-    tp          // Take Profit price
-  );
-
-// Print("SL: " + sl); //DEBUG
-// Print("TP: " + tp); //DEBUG
-
-}
-*/

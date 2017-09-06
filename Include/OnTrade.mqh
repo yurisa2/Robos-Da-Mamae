@@ -12,9 +12,9 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
   const MqlTradeResult& result)
   {
 
-    
-
-
-
+    // Verifica_Posicao *posicao;
+    // posicao = new Verifica_Posicao();
+    //
+    // Alert("Ticket" + posicao.Ticket);
 
   }

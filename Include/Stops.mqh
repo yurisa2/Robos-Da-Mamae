@@ -10,7 +10,7 @@
 #include <Stops_Moveis.mqh>
 #include <Stops_Fixos.mqh>
 
-void Inicializa_Prop ()
+void Inicializa_Prop()
 {
 
    Prop_Limite_Minimo =  Prop_Limite_Minimo_Tick_Size * Tick_Size;

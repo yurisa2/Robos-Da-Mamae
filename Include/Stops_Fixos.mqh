@@ -103,7 +103,7 @@ double   Prop_Calc_TP = Prop_TakeProfit * Prop_Delta();
              AtualizaLinhas();
 }
 
-void CalculaStops ()
+void CalculaStops()
 {
 
 string DeclaraStops = "";
@@ -140,7 +140,6 @@ TakeProfitValorVenda = -999999999;
              }
              Print(DeclaraStops);
              AtualizaLinhas();
-
 }
 
 

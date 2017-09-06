@@ -12,6 +12,8 @@ void Init_Xav ()
 
   ChartIndicatorAdd(0,0,Xavier_Handle_BB);
 
+  Direcao = 1;
+
 //  Print("Valor da Banda: ",Xavier_BB_Tamanho_Porcent());
 }
 

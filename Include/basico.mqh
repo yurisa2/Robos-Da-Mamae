@@ -18,7 +18,7 @@
 // CTrade  trade;
 //CTrade  CObject;
 //CSymbolInfo simbolo;
-//CPositionInfo posicao;
+CPositionInfo posicao;
 CDealInfo negocio;
 //CChart grafico;
 CAccountInfo conta;
@@ -295,12 +295,15 @@ void Init_Padrao ()
 
   Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
+  Print("TimeMagic: ",IntegerToString(TimeMagic));
 
   Liquidez_Teste_inicio = conta.Equity();
   Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
 
   Cria_Botao_Operar();  // Heranca bucareste, FERMAT calculou com a func DIRECAO(), mas ainda assim, pensando na vida...
   ArrumaMinutos();
+
+
 
   if(Usa_Prop == true) Inicializa_Prop();
 }
@@ -362,11 +365,13 @@ Comentario_Debug = Comentario_Avancado +
 "\nSpread: " + DoubleToString(Calcula_Spread_RT) +
 "\n---------------------- " +
 "\nliquidez_inicio: " + DoubleToString(liquidez_inicio) +
-"\nLiq Project: " + DoubleToString(Saldo_Do_Dia_RT - (custo_operacao * Lotes))
+"\nLiq Project: " + DoubleToString(Saldo_Do_Dia_RT - (custo_operacao * Lotes)) +
+"\nMagic #: " + IntegerToString(TimeMagic) +
+"\n---------------------- " +
+// "\nTipo Posicao: " +  posicao.EnumToString(PositionType());
 
-// "\nMagic #: " + IntegerToString(TimeMagic)
 // "\nUltimo Valor: " + PrecoNegocio //NAO FUNFA NEM NA RICO NEM NA XP.... FX OK
-
+"\n---------------------- "
 ;
 }
 

@@ -24,9 +24,7 @@ void Operacoes_No_tick()
 
   /////////////////////// Funçoes de STOP
 
-  Stops *Obj_Stops = new Stops;
-  Obj_Stops.No_Tick();
-  delete(Obj_Stops);
+  O_Stops.No_Tick();
 
 
   /////////////////////////////////////////////////

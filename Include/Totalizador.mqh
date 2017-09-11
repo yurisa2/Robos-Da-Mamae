@@ -88,3 +88,5 @@ lucro_ate_momento();
 custo_ate_momento();
 ganho_liquido();
 }
+
+Totalizador totalizator;

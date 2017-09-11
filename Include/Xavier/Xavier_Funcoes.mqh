@@ -73,16 +73,24 @@ void Xavier_Avalia()
   double Valor_Fuzzy = 0;
 
   if(TaDentroDoHorario_RT) Valor_Fuzzy = Fuzzy_Respo(Xavier_BB_Tamanho_Porcent(),CalculaRSI());
+  if(Valor_Fuzzy == 0) Xavier_Autorizado = 0;
 
 
-  if(Valor_Fuzzy > Xavier_Valor_Venda && Operacoes == 0)  Xavier_Venda("Xavier Compra, Fuzzy: " + DoubleToString(Valor_Fuzzy) ) ;
+  if(Valor_Fuzzy > Xavier_Valor_Venda && Operacoes == 0)  Xavier_Venda("Xavier Venda, Fuzzy: " + DoubleToString(Valor_Fuzzy) ) ;
   if(Valor_Fuzzy < Xavier_Valor_Compra && Operacoes == 0) Xavier_Compra("Xavier Compra, Fuzzy: " + DoubleToString(Valor_Fuzzy) ) ;
+
+  // if(Valor_Fuzzy > Xavier_Valor_Venda && Operacoes == 0)  Xavier_Autorizado = -1 ;
+  // if(Valor_Fuzzy < Xavier_Valor_Compra && Operacoes == 0)  Xavier_Autorizado = 1 ;
+  //
+  // if(Xavier_Autorizado < 0 && Xavier_BB_Tamanho_Porcent() <= 100) Xavier_Venda("Xavier Venda, Fuzzy: " + DoubleToString(Valor_Fuzzy) ) ;
+  // if(Xavier_Autorizado > 0 && Xavier_BB_Tamanho_Porcent() >= 0) Xavier_Compra("Xavier Compra, Fuzzy: " + DoubleToString(Valor_Fuzzy) ) ;
 
 
 }
 
 void Xavier_Compra(string Desc,string IO = "Neutro")
 {
+  Xavier_Autorizado = 0;
   if(TaDentroDoHorario_RT==true && JaZerou)
   {
     if(IO == "Entrada") EM_Contador_Picote = 0;
@@ -105,6 +113,7 @@ void Xavier_Compra(string Desc,string IO = "Neutro")
 
 void Xavier_Venda(string Desc,string IO = "Neutro")
 {
+   Xavier_Autorizado = 0;
   if(TaDentroDoHorario_RT==true && JaZerou)
   {
     if(IO == "Entrada") EM_Contador_Picote = 0;

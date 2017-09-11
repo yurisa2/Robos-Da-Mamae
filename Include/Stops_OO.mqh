@@ -97,3 +97,5 @@ double Stops::Valor_Negocio()
     delete(posiciones);
     return valor;
 }
+
+Stops O_Stops;

@@ -67,9 +67,9 @@ double Fuzzy_Respo(double Banda, double Rsi)
    CMamdaniFuzzySystem *fsIpsus=new CMamdaniFuzzySystem();
 //--- Create first input variables for the system
    CFuzzyVariable *fvBanda=new CFuzzyVariable("banda_bollinger",-50.0,150.0);
-   fvBanda.Terms().Add(new CFuzzyTerm("compra", new CTriangularMembershipFunction(-50.0, 0.0, 50.0)));
-   fvBanda.Terms().Add(new CFuzzyTerm("neutro", new CTriangularMembershipFunction(20.0, 50.0, 80.0)));
-   fvBanda.Terms().Add(new CFuzzyTerm("venda", new CTriangularMembershipFunction(50.0, 100.0, 150.0)));
+   fvBanda.Terms().Add(new CFuzzyTerm("venda", new CTrapezoidMembershipFunction(50,100,120, 150)));
+   fvBanda.Terms().Add(new CFuzzyTerm("neutro", new CTrapezoidMembershipFunction(20,40, 60, 80)));
+   fvBanda.Terms().Add(new CFuzzyTerm("compra", new CTrapezoidMembershipFunction(-50,-30,0,50)));
    fsIpsus.Input().Add(fvBanda);
 //--- Create second input variables for the system
    CFuzzyVariable *fvRsi=new CFuzzyVariable("rsi_forca",0.0,100.0);
@@ -79,9 +79,9 @@ double Fuzzy_Respo(double Banda, double Rsi)
    fsIpsus.Input().Add(fvRsi);
 //--- Create Output
    CFuzzyVariable *fvIpsus=new CFuzzyVariable("tendencia",-100.0,100.0);
-   fvIpsus.Terms().Add(new CFuzzyTerm("re_venda", new CNormalMembershipFunction(100.0,2)));
-   fvIpsus.Terms().Add(new CFuzzyTerm("re_faz_nada", new CNormalMembershipFunction(0.0,2)));
-   fvIpsus.Terms().Add(new CFuzzyTerm("re_compra", new CNormalMembershipFunction(-100.0,2)));
+   fvIpsus.Terms().Add(new CFuzzyTerm("re_venda", new CTriangularMembershipFunction(70,100,100)));
+   fvIpsus.Terms().Add(new CFuzzyTerm("re_faz_nada", new CTriangularMembershipFunction(-80,0,80)));
+   fvIpsus.Terms().Add(new CFuzzyTerm("re_compra", new CTriangularMembershipFunction(-100,-100,-70)));
    fsIpsus.Output().Add(fvIpsus);
 //--- Create three Mamdani fuzzy rule
    CMamdaniFuzzyRule *rule1 = fsIpsus.ParseRule("if (banda_bollinger is compra )  and (rsi_forca is alta) then tendencia is re_compra");

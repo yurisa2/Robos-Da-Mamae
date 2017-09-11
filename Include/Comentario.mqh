@@ -10,7 +10,6 @@
 void Comentario_Debug_funcao ()
 {
 
-  Stops *Obj_Stops = new Stops;
 
 Comentario_Debug = Comentario_Avancado +
 
@@ -36,12 +35,11 @@ Comentario_Debug = Comentario_Avancado +
 "\nLiq Project: " + DoubleToString(Saldo_Do_Dia_RT - (custo_operacao * Lotes)) +
 "\nMagic #: " + IntegerToString(TimeMagic) +
 "\n---------------------- " +
-"\nStops::Tipo_Posicao(): " + IntegerToString(Obj_Stops.Tipo_Posicao()) +
+"\nStops::Tipo_Posicao(): " + IntegerToString(O_Stops.Tipo_Posicao()) +
 
 // "\nUltimo Valor: " + PrecoNegocio //NAO FUNFA NEM NA RICO NEM NA XP.... FX OK
 "\n---------------------- "
 ;
 
-delete(Obj_Stops);
 
 }

@@ -16,3 +16,5 @@ input string Indicadores = "-------------------------------------";
 input bool   Xavier_Sai_Em_Zero = false;                                        //Sai Quando Neutraliza
 input double Xavier_Valor_Venda = 98;                                           //Valor Mínimo para Venda do Fuzzão
 input double Xavier_Valor_Compra = -98;                                           //Valor Mínimo para Compra do Fuzzão (Negativo)
+
+int Xavier_Autorizado = 0;

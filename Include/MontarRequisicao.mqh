@@ -86,9 +86,7 @@ void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
    Print("Saldo do Dia ate o momento: ",conta.Equity() - liquidez_inicio -  OperacoesFeitas*custo_operacao);
 //   Print("Funcao Saldo: ",Saldo_Dia_Permite());
 
-Stops *Obj_Stops = new Stops;
-if(Usar_Posicoes) Obj_Stops.Setar_Ordens_Vars();
-delete(Obj_Stops);
+if(Usar_Posicoes) O_Stops.Setar_Ordens_Vars();
 
 
    Liquidez_Teste_fim = conta.Equity();

@@ -47,8 +47,6 @@ input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;       //Tipo d
 input int Tipo_Comentario = 1;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
 input bool Otimizacao = false;                                          //Parametro para otimizacao
 
-
-
 input string Limites_Fixos = "----------USANDO TICK SIZE-----------";
 input bool   Usa_Fixos = false;                                            //Usar Limites Fixos
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
@@ -73,7 +71,7 @@ input double   Prop_StopLoss = 0.7;                                       //Stop
 input double   Prop_MoverSL = 0;                                          //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
 input double   Prop_PontoDeMudancaSL = 0;                                 //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operaï¿½ï¿½o)
 input double   Prop_TakeProfit = 1;                                       //TakeProfit: Multiplicador do Delta (0 desliga)
-input double   Prop_Trailing_stop =0;                                     //Trailing Stop: Multiplicador do Delta (0 desliga)
+input double   Prop_Trailing_stop = 0;                                     //Trailing Stop: Multiplicador do Delta (0 desliga)
 input double   Prop_Trailing_stop_start = 0;                              //Inicio do Trailing Stop (0 desliga)
 input double   Prop_Limite_Minimo_Tick_Size = 0;                          //Limite Minimo para operar (*Tick Size)
 
@@ -154,7 +152,6 @@ int HandleFrac;
 int HandleOzy;
 int HandleBSI;
 int HandleRSI;
-int HandleStoch;
 
 int CondicaoBSI;
 

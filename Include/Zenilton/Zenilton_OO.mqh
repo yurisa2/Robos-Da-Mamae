@@ -10,13 +10,11 @@ class Zenilton
   void Avalia();
   void Zeni_Compra();
   void Zeni_Venda();
-
-
 };
 
 void Zenilton::Zenilton()
 {
-
+Direcao = 1;
 }
 
 void Zenilton::Avalia()

@@ -13,8 +13,9 @@ class Stops
   // ~Stops() {};
   int Tipo_Posicao();
   void No_Tick();
-  void Setar_Ordens_Vars();
+  void Setar_Ordens_Vars_Static();
   double Valor_Negocio();
+  void TS();
 
   protected:
   void Atuador_Stops();
@@ -51,21 +52,36 @@ int Stops::Tipo_Posicao()
 void Stops::No_Tick()
 {
   if(!Usar_Posicoes) Atuador_Stops();
+  if(Usar_Posicoes) O_Stops.TS();
 }
 
-void Stops::Setar_Ordens_Vars()
+void Stops::Setar_Ordens_Vars_Static()
 {
   CTrade *tradionices = new CTrade;
   double valor = Valor_Negocio();
-
   double sl = valor - (StopLoss * (Tipo_Posicao() * Tick_Size));
-
   double tp = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
 
   tradionices.PositionModify(Symbol(),sl,tp);
 
   delete(tradionices);
 }
+
+void Stops::TS()
+{
+  CTrade *tradionices = new CTrade;
+  double valor = Valor_Negocio();
+
+  if(Tipo_Posicao() > 0 && daotick_geral > valor + (Tick_Size * (Trailing_stop + Trailing_stop_start)))
+  {
+    double tp = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
+    double sl = valor + (valor + (Tick_Size * (Trailing_stop + Trailing_stop_start)));
+
+    tradionices.PositionModify(Symbol(),sl,tp);
+  }
+  delete(tradionices);
+}
+
 
 void Stops::Atuador_Stops()
 {
@@ -89,13 +105,13 @@ void Stops::Atuador_Stops()
 
 double Stops::Valor_Negocio()
 {
-    CPositionInfo *posiciones = new CPositionInfo;
+  CPositionInfo *posiciones = new CPositionInfo;
 
-    posiciones.Select(Symbol());
-    double valor = posiciones.PriceOpen();
+  posiciones.Select(Symbol());
+  double valor = posiciones.PriceOpen();
 
-    delete(posiciones);
-    return valor;
+  delete(posiciones);
+  return valor;
 }
 
 Stops O_Stops;

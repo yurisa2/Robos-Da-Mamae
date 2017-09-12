@@ -39,7 +39,7 @@ int OnInit()
 {
   Init_Padrao();
 
-   Init_Zenilton();
+  Init_Zenilton();
 
   if(VerificaInit() == INIT_PARAMETERS_INCORRECT )
   {
@@ -66,7 +66,7 @@ void OnTimer()
 
 void OnTick()
 {
-   Zenilton_No_Tick();
+  Zenilton_No_Tick();
   Operacoes_No_tick();
 }
 

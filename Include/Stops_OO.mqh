@@ -15,9 +15,9 @@ class Stops
   void No_Tick();
   void Setar_Ordens_Vars_Static();
   double Valor_Negocio();
-  void TS();
 
   protected:
+  void TS_();
   void Atuador_Stops();
 };
 
@@ -52,7 +52,7 @@ int Stops::Tipo_Posicao()
 void Stops::No_Tick()
 {
   if(!Usar_Posicoes) Atuador_Stops();
-  if(Usar_Posicoes) O_Stops.TS();
+  if(Usar_Posicoes && Tipo_Posicao() != 0) TS_();
 }
 
 void Stops::Setar_Ordens_Vars_Static()
@@ -67,7 +67,7 @@ void Stops::Setar_Ordens_Vars_Static()
   delete(tradionices);
 }
 
-void Stops::TS()
+void Stops::TS_()
 {
   CTrade *tradionices = new CTrade;
   double valor = Valor_Negocio();

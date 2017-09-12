@@ -154,6 +154,7 @@ int HandleFrac;
 int HandleOzy;
 int HandleBSI;
 int HandleRSI;
+int HandleStoch;
 
 int CondicaoBSI;
 

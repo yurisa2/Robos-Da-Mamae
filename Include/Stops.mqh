@@ -17,23 +17,23 @@ void Inicializa_Prop()
    Print("Tamanho do Tick: ",Tick_Size," Delta Minimo: ",Prop_Limite_Minimo);
 
 // Delta com duas m�dias
-   if(Prop_Metodo == 534)
-   {
-      Handle_Prop_Media_Alta = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_HIGH);
-      Handle_Prop_Media_Baixa = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_LOW);
-
-      ChartIndicatorAdd(0,0,Handle_Prop_Media_Alta);
-      ChartIndicatorAdd(0,0,Handle_Prop_Media_Baixa);
-   }
+  //  if(Prop_Metodo == 534)
+  //  {
+  //     Handle_Prop_Media_Alta = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_HIGH);
+  //     Handle_Prop_Media_Baixa = iMA(_Symbol,TimeFrame,Prop_Periodos,0,MODE_SMA,PRICE_LOW);
+   //
+  //     ChartIndicatorAdd(0,0,Handle_Prop_Media_Alta);
+  //     ChartIndicatorAdd(0,0,Handle_Prop_Media_Baixa);
+  //  }
    // Delta com BB
-   if(Prop_Metodo == 88)
-   {
-      Handle_Prop_BB = iBands(_Symbol,TimeFrame,Prop_Periodos,0,2,PRICE_CLOSE);
-            ChartIndicatorAdd(0,0,Handle_Prop_BB);
-   }
-
-   if(Handle_Prop_Media_Alta + Handle_Prop_Media_Baixa + Handle_Prop_BB == 0 )
-     {
-       ExpertRemove();
-     }
+  //  if(Prop_Metodo == 88)
+  //  {
+  //     Handle_Prop_BB = iBands(_Symbol,TimeFrame,Prop_Periodos,0,2,PRICE_CLOSE);
+  //           ChartIndicatorAdd(0,0,Handle_Prop_BB);
+  //  }
+   //
+  //  if(Handle_Prop_Media_Alta + Handle_Prop_Media_Baixa + Handle_Prop_BB == 0 )
+  //    {
+  //      ExpertRemove();
+  //    }
 }

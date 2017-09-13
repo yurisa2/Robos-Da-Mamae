@@ -95,12 +95,9 @@ void Xavier_Compra(string Desc,string IO = "Neutro")
   {
     if(IO == "Entrada") EM_Contador_Picote = 0;
 
-    if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
-    if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
-
     Print(Descricao_Robo+" "+Desc);
 
-    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true )
     {
       DeuStopLoss = false;
       DeuTakeProfit = false;
@@ -118,12 +115,9 @@ void Xavier_Venda(string Desc,string IO = "Neutro")
   {
     if(IO == "Entrada") EM_Contador_Picote = 0;
 
-    if(EM_Picote_Tipo==55) Valor_Escalpe = Tick_Size * Tamanho_Picote;    //Para fazer funcionar o EM   - fixo
-    if(EM_Picote_Tipo==471) Valor_Escalpe = Prop_Delta() * Tamanho_Picote;  //Para fazer funcionar o EM - proporcional
-
     Print(Descricao_Robo+" "+Desc);
 
-    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true )
     {
       DeuStopLoss = false;
       DeuTakeProfit = false;

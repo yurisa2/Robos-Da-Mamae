@@ -18,7 +18,6 @@ class Stops
 
   protected:
   void TS_();
-  void Atuador_Stops();
 };
 
 int Stops::Tipo_Posicao()
@@ -51,8 +50,7 @@ int Stops::Tipo_Posicao()
 
 void Stops::No_Tick()
 {
-  if(!Usar_Posicoes) Atuador_Stops();
-  if(Usar_Posicoes && Tipo_Posicao() != 0) TS_();
+  if(Tipo_Posicao() != 0 && Trailing_stop > 0) TS_();
 }
 
 void Stops::Setar_Ordens_Vars_Static()
@@ -75,32 +73,11 @@ void Stops::TS_()
   if(Tipo_Posicao() > 0 && daotick_geral > valor + (Tick_Size * (Trailing_stop + Trailing_stop_start)))
   {
     double tp = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
-    double sl = valor + (valor + (Tick_Size * (Trailing_stop + Trailing_stop_start)));
+    double sl = valor + ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
 
     tradionices.PositionModify(Symbol(),sl,tp);
   }
   delete(tradionices);
-}
-
-
-void Stops::Atuador_Stops()
-{
-  if(Usa_Fixos == true)
-  {
-    if(Trailing_stop > 0) TS();
-    if(RAW_MoverSL > 0) SLMovel();
-  }
-
-  if(Usa_Prop == true)
-  {
-    if(Prop_Trailing_stop > 0) Prop_TS();
-    if(Prop_MoverSL > 0) Prop_SLMovel();
-  }
-
-  if(Prop_StopLoss > 0 || StopLoss > 0) StopLossCompra();
-  if(Prop_StopLoss > 0 || StopLoss > 0) StopLossVenda();
-  if(TakeProfit > 0 || Prop_TakeProfit > 0) TakeProfitCompra();
-  if(TakeProfit > 0 || Prop_TakeProfit > 0) TakeProfitVenda();
 }
 
 double Stops::Valor_Negocio()
@@ -113,5 +90,8 @@ double Stops::Valor_Negocio()
   delete(posiciones);
   return valor;
 }
+
+
+
 
 Stops O_Stops;

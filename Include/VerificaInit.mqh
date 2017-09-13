@@ -60,53 +60,7 @@ ENUM_INIT_RETCODE VerificaInit ()
     return(INIT_PARAMETERS_INCORRECT);
   }
 
-  if((Usa_Prop == true && Usa_Fixos == true) ||(Usa_Prop == false && Usa_Fixos == false))
-  {
-    MessageBox("Escolha o tipo de limite novamente.","Erro de Inicialização",MB_OK);
-    Print("Escolha o tipo de limite novamente."," - Erro de Inicialização");
-    return(INIT_PARAMETERS_INCORRECT);
-  }
 
-  if(Prop_MoverSL > Prop_TakeProfit && Prop_TakeProfit >0)
-  {
-    MessageBox("Mover SL maior que TP.","Erro de Inicialização",MB_OK);
-    Print("Mover SL maior que TP."," - Erro de Inicialização");
-    return(INIT_PARAMETERS_INCORRECT);
-  }
-
-  if(Prop_Trailing_stop + Prop_Trailing_stop_start > Prop_TakeProfit && Prop_TakeProfit>0)
-  {
-    MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização",MB_OK);
-    Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicialização");
-    return(INIT_PARAMETERS_INCORRECT);
-  }
-
-  // Verificador de params para otimização
-
-  if(Otimizacao)
-  {
-    if(Usa_Prop)
-    {
-      if(Prop_StopLoss + Prop_MoverSL + Prop_PontoDeMudancaSL + Prop_TakeProfit + Prop_Trailing_stop + Prop_Trailing_stop_start ==0 )
-      {
-        MessageBox("Tá prop e tá tudo zerado","Erro de Inicialização",MB_OK);
-        Print("Tá prop e tá tudo zerado","Erro de Inicialização");
-        return(INIT_PARAMETERS_INCORRECT);
-      }
-    }
-
-    if(Usa_Fixos)
-    {
-      if(StopLoss + MoverSL + PontoDeMudancaSL + TakeProfit + Trailing_stop + Trailing_stop_start ==0)
-      {
-        MessageBox("Tá Fixo e tá tudo zerado","Erro de Inicialização",MB_OK);
-        Print("Tá Fixo e tá tudo zerado","Erro de Inicialização");
-        return(INIT_PARAMETERS_INCORRECT);
-      }
-    }
-
-  }
-  // Verificador de params para otimização
   return INIT_SUCCEEDED;
 
 }

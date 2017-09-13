@@ -10,8 +10,8 @@
 double Prop_Delta ()
    {
       double retorno_Prop_Delta =0;
-      if(Prop_Metodo == 534) retorno_Prop_Delta =  Prop_Delta_Media();
-      if(Prop_Metodo == 88) retorno_Prop_Delta =  Prop_Delta_BB();
+      // if(Prop_Metodo == 534) retorno_Prop_Delta =  Prop_Delta_Media();
+      // if(Prop_Metodo == 88) retorno_Prop_Delta =  Prop_Delta_BB();
 
       return retorno_Prop_Delta;
 

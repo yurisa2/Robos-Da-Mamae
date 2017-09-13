@@ -29,23 +29,6 @@ return conta.Equity() - liquidez_inicio -  (OperacoesFeitas * custo_operacao * L
 
 }
 
-double Saldo_Operacao_Atual ()
-{
-  double Retorno_Saldo = 0;
-
-  if(Operacoes > 0)
-  {
-    Retorno_Saldo =   daotick_venda - PrecoCompra;
-   }
-
-   if(Operacoes < 0)
-   {
-     Retorno_Saldo =   PrecoVenda - daotick_compra;
-    }
-
-return Retorno_Saldo;
-}
-
 double Calcula_Spread()
 {
   double retorno = SymbolInfoInteger(_Symbol,SYMBOL_SPREAD) * SymbolInfoDouble(_Symbol,SYMBOL_POINT);

@@ -31,7 +31,4 @@ void Operacoes_No_tick()
 
   DetectaNovaBarra();
 
-  if(Usa_EM) Escalpelador_Maluco();
-
-  if(interrompe_durante) Stop_Global_Imediato();  // NAO FUNCIONAL, VERIFICAR!
 }

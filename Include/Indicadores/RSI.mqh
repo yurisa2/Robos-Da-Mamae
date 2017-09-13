@@ -3,6 +3,8 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
+int HandleRSI = 0;
+
 void Inicializa_RSI ()
 {
   HandleRSI = iRSI(NULL,RSI_TimeFrame,RSI_period,RSI_preco);

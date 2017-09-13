@@ -146,10 +146,10 @@ void Comentario ()
   if(Operacoes > 0)
   {
     Comentario_Simples =
-    " COMPRADO | SL: "+DoubleToString(StopLossValorCompra,_Digits)+
-    " | TP: "+DoubleToString(TakeProfitValorCompra,_Digits)+
-    " TS: "+DoubleToString(TS_ValorCompra,_Digits)+" - "+
-     "Delta op Atual:" + DoubleToString(Saldo_Operacao_Atual(),_Digits)
+    " COMPRADO | SL: "+
+    " | TP: "+
+    " TS: "+" - "+
+     "Delta op Atual:"
 
     ;
   }
@@ -157,10 +157,10 @@ void Comentario ()
   if(Operacoes < 0)
   {
     Comentario_Simples =
-    " VENDIDO | SL: "+DoubleToString(StopLossValorVenda,_Digits)+
-    " | TP: "+DoubleToString(TakeProfitValorVenda,_Digits)+
-    " TS: "+DoubleToString(TS_ValorVenda,_Digits)+" - "+
-    "Delta op Atual: " + DoubleToString(Saldo_Operacao_Atual(),_Digits)
+    " VENDIDO | SL: "+
+    " | TP: "+
+    " TS: "+" - "+
+    "Delta op Atual: "
 
     ;
   }
@@ -168,7 +168,7 @@ void Comentario ()
   if(Operacoes == 0)
   {
     Comentario_Simples =
-    "Nenhuma trade ativa | DELTA: "+DoubleToString(Prop_Delta(),_Digits)+" | "+
+    "Nenhuma trade ativa |  | "+
     " | daotick: "+DoubleToString(daotick_geral,_Digits);
   }
 
@@ -221,19 +221,6 @@ string Descricao_Robo()
 
   // Prop
 
-  if(Usa_Prop)
-  {
-    Desc_Robo = Desc_Robo+"Proporcionais | ";
-    if(Prop_StopLoss>0) Desc_Robo = Desc_Robo+"SL"+DoubleToString(Prop_StopLoss,2);
-    if(Prop_Metodo==534) Desc_Robo = Desc_Robo+"SMA"+DoubleToString(Prop_Periodos,2);
-    if(Prop_Metodo==88) Desc_Robo = Desc_Robo+"BB"+DoubleToString(Prop_Periodos,2);
-    if(Prop_MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(Prop_MoverSL,2);
-    if(Prop_PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(Prop_PontoDeMudancaSL,2);
-    if(Prop_TakeProfit>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_TakeProfit,2);
-    if(Prop_Trailing_stop>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_Trailing_stop,2);
-    if(Prop_Trailing_stop_start>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Prop_Trailing_stop_start,2);
-    if(Prop_Limite_Minimo_Tick_Size>0) Desc_Robo = Desc_Robo+"MT"+DoubleToString(Prop_Limite_Minimo_Tick_Size,2);
-  }
   return Desc_Robo;
 }
 
@@ -270,12 +257,11 @@ void Init_Padrao ()
   Liquidez_Teste_inicio = conta.Equity();
   Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
 
-  Cria_Botao_Operar();  // Heranca bucareste, FERMAT calculou com a func DIRECAO(), mas ainda assim, pensando na vida...
   ArrumaMinutos();
 
 
 
-  if(Usa_Prop == true) Inicializa_Prop();
+  // if(Usa_Prop == true) Inicializa_Prop();
 }
 
 void IniciaDia ()
@@ -284,15 +270,7 @@ void IniciaDia ()
   {
     if(TaDentroDoHorario_RT==true && JaZerou==false)
     {
-      PrecoCompra = 0;
-      PrecoVenda = 0;
-
       OperacoesFeitas = 0;
-
-      StopLossValorCompra =-9999999999;
-      TakeProfitValorCompra = 999999999;
-      StopLossValorVenda =99999999999;
-      TakeProfitValorVenda = -999999999;
 
       JaZerou = true;
       JaDeuFinal = false;

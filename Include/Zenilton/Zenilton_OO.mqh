@@ -86,32 +86,32 @@ void Zenilton::Avalia()
 
 void Zenilton::Zeni_Compra()
 {
-  if(TaDentroDoHorario_RT==true && JaZerou)
+  if(TaDentroDoHorario_RT && JaZerou)
   {
 
-    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite())
     {
       DeuStopLoss = false;
       DeuTakeProfit = false;
       Ordem = false;
       Direcao = 0;
-      MontarRequisicao(ORDER_TYPE_BUY,"Entrada Zenilton");
+      MontarRequisicao(ORDER_TYPE_BUY,"Compra Zenilton");
     }
   }
 }
 
 void Zenilton::Zeni_Venda()
 {
-  if(TaDentroDoHorario_RT==true && JaZerou)
+  if(TaDentroDoHorario_RT && JaZerou)
   {
 
-    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite() == true &&  (  (Usa_Prop == true && Prop_Delta() > Prop_Limite_Minimo) || Usa_Fixos == true ) )
+    if(Operacoes==0 && OperacoesFeitas < (Limite_Operacoes*2) && Saldo_Dia_Permite())
     {
       DeuStopLoss = false;
       DeuTakeProfit = false;
       Ordem = false;
       Direcao = 0;
-      MontarRequisicao(ORDER_TYPE_SELL,"Entrada Zenilton");
+      MontarRequisicao(ORDER_TYPE_SELL,"Venda Zenilton");
     }
   }
 }

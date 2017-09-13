@@ -23,7 +23,6 @@ Comentario_Debug = Comentario_Avancado +
 "\nUsa_Fixos: " + IntegerToString(Usa_Fixos) +
 "\nTaDentroDoHorario: " + IntegerToString(TaDentroDoHorario_RT) +
 "\nSaldo_Dia_Permite: " + IntegerToString(Saldo_Dia_Permite_RT) +
-"\nProp_Permite: " + IntegerToString(Prop_Permite()) +
 "\nDirecao: " + DoubleToString(Direcao,0) +
 "\n---------------------- " +
 "\nBid: " + DoubleToString(daotick_venda) +

@@ -145,7 +145,7 @@ void SLMovel ()
   //   Tick_Spread_Venda = daotick_geral + Calcula_Spread();
   // }
 
-MoverSL  = RAW_MoverSL * Tick_Size;
+// MoverSL  = RAW_MoverSL * Tick_Size;
 
 if(MoverSL !=0 && Tick_Spread_Compra >= PrecoCompra + MoverSL &&  Operacoes > 0 && Contador_SLMOVEL==0)
   {

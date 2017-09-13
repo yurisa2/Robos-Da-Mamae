@@ -26,12 +26,10 @@
 #include <Zenilton\Zenilton_Comments.mqh>
 #include <Zenilton\Zenilton_OO.mqh>
 
-#include <Seccao.mqh>
-#include <Stops.mqh>
-#include <Graficos.mqh>
+#include <Stops_OO.mqh>
 #include <MontarRequisicao.mqh>
 #include <VerificaInit.mqh>
-#include <Operacoes.mqh>
+
 
 
 

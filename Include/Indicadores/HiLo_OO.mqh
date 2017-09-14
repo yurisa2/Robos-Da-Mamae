@@ -9,6 +9,7 @@ class HiLo_OO
   public:
   void HiLo_OO(int Periodo_Hilo = 4);
   int Direcao();
+  int Mudanca();
 
   private:
   int Periodos_Inputs;
@@ -18,9 +19,8 @@ class HiLo_OO
 void HiLo_OO::HiLo_OO(int Periodo_Hilo = 4)
 {
   Periodos_Inputs = Periodo_Hilo;
-
-
 }
+
 int HiLo_OO::Direcao()
 {
   MA *MediaMovelAlta = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_HIGH);
@@ -47,4 +47,49 @@ int HiLo_OO::Direcao()
 
 
   return direcao;
+}
+
+int HiLo_OO::Mudanca()
+{
+  MA *MediaMovelAlta = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_HIGH);
+  MA *MediaMovelBaixa = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_LOW);
+
+  int historico_direcao[];
+
+  double ValorMA_Alta1 = MediaMovelAlta.Valor(1);
+  double ValorMA_Baixa1 = MediaMovelBaixa.Valor(1);
+  double ValorMA_Alta2 = MediaMovelAlta.Valor(2);
+  double ValorMA_Baixa2 = MediaMovelBaixa.Valor(2);
+
+//Pega O historico
+  MqlRates rates[];
+   ArraySetAsSeries(rates,true);
+   int copied=CopyRates(Symbol(),0,0,100,rates);
+
+   int i = ArraySize(rates);
+   ArrayResize(historico_direcao,i);
+   i--;
+
+  do
+  {
+    historico_direcao[i] = 0;
+    if(rates[i].high > MediaMovelAlta.Valor(i)) historico_direcao[i] = 1;
+    if(rates[i].low < MediaMovelBaixa.Valor(i)) historico_direcao[i] = -1;
+
+    if(historico_direcao[i] == 0) historico_direcao[i] = historico_direcao[i+1];
+
+    Print("Direcao Historica... i = " + i + " Direcao:" + historico_direcao[i]);
+
+    i--;
+  }
+  while(i==0);
+
+
+
+
+  delete(MediaMovelAlta);
+  delete(MediaMovelBaixa);
+
+
+  return true; //Mudar hein...
 }

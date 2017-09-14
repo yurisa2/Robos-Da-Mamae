@@ -175,7 +175,7 @@ void Comentario ()
   }
 
   Comentario_Avancado =
-  Descricao_Robo()+" | "+Desc_Se_Vazio()+"\n"+Descricao_Robo+
+  Descricao_Robo()+" | \n"+Descricao_Robo+
 
   Comentario_Simples+   //AQUI EH O ESPECIFICO DA ORDEM
 
@@ -209,19 +209,6 @@ string Descricao_Robo()
 
   Desc_Robo = Desc_Robo + " | ";
   // Fixos
-
-  // if(Usa_Fixos)
-  // {
-  //   Desc_Robo = Desc_Robo+"Fixo | ";
-  //   if(StopLoss>0) Desc_Robo = Desc_Robo+"SL"+DoubleToString(StopLoss,2);
-  //   if(MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(MoverSL,2);
-  //   if(PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(PontoDeMudancaSL,2);
-  //   if(TakeProfit>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(TakeProfit,2);
-  //   if(Trailing_stop>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop,2);
-  //   if(Trailing_stop_start>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop_start,2);
-  // }
-
-  // Prop
 
   return Desc_Robo;
 }
@@ -261,9 +248,6 @@ void Init_Padrao ()
 
   ArrumaMinutos();
 
-
-
-  // if(Usa_Prop == true) Inicializa_Prop();
 }
 
 void IniciaDia ()

@@ -11,7 +11,7 @@
 
 input string Parametros_Gerais = "-------------------------------------";  //Parametros Gerais
 // input bool  multi_op = false;                                              //Multi Operacao (define o método de operacao)
-input ENUM_TIMEFRAMES TimeFrame = PERIOD_M10;                              //TimeFrame base
+input ENUM_TIMEFRAMES TimeFrame = PERIOD_CURRENT;                              //TimeFrame base
 
 input int HoraDeInicio = 9;                                                //Hora de Inicio
 input int MinutoDeInicio = 20;                                             //Minuto de Inicio
@@ -30,19 +30,7 @@ input double preju_dia = 1000000;                                          //Pre
 input bool   interrompe_durante = 0;                                       //(NAO FUNCIONAL AINDA) Interrompe a operacao nos limites IMEDIATAMENTE
 
 
-string Desc_Se_Vazio ()
-{
-  string TM = "";
-  /* VERIFICAR COMO FUNCIONAR ISSO
-  if(Descricao_Robo_Alpha =="")
-  {
-  TM = IntegerToString(TimeMagic);
-}*/
-return TM;
-}
-
-string Descricao_Robo = Desc_Se_Vazio()+Descricao_Robo_Alpha;
-input ENUM_ORDER_TYPE_FILLING TipoDeOrdem = ORDER_FILLING_RETURN;       //Tipo de ordem (teste)
+string Descricao_Robo = Descricao_Robo_Alpha;
 input int Tipo_Comentario = 2;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
 input bool Otimizacao = false;                                          //Parametro para otimizacao
 

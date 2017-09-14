@@ -53,7 +53,6 @@ enum Tipo_Limites
   Limite_Proporcional  = 471
 };
 input Tipo_Limites Tipo_Limite = 55;                                      //Tipo De limite
-input bool   Usa_Fixos = true;                                            //Usar Limites Fixos
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
 input double MoverSL = 0;                                              //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
 input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operacão)
@@ -130,8 +129,6 @@ string Comentario_Avancado = "";
 string Comentario_Debug = "";
 
 string Comentario_Robo = "";
-
-double spread = 0;
 
 string PrecoNegocio = "0";
 

@@ -56,7 +56,6 @@ void OnTimer()
 
   Comentario();
 
-  ZerarODia();
 
   Operacoes_No_Timer();
 

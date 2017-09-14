@@ -18,7 +18,9 @@
 #include <Lib_CisNewBar.mqh>
 #include <Operacoes_No_tick.mqh>
 #include <Stops_OO.mqh>
+#include <Condicoes.mqh>
 #include <Comentario.mqh>
+
 //#include <Expert\Expert.mqh>
 
 //--- object for performing trade operations
@@ -94,35 +96,35 @@ string Segundos_Fim_Barra()
 }
 
 ////////////////// Zerar o dia
-void ZerarODia()
-{
-  if(JaDeuFinal == false)
-  {
-    if(TaDentroDoHorario(HorarioFim,HorarioFimMais1) == true)
-    {
-      Sleep(5000);
-      JaDeuFinal = true;
-      JaZerou = false;
-      PrimeiraOp = false;
-      Print(Descricao_Robo+"Final do Dia! Operacoes: ",Operacoes);
-      // SendNotification(Descricao_Robo+" encerrando");
-
-      if(Operacoes<0)
-      {
-        MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia | Ops: "+IntegerToString(Operacoes));
-        Sleep(1000);
-      }
-      if(Operacoes>0)
-      {
-        MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia | Ops: "+IntegerToString(Operacoes));
-        Sleep(1000);
-        SendMail(Descricao_Robo+"Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
-      }
-      Print(Descricao_Robo+"Depois da Ultima Operação: ",IntegerToString(Operacoes));
-      Sleep(5000);
-    } // Fim do ta dentro do horario
-  } // Fim do JaDeuFinal
-}
+// void ZerarODia()
+// {
+//   if(JaDeuFinal == false)
+//   {
+//     if(TaDentroDoHorario(HorarioFim,HorarioFimMais1) == true)
+//     {
+//       Sleep(5000);
+//       JaDeuFinal = true;
+//       JaZerou = false;
+//       PrimeiraOp = false;
+//       Print(Descricao_Robo+"Final do Dia! Operacoes: ",Operacoes);
+//       // SendNotification(Descricao_Robo+" encerrando");
+//
+//       if(Operacoes<0)
+//       {
+//         MontarRequisicao(ORDER_TYPE_BUY,"Compra para zerar o dia | Ops: "+IntegerToString(Operacoes));
+//         Sleep(1000);
+//       }
+//       if(Operacoes>0)
+//       {
+//         MontarRequisicao(ORDER_TYPE_SELL,"Venda para zerar o dia | Ops: "+IntegerToString(Operacoes));
+//         Sleep(1000);
+//         SendMail(Descricao_Robo+"Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
+//       }
+//       Print(Descricao_Robo+"Depois da Ultima Operação: ",IntegerToString(Operacoes));
+//       Sleep(5000);
+//     } // Fim do ta dentro do horario
+//   } // Fim do JaDeuFinal
+// }
 
 void ArrumaMinutos ()
 {
@@ -208,16 +210,16 @@ string Descricao_Robo()
   Desc_Robo = Desc_Robo + " | ";
   // Fixos
 
-  if(Usa_Fixos)
-  {
-    Desc_Robo = Desc_Robo+"Fixo | ";
-    if(StopLoss>0) Desc_Robo = Desc_Robo+"SL"+DoubleToString(StopLoss,2);
-    if(MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(MoverSL,2);
-    if(PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(PontoDeMudancaSL,2);
-    if(TakeProfit>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(TakeProfit,2);
-    if(Trailing_stop>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop,2);
-    if(Trailing_stop_start>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop_start,2);
-  }
+  // if(Usa_Fixos)
+  // {
+  //   Desc_Robo = Desc_Robo+"Fixo | ";
+  //   if(StopLoss>0) Desc_Robo = Desc_Robo+"SL"+DoubleToString(StopLoss,2);
+  //   if(MoverSL>0) Desc_Robo = Desc_Robo+"MSL"+DoubleToString(MoverSL,2);
+  //   if(PontoDeMudancaSL>0) Desc_Robo = Desc_Robo+"PMSL"+DoubleToString(PontoDeMudancaSL,2);
+  //   if(TakeProfit>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(TakeProfit,2);
+  //   if(Trailing_stop>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop,2);
+  //   if(Trailing_stop_start>0) Desc_Robo = Desc_Robo+"TP"+DoubleToString(Trailing_stop_start,2);
+  // }
 
   // Prop
 

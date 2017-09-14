@@ -13,10 +13,10 @@ class ZComments
 
 void ZComments::ZComments()
 {
-  Stoch *estocastico_curto = new Stoch(10,3,3,Zeni_Periodo_Curto);
-  MA *ema5_curto = new MA(5,MODE_EMA,Zeni_Periodo_Curto);
-  MA *ema10_curto = new MA(10,MODE_EMA,Zeni_Periodo_Curto);
-  RSI *rsi_curto = new RSI(9,Zeni_Periodo_Curto);
+  Stoch *estocastico_curto = new Stoch(10,3,3,TimeFrame);
+  MA *ema5_curto = new MA(5,MODE_EMA,TimeFrame);
+  MA *ema10_curto = new MA(10,MODE_EMA,TimeFrame);
+  RSI *rsi_curto = new RSI(9,TimeFrame);
 
   Stoch *estocastico_longo = new Stoch(10,3,3,Zeni_Periodo_Longo);
   MA *ema5_longo = new MA(5,MODE_EMA,Zeni_Periodo_Longo);

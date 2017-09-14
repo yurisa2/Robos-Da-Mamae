@@ -10,11 +10,20 @@
 
 //////////////////////////// Req de Operaçao
 
-void MontarRequisicao (ENUM_ORDER_TYPE order_type, string comentario_req)
+class Opera_Mercado
+{
+  public:
+  void AbrePosicao(ENUM_ORDER_TYPE order_type, string comentario_req);
+};
+
+void Opera_Mercado::AbrePosicao(ENUM_ORDER_TYPE order_type, string comentario_req)
    {
      CTrade *requisicao_montar = new CTrade;
+     if(Condicoes_Basicas.Condicao())
+     {
      requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
      O_Stops.Setar_Ordens_Vars_Static();
+     }
      delete(requisicao_montar);
 
    }

@@ -15,9 +15,9 @@ class Stops
   void No_Tick();
   void Setar_Ordens_Vars_Static();
   double Valor_Negocio();
+  void TS_();
 
   protected:
-  void TS_();
 };
 
 int Stops::Tipo_Posicao()
@@ -60,6 +60,8 @@ void Stops::Setar_Ordens_Vars_Static()
   double sl = valor - (StopLoss * (Tipo_Posicao() * Tick_Size));
   double tp = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
 
+  if(TakeProfit == 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
+
   tradionices.PositionModify(Symbol(),sl,tp);
 
   delete(tradionices);
@@ -70,10 +72,27 @@ void Stops::TS_()
   CTrade *tradionices = new CTrade;
   double valor = Valor_Negocio();
 
-  if(Tipo_Posicao() > 0 && daotick_geral > valor + (Tick_Size * (Trailing_stop + Trailing_stop_start)))
+  if(Tipo_Posicao() > 0 && daotick_geral > (valor + (Tick_Size * (Trailing_stop + Trailing_stop_start))))
   {
-    double tp = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
+    double tp = valor + (TakeProfit * Tick_Size);
+    double sl = valor - ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
+
+    if(TakeProfit == 0) tp = valor + (Tick_Size * 10); //Sério mano, apelando, APELANDO MONSTRO
+
+    Print("TRAILING STOP COMPRA");
+
+    tradionices.PositionModify(Symbol(),sl,tp);
+  }
+  //VERIFICAR JEITO MAIS INTELIGENTE DE FAZER AS ORDENS (TIPO USANDO Tipo_Posicao
+
+  if(Tipo_Posicao() < 0 && daotick_geral < (valor - (Tick_Size * (Trailing_stop + Trailing_stop_start))))
+  {
+    double tp = valor - (TakeProfit * Tick_Size);
     double sl = valor + ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
+
+    if(TakeProfit == 0) tp = valor - (Tick_Size * 50); //Sério mano, apelando, APELANDO MONSTRO
+
+    Print("TRAILING STOP SL: " + sl + " TP: " + tp + " Tipo_Posicao(): " + Tipo_Posicao() + " Valor do Do Negocio: " + valor);
 
     tradionices.PositionModify(Symbol(),sl,tp);
   }
@@ -90,8 +109,5 @@ double Stops::Valor_Negocio()
   delete(posiciones);
   return valor;
 }
-
-
-
 
 Stops O_Stops;

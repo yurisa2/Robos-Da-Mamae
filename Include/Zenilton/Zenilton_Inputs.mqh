@@ -8,4 +8,3 @@
 
 input string Periodos_Cowabunga = "-------------------------------------";
 input ENUM_TIMEFRAMES Zeni_Periodo_Longo = PERIOD_M15;
-input ENUM_TIMEFRAMES Zeni_Periodo_Curto = PERIOD_M1;

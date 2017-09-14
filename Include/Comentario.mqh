@@ -20,7 +20,7 @@ Comentario_Debug = Comentario_Avancado +
 "\nDeuTakeProfit: " + IntegerToString(DeuTakeProfit) +
 "\nDeuStopLoss: " + IntegerToString(DeuStopLoss) +
 "\n---------------------- "  +
-"\nUsa_Fixos: " + IntegerToString(Usa_Fixos) +
+// "\nUsa_Fixos: " + IntegerToString(Usa_Fixos) +
 "\nTaDentroDoHorario: " + IntegerToString(TaDentroDoHorario_RT) +
 "\nSaldo_Dia_Permite: " + IntegerToString(Saldo_Dia_Permite_RT) +
 "\nDirecao: " + DoubleToString(Direcao,0) +

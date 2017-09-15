@@ -10,11 +10,11 @@ class Condicoes_Basicas_OO
 {
   public:
   bool Condicao();
+  bool Horario();
 
   private:
-  bool Horario();
-  bool Operacao_Em_Curso();
   bool Banda_Permite();
+  bool Operacao_Em_Curso();
 
 
 };
@@ -60,9 +60,12 @@ bool  Condicoes_Basicas_OO::Banda_Permite()
   MqlRates rates[];
   ArraySetAsSeries(rates,true);
   int copied=CopyRates(Symbol(),0,0,200,rates);
-  delta_media_candle = (((rates[1].high + rates[2].high + rates[3].high) / 3 ) - ((rates[1].low + rates[2].low + rates[3].low) / 3 ));
+  // delta_media_candle = (((rates[1].high + rates[2].high + rates[3].high) / 3 ) - ((rates[1].low + rates[2].low + rates[3].low) / 3 )/Tick_Size);
+  delta_media_candle = (rates[1].high - rates[1].low);
 
-  delta = Banda.BB_Delta_Bruto()/delta_media_candle ;
+  delta = (Banda.BB_Delta_Bruto()/delta_media_candle) * 100 ;
+
+  // Print("delta: " + delta);
 
   if(delta > Limite_Minimo_Tick_Size && delta < Limite_Maximo_Tick_Size) retorno = true;
 

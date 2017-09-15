@@ -81,7 +81,7 @@ int HiLo_OO::Mudanca()
   }
   while(i>=0);
 
-  Print("Hilo Mudanca... 0:" + historico_direcao[0] + " 1:" + historico_direcao[1] + " 2:" + historico_direcao[2]); //DEBUG
+  // Print("Hilo Mudanca... 0:" + historico_direcao[0] + " 1:" + historico_direcao[1] + " 2:" + historico_direcao[2]); //DEBUG
 
 if(historico_direcao[1] != historico_direcao[2]) retorno = historico_direcao[1]; //testar em tempo real
 

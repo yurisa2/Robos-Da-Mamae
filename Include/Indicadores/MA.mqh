@@ -33,7 +33,7 @@ double MA::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_MA, true);
-     int MA_copied = CopyBuffer(HandleMA,0,0,100,_MA);
+     int MA_copied = CopyBuffer(HandleMA,0,0,200,_MA);
 
      retorno = _MA[barra];
 

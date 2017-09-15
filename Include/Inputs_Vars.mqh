@@ -48,7 +48,7 @@ input double TakeProfit = 0;                                               //Tak
 input double Trailing_stop =0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 input double Limite_Minimo_Tick_Size = 0;                          //Limite Minimo para operar (*Tick Size)
-input double Limite_Maximo_Tick_Size = 0;                          //Limite Maximo para operar (*Tick Size)
+input double Limite_Maximo_Tick_Size = 9999;                          //Limite Maximo para operar (*Tick Size)
 
 input string _Escalpelador_Maluco  =  "USANDO TICK SIZE E PROP - CUIDADO----";
 input bool Usa_EM = false;                                                       //Usa Escalpelador Maluco

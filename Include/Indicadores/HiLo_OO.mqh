@@ -1,4 +1,5 @@
 /* -*- C++ -*- */
+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
@@ -53,43 +54,40 @@ int HiLo_OO::Mudanca()
 {
   MA *MediaMovelAlta = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_HIGH);
   MA *MediaMovelBaixa = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_LOW);
+  int retorno = 0;
 
   int historico_direcao[];
 
-  double ValorMA_Alta1 = MediaMovelAlta.Valor(1);
-  double ValorMA_Baixa1 = MediaMovelBaixa.Valor(1);
-  double ValorMA_Alta2 = MediaMovelAlta.Valor(2);
-  double ValorMA_Baixa2 = MediaMovelBaixa.Valor(2);
-
-//Pega O historico
+  //Pega O historico
   MqlRates rates[];
    ArraySetAsSeries(rates,true);
-   int copied=CopyRates(Symbol(),0,0,100,rates);
+   int copied=CopyRates(Symbol(),0,0,200,rates);
 
    int i = ArraySize(rates);
    ArrayResize(historico_direcao,i);
-   i--;
+   i = i - 50;
 
   do
   {
     historico_direcao[i] = 0;
-    if(rates[i].high > MediaMovelAlta.Valor(i)) historico_direcao[i] = 1;
-    if(rates[i].low < MediaMovelBaixa.Valor(i)) historico_direcao[i] = -1;
+    if(rates[i].close > MediaMovelAlta.Valor(i)) historico_direcao[i] = 1; //Se deixar com High ele fica mais sensivel
+    if(rates[i].close < MediaMovelBaixa.Valor(i)) historico_direcao[i] = -1; //Aqui seria com o Low, talvez role parametro...nao sei
 
     if(historico_direcao[i] == 0) historico_direcao[i] = historico_direcao[i+1];
 
-    Print("Direcao Historica... i = " + i + " Direcao:" + historico_direcao[i]);
+    // Print("Direcao Historica... i = " + i + " Direcao:" + historico_direcao[i]); //DEBUG
 
     i--;
   }
-  while(i==0);
+  while(i>=0);
 
+  Print("Hilo Mudanca... 0:" + historico_direcao[0] + " 1:" + historico_direcao[1] + " 2:" + historico_direcao[2]); //DEBUG
 
-
+if(historico_direcao[1] != historico_direcao[2]) retorno = historico_direcao[1]; //testar em tempo real
 
   delete(MediaMovelAlta);
   delete(MediaMovelBaixa);
 
 
-  return true; //Mudar hein...
+  return retorno;
 }

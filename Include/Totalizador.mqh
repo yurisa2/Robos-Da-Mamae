@@ -87,6 +87,9 @@ void Totalizador::calcula_financeiro()
 lucro_ate_momento();
 custo_ate_momento();
 ganho_liquido();
+
+  // Print("custo_ate_momento: " + DoubleToString(custo_ate_momento()));
+
 }
 
 Totalizador totalizator;

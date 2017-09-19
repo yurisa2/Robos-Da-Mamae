@@ -18,6 +18,7 @@
 #include <Indicadores\MA.mqh>
 #include <Indicadores\RSI_OO.mqh>
 #include <Indicadores\MACD.mqh>
+#include <Indicadores\BB.mqh>
 
 #include <Zenilton\Zenilton_Fuzzy.mqh>
 #include <Zenilton\Zenilton_Funcoes.mqh>

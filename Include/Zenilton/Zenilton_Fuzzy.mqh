@@ -3,41 +3,7 @@
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-//| Implementation of FuzzyNet library in MetaQuotes Language 5(MQL5)|
-//|                                                                  |
-//| The features of the FuzzyNet library include:                    |
-//| - Create Mamdani fuzzy model                                     |
-//| - Create Sugeno fuzzy model                                      |
-//| - Normal membership function                                     |
-//| - Triangular membership function                                 |
-//| - Trapezoidal membership function                                |
-//| - Constant membership function                                   |
-//| - Defuzzification method of center of gravity (COG)              |
-//| - Defuzzification method of bisector of area (BOA)               |
-//| - Defuzzification method of mean of maxima (MeOM)                |
-//|                                                                  |
-//| If you find any functional differences between FuzzyNet for MQL5 |
-//| and the original FuzzyNet project , please contact developers of |
-//| MQL5 on the Forum at www.mql5.com.                               |
-//|                                                                  |
-//| You can report bugs found in the computational algorithms of the |
-//| FuzzyNet library by notifying the FuzzyNet project coordinators  |
-//+------------------------------------------------------------------+
-//|                         SOURCE LICENSE                           |
-//|                                                                  |
-//| This program is free software; you can redistribute it and/or    |
-//| modify it under the terms of the GNU General Public License as   |
-//| published by the Free Software Foundation (www.fsf.org); either  |
-//| version 2 of the License, or (at your option) any later version. |
-//|                                                                  |
-//| This program is distributed in the hope that it will be useful,  |
-//| but WITHOUT ANY WARRANTY; without even the implied warranty of   |
-//| MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the     |
-//| GNU General Public License for more details.                     |
-//|                                                                  |
-//| A copy of the GNU General Public License is available at         |
-//| http://www.fsf.org/licensing/licenses                            |
-//+------------------------------------------------------------------+
+
 #property copyright "Copyright 2015, MetaQuotes Software Corp."
 #property link      "https://www.mql5.com"
 #property version   "1.00"
@@ -78,11 +44,11 @@ double Fuzzy_Respo(double Banda, double Rsi)
    fvRsi.Terms().Add(new CFuzzyTerm("alta", new CTrapezoidMembershipFunction(0,0,30,40)));
    fsIpsus.Input().Add(fvRsi);
 //--- Create Output
-   CFuzzyVariable *fvIpsus=new CFuzzyVariable("tendencia",-100.0,100.0);
-   fvIpsus.Terms().Add(new CFuzzyTerm("re_venda", new CTriangularMembershipFunction(70,100,100)));
-   fvIpsus.Terms().Add(new CFuzzyTerm("re_faz_nada", new CTriangularMembershipFunction(-80,0,80)));
-   fvIpsus.Terms().Add(new CFuzzyTerm("re_compra", new CTriangularMembershipFunction(-100,-100,-70)));
-   fsIpsus.Output().Add(fvIpsus);
+CFuzzyVariable *fvIpsus=new CFuzzyVariable("tendencia",-100.0,100.0);
+fvIpsus.Terms().Add(new CFuzzyTerm("re_venda", new CTriangularMembershipFunction(70,100,100)));
+fvIpsus.Terms().Add(new CFuzzyTerm("re_faz_nada", new CTriangularMembershipFunction(-80,0,80)));
+fvIpsus.Terms().Add(new CFuzzyTerm("re_compra", new CTriangularMembershipFunction(-100,-100,-70)));
+fsIpsus.Output().Add(fvIpsus);
 //--- Create three Mamdani fuzzy rule
    CMamdaniFuzzyRule *rule1 = fsIpsus.ParseRule("if (banda_bollinger is compra )  and (rsi_forca is alta) then tendencia is re_compra");
    CMamdaniFuzzyRule *rule2 = fsIpsus.ParseRule("if (banda_bollinger is venda )  and (rsi_forca is queda) then tendencia is re_venda");

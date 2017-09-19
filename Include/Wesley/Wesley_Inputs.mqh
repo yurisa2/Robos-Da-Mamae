@@ -10,11 +10,7 @@ ENUM_TIMEFRAMES RSI_TimeFrame = PERIOD_CURRENT;
 int RSI_period = 14;
 ENUM_APPLIED_PRICE RSI_preco =  PRICE_CLOSE;
 
-
-
 input string Indicadores = "-------------------------------------";
-input bool   Wesley_Sai_Em_Zero = false;                                        //Sai Quando Neutraliza
-input double Wesley_Valor_Venda = 98;                                           //Valor Mínimo para Venda do Fuzzão
-input double Wesley_Valor_Compra = -98;                                           //Valor Mínimo para Compra do Fuzzão (Negativo)
-
-int Wesley_Autorizado = 0;
+input bool   Wesley_Sai_Em_Zero = false;                                          //Sai Quando Neutraliza
+input double Wesley_Valor_Venda = 71.7;                                           //Valor Mínimo para Venda do Fuzzão
+input double Wesley_Valor_Compra = -71.7;                                         //Valor Mínimo para Compra do Fuzzão (Negativo)

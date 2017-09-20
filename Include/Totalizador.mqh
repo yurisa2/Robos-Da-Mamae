@@ -21,6 +21,7 @@ class Totalizador
 void Totalizador::Totalizador()
 {
   negocios = 0;
+  calcula_financeiro();
 }
 
 double Totalizador::lucro_ate_momento()
@@ -92,4 +93,4 @@ ganho_liquido();
 
 }
 
-Totalizador totalizator;
+// Totalizador totalizator;

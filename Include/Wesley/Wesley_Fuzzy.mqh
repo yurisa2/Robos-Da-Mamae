@@ -1,25 +1,58 @@
+/* -*- C++ -*- */
 //+------------------------------------------------------------------+
-//|                                                     fuzzynet.mqh |
-//|                        Copyright 2015, MetaQuotes Software Corp. |
-//|                                             https://www.mql5.com |
-//+------------------------------------------------------------------+
-//+------------------------------------------------------------------+
-#property copyright "Copyright 2015, MetaQuotes Software Corp."
-#property link      "https://www.mql5.com"
-#property version   "1.00"
-#property strict
-#property script_show_inputs
-//+------------------------------------------------------------------+
-//| Connecting libraries                                             |
-//+------------------------------------------------------------------+
+
 #include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
-//--- input parameters
-// double   Banda;
-// double   Rsi;
-//+------------------------------------------------------------------+
-//| Script program start function                                    |
-//+------------------------------------------------------------------+
-double Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico = 50, double MoneyFI = 50)
+
+class Wesley
+{
+  public:
+  void Wesley::Wesley();
+  double Wesley_Fuzzy_Valor;
+
+  private:
+  void Get_Dados();
+  void Wesley::Comentario();
+  void Wesley::Abre();
+  void Wesley::Fecha();
+  double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico = 50, double MoneyFI = 50);
+  double Wesley_BB_Valor;
+  double Wesley_RSI_Valor;
+  double Wesley_Stoch_Valor;
+  double Wesley_MF_Valor;
+};
+
+
+void Wesley::Get_Dados()
+{
+  if(TaDentroDoHorario_RT)
+  {
+    BB *Banda_BB = new BB;
+    RSI *RSI_OO = new RSI();
+    Stoch *Stoch_OO = new Stoch();
+    MFI *MFI_OO = new MFI();
+
+    Wesley_BB_Valor = Banda_BB.BB_Posicao_Percent();
+    Wesley_RSI_Valor = RSI_OO.Valor();
+    Wesley_Stoch_Valor = Stoch_OO.Valor();
+    Wesley_MF_Valor = MFI_OO.Valor();
+
+    Wesley_Fuzzy_Valor = Fuzzy_Respo(Wesley_BB_Valor,Wesley_RSI_Valor,Wesley_Stoch_Valor,Wesley_MF_Valor);
+
+    delete(RSI_OO);
+    delete(Banda_BB);
+    delete(Stoch_OO);
+    delete(MFI_OO);
+  }
+  else
+  {
+    Wesley_BB_Valor = 0;
+    Wesley_RSI_Valor = 0;
+    Wesley_Stoch_Valor = 0;
+    Wesley_MF_Valor = 0;
+  }
+}
+
+double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico = 50, double MoneyFI = 50)
 {
   double retorno = 0;
 
@@ -43,8 +76,8 @@ double Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico = 50, d
 
   //--- Create first input variables for the system
   CFuzzyVariable *fvBanda=new CFuzzyVariable("banda_bollinger",-50.0,150.0);
-  fvBanda.Terms().Add(new CFuzzyTerm("venda", new CTrapezoidMembershipFunction(50,100,120, 150)));
-  fvBanda.Terms().Add(new CFuzzyTerm("compra", new CTrapezoidMembershipFunction(-50,-20,0,50)));
+  fvBanda.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.1,100)));
+  fvBanda.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.1,0)));
   fsIpsus.Input().Add(fvBanda);
   CMamdaniFuzzyRule *rule1 = fsIpsus.ParseRule("if (banda_bollinger is compra)  then tendencia is re_compra");
   CMamdaniFuzzyRule *rule2 = fsIpsus.ParseRule("if (banda_bollinger is venda)  then tendencia is re_venda");
@@ -81,12 +114,6 @@ double Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico = 50, d
   fsIpsus.Rules().Add(rule12);
   fsIpsus.Rules().Add(rule13);
 
-
-
-
-
-
-
   //--- Set input value
   CList *in=new CList;
   CDictionary_Obj_Double *p_od_Banda=new CDictionary_Obj_Double;
@@ -112,12 +139,68 @@ double Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico = 50, d
   //   Print("Ipsus, escala: ",p_od_Ipsus.Value());
 
   retorno = p_od_Ipsus.Value();
+  Wesley_Fuzzy_Valor = retorno;
 
   delete in;
   delete result;
   delete fsIpsus;
 
   return retorno;
-
 }
+
+void Wesley::Wesley()
+{
+  if(TaDentroDoHorario_RT)
+  {
+    Get_Dados();
+    Abre();
+  }
+  if(!Otimizacao) Comentario();
+
+  if(Wesley_Sai_Em_Zero && O_Stops.Tipo_Posicao() != 0 ) Fecha();
+}
+
+void Wesley::Abre()
+{
+  if(Wesley_Fuzzy_Valor > Wesley_Valor_Venda)
+  {
+    Opera_Mercado *opera = new Opera_Mercado;
+    opera.AbrePosicao(ORDER_TYPE_SELL,"Wesley Venda, Fuzzy: " + DoubleToString(Wesley_Fuzzy_Valor) ) ;
+    delete(opera);
+  }
+
+  if(Wesley_Fuzzy_Valor < Wesley_Valor_Compra)
+  {
+    Opera_Mercado *opera = new Opera_Mercado;
+    opera.AbrePosicao(ORDER_TYPE_BUY,"Wesley Compra, Fuzzy: " + DoubleToString(Wesley_Fuzzy_Valor) ) ;
+    delete(opera);
+  }
+}
+
+void Wesley::Fecha()
+{
+  if(O_Stops.Tipo_Posicao() < 0 && Wesley_Fuzzy_Valor <= 0)
+  {
+    Opera_Mercado *opera = new Opera_Mercado;
+    opera.FechaPosicao() ;
+    delete(opera);
+  }
+
+  if(O_Stops.Tipo_Posicao() > 0 && Wesley_Fuzzy_Valor >= 0)
+  {
+    Opera_Mercado *opera = new Opera_Mercado;
+    opera.FechaPosicao() ;
+    delete(opera);
+  }
+}
+
+void Wesley::Comentario()
+{
+  Comentario_Robo = "\n Wesley_BB_Tamanho_Porcent BB: " + DoubleToString(Wesley_BB_Valor,2);
+  Comentario_Robo = Comentario_Robo + "\n CalculaRSI: " + DoubleToString(Wesley_RSI_Valor,2);
+  Comentario_Robo = Comentario_Robo + "\n Stoch: " + DoubleToString(Wesley_Stoch_Valor,2);
+  Comentario_Robo = Comentario_Robo + "\n MFI: " + DoubleToString(Wesley_MF_Valor,2);
+  Comentario_Robo = Comentario_Robo + "\n Fuzzy_Respo(): " + DoubleToString(Wesley_Fuzzy_Valor,2);
+}
+
 //+------------------------------------------------------------------+

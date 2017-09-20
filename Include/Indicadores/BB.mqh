@@ -80,11 +80,14 @@ double BB::BB_Delta_Bruto(int barra = 0)
 double BB::BB_Posicao_Percent()
 {
   double retorno = 0;
-  double delta_BB = 0;
+  double delta_BB = 1;
   double trans_size = 0;
 
   delta_BB = BB_High() - BB_Low();
   trans_size = daotick_geral - BB_Low();
+
+  if(delta_BB == 0) delta_BB = 0.0000001;
+
   retorno = trans_size/delta_BB*100;
 
   return retorno;

@@ -4,7 +4,7 @@
 //|                        Copyright 2017, Sa2 INVESTMENT            |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "Fuzzificando."
+#property copyright "Cowabanga, work."
 #property link      "http://www.sa2.com.br"
 
 #property version   "1.0" //Low Profit Scalping
@@ -73,14 +73,13 @@ double OnTester()
   //return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais * custo_operacao * Lotes;
 
   double resultado;
-
-
-
+  
+  Totalizador *totalizator = new Totalizador();
   resultado = totalizator.ganho_liquido();
-
-
-
+  delete(totalizator);
+  
   return resultado;
+
 }
 
 void OnNewBar()

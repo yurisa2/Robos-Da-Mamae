@@ -16,9 +16,11 @@ class Wesley
   void Wesley::Fecha();
   double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico = 50, double MoneyFI = 50);
   double Wesley_BB_Valor;
+  double Wesley_BB_Delta_Valor;
   double Wesley_RSI_Valor;
   double Wesley_Stoch_Valor;
   double Wesley_MF_Valor;
+  double Wesley_Volumes;
 };
 
 
@@ -30,16 +32,20 @@ void Wesley::Get_Dados()
     RSI *RSI_OO = new RSI();
     Stoch *Stoch_OO = new Stoch();
     MFI *MFI_OO = new MFI();
+    Volumes *Volumes_OO = new Volumes();
 
     Wesley_BB_Valor = Banda_BB.BB_Posicao_Percent();
+    Wesley_BB_Delta_Valor = Banda_BB.Banda_Delta_Valor();
     Wesley_RSI_Valor = RSI_OO.Valor();
     Wesley_Stoch_Valor = Stoch_OO.Valor();
     Wesley_MF_Valor = MFI_OO.Valor();
+    Wesley_Volumes = Volumes_OO.Valor();
 
     Wesley_Fuzzy_Valor = Fuzzy_Respo(Wesley_BB_Valor,Wesley_RSI_Valor,Wesley_Stoch_Valor,Wesley_MF_Valor);
 
     delete(RSI_OO);
     delete(Banda_BB);
+    delete(Volumes_OO);
     delete(Stoch_OO);
     delete(MFI_OO);
   }
@@ -58,6 +64,8 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
 
   if(Banda < -49) Banda = 0;
   if(Banda > 149) Banda = 149;
+  if(Rsi < 0) Rsi = 0;
+  if(Rsi > 100) Rsi = 100;
 
   //--- Mamdani Fuzzy System
   CMamdaniFuzzySystem *fsIpsus=new CMamdaniFuzzySystem();
@@ -165,14 +173,14 @@ void Wesley::Abre()
   if(Wesley_Fuzzy_Valor > Wesley_Valor_Venda)
   {
     Opera_Mercado *opera = new Opera_Mercado;
-    opera.AbrePosicao(ORDER_TYPE_SELL,"Wesley Venda, Fuzzy: " + DoubleToString(Wesley_Fuzzy_Valor) ) ;
+    opera.AbrePosicao(ORDER_TYPE_SELL,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
     delete(opera);
   }
 
   if(Wesley_Fuzzy_Valor < Wesley_Valor_Compra)
   {
     Opera_Mercado *opera = new Opera_Mercado;
-    opera.AbrePosicao(ORDER_TYPE_BUY,"Wesley Compra, Fuzzy: " + DoubleToString(Wesley_Fuzzy_Valor) ) ;
+    opera.AbrePosicao(ORDER_TYPE_BUY,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
     delete(opera);
   }
 }
@@ -200,6 +208,8 @@ void Wesley::Comentario()
   Comentario_Robo = Comentario_Robo + "\n CalculaRSI: " + DoubleToString(Wesley_RSI_Valor,2);
   Comentario_Robo = Comentario_Robo + "\n Stoch: " + DoubleToString(Wesley_Stoch_Valor,2);
   Comentario_Robo = Comentario_Robo + "\n MFI: " + DoubleToString(Wesley_MF_Valor,2);
+  Comentario_Robo = Comentario_Robo + "\n Wesley_BB_Delta_Valor: " + DoubleToString(Wesley_BB_Delta_Valor,2);
+  Comentario_Robo = Comentario_Robo + "\n Wesley_Volumes: " + DoubleToString(Wesley_Volumes,2);
   Comentario_Robo = Comentario_Robo + "\n Fuzzy_Respo(): " + DoubleToString(Wesley_Fuzzy_Valor,2);
 }
 

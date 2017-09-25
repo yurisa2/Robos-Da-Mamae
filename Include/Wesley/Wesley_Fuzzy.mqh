@@ -62,10 +62,18 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
 {
   double retorno = 0;
 
+  // Bloco para nao estourar o FUzzão
   if(Banda < -49) Banda = 0;
   if(Banda > 149) Banda = 149;
   if(Rsi < 0) Rsi = 0;
   if(Rsi > 100) Rsi = 100;
+  if(Estocastico < 0) Estocastico = 0;
+  if(Estocastico > 100) Estocastico = 100;
+  if(MoneyFI < 0) MoneyFI = 0;
+  if(MoneyFI > 100) MoneyFI = 100;
+  // Bloco para nao estourar o FUzzão
+
+
 
   //--- Mamdani Fuzzy System
   CMamdaniFuzzySystem *fsIpsus=new CMamdaniFuzzySystem();
@@ -170,6 +178,11 @@ void Wesley::Wesley()
 
 void Wesley::Abre()
 {
+  double Wesley_Valor_Compra_Mod = 0;
+
+  if(Wesley_Igual_Lados) Wesley_Valor_Compra_Mod = Wesley_Valor_Venda * -1;   //ME DA O TACAPEEEEEEEEEEEEEEEE
+  else Wesley_Valor_Compra_Mod = Wesley_Valor_Compra;
+
   if(Wesley_Fuzzy_Valor > Wesley_Valor_Venda)
   {
     Opera_Mercado *opera = new Opera_Mercado;
@@ -177,7 +190,7 @@ void Wesley::Abre()
     delete(opera);
   }
 
-  if(Wesley_Fuzzy_Valor < Wesley_Valor_Compra)
+  if(Wesley_Fuzzy_Valor < Wesley_Valor_Compra_Mod)
   {
     Opera_Mercado *opera = new Opera_Mercado;
     opera.AbrePosicao(ORDER_TYPE_BUY,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));

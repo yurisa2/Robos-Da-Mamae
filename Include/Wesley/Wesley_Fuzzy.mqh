@@ -72,8 +72,8 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
 
   //--- Create Output
   CFuzzyVariable *fvIpsus=new CFuzzyVariable("tendencia",-100,100.0);
-  fvIpsus.Terms().Add(new CFuzzyTerm("re_venda", new CTriangularMembershipFunction(0,100,100)));
-  fvIpsus.Terms().Add(new CFuzzyTerm("re_compra", new CTriangularMembershipFunction(-100,-100,0)));
+  fvIpsus.Terms().Add(new CFuzzyTerm("re_venda", new CSigmoidalMembershipFunction(0.1,50)));
+  fvIpsus.Terms().Add(new CFuzzyTerm("re_compra", new CSigmoidalMembershipFunction(-0.1,-50)));
   fsIpsus.Output().Add(fvIpsus);
   //--- Create three Mamdani fuzzy rule
   // //--- Create first input variables for the system
@@ -84,8 +84,8 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
 
   //--- Create first input variables for the system
   CFuzzyVariable *fvBanda=new CFuzzyVariable("banda_bollinger",-50.0,150.0);
-  fvBanda.Terms().Add(new CFuzzyTerm("venda", new CTriangularMembershipFunction(50,100,100)));
-  fvBanda.Terms().Add(new CFuzzyTerm("compra", new CTriangularMembershipFunction(0,0,50)));
+  fvBanda.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.1,100)));
+  fvBanda.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.1,0)));
   fsIpsus.Input().Add(fvBanda);
   CMamdaniFuzzyRule *rule1 = fsIpsus.ParseRule("if (banda_bollinger is compra)  then tendencia is re_compra");
   CMamdaniFuzzyRule *rule2 = fsIpsus.ParseRule("if (banda_bollinger is venda)  then tendencia is re_venda");
@@ -94,8 +94,8 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
 
   //--- Create second input variables for the system
   CFuzzyVariable *fvRsi=new CFuzzyVariable("rsi_forca",0.0,100.0);
-  fvRsi.Terms().Add(new CFuzzyTerm("venda", new CTriangularMembershipFunction(50,100,100)));
-  fvRsi.Terms().Add(new CFuzzyTerm("compra", new CTriangularMembershipFunction(0,0,50)));
+  fvRsi.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.3,70)));
+  fvRsi.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.3,30)));
   fsIpsus.Input().Add(fvRsi);
   CMamdaniFuzzyRule *rule7 = fsIpsus.ParseRule("if (rsi_forca is compra) then tendencia is re_compra");
   CMamdaniFuzzyRule *rule8 = fsIpsus.ParseRule("if (rsi_forca is venda) then tendencia is re_venda");
@@ -104,8 +104,8 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
 
   //--- Create first input variables for the system
   CFuzzyVariable *fvStoch=new CFuzzyVariable("stoch",0,100.0);
-  fvStoch.Terms().Add(new CFuzzyTerm("venda", new CTriangularMembershipFunction(50,100,100)));
-  fvStoch.Terms().Add(new CFuzzyTerm("compra", new CTriangularMembershipFunction(0,0,50)));
+  fvStoch.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.15,80)));
+  fvStoch.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.15,20)));
   fsIpsus.Input().Add(fvStoch);
   CMamdaniFuzzyRule *rule10 = fsIpsus.ParseRule("if (stoch is compra) then tendencia is re_compra");
   CMamdaniFuzzyRule *rule11 = fsIpsus.ParseRule("if (stoch is venda) then tendencia is re_venda");
@@ -114,8 +114,8 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
 
   //--- Create first input variables for the system
   CFuzzyVariable *fvMFI=new CFuzzyVariable("mfi",0,100.0);
-  fvMFI.Terms().Add(new CFuzzyTerm("venda", new CTriangularMembershipFunction(50,100,100)));
-  fvMFI.Terms().Add(new CFuzzyTerm("compra", new CTriangularMembershipFunction(0,0,50)));
+  fvMFI.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.15,80)));
+  fvMFI.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(0.15,80)));
   fsIpsus.Input().Add(fvMFI);
   CMamdaniFuzzyRule *rule12 = fsIpsus.ParseRule("if (mfi is compra) then tendencia is re_compra");
   CMamdaniFuzzyRule *rule13 = fsIpsus.ParseRule("if (mfi is venda) then tendencia is re_venda");

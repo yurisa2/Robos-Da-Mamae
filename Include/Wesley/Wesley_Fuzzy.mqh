@@ -115,7 +115,7 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
   //--- Create first input variables for the system
   CFuzzyVariable *fvMFI=new CFuzzyVariable("mfi",0,100.0);
   fvMFI.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.15,80)));
-  fvMFI.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(0.15,80)));
+  fvMFI.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.15,20)));
   fsIpsus.Input().Add(fvMFI);
   CMamdaniFuzzyRule *rule12 = fsIpsus.ParseRule("if (mfi is compra) then tendencia is re_compra");
   CMamdaniFuzzyRule *rule13 = fsIpsus.ParseRule("if (mfi is venda) then tendencia is re_venda");

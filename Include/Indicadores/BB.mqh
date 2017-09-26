@@ -6,8 +6,8 @@ class BB
 {
   public:
   void BB(
-    string              symbol = NULL,            // símbolo nome
     ENUM_TIMEFRAMES     period = PERIOD_CURRENT,            // período
+    string              symbol = NULL,            // símbolo nome
     int                 bands_period = 20,      // período para o cálculo da média da linha
     int                 bands_shift = 0,       // deslocamento horizontal do indicador
     double              deviation = 2,         // número de desvios padrão
@@ -25,8 +25,8 @@ class BB
 };
 
 void BB::BB(
-  string              symbol = NULL,            // símbolo nome
   ENUM_TIMEFRAMES     period = PERIOD_CURRENT,            // período
+  string              symbol = NULL,            // símbolo nome
   int                 bands_period = 20,      // período para o cálculo da média da linha
   int                 bands_shift = 0,       // deslocamento horizontal do indicador
   double              deviation = 2,         // número de desvios padrão

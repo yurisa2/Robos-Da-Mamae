@@ -28,11 +28,11 @@ void Wesley::Get_Dados()
 {
   if(TaDentroDoHorario_RT)
   {
-    BB *Banda_BB = new BB;
-    RSI *RSI_OO = new RSI();
-    Stoch *Stoch_OO = new Stoch();
-    MFI *MFI_OO = new MFI();
-    Volumes *Volumes_OO = new Volumes();
+    BB *Banda_BB = new BB(TimeFrame);
+    RSI *RSI_OO = new RSI(14,TimeFrame);
+    Stoch *Stoch_OO = new Stoch(10,3,3,TimeFrame);
+    MFI *MFI_OO = new MFI(TimeFrame);
+    Volumes *Volumes_OO = new Volumes(NULL,TimeFrame);
 
     Wesley_BB_Valor = Banda_BB.BB_Posicao_Percent();
     Wesley_BB_Delta_Valor = Banda_BB.Banda_Delta_Valor();

@@ -55,7 +55,7 @@ double Totalizador::lucro_ate_momento()
           profit_somado = profit_somado + profit;
           ganho_total = profit_somado;
           num_negocios++;
-          negocios = num_negocios;
+          negocios = num_negocios-1;
           }
 
           delete(opera);

@@ -63,6 +63,8 @@ bool  Condicoes_Basicas_OO::Banda_Permite()
   // delta_media_candle = (((rates[1].high + rates[2].high + rates[3].high) / 3 ) - ((rates[1].low + rates[2].low + rates[3].low) / 3 )/Tick_Size);
   delta_media_candle = (rates[1].high - rates[1].low);
 
+  if(delta_media_candle == 0) delta_media_candle = 0.0000001;
+
   delta = (Banda.BB_Delta_Bruto()/delta_media_candle) * 100 ;
 
   // Print("delta: " + delta);

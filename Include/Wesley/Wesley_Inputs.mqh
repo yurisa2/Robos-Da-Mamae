@@ -14,5 +14,8 @@ input string Indicadores = "-------------------------------------";
 input bool  Wesley_Tempo_Real = true;   //Tempo real ou no tick
 input bool   Wesley_Sai_Em_Zero = true;                                          //Sai Quando Zera
 input bool   Wesley_Igual_Lados = true;                                           //Parametros Simetricos
-input double Wesley_Valor_Venda = 71.7;                                           //Valor Mínimo para Venda (Usa esse para Simetricos)
-input double Wesley_Valor_Compra = -71.7;                                         //Valor Mínimo para Compra (ignorado se Simetricos)
+input double Wesley_Valor_Venda = 52.203;                                           //Valor Mínimo para Venda (Usa esse para Simetricos)
+input double Wesley_Valor_Compra = -52.203;                                         //Valor Mínimo para Compra (ignorado se Simetricos)
+
+// if (RSI is compra) then tendencia is re_compra
+// if (RSI is venda) then tendencia is re_venda

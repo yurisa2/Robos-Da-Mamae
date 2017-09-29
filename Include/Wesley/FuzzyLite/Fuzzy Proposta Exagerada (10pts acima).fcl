@@ -1,0 +1,63 @@
+FUNCTION_BLOCK Wesley
+
+VAR_INPUT
+RSI: REAL;
+BB: REAL;
+Stoch: REAL;
+MFI: REAL;
+END_VAR
+
+VAR_OUTPUT
+tendencia: REAL;
+END_VAR
+
+FUZZIFY RSI
+RANGE := (0.000 .. 100.000);
+TERM venda := Sigmoid (80.000, 0.200);
+TERM compra := Sigmoid (20.000, -0.200);
+END_FUZZIFY
+
+FUZZIFY BB
+RANGE := (-50.000 .. 150.000);
+TERM venda := Sigmoid (110.000, 0.100);
+TERM compra := Sigmoid (-10.000, -0.100);
+END_FUZZIFY
+
+FUZZIFY Stoch
+RANGE := (0.000 .. 100.000);
+TERM venda := Sigmoid (90.000, 0.200);
+TERM compra := Sigmoid (10.000, -0.200);
+END_FUZZIFY
+
+FUZZIFY MFI
+RANGE := (0.000 .. 100.000);
+TERM venda := Sigmoid (90.000, 0.200);
+TERM compra := Sigmoid (10.000, -0.200);
+END_FUZZIFY
+
+DEFUZZIFY tendencia
+RANGE := (-100.000 .. 100.000);
+TERM re_venda := Sigmoid (30.000, 0.040);
+TERM re_compra := Sigmoid (-30.000, -0.040);
+
+METHOD : COG;
+ACCU : MAX;
+DEFAULT := nan;
+END_DEFUZZIFY
+
+RULEBLOCK 
+AND : MIN;
+OR : MAX;
+ACT : MIN;
+
+RULE 1 : if (BB is compra) then tendencia is re_compra
+RULE 2 : if (BB is venda) then tendencia is re_venda
+RULE 3 : if (RSI is compra) then tendencia is re_compra
+RULE 4 : if (RSI is venda) then tendencia is re_venda
+RULE 5 : if (Stoch is compra) then tendencia is re_compra
+RULE 6 : if (Stoch is venda) then tendencia is re_venda
+RULE 7 : if (MFI is compra) then tendencia is re_compra
+RULE 8 : if (MFI is venda) then tendencia is re_venda
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK

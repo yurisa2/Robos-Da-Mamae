@@ -80,50 +80,62 @@ double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico
 
   //--- Create Output
   CFuzzyVariable *fvIpsus=new CFuzzyVariable("tendencia",-100,100.0);
-  fvIpsus.Terms().Add(new CFuzzyTerm("re_venda", new CSigmoidalMembershipFunction(0.04,30)));
-  fvIpsus.Terms().Add(new CFuzzyTerm("re_compra", new CSigmoidalMembershipFunction(-0.04,-30)));
+  fvIpsus.Terms().Add(new CFuzzyTerm("re_compra", new CSigmoidalMembershipFunction(-0.1,-50)));
+  fvIpsus.Terms().Add(new CFuzzyTerm("re_intermediario", new CGeneralizedBellShapedMembershipFunction(50,20,3)));
+  fvIpsus.Terms().Add(new CFuzzyTerm("re_venda", new CSigmoidalMembershipFunction(0.1,50)));
   fsIpsus.Output().Add(fvIpsus);
-
 
   //--- Create first input variables for the system
   CFuzzyVariable *fvBanda=new CFuzzyVariable("banda_bollinger",-50.0,150.0);
-  fvBanda.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.040,100)));
-  fvBanda.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.040,0)));
+  fvBanda.Terms().Add(new CFuzzyTerm("BB_Compra", new CSigmoidalMembershipFunction(-0.1,0)));
+  fvBanda.Terms().Add(new CFuzzyTerm("BB_Meio", new CGeneralizedBellShapedMembershipFunction(50,28,3)));
+  fvBanda.Terms().Add(new CFuzzyTerm("BB_Venda", new CSigmoidalMembershipFunction(0.1,100)));
   fsIpsus.Input().Add(fvBanda);
-  CMamdaniFuzzyRule *rule1 = fsIpsus.ParseRule("if (banda_bollinger is compra)  then tendencia is re_compra");
-  CMamdaniFuzzyRule *rule2 = fsIpsus.ParseRule("if (banda_bollinger is venda)  then tendencia is re_venda");
-  fsIpsus.Rules().Add(rule1);
-  fsIpsus.Rules().Add(rule2);
+  CMamdaniFuzzyRule *R_Compra_BB = fsIpsus.ParseRule("if (banda_bollinger is BB_Compra)  then tendencia is re_compra");
+  CMamdaniFuzzyRule *R_Meio_BB = fsIpsus.ParseRule("if (banda_bollinger is BB_Meio)  then tendencia is re_intermediario");
+  CMamdaniFuzzyRule *R_Venda_BB = fsIpsus.ParseRule("if (banda_bollinger is BB_Venda)  then tendencia is re_venda");
+  fsIpsus.Rules().Add(R_Compra_BB);
+  fsIpsus.Rules().Add(R_Meio_BB);
+  fsIpsus.Rules().Add(R_Venda_BB);
 
   //--- Create second input variables for the system
   CFuzzyVariable *fvRsi=new CFuzzyVariable("rsi_forca",0.0,100.0);
-  fvRsi.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.1,70)));
-  fvRsi.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.1,30)));
+  fvRsi.Terms().Add(new CFuzzyTerm("RSI_Compra", new CSigmoidalMembershipFunction(-0.2,30)));
+  fvRsi.Terms().Add(new CFuzzyTerm("RSI_Meio", new CGeneralizedBellShapedMembershipFunction(50,15,3)));
+  fvRsi.Terms().Add(new CFuzzyTerm("RSI_Venda", new CSigmoidalMembershipFunction(0.2,70)));
   fsIpsus.Input().Add(fvRsi);
-  CMamdaniFuzzyRule *rule7 = fsIpsus.ParseRule("if (rsi_forca is compra) then tendencia is re_compra");
-  CMamdaniFuzzyRule *rule8 = fsIpsus.ParseRule("if (rsi_forca is venda) then tendencia is re_venda");
-  fsIpsus.Rules().Add(rule7);
-  fsIpsus.Rules().Add(rule8);
+  CMamdaniFuzzyRule *R_Compra_RSI = fsIpsus.ParseRule("if (rsi_forca is RSI_Compra) then tendencia is re_compra");
+  CMamdaniFuzzyRule *R_Meio_RSI = fsIpsus.ParseRule("if (rsi_forca is RSI_Meio) then tendencia is re_intermediario");
+  CMamdaniFuzzyRule *R_Venda_RSI = fsIpsus.ParseRule("if (rsi_forca is RSI_Venda) then tendencia is re_venda");
+  fsIpsus.Rules().Add(R_Compra_RSI);
+  fsIpsus.Rules().Add(R_Meio_RSI);
+  fsIpsus.Rules().Add(R_Venda_RSI);
 
   //--- Create first input variables for the system
   CFuzzyVariable *fvStoch=new CFuzzyVariable("stoch",0,100.0);
-  fvStoch.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.08,80)));
-  fvStoch.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.08,20)));
+  fvStoch.Terms().Add(new CFuzzyTerm("S_Compra", new CSigmoidalMembershipFunction(-0.15,20)));
+  fvStoch.Terms().Add(new CFuzzyTerm("S_Meio", new CGeneralizedBellShapedMembershipFunction(50,20,3)));
+  fvStoch.Terms().Add(new CFuzzyTerm("S_Venda", new CSigmoidalMembershipFunction(0.15,80)));
   fsIpsus.Input().Add(fvStoch);
-  CMamdaniFuzzyRule *rule10 = fsIpsus.ParseRule("if (stoch is compra) then tendencia is re_compra");
-  CMamdaniFuzzyRule *rule11 = fsIpsus.ParseRule("if (stoch is venda) then tendencia is re_venda");
-  fsIpsus.Rules().Add(rule10);
-  fsIpsus.Rules().Add(rule11);
+  CMamdaniFuzzyRule *R_S_Compra = fsIpsus.ParseRule("if (stoch is S_Compra) then tendencia is re_compra");
+  CMamdaniFuzzyRule *R_S_Meio = fsIpsus.ParseRule("if (stoch is S_Meio) then tendencia is re_intermediario");
+  CMamdaniFuzzyRule *R_S_Venda = fsIpsus.ParseRule("if (stoch is S_Venda) then tendencia is re_venda");
+  fsIpsus.Rules().Add(R_S_Compra);
+  fsIpsus.Rules().Add(R_S_Meio);
+  fsIpsus.Rules().Add(R_S_Venda);
 
   //--- Create first input variables for the system
   CFuzzyVariable *fvMFI=new CFuzzyVariable("mfi",0,100.0);
-  fvMFI.Terms().Add(new CFuzzyTerm("venda", new CSigmoidalMembershipFunction(0.08,80)));
-  fvMFI.Terms().Add(new CFuzzyTerm("compra", new CSigmoidalMembershipFunction(-0.08,20)));
+  fvMFI.Terms().Add(new CFuzzyTerm("MFI_Compra", new CSigmoidalMembershipFunction(-0.15,20)));
+  fvMFI.Terms().Add(new CFuzzyTerm("MFI_Meio", new CGeneralizedBellShapedMembershipFunction(50,20,3)));
+  fvMFI.Terms().Add(new CFuzzyTerm("MFI_Venda", new CSigmoidalMembershipFunction(0.15,80)));
   fsIpsus.Input().Add(fvMFI);
-  CMamdaniFuzzyRule *rule12 = fsIpsus.ParseRule("if (mfi is compra) then tendencia is re_compra");
-  CMamdaniFuzzyRule *rule13 = fsIpsus.ParseRule("if (mfi is venda) then tendencia is re_venda");
-  fsIpsus.Rules().Add(rule12);
-  fsIpsus.Rules().Add(rule13);
+  CMamdaniFuzzyRule *R_MFI_Compra = fsIpsus.ParseRule("if (mfi is MFI_Compra) then tendencia is re_compra");
+  CMamdaniFuzzyRule *R_MFI_Meio = fsIpsus.ParseRule("if (mfi is MFI_Meio) then tendencia is re_intermediario");
+  CMamdaniFuzzyRule *R_MFI_Venda = fsIpsus.ParseRule("if (mfi is MFI_Venda) then tendencia is re_venda");
+  fsIpsus.Rules().Add(R_MFI_Compra);
+  fsIpsus.Rules().Add(R_MFI_Meio);
+  fsIpsus.Rules().Add(R_MFI_Venda);
 
   //--- Set input value
   CList *in=new CList;

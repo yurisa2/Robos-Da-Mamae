@@ -7,7 +7,7 @@
 #include <Graphics\Graphic.mqh>
 //--- Create membership functions
 CSigmoidalMembershipFunction func1(0.1,100);
-CGeneralizedBellShapedMembershipFunction func2(50,2,20);
+CGeneralizedBellShapedMembershipFunction func2(50,20,3);
 CSigmoidalMembershipFunction func3(-0.1,0);
 
 //--- Create wrappers for membership functions

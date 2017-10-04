@@ -111,16 +111,20 @@ void Wesley::Abre()
   if(Wesley_Fuzzy_Valor > Wesley_Valor_Venda)
   {
     Opera_Mercado *opera = new Opera_Mercado;
-    if(!Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_SELL,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
-    if(Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_BUY,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
+    if(!Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_SELL,"Fuzzy: " + DoubleToString(Wesley_Fuzzy_Valor));
+    if(Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_BUY,"Fuzzy: " + DoubleToString(Wesley_Fuzzy_Valor));
+    // if(!Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_SELL,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
+    // if(Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_BUY,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
     delete(opera);
   }
 
   if(Wesley_Fuzzy_Valor < Wesley_Valor_Compra_Mod)
   {
     Opera_Mercado *opera = new Opera_Mercado;
-    if(!Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_BUY,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
-    if(Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_SELL,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
+    if(!Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_BUY,"Fuzzy: " + DoubleToString(Wesley_Fuzzy_Valor));
+    if(Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_SELL,"Fuzzy: " + DoubleToString(Wesley_Fuzzy_Valor));
+    // if(!Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_BUY,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
+    // if(Wesley_Inverte) opera.AbrePosicao(ORDER_TYPE_SELL,DoubleToString(Wesley_BB_Valor,0) + ";" + DoubleToString(Wesley_BB_Delta_Valor,0) + ";" + DoubleToString(Wesley_RSI_Valor,0) + ";" + DoubleToString(Wesley_Stoch_Valor,0) + ";" + DoubleToString(Wesley_MF_Valor,0) + ";" + DoubleToString(Wesley_Volumes,0));
     delete(opera);
   }
 }

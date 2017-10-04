@@ -7,7 +7,7 @@
 #include <Graphics\Graphic.mqh>
 //--- Create membership functions
 CSigmoidalMembershipFunction func1(0.1,50);
-CGeneralizedBellShapedMembershipFunction func2(0,2,60);
+CGeneralizedBellShapedMembershipFunction func2(0,3,28);
 CSigmoidalMembershipFunction func3(-0.1,-50);
 
 //--- Create wrappers for membership functions
@@ -19,7 +19,7 @@ double SigmoidalMembershipFunction3(double x) { return(func3.GetValue(x)); }
 //+------------------------------------------------------------------+
 void OnStart()
   {
-  
+
   ObjectsDeleteAll(0);
 //--- create graphic
    CGraphic graphic;
@@ -32,7 +32,7 @@ void OnStart()
    graphic.BackgroundMainSize(16);
 //--- create curve
    graphic.CurveAdd(S_ShapedMembershipFunction1,-100,100,0.1,CURVE_LINES,"Func1");
- //  graphic.CurveAdd(GeneralizedBellShapedMembershipFuncion2,-100,100,0.1,CURVE_LINES,"Func2");
+   graphic.CurveAdd(GeneralizedBellShapedMembershipFuncion2,-100,100,0.1,CURVE_LINES,"Func2");
    graphic.CurveAdd(SigmoidalMembershipFunction3,-100,100.0,0.1,CURVE_LINES,"Func3");
 //--- sets the X-axis properties
    graphic.XAxis().AutoScale(false);

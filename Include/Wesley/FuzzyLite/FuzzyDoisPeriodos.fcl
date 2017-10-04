@@ -1,0 +1,116 @@
+FUNCTION_BLOCK WesleyNovo
+
+VAR_INPUT
+BB: REAL;
+RSI: REAL;
+Stoch: REAL;
+MFI: REAL;
+BBL: REAL;
+RSIL: REAL;
+StochL: REAL;
+MFIL: REAL;
+END_VAR
+
+VAR_OUTPUT
+Decisao: REAL;
+END_VAR
+
+FUZZIFY BB
+RANGE := (-50.000 .. 150.000);
+TERM BB_Compra := Sigmoid (0.000, -0.100);
+TERM BB_Meio := Bell (50.000, 28.000, 3.000);
+TERM BB_Venda := Sigmoid (100.000, 0.100);
+END_FUZZIFY
+
+FUZZIFY RSI
+RANGE := (0.000 .. 100.000);
+TERM RSI_Compra := Sigmoid (30.000, -0.200);
+TERM RSI_Meio := Bell (50.000, 15.000, 3.000);
+TERM RSI_Venda := Sigmoid (70.000, 0.200);
+END_FUZZIFY
+
+FUZZIFY Stoch
+RANGE := (0.000 .. 100.000);
+TERM S_Compra := Sigmoid (20.000, -0.150);
+TERM S_Meio := Bell (50.000, 20.000, 3.000);
+TERM S_Venda := Sigmoid (80.000, 0.150);
+END_FUZZIFY
+
+FUZZIFY MFI
+RANGE := (0.000 .. 100.000);
+TERM MFI_Compra := Sigmoid (20.000, -0.150);
+TERM MFI_Meio := Bell (50.000, 20.000, 3.000);
+TERM MFI_Venda := Sigmoid (80.000, 0.150);
+END_FUZZIFY
+
+FUZZIFY BBL
+RANGE := (-50.000 .. 150.000);
+TERM BBL_Compra := Sigmoid (0.000, -0.100);
+TERM BBL_Meio := Bell (50.000, 28.000, 3.000);
+TERM BBL_Venda := Sigmoid (100.000, 0.100);
+END_FUZZIFY
+
+FUZZIFY RSIL
+RANGE := (0.000 .. 100.000);
+TERM RSIL_Compra := Sigmoid (30.000, -0.200);
+TERM RSIL_Meio := Bell (50.000, 15.000, 3.000);
+TERM RSIL_Venda := Sigmoid (70.000, 0.200);
+END_FUZZIFY
+
+FUZZIFY StochL
+RANGE := (0.000 .. 100.000);
+TERM SL_Compra := Sigmoid (20.000, -0.150);
+TERM SL_Meio := Bell (50.000, 20.000, 3.000);
+TERM SL_Venda := Sigmoid (80.000, 0.150);
+END_FUZZIFY
+
+FUZZIFY MFIL
+RANGE := (0.000 .. 100.000);
+TERM MFIL_Compra := Sigmoid (20.000, -0.150);
+TERM MFIL_Meio := Bell (50.000, 20.000, 3.000);
+TERM MFIL_Venda := Sigmoid (80.000, 0.150);
+END_FUZZIFY
+
+DEFUZZIFY Decisao
+RANGE := (-100.000 .. 100.000);
+TERM re_compra := Sigmoid (-50.000, -0.100);
+TERM re_intermediario := Bell (0.000, 28.000, 3.000);
+TERM re_venda := Sigmoid (50.000, 0.100);
+
+METHOD : COG;
+ACCU : ASUM;
+DEFAULT := nan;
+END_DEFUZZIFY
+
+RULEBLOCK 
+AND : MIN;
+OR : MAX;
+ACT : MIN;
+
+RULE 1 : if BB is BB_Compra then Decisao is re_compra
+RULE 2 : if BB is BB_Meio then Decisao is re_intermediario
+RULE 3 : if BB is BB_Venda then Decisao is re_venda
+RULE 4 : if RSI is RSI_Compra then Decisao is re_compra
+RULE 5 : if RSI is RSI_Meio then Decisao is re_intermediario
+RULE 6 : if RSI is RSI_Venda then Decisao is re_venda
+RULE 7 : if Stoch is S_Compra then Decisao is re_compra
+RULE 8 : if Stoch is S_Meio then Decisao is re_intermediario
+RULE 9 : if Stoch is S_Venda then Decisao is re_venda
+RULE 10 : if MFI is MFI_Compra then Decisao is re_compra
+RULE 11 : if MFI is MFI_Meio then Decisao is re_intermediario
+RULE 12 : if MFI is MFI_Venda then Decisao is re_venda
+RULE 13 : if BBL is BBL_Compra then Decisao is re_compra
+RULE 14 : if BBL is BBL_Meio then Decisao is re_intermediario
+RULE 15 : if BBL is BBL_Venda then Decisao is re_venda
+RULE 16 : if RSIL is RSIL_Compra then Decisao is re_compra
+RULE 17 : if RSIL is RSIL_Meio then Decisao is re_intermediario
+RULE 18 : if RSIL is RSIL_Venda then Decisao is re_venda
+RULE 19 : if StochL is SL_Compra then Decisao is re_compra
+RULE 20 : if StochL is SL_Meio then Decisao is re_intermediario
+RULE 21 : if StochL is SL_Venda then Decisao is re_venda
+RULE 22 : if MFIL is MFIL_Compra then Decisao is re_compra
+RULE 23 : if MFIL is MFIL_Meio then Decisao is re_intermediario
+RULE 24 : if MFIL is MFIL_Venda then Decisao is re_venda
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK

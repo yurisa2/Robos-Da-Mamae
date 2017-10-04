@@ -52,6 +52,7 @@ void Wesley::Get_Dados()
     Wesley_Stoch_Valor = Stoch_OO.Valor();
     Wesley_MF_Valor = MFI_OO.Valor();
     Wesley_Volumes = Volumes_OO.Valor();
+
     Wesley_BB_ValorL = Banda_BBL.BB_Posicao_Percent();
     Wesley_BB_Delta_ValorL = Banda_BBL.Banda_Delta_Valor();
     Wesley_RSI_ValorL = RSI_OOL.Valor();
@@ -59,7 +60,8 @@ void Wesley::Get_Dados()
     Wesley_MF_ValorL = MFI_OOL.Valor();
     Wesley_VolumesL = Volumes_OOL.Valor();
 
-    Wesley_Fuzzy_Valor = Fuzzy_Respo(Wesley_BB_Valor,Wesley_RSI_Valor,Wesley_Stoch_Valor,Wesley_MF_Valor,
+    Wesley_Fuzzy_Valor = Fuzzy_Respo(
+      Wesley_BB_Valor,Wesley_RSI_Valor,Wesley_Stoch_Valor,Wesley_MF_Valor,
       Wesley_BB_ValorL,Wesley_RSI_ValorL,Wesley_Stoch_ValorL,Wesley_MF_ValorL
     );
 
@@ -146,9 +148,18 @@ void Wesley::Comentario()
   Comentario_Robo = Comentario_Robo + "\n CalculaRSI: " + DoubleToString(Wesley_RSI_Valor,2);
   Comentario_Robo = Comentario_Robo + "\n Stoch: " + DoubleToString(Wesley_Stoch_Valor,2);
   Comentario_Robo = Comentario_Robo + "\n MFI: " + DoubleToString(Wesley_MF_Valor,2);
-  Comentario_Robo = Comentario_Robo + "\n Wesley_BB_Delta_Valor: " + DoubleToString(Wesley_BB_Delta_Valor,2);
-  Comentario_Robo = Comentario_Robo + "\n Wesley_Volumes: " + DoubleToString(Wesley_Volumes,2);
+//  Comentario_Robo = Comentario_Robo + "\n Wesley_BB_Delta_Valor: " + DoubleToString(Wesley_BB_Delta_Valor,2);
+//  Comentario_Robo = Comentario_Robo + "\n Wesley_Volumes: " + DoubleToString(Wesley_Volumes,2);
+  Comentario_Robo = Comentario_Robo + "\n Wesley_BB_Tamanho_Porcent BB L: " + DoubleToString(Wesley_BB_ValorL,2);
+  Comentario_Robo = Comentario_Robo + "\n CalculaRSI (L): " + DoubleToString(Wesley_RSI_ValorL,2);
+  Comentario_Robo = Comentario_Robo + "\n Stoch (L): " + DoubleToString(Wesley_Stoch_ValorL,2);
+  Comentario_Robo = Comentario_Robo + "\n MFI (L): " + DoubleToString(Wesley_MF_ValorL,2);
+//  Comentario_Robo = Comentario_Robo + "\n Wesley_BB_Delta_Valor (L): " + DoubleToString(Wesley_BB_Delta_Valor,2);
+//  Comentario_Robo = Comentario_Robo + "\n Wesley_Volumes (L): " + DoubleToString(Wesley_Volumes,2);
+  Comentario_Robo = Comentario_Robo + "\n\n";
+
   Comentario_Robo = Comentario_Robo + "\n Fuzzy_Respo(): " + DoubleToString(Wesley_Fuzzy_Valor,2);
+
 }
 
 //+------------------------------------------------------------------+

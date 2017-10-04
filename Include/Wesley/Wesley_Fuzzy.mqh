@@ -45,6 +45,7 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   CList *in=new CList;
 
   //--- Create first input variables for the system
+  if(Wesley_BB_Enable && Wesley_Permite_Large && Wesley_BBG_Enable){
   CFuzzyVariable *fvBanda=new CFuzzyVariable("banda_bollinger",-50.0,150.0);
   fvBanda.Terms().Add(new CFuzzyTerm("BB_Compra", new CSigmoidalMembershipFunction(-0.1,0)));
   fvBanda.Terms().Add(new CFuzzyTerm("BB_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,28)));
@@ -60,8 +61,9 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   p_od_Banda.SetAll(fvBanda, Banda);
   in.Add(p_od_Banda);
 
-
+}
   //--- Create first input variables for the system
+    if(Wesley_BBL_Enable && Wesley_Permite_Large && Wesley_BBG_Enable){
   CFuzzyVariable *fvBandaBBL=new CFuzzyVariable("banda_bollinger_large",-50.0,150.0);
   fvBandaBBL.Terms().Add(new CFuzzyTerm("BBL_Compra", new CSigmoidalMembershipFunction(-0.1,0)));
   fvBandaBBL.Terms().Add(new CFuzzyTerm("BBL_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,28)));
@@ -76,8 +78,10 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   CDictionary_Obj_Double *p_od_BandaL=new CDictionary_Obj_Double;
   p_od_BandaL.SetAll(fvBandaBBL, BandaL);
   in.Add(p_od_BandaL);
+}
 
   //--- Create second input variables for the system
+    if(Wesley_RSI_Enable && Wesley_Permite_Large && Wesley_RSIG_Enable){
   CFuzzyVariable *fvRsi=new CFuzzyVariable("rsi_forca",0,100);
   fvRsi.Terms().Add(new CFuzzyTerm("RSI_Compra", new CSigmoidalMembershipFunction(-0.2,30)));
   fvRsi.Terms().Add(new CFuzzyTerm("RSI_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,15)));
@@ -92,8 +96,10 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   CDictionary_Obj_Double *p_od_Rsi=new CDictionary_Obj_Double;
   p_od_Rsi.SetAll(fvRsi, Rsi);
   in.Add(p_od_Rsi);
+}
 
   //--- Create second input variables for the system
+    if(Wesley_RSIL_Enable && Wesley_Permite_Large && Wesley_RSIG_Enable){
   CFuzzyVariable *fvRsil=new CFuzzyVariable("rsil_forca",0,100);
   fvRsil.Terms().Add(new CFuzzyTerm("RSIL_Compra", new CSigmoidalMembershipFunction(-0.2,30)));
   fvRsil.Terms().Add(new CFuzzyTerm("RSIL_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,15)));
@@ -108,8 +114,10 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   CDictionary_Obj_Double *p_od_RsiL=new CDictionary_Obj_Double;
   p_od_RsiL.SetAll(fvRsil, RsiL);
   in.Add(p_od_RsiL);
+}
 
   //--- Create first input variables for the system
+    if(Wesley_Stoch_Enable && Wesley_Permite_Large && Wesley_StochG_Enable){
   CFuzzyVariable *fvStoch=new CFuzzyVariable("stoch",0,100);
   fvStoch.Terms().Add(new CFuzzyTerm("S_Compra", new CSigmoidalMembershipFunction(-0.15,20)));
   fvStoch.Terms().Add(new CFuzzyTerm("S_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,20)));
@@ -124,9 +132,11 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   CDictionary_Obj_Double *p_od_Stoch=new CDictionary_Obj_Double;
   p_od_Stoch.SetAll(fvStoch, Estocastico);
   in.Add(p_od_Stoch);
+}
 
 
   //--- Create first input variables for the system
+    if(Wesley_StochL_Enable && Wesley_Permite_Large && Wesley_StochG_Enable){
   CFuzzyVariable *fvStochl=new CFuzzyVariable("stochL",0,100);
   fvStochl.Terms().Add(new CFuzzyTerm("SL_Compra", new CSigmoidalMembershipFunction(-0.15,20)));
   fvStochl.Terms().Add(new CFuzzyTerm("SL_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,20)));
@@ -141,9 +151,10 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   CDictionary_Obj_Double *p_od_StochL=new CDictionary_Obj_Double;
   p_od_StochL.SetAll(fvStochl, EstocasticoL);
   in.Add(p_od_StochL);
-
+}
 
   //--- Create first input variables for the system
+    if(Wesley_MFI_Enable && Wesley_Permite_Large && Wesley_MFIG_Enable){
   CFuzzyVariable *fvMFI=new CFuzzyVariable("mfi",0,100);
   fvMFI.Terms().Add(new CFuzzyTerm("MFI_Compra", new CSigmoidalMembershipFunction(-0.15,20)));
   fvMFI.Terms().Add(new CFuzzyTerm("MFI_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,20)));
@@ -158,9 +169,10 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   CDictionary_Obj_Double *p_od_MoneyFI=new CDictionary_Obj_Double;
   p_od_MoneyFI.SetAll(fvMFI, MoneyFI);
   in.Add(p_od_MoneyFI);
-
+}
 
   //--- Create first input variables for the system
+    if(Wesley_MFIL_Enable && Wesley_Permite_Large && Wesley_MFIG_Enable){
   CFuzzyVariable *fvMFIL=new CFuzzyVariable("mfiL",0,100);
   fvMFIL.Terms().Add(new CFuzzyTerm("MFIL_Compra", new CSigmoidalMembershipFunction(-0.15,20)));
   fvMFIL.Terms().Add(new CFuzzyTerm("MFIL_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,20)));
@@ -175,7 +187,7 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   CDictionary_Obj_Double *p_od_MoneyFIL=new CDictionary_Obj_Double;
   p_od_MoneyFIL.SetAll(fvMFIL, MoneyFIL);
   in.Add(p_od_MoneyFIL);
-
+}
 
 
   //--- Get result

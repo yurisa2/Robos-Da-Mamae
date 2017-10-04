@@ -90,27 +90,24 @@ ACT : MIN;
 RULE 1 : if BB is BB_Compra then Decisao is re_compra
 RULE 2 : if BB is BB_Meio then Decisao is re_intermediario
 RULE 3 : if BB is BB_Venda then Decisao is re_venda
-RULE 4 : if RSI is RSI_Compra then Decisao is re_compra
-RULE 5 : if RSI is RSI_Meio then Decisao is re_intermediario
-RULE 6 : if RSI is RSI_Venda then Decisao is re_venda
-RULE 7 : if Stoch is S_Compra then Decisao is re_compra
-RULE 8 : if Stoch is S_Meio then Decisao is re_intermediario
-RULE 9 : if Stoch is S_Venda then Decisao is re_venda
-RULE 10 : if MFI is MFI_Compra then Decisao is re_compra
-RULE 11 : if MFI is MFI_Meio then Decisao is re_intermediario
-RULE 12 : if MFI is MFI_Venda then Decisao is re_venda
-RULE 13 : if BBL is BBL_Compra then Decisao is re_compra
-RULE 14 : if BBL is BBL_Meio then Decisao is re_intermediario
-RULE 15 : if BBL is BBL_Venda then Decisao is re_venda
-RULE 16 : if RSIL is RSIL_Compra then Decisao is re_compra
-RULE 17 : if RSIL is RSIL_Meio then Decisao is re_intermediario
-RULE 18 : if RSIL is RSIL_Venda then Decisao is re_venda
-RULE 19 : if StochL is SL_Compra then Decisao is re_compra
-RULE 20 : if StochL is SL_Meio then Decisao is re_intermediario
-RULE 21 : if StochL is SL_Venda then Decisao is re_venda
-RULE 22 : if MFIL is MFIL_Compra then Decisao is re_compra
-RULE 23 : if MFIL is MFIL_Meio then Decisao is re_intermediario
-RULE 24 : if MFIL is MFIL_Venda then Decisao is re_venda
+RULE 4 : if Stoch is S_Compra then Decisao is re_compra
+RULE 5 : if Stoch is S_Meio then Decisao is re_intermediario
+RULE 6 : if Stoch is S_Venda then Decisao is re_venda
+RULE 7 : if MFI is MFI_Compra then Decisao is re_compra
+RULE 8 : if MFI is MFI_Meio then Decisao is re_intermediario
+RULE 9 : if MFI is MFI_Venda then Decisao is re_venda
+RULE 10 : if BBL is BBL_Compra then Decisao is re_compra
+RULE 11 : if BBL is BBL_Meio then Decisao is re_intermediario
+RULE 12 : if BBL is BBL_Venda then Decisao is re_venda
+RULE 13 : if RSIL is RSIL_Compra then Decisao is re_compra
+RULE 14 : if RSIL is RSIL_Meio then Decisao is re_intermediario
+RULE 15 : if RSIL is RSIL_Venda then Decisao is re_venda
+RULE 16 : if StochL is SL_Compra then Decisao is re_compra
+RULE 17 : if StochL is SL_Meio then Decisao is re_intermediario
+RULE 18 : if StochL is SL_Venda then Decisao is re_venda
+RULE 19 : if MFIL is MFIL_Compra then Decisao is re_compra
+RULE 20 : if MFIL is MFIL_Meio then Decisao is re_intermediario
+RULE 21 : if MFIL is MFIL_Venda then Decisao is re_venda
 END_RULEBLOCK
 
 END_FUNCTION_BLOCK

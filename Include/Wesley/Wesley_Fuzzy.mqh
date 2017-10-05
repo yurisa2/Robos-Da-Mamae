@@ -5,7 +5,7 @@
 
 double Wesley::Fuzzy_Respo(
   double Banda = 0, double Rsi = 50, double Estocastico = 50, double MoneyFI = 50,
-double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL = 50
+double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL = 50, double Wesley_ADX = 50
 )
 {
   double retorno = 0;
@@ -27,6 +27,8 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   if(EstocasticoL > 100) EstocasticoL = 100;
   if(MoneyFIL < 0) MoneyFIL = 0;
   if(MoneyFIL > 100) MoneyFIL = 100;
+  if(Wesley_ADX < 0) Wesley_ADX = 0;
+  if(Wesley_ADX > 100) Wesley_ADX = 100;
   // Bloco para nao estourar o FUzzão
 
 
@@ -44,23 +46,32 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   //--- Set input value
   CList *in=new CList;
 
+  CFuzzyVariable *fvADX=new CFuzzyVariable("ADX",0,100);
+  fvADX.Terms().Add(new CFuzzyTerm("ADX_Alta", new CSigmoidalMembershipFunction(0.07,60)));
+  fvADX.Terms().Add(new CFuzzyTerm("ADX_Baixa", new CSigmoidalMembershipFunction(-0.2,40)));
+  fsIpsus.Input().Add(fvADX);
+  CMamdaniFuzzyRule *R_Intermediario = fsIpsus.ParseRule("if (ADX is ADX_Baixa) then tendencia is re_intermediario");
+  fsIpsus.Rules().Add(R_Intermediario);
+  CDictionary_Obj_Double *p_od_adx=new CDictionary_Obj_Double;
+  p_od_adx.SetAll(fvADX, Wesley_ADX);
+  in.Add(p_od_adx);
+
   //--- Create first input variables for the system
-  if(Wesley_BB_Enable && Wesley_Permite_Large && Wesley_BBG_Enable){
+  if(Wesley_BB_Enable){
   CFuzzyVariable *fvBanda=new CFuzzyVariable("banda_bollinger",-50.0,150.0);
   fvBanda.Terms().Add(new CFuzzyTerm("BB_Compra", new CSigmoidalMembershipFunction(-0.1,0)));
   fvBanda.Terms().Add(new CFuzzyTerm("BB_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,28)));
   fvBanda.Terms().Add(new CFuzzyTerm("BB_Venda", new CSigmoidalMembershipFunction(0.1,100)));
   fsIpsus.Input().Add(fvBanda);
-  CMamdaniFuzzyRule *R_Compra_BB = fsIpsus.ParseRule("if (banda_bollinger is BB_Compra) then tendencia is re_compra");
+  CMamdaniFuzzyRule *R_Compra_BB = fsIpsus.ParseRule("if (banda_bollinger is BB_Compra) and (ADX is ADX_Alta) then tendencia is re_compra");
   CMamdaniFuzzyRule *R_Meio_BB = fsIpsus.ParseRule("if (banda_bollinger is BB_Meio) then tendencia is re_intermediario");
-  CMamdaniFuzzyRule *R_Venda_BB = fsIpsus.ParseRule("if (banda_bollinger is BB_Venda) then tendencia is re_venda");
+  CMamdaniFuzzyRule *R_Venda_BB = fsIpsus.ParseRule("if (banda_bollinger is BB_Venda) and (ADX is ADX_Alta)  then tendencia is re_venda");
   fsIpsus.Rules().Add(R_Compra_BB);
   fsIpsus.Rules().Add(R_Meio_BB);
   fsIpsus.Rules().Add(R_Venda_BB);
   CDictionary_Obj_Double *p_od_Banda=new CDictionary_Obj_Double;
   p_od_Banda.SetAll(fvBanda, Banda);
   in.Add(p_od_Banda);
-
 }
   //--- Create first input variables for the system
     if(Wesley_BBL_Enable && Wesley_Permite_Large && Wesley_BBG_Enable){
@@ -81,15 +92,15 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
 }
 
   //--- Create second input variables for the system
-    if(Wesley_RSI_Enable && Wesley_Permite_Large && Wesley_RSIG_Enable){
+  if(Wesley_RSI_Enable){
   CFuzzyVariable *fvRsi=new CFuzzyVariable("rsi_forca",0,100);
   fvRsi.Terms().Add(new CFuzzyTerm("RSI_Compra", new CSigmoidalMembershipFunction(-0.2,30)));
   fvRsi.Terms().Add(new CFuzzyTerm("RSI_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,15)));
   fvRsi.Terms().Add(new CFuzzyTerm("RSI_Venda", new CSigmoidalMembershipFunction(0.2,70)));
   fsIpsus.Input().Add(fvRsi);
-  CMamdaniFuzzyRule *R_Compra_RSI = fsIpsus.ParseRule("if (rsi_forca is RSI_Compra) then tendencia is re_compra");
+  CMamdaniFuzzyRule *R_Compra_RSI = fsIpsus.ParseRule("if (rsi_forca is RSI_Compra) and (ADX is ADX_Alta) then tendencia is re_compra");
   CMamdaniFuzzyRule *R_Meio_RSI = fsIpsus.ParseRule("if (rsi_forca is RSI_Meio) then tendencia is re_intermediario");
-  CMamdaniFuzzyRule *R_Venda_RSI = fsIpsus.ParseRule("if (rsi_forca is RSI_Venda) then tendencia is re_venda");
+  CMamdaniFuzzyRule *R_Venda_RSI = fsIpsus.ParseRule("if (rsi_forca is RSI_Venda) and (ADX is ADX_Alta) then tendencia is re_venda");
   fsIpsus.Rules().Add(R_Compra_RSI);
   fsIpsus.Rules().Add(R_Meio_RSI);
   fsIpsus.Rules().Add(R_Venda_RSI);
@@ -99,7 +110,7 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
 }
 
   //--- Create second input variables for the system
-    if(Wesley_RSIL_Enable && Wesley_Permite_Large && Wesley_RSIG_Enable){
+    if(Wesley_RSIL_Enable){
   CFuzzyVariable *fvRsil=new CFuzzyVariable("rsil_forca",0,100);
   fvRsil.Terms().Add(new CFuzzyTerm("RSIL_Compra", new CSigmoidalMembershipFunction(-0.2,30)));
   fvRsil.Terms().Add(new CFuzzyTerm("RSIL_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,15)));
@@ -117,15 +128,15 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
 }
 
   //--- Create first input variables for the system
-    if(Wesley_Stoch_Enable && Wesley_Permite_Large && Wesley_StochG_Enable){
+    if(Wesley_Stoch_Enable){
   CFuzzyVariable *fvStoch=new CFuzzyVariable("stoch",0,100);
   fvStoch.Terms().Add(new CFuzzyTerm("S_Compra", new CSigmoidalMembershipFunction(-0.15,20)));
   fvStoch.Terms().Add(new CFuzzyTerm("S_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,20)));
   fvStoch.Terms().Add(new CFuzzyTerm("S_Venda", new CSigmoidalMembershipFunction(0.15,80)));
   fsIpsus.Input().Add(fvStoch);
-  CMamdaniFuzzyRule *R_S_Compra = fsIpsus.ParseRule("if (stoch is S_Compra) then tendencia is re_compra");
+  CMamdaniFuzzyRule *R_S_Compra = fsIpsus.ParseRule("if (stoch is S_Compra) and (ADX is ADX_Alta) then tendencia is re_compra");
   CMamdaniFuzzyRule *R_S_Meio = fsIpsus.ParseRule("if (stoch is S_Meio) then tendencia is re_intermediario");
-  CMamdaniFuzzyRule *R_S_Venda = fsIpsus.ParseRule("if (stoch is S_Venda) then tendencia is re_venda");
+  CMamdaniFuzzyRule *R_S_Venda = fsIpsus.ParseRule("if (stoch is S_Venda) and (ADX is ADX_Alta) then tendencia is re_venda");
   fsIpsus.Rules().Add(R_S_Compra);
   fsIpsus.Rules().Add(R_S_Meio);
   fsIpsus.Rules().Add(R_S_Venda);
@@ -154,15 +165,15 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
 }
 
   //--- Create first input variables for the system
-    if(Wesley_MFI_Enable && Wesley_Permite_Large && Wesley_MFIG_Enable){
+    if(Wesley_MFI_Enable){
   CFuzzyVariable *fvMFI=new CFuzzyVariable("mfi",0,100);
   fvMFI.Terms().Add(new CFuzzyTerm("MFI_Compra", new CSigmoidalMembershipFunction(-0.15,20)));
   fvMFI.Terms().Add(new CFuzzyTerm("MFI_Meio", new CGeneralizedBellShapedMembershipFunction(50,3,20)));
   fvMFI.Terms().Add(new CFuzzyTerm("MFI_Venda", new CSigmoidalMembershipFunction(0.15,80)));
   fsIpsus.Input().Add(fvMFI);
-  CMamdaniFuzzyRule *R_MFI_Compra = fsIpsus.ParseRule("if (mfi is MFI_Compra) then tendencia is re_compra");
+  CMamdaniFuzzyRule *R_MFI_Compra = fsIpsus.ParseRule("if (mfi is MFI_Compra) and (ADX is ADX_Alta) then tendencia is re_compra");
   CMamdaniFuzzyRule *R_MFI_Meio = fsIpsus.ParseRule("if (mfi is MFI_Meio) then tendencia is re_intermediario");
-  CMamdaniFuzzyRule *R_MFI_Venda = fsIpsus.ParseRule("if (mfi is MFI_Venda) then tendencia is re_venda");
+  CMamdaniFuzzyRule *R_MFI_Venda = fsIpsus.ParseRule("if (mfi is MFI_Venda) and (ADX is ADX_Alta) then tendencia is re_venda");
   fsIpsus.Rules().Add(R_MFI_Compra);
   fsIpsus.Rules().Add(R_MFI_Meio);
   fsIpsus.Rules().Add(R_MFI_Venda);

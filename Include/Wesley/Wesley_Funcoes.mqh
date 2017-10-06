@@ -6,11 +6,11 @@
 class Wesley
 {
   public:
-  void Wesley::Wesley();
+  void Wesley::Wesley(int barra = 0);
   double Wesley_Fuzzy_Valor;
 
   private:
-  void Get_Dados();
+  void Get_Dados(int barra = 0);
   void Wesley::Comentario();
   void Wesley::Abre();
   void Wesley::Fecha();
@@ -31,8 +31,19 @@ class Wesley
   double Wesley_VolumesL;
 };
 
+void Wesley::Wesley(int barra = 0)
+{
+  if(TaDentroDoHorario_RT)
+  {
+    Get_Dados(barra);
+    Abre();
+  }
+  if(!Otimizacao) Comentario();
 
-void Wesley::Get_Dados()
+  if(Wesley_Sai_Em_Zero && O_Stops.Tipo_Posicao() != 0 ) Fecha();
+}
+
+void Wesley::Get_Dados(int barra = 0)
 {
   if(TaDentroDoHorario_RT)
   {
@@ -49,23 +60,21 @@ void Wesley::Get_Dados()
     MFI *MFI_OOL = new MFI(Wesley_Large);
     Volumes *Volumes_OOL = new Volumes(NULL,Wesley_Large);
 
-
-
-    Wesley_BB_Valor = Banda_BB.BB_Posicao_Percent();
+    Wesley_BB_Valor = Banda_BB.BB_Posicao_Percent(barra);
     Wesley_BB_Delta_Valor = Banda_BB.Banda_Delta_Valor();
-    Wesley_RSI_Valor = RSI_OO.Valor();
-    Wesley_Stoch_Valor = Stoch_OO.Valor();
-    Wesley_MF_Valor = MFI_OO.Valor();
-    Wesley_Volumes = Volumes_OO.Valor();
+    Wesley_RSI_Valor = RSI_OO.Valor(barra);
+    Wesley_Stoch_Valor = Stoch_OO.Valor(barra);
+    Wesley_MF_Valor = MFI_OO.Valor(barra);
+    Wesley_Volumes = Volumes_OO.Valor(barra);
 
-    Wesley_ADX_Valor = ADX_OO.Valor();
+    Wesley_ADX_Valor = ADX_OO.Valor(barra);
 
-    Wesley_BB_ValorL = Banda_BBL.BB_Posicao_Percent();
+    Wesley_BB_ValorL = Banda_BBL.BB_Posicao_Percent(barra);
     Wesley_BB_Delta_ValorL = Banda_BBL.Banda_Delta_Valor();
-    Wesley_RSI_ValorL = RSI_OOL.Valor();
-    Wesley_Stoch_ValorL = Stoch_OOL.Valor();
-    Wesley_MF_ValorL = MFI_OOL.Valor();
-    Wesley_VolumesL = Volumes_OOL.Valor();
+    Wesley_RSI_ValorL = RSI_OOL.Valor(barra);
+    Wesley_Stoch_ValorL = Stoch_OOL.Valor(barra);
+    Wesley_MF_ValorL = MFI_OOL.Valor(barra);
+    Wesley_VolumesL = Volumes_OOL.Valor(barra);
 
     Wesley_Fuzzy_Valor = Fuzzy_Respo(
       Wesley_BB_Valor,Wesley_RSI_Valor,Wesley_Stoch_Valor,Wesley_MF_Valor,
@@ -98,18 +107,6 @@ void Wesley::Get_Dados()
     Wesley_MF_ValorL = 0;
     Wesley_ADX_Valor = 0;
   }
-}
-
-void Wesley::Wesley()
-{
-  if(TaDentroDoHorario_RT)
-  {
-    Get_Dados();
-    Abre();
-  }
-  if(!Otimizacao) Comentario();
-
-  if(Wesley_Sai_Em_Zero && O_Stops.Tipo_Posicao() != 0 ) Fecha();
 }
 
 void Wesley::Abre()

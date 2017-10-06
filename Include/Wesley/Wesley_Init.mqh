@@ -9,6 +9,15 @@ void Init_Wesley()
 {
 
 
+for(int i=0; i<=10; i++)
+{
+
+  Wesley *Wes = new Wesley(i);
+  Print("Valor do fuzzao: i=" + i + " - " + Wes.Wesley_Fuzzy_Valor);
+  delete(Wes);
+
+}
+
 
 }
 

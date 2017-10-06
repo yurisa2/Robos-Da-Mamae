@@ -33,7 +33,7 @@ double Stoch::Valor(int buffer = 0, int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_Stoch, true);
-     int Stoch_copied = CopyBuffer(HandleStoch,buffer,0,100,_Stoch);
+     int Stoch_copied = CopyBuffer(HandleStoch,buffer,0,barra+5,_Stoch);
 
      retorno = _Stoch[barra];
 

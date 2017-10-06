@@ -38,7 +38,7 @@ double MFI::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_MFI, true);
-     int MFI_copied = CopyBuffer(HandleMFI,0,0,100,_MFI);
+     int MFI_copied = CopyBuffer(HandleMFI,0,0,barra+5,_MFI);
 
      retorno = _MFI[barra];
 

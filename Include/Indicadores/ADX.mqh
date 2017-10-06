@@ -35,7 +35,7 @@ double ADX::Valor(int buffer = 0, int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_ADX, true);
-     int ADX_copied = CopyBuffer(HandleADX,buffer,0,100,_ADX);
+     int ADX_copied = CopyBuffer(HandleADX,buffer,0,barra+3,_ADX);
 
      retorno = _ADX[barra];
 

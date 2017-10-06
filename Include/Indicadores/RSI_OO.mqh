@@ -33,7 +33,7 @@ double RSI::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_RSI, true);
-     int RSI_copied = CopyBuffer(HandleRSI,0,0,100,_RSI);
+     int RSI_copied = CopyBuffer(HandleRSI,0,0,barra+5,_RSI);
 
      retorno = _RSI[barra];
 

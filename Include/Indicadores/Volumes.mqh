@@ -33,7 +33,7 @@ double Volumes::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_Volumes, true);
-     int Volumes_copied = CopyBuffer(HandleVolumes,0,0,100,_Volumes);
+     int Volumes_copied = CopyBuffer(HandleVolumes,0,0,barra+5,_Volumes);
 
      retorno = _Volumes[barra];
 

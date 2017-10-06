@@ -35,7 +35,7 @@ double MACD::Valor(int buffer = 0, int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_MACD, true);
-     int MACD_copied = CopyBuffer(HandleMACD,buffer,0,100,_MACD);
+     int MACD_copied = CopyBuffer(HandleMACD,buffer,0,barra+5,_MACD);
 
      retorno = _MACD[barra];
 

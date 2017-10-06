@@ -8,6 +8,11 @@ class Wesley
   public:
   void Wesley::Wesley(int barra = 0);
   double Wesley_Fuzzy_Valor;
+  double Wesley_BB_Valor;
+  double Wesley_RSI_Valor;
+  double Wesley_MF_Valor;
+  double Wesley_Stoch_Valor;
+  double Wesley_ADX_Valor;
 
   private:
   void Get_Dados(int barra = 0);
@@ -16,13 +21,8 @@ class Wesley
   void Wesley::Fecha();
     double Wesley::Fuzzy_Respo(double Banda = 0, double Rsi = 50, double Estocastico = 50, double MoneyFI = 50,
       double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL = 50, double Wesley_ADX = 50);
-  double Wesley_BB_Valor;
   double Wesley_BB_Delta_Valor;
-  double Wesley_RSI_Valor;
-  double Wesley_Stoch_Valor;
-  double Wesley_MF_Valor;
   double Wesley_Volumes;
-  double Wesley_ADX_Valor;
   double Wesley_BB_ValorL;
   double Wesley_BB_Delta_ValorL;
   double Wesley_RSI_ValorL;

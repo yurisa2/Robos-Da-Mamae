@@ -67,7 +67,7 @@ void Wesley::Get_Dados(int barra = 0)
     Wesley_MF_Valor = MFI_OO.Valor(barra);
     Wesley_Volumes = Volumes_OO.Valor(barra);
 
-    Wesley_ADX_Valor = ADX_OO.Valor(barra);
+    Wesley_ADX_Valor = ADX_OO.Valor(0,barra);
 
     Wesley_BB_ValorL = Banda_BBL.BB_Posicao_Percent(barra);
     Wesley_BB_Delta_ValorL = Banda_BBL.Banda_Delta_Valor();

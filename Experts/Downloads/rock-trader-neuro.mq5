@@ -13,6 +13,7 @@ input int      StopLoss=30;      // Stop Loss
 input int      TakeProfit=100;   // Take Profit
 input int      EA_Magic=12345;   // EA Magic Number
 input double   Lot=1.0;          // Lots to Trade
+input ENUM_TIMEFRAMES TimeFrames = PERIOD_CURRENT;
 //--- weight of Neuros values                                                                   
 input double w0=0.8;
 input double w1=0.4;
@@ -28,6 +29,8 @@ input double w10=0.5;
 input double w11=0.5;
 input double w12=0.0;
 input double w13=1.0;
+
+
 
 //-------------------------
 
@@ -53,6 +56,8 @@ double out;     // variable for storing the output neuron value
 //+------------------------------------------------------------------+
 int OnInit()
   {
+  
+  my_timeframe = TimeFrames; //PARA TESTE
 //--- Do we have sufficient bars to work
    if(Bars(_Symbol,_Period)<60) // total number of bars is less than 60?
      {
@@ -280,7 +285,7 @@ void OnTick()
          //--- send order
          OrderSend(mrequest,mresult);
          
-                  Print("Out: " + DoubleToString(out));
+            //      Print("Out: " + DoubleToString(out)); //DEBUG
          
          // get the result code
          if(mresult.retcode==10009 || mresult.retcode==10008) //Request is completed or order placed
@@ -322,7 +327,7 @@ void OnTick()
          //--- send order
          OrderSend(mrequest,mresult);
          
-         Print("Out: " + DoubleToString(out));
+       //  Print("Out: " + DoubleToString(out)); // DEBUG
          
          // get the result code
          if(mresult.retcode==10009 || mresult.retcode==10008) //Request is completed or order placed
@@ -367,7 +372,7 @@ double ActivateNeuron(double x)
    Out=(exp(x)-exp(-x))/(exp(x)+exp(-x));
 //--- return the activation function value
 
-   Comment("Out: " + DoubleToString(Out));
+   //Comment("Out: " + DoubleToString(Out)); //DEBUG
 
    return(Out);
   }

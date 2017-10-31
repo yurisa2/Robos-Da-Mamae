@@ -12,11 +12,12 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
   const MqlTradeResult& result)
   {
 
+    posicao *Verifica_Posicao  = new posicao;
 
+ ulong posicao_ticket = request.position;
 
-    // Verifica_Posicao *posicao;
-    // posicao = new Verifica_Posicao();
-    //
-    // Alert("Ticket" + posicao.Ticket);
+if(posicao_ticket == Verifica_Posicao.Ticket)    Alert("Ticket" + IntegerToString(Verifica_Posicao.Ticket));
+
+delete(Verifica_Posicao);
 
   }

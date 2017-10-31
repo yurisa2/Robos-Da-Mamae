@@ -11,10 +11,10 @@ class Condicoes_Basicas_OO
   public:
   bool Condicao();
   bool Horario();
+  bool Operacao_Em_Curso();
 
   private:
   bool Banda_Permite();
-  bool Operacao_Em_Curso();
 
 
 };

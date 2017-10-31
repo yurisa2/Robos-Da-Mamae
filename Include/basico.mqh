@@ -11,9 +11,11 @@
 #include <Trade\AccountInfo.mqh>
 //#include <Charts\Chart.mqh>
 
-#include <OnTrade.mqh>
 #include <Posicao.mqh>
+#include <OnTrade.mqh>
 #include <Totalizador.mqh>
+#include <Graficos.mqh>
+
 
 #include <Lib_CisNewBar.mqh>
 #include <Operacoes_No_tick.mqh>

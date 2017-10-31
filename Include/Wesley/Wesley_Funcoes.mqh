@@ -52,7 +52,7 @@ void Wesley::Get_Dados(int barra = 0)
     Stoch *Stoch_OO = new Stoch(10,3,3,TimeFrame);
     MFI *MFI_OO = new MFI(TimeFrame);
     Volumes *Volumes_OO = new Volumes(NULL,TimeFrame);
-    ADX *ADX_OO = new ADX(4,TimeFrame);
+    ADX *ADX_OO = new ADX(14,TimeFrame);
 
     BB *Banda_BBL = new BB(Wesley_Large);
     RSI *RSI_OOL = new RSI(14,Wesley_Large);

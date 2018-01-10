@@ -10,3 +10,10 @@ input int IXP_Shift = 0; //Shift da BB
 input int IXP_Desvios = 2; //Desvios da BB
 
 input int IXP_Limite_Op = 20; //Limite de operacao
+
+enum Tipo_Op
+{
+  Comprando = 1,
+  Vendendo  = -1
+};
+input Tipo_Op Xeno_Tipo_Op = 1;

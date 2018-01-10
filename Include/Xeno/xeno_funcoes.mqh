@@ -36,7 +36,7 @@ void Xeno::Avalia()
 
 
     Opera_Mercado *opera = new Opera_Mercado;
-    if(O_Stops.Tipo_Posicao() == 0 && Valor_Xeno_atual < IXP_Limite_Op)   opera.AbrePosicao(1,"Xeno: " + DoubleToString(Valor_Xeno_atual));
+    if(O_Stops.Tipo_Posicao() == 0 && Valor_Xeno_atual < IXP_Limite_Op)   opera.AbrePosicao(Xeno_Tipo_Op,"Xeno: " + DoubleToString(Valor_Xeno_atual));
     delete(opera);
 
   //  Print("Xeno: " + DoubleToString(Valor_Xeno_atual)); //DEBUG

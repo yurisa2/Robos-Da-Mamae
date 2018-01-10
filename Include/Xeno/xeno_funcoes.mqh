@@ -48,19 +48,7 @@ void Xeno::Avalia()
 void Xeno::Timer()
 {
 
-// if(O_Stops.Tipo_Posicao() == 0)
-// {
-//   CTrade *tradionices = new CTrade;
-//
-//   ulong Ticket_Order = tradionices.RequestOrder();
-//
-//   tradionices.OrderDelete(Ticket_Order);
-//
-//   delete(tradionices);
-//
-//
-// }
-
+/////// Inicio Apagar ordens pendentes
 if(O_Stops.Tipo_Posicao() == 0)
 {
 int ord_total=OrdersTotal();
@@ -78,5 +66,7 @@ int ord_total=OrdersTotal();
         }
      }
 }
+/////// FIM Apagar ordens pendentes
+
 
 }

@@ -47,6 +47,7 @@ input double PontoDeMudancaSL = 0;                                         //Dis
 input double TakeProfit = 0;                                               //Take Profit (0 desliga)
 input double TakeProfit2 = 0;                                               //Take Profit2 (0 desliga)
 input double TakeProfit3 = 0;                                               //Take Profit3 (0 desliga)
+input bool Zerar_SL_TP = 1;                                                 //Zerar SL na realização parcial
 input double Trailing_stop = 0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 input double Limite_Minimo_Tick_Size = 0;                          //Limite Minimo para operar (*Tick Size)

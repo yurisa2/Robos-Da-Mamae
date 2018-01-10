@@ -7,7 +7,7 @@ void Inicializa_HiLo ()
   //HandleHiLoMediaAlta = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_HIGH);
   //HandleHiLoMediaBaixa = iMA(NULL,TimeFrame,Periodos,0,MODE_SMA,PRICE_LOW);
   HandleGHL = iCustom(NULL,TimeFrame,"gann_hi_lo_activator_ssl",Periodos,MODE_SMA);
-  ChartIndicatorAdd(0,0,HandleGHL);
+  // ChartIndicatorAdd(0,0,HandleGHL);
 
   if(HandleGHL== 0 )
   {

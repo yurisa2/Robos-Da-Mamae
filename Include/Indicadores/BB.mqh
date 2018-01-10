@@ -43,7 +43,7 @@ void BB::BB(
 
   HandleBBOO = 0;
   HandleBBOO = iBands(symbol,period, bands_period,bands_shift,deviation,applied_price);
-  ChartIndicatorAdd(0,0,HandleBBOO);
+  // ChartIndicatorAdd(0,0,HandleBBOO);
 
   // Print("Handle Stoch: " + IntegerToString(HandleBBOO));
 
@@ -99,7 +99,8 @@ double BB::BB_Posicao_Percent(int barra = 0)
   if(barra > 0)
   {
     MqlRates rates[];
-    CopyRates(simbolo,periodos,0,barra+5,rates);
+    CopyRates(simbolo,periodos,0,barra+1,rates);
+    // Print("BB Barra: " + barra); //DEBUG
     trans_size = rates[barra].close - BB_Low(barra);
   }
   if(delta_BB == 0) delta_BB = 0.0000001;

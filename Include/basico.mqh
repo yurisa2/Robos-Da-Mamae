@@ -228,7 +228,28 @@ void Operacoes_No_Timer()
 {
 
     TaDentroDoHorario_RT = TaDentroDoHorario(HorarioInicio,HorarioFim);
+    Encerra_Ops_Dia();
 
+}
+
+void Encerra_Ops_Dia()
+{
+
+  Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+
+  if(!Condicoes.Horario())
+  {
+    if(O_Stops.Tipo_Posicao() != 0)
+    {
+      Opera_Mercado *opera = new Opera_Mercado;
+      opera.FechaPosicao() ;
+      delete(opera);
+
+    }
+
+  }
+
+  delete(Condicoes);
 
 }
 

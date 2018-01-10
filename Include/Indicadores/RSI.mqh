@@ -8,7 +8,7 @@ int HandleRSI = 0;
 void Inicializa_RSI ()
 {
   HandleRSI = iRSI(NULL,RSI_TimeFrame,RSI_period,RSI_preco);
-  ChartIndicatorAdd(0,1,HandleRSI);
+  // ChartIndicatorAdd(0,1,HandleRSI);
 
   Print("Handle RSI: "+IntegerToString(HandleRSI));
   Print("Valor Inicial RSI: "+DoubleToString(CalculaRSI(),2));

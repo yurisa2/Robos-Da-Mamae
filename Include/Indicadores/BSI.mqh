@@ -4,7 +4,7 @@
 void Inicializa_BSI ()
 {
   HandleBSI = iCustom(NULL,TimeFrame,"bsi",BSI_RangePeriod,BSI_Slowing,BSI_Avg_Period);
-  ChartIndicatorAdd(0,1,HandleBSI);
+  // ChartIndicatorAdd(0,1,HandleBSI);
 
   if(HandleBSI== 0 )
   {

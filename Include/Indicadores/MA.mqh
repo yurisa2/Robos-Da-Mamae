@@ -17,7 +17,7 @@ void MA::MA(int ma_period = 3,ENUM_MA_METHOD ma_method = MODE_SMA, ENUM_TIMEFRAM
 {
   HandleMA = 0;
   HandleMA = iMA(NULL,Periodos_MA,ma_period,ma_shift,ma_method,applied_price) ;
-  ChartIndicatorAdd(0,0,HandleMA);
+  // ChartIndicatorAdd(0,0,HandleMA);
 
   // Print("Handle Stoch: " + IntegerToString(HandleMA));
 

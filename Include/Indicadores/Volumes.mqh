@@ -17,7 +17,7 @@ void Volumes::Volumes(string symbol = NULL, ENUM_TIMEFRAMES period = PERIOD_CURR
 {
   HandleVolumes = 0;
   HandleVolumes = iVolumes(symbol,period,applied_volume) ;
-  ChartIndicatorAdd(0,1,HandleVolumes);
+  // ChartIndicatorAdd(0,1,HandleVolumes);
 
   // Print("Handle Stoch: " + IntegerToString(HandleVolumes));
 

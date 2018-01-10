@@ -17,7 +17,7 @@ void Stoch::Stoch(int STOCH_k_period = 10,int STOCH_d_period = 3,int STOCH_slowi
 {
   HandleStoch = 0;
   HandleStoch = iStochastic(symbol,STOCH_periods,STOCH_k_period,STOCH_d_period,STOCH_slowing,STOCH_method,STOCH_price);
-  ChartIndicatorAdd(0,1,HandleStoch);
+  // ChartIndicatorAdd(0,1,HandleStoch);
 
   // Print("Handle Stoch: " + IntegerToString(HandleStoch));
 

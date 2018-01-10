@@ -19,7 +19,7 @@ void ADX::ADX(int adx_period = 14, ENUM_TIMEFRAMES  period = PERIOD_CURRENT, str
 {
   HandleADX = 0;
   HandleADX = iADX(symbol,period,adx_period);
-  ChartIndicatorAdd(0,1,HandleADX);
+  // ChartIndicatorAdd(0,1,HandleADX);
 
   // Print("Handle ADX: " + IntegerToString(HandleADX));
 

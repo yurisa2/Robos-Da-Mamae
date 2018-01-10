@@ -22,7 +22,7 @@ void MFI::MFI(ENUM_TIMEFRAMES period = PERIOD_CURRENT,int ma_period = 14, ENUM_A
 {
   HandleMFI = 0;
   HandleMFI = iMFI(symbol,period,ma_period,applied_volume);
-  ChartIndicatorAdd(0,1,HandleMFI);
+  // ChartIndicatorAdd(0,1,HandleMFI);
 
   // Print("Handle MFI: " + IntegerToString(HandleMFI));
 

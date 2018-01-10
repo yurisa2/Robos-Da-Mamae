@@ -14,6 +14,7 @@ class Stops
   int Tipo_Posicao();
   void No_Tick();
   void Setar_Ordens_Vars_Static();
+  void Setar_Ordens_Vars_Proporcional();
   double Valor_Negocio();
   void TS_();
 
@@ -58,9 +59,61 @@ void Stops::Setar_Ordens_Vars_Static()
   CTrade *tradionices = new CTrade;
   double valor = Valor_Negocio();
   double sl = valor - (StopLoss * (Tipo_Posicao() * Tick_Size));
-  double tp = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
+  double tp1 = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
+  double tp2 = valor + (TakeProfit2 * (Tipo_Posicao() * Tick_Size));
+  double tp3 = valor + (TakeProfit3 * (Tipo_Posicao() * Tick_Size));
+
+  if(TakeProfit == 0) tp3 = valor + Tipo_Posicao() * Tick_Size * 100;
+
+
+  string DiaHojeStop = TimeToString(TimeCurrent(),TIME_DATE) + " 23:59";
+
+  datetime dtHoje;
+  dtHoje = StringToTime(DiaHojeStop);
+
+  Print("Data: " + dtHoje);
+
+  //TP1
+  tradionices.OrderOpen(Symbol(),ORDER_TYPE_SELL_LIMIT,1,0,tp1,0,0,ORDER_TIME_DAY,dtHoje); //Hard Coded
+  tradionices.OrderOpen(Symbol(),ORDER_TYPE_SELL_LIMIT,1,0,tp2,0,0,ORDER_TIME_DAY,dtHoje); //Hard Coded
+
+
+
+  Print("StopLoss Fixo: " + DoubleToString(sl) + " | " + "StopLoss Fixo: " + DoubleToString(sl)); //DEBUG
+
+  tradionices.PositionModify(Symbol(),sl,tp3);
+
+
+
+
+  delete(tradionices);
+}
+
+void Stops::Setar_Ordens_Vars_Proporcional()
+{
+  CTrade *tradionices = new CTrade;
+  double valor = Valor_Negocio();
+  double delta_bb = 0;
+  double StopLoss_Proporcional = 0;
+  double TakeProfit_Proporcional = 0;
+
+  BB *Banda_BB = new BB();
+  delta_bb = Banda_BB.BB_High(0) - Banda_BB.BB_Low(0);
+  delete(Banda_BB);
+
+  StopLoss_Proporcional = StopLoss * delta_bb;
+  TakeProfit_Proporcional = TakeProfit * delta_bb;
+
+  double sl = MathRound(valor - (StopLoss_Proporcional * (Tipo_Posicao())));
+  double tp = MathRound(valor + (TakeProfit_Proporcional * (Tipo_Posicao())));
 
   if(TakeProfit == 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
+  if(TakeProfit > 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
+  if(TakeProfit > 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
+
+  Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
+  Print("StopLoss Prop: " + DoubleToString(sl) + " | " + "TakeProfit Prop: " + DoubleToString(tp)); //DEBUG
+
 
   tradionices.PositionModify(Symbol(),sl,tp);
 

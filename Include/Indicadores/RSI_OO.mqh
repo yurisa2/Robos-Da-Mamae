@@ -17,7 +17,7 @@ void RSI::RSI(int ma_period = 14, ENUM_TIMEFRAMES periodos_r = PERIOD_CURRENT, s
 {
   HandleRSI = 0;
   HandleRSI = iRSI(Simbolo,periodos_r,ma_period,applied_price) ;
-  ChartIndicatorAdd(0,1,HandleRSI);
+  // ChartIndicatorAdd(0,1,HandleRSI);
 
   // Print("Handle Stoch: " + IntegerToString(HandleRSI));
 

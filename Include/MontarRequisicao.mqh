@@ -40,7 +40,10 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
      if(Condicoes_Basicas.Condicao())
      {
      requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
-     O_Stops.Setar_Ordens_Vars_Static();
+
+     if(Tipo_Limite == 55) O_Stops.Setar_Ordens_Vars_Static();
+     if(Tipo_Limite == 471) O_Stops.Setar_Ordens_Vars_Proporcional();
+
      }
      delete(requisicao_montar);
 

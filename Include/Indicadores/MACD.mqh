@@ -19,7 +19,7 @@ void MACD::MACD(int fast_ema_period = 12,int slow_ema_period = 26,int signal_per
 {
   HandleMACD = 0;
   HandleMACD = iMACD(symbol,period,fast_ema_period,slow_ema_period,signal_period,applied_price);
-  ChartIndicatorAdd(0,1,HandleMACD);
+  // ChartIndicatorAdd(0,1,HandleMACD);
 
   // Print("Handle MACD: " + IntegerToString(HandleMACD));
 

@@ -67,7 +67,7 @@ bool  Condicoes_Basicas_OO::Banda_Permite()
 
   delta = (Banda.BB_Delta_Bruto()/delta_media_candle) * 100 ;
 
-  // Print("delta: " + delta);
+  Print("Delta do Permite: " + DoubleToString(delta)); //DEBUG
 
   if(delta > Limite_Minimo_Tick_Size && delta < Limite_Maximo_Tick_Size) retorno = true;
 

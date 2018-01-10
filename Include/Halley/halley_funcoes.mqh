@@ -10,7 +10,6 @@ class Halley
   bool Formato(int barra = 0);
   int Direcao(int barra = 0);
   int Forma_Direcao(int barra = 0);
-  int verificacao();
 
 
 
@@ -36,10 +35,12 @@ bool Halley::Formato(int barra = 0)
   ArraySetAsSeries(rates,true);
   int copied=CopyRates(Symbol(),PERIOD_CURRENT,0,200,rates);
 
-  corpo = (rates[barra+1].open - rates[barra+1].close);
+  corpo = MathAbs(rates[barra+1].open - rates[barra+1].close);
   sombra = (rates[barra+1].high - rates[barra+1].open);
 
   if(sombra > (n_vezes * corpo)) retorno = true;
+
+  //Print("Corpo: " + corpo + " | Sombra: " + sombra); //DEBUG
 
   return retorno;
 }
@@ -72,47 +73,6 @@ int Halley::Direcao(int barra = 0)
   return retorno;
 }
 
-int Halley::Forma_Direcao(int barra = 0)
-{
-  int retorno = 0;
-
-  if(Direcao(barra) == Formato(barra)) retorno = 1;
-
-  Print("Barra: " + barra + " | Direcao: " + Direcao(barra) + " | " + "Formato: " + Formato(barra));
-
-  return retorno;
-
-}
-
-int Halley::verificacao()
-{
-  int marca_barra = -1;
-  double preco = 0;
-  int retorno = 0;
-
-  MqlRates rates[];
-  ArraySetAsSeries(rates,true);
-  int copied=CopyRates(Symbol(),PERIOD_CURRENT,0,200,rates);
-
-
-
-  for(int i = 0; i <= n_ultimos; i++)
-  {
-    if(Forma_Direcao(i) != 0) marca_barra = i;
-  }
-
- preco =  rates[marca_barra].low;
-
-  if(marca_barra > 0 && daotick_geral < preco)
-  {
-  retorno = -1;
-  Print("Detectou Atirador: " + marca_barra);
-  }
-
-  return retorno;
-}
-
-
 
 void Halley::Avalia()
 {
@@ -122,8 +82,10 @@ void Halley::Avalia()
   if(Condicoes.Horario())
   {
 
+    Print("Formato: " + Formato(0));
+
     Opera_Mercado *opera = new Opera_Mercado;
-    if(O_Stops.Tipo_Posicao() == 0 && verificacao() < 0)   opera.AbrePosicao(-1,"Halley: ");
+  //  if(O_Stops.Tipo_Posicao() == 0 )   opera.AbrePosicao(-1,"Halley: ");
     delete(opera);
 
     //  Print("Halley: " + DoubleToString(Valor_Halley_atual)); //DEBUG

@@ -7,9 +7,10 @@ class Halley
   void Halley_Comentario();
   void Avalia();
   void Timer();
-  bool Formato(int barra = 0);
+  int  Formato(int barra = 0);
   int Direcao(int barra = 0);
   int Forma_Direcao(int barra = 0);
+  MqlRates Halley::Preco(int barra = 0);
 
 
 
@@ -19,26 +20,120 @@ class Halley
 
 void Halley::Halley_Comentario()
 {
-
-
+  // MA *MediaMovel20 = new MA(20);
+  // Comentario_Robo = "MediaMovel20: " + MediaMovel20.Valor();
+  // delete(MediaMovel20);
 
 }
 
-bool Halley::Formato(int barra = 0)
+int  Halley::Formato(int barra = 0)
 {
-  double corpo = 0;
-  double sombra = 0;
-  bool retorno = false;
-
+  int  retorno = false;
+  double sombra = NULL;
+  double sombra2 = NULL;
+  double corpo = NULL;
 
   MqlRates rates[];
   ArraySetAsSeries(rates,true);
   int copied=CopyRates(Symbol(),PERIOD_CURRENT,0,200,rates);
 
-  corpo = MathAbs(rates[barra+1].open - rates[barra+1].close);
-  sombra = (rates[barra+1].high - rates[barra+1].open);
+//  Print("Hora: " +  rates[barra+1].time +" | OHLC:" + rates[barra+1].open + " | " + rates[barra+1].high +" | " + rates[barra+1].low +" | " + rates[barra+1].close);
 
-  if(sombra > (n_vezes * corpo)) retorno = true;
+  //ShootingStar
+
+  if(rates[barra+1].close > rates[barra+1].open) //Candle de alta
+  {
+    corpo = MathAbs(rates[barra+1].close - rates[barra+1].open);
+    sombra =  MathAbs(rates[barra+1].high - rates[barra+1].close);
+    sombra2 = MathAbs(rates[barra+1].open - rates[barra+1].low);
+    if(sombra2 == 0) sombra2 = 0.01;
+
+    if(sombra > (n_vezes * corpo) && ((sombra/sombra2) > prop_sombra || sombra2 == 0.01))
+    {
+      retorno = -1;
+    }
+  }
+
+  if(rates[barra+1].close < rates[barra+1].open)  //Candle de baixa
+  {
+    corpo = MathAbs(rates[barra+1].open - rates[barra+1].close);
+    sombra =  MathAbs(rates[barra+1].high - rates[barra+1].open);
+    sombra2 = MathAbs(rates[barra+1].close - rates[barra+1].low);
+    if(sombra2 == 0) sombra2 = 0.01;
+
+    if(sombra > (n_vezes * corpo) && ((sombra/sombra2) > prop_sombra || sombra2 == 0.01))
+    {
+      retorno = -1;
+    }
+  }
+
+  //   Print("Shooting Candle de Baixa - Corpo: " +
+  //   (rates[barra+1].open - rates[barra+1].close) +
+  //   " | Sombra: " +
+  //   (rates[barra+1].high - rates[barra+1].open) +
+  //   " | Divisao: " +
+  //   (MathAbs(rates[barra+1].high - rates[barra+1].open)/MathAbs(rates[barra+1].open - rates[barra+1].close))
+  // );
+  //
+  //   Print("Martelo Candle de Baixa - Corpo: " +
+  //   (rates[barra+1].open - rates[barra+1].close) +
+  //   " | Sombra: " +
+  //   (rates[barra+1].low - rates[barra+1].close) +
+  //   " | Divisao: " +
+  //   (MathAbs(rates[barra+1].low - rates[barra+1].close)/MathAbs(rates[barra+1].open - rates[barra+1].close))
+  // );
+
+
+  //--!ShootingStar
+
+  //Mijolnir
+
+  if(rates[barra+1].close > rates[barra+1].open) //Candle de alta
+  {
+    corpo = MathAbs(rates[barra+1].close - rates[barra+1].open);
+    sombra =  MathAbs(rates[barra+1].open - rates[barra+1].low);
+    sombra2 = MathAbs(rates[barra+1].high - rates[barra+1].close);
+    if(sombra2 == 0) sombra2 = 0.01;
+
+    if(sombra > (n_vezes * corpo) && ((sombra/sombra2) > prop_sombra || sombra2 == 0.01))
+    {
+      retorno = 1;
+    }
+  }
+
+  if(rates[barra+1].close < rates[barra+1].open)  //Candle de baixa
+  {
+    corpo = MathAbs(rates[barra+1].open - rates[barra+1].close);
+    sombra =  MathAbs(rates[barra+1].close - rates[barra+1].low);
+    sombra2 = MathAbs(rates[barra+1].high - rates[barra+1].open);
+    if(sombra2 == 0) sombra2 = 0.01;
+
+    if(sombra > (n_vezes * corpo) && ((sombra/sombra2) > prop_sombra || sombra2 == 0.01))
+    {
+      retorno = 1;
+    }
+  }
+
+  //--!Mijolnir
+
+
+  //   Print("Candle de Alta - Corpo: " +
+  //   (rates[barra+1].close - rates[barra+1].open) +
+  //   " | Sombra: " +
+  //   (rates[barra+1].high - rates[barra+1].close) +
+  //   " | Divisao: " +
+  //   (MathAbs(rates[barra+1].high - rates[barra+1].close)/MathAbs(rates[barra+1].close - rates[barra+1].open))
+  // );
+  //
+  // Print("Candle de Alta - Corpo: " +
+  // (rates[barra+1].close - rates[barra+1].open) +
+  // " | Sombra: " +
+  // (rates[barra+1].low - rates[barra+1].open) +
+  // " | Divisao: " +
+  // (MathAbs(rates[barra+1].low - rates[barra+1].open)/MathAbs(rates[barra+1].close - rates[barra+1].open))
+  // );
+  //Fim ShootingStar - Mijolnir
+
 
   //Print("Corpo: " + corpo + " | Sombra: " + sombra); //DEBUG
 
@@ -51,41 +146,118 @@ int Halley::Direcao(int barra = 0)
   double valor_ma = 0;
   double preco = 0;
   int direcao_ma = 0;
+  int barra_somar_1 = 0;
+  int barra_somar_2 = 0;
+
+  barra_somar_1 = barra + 1;
+  barra_somar_2 = barra + 2;
 
   MqlRates rates[];
   ArraySetAsSeries(rates,true);
   int copied=CopyRates(Symbol(),PERIOD_CURRENT,0,200,rates);
 
-  preco =  rates[barra+1].close;
+  preco =  rates[barra_somar_1].close;
 
-  MA *ma = new MA(20);
+  MA *MediaMovel20 = new MA(20);
 
-  valor_ma = ma.Valor(barra);
-  if(ma.Valor(barra+2) < ma.Valor(barra+1)) direcao_ma = 1;
-  if(ma.Valor(barra+2) > ma.Valor(barra+1)) direcao_ma = -1;
+  valor_ma = MediaMovel20.Valor(barra_somar_1);
+  if(MediaMovel20.Valor(barra_somar_2) < MediaMovel20.Valor(barra_somar_1)) direcao_ma = 1;
+  if(MediaMovel20.Valor(barra_somar_2) > MediaMovel20.Valor(barra_somar_1)) direcao_ma = -1;
+//DUP
+  valor_ma = MediaMovel20.Valor(barra_somar_1);
+  if(MediaMovel20.Valor(barra_somar_2) < MediaMovel20.Valor(barra_somar_1)) direcao_ma = 1;
+  if(MediaMovel20.Valor(barra_somar_2) > MediaMovel20.Valor(barra_somar_1)) direcao_ma = -1;
+//DUP
 
-  delete(ma);
+
+  // Print("direcao_ma: "+direcao_ma); //DEBUG
+  // Print("MediaMovel20.Valor(barra_somar_2): "+MediaMovel20.Valor(barra_somar_2)); //DEBUG
+  // Print("MediaMovel20.Valor(barra_somar_1): "+MediaMovel20.Valor(barra_somar_1)); //DEBUG
+  // Print("preco: "+ preco); //DEBUG
+  // Print("valor_ma: "+ valor_ma); //DEBUG
+  //
+  // Print("barra_somar_1: " +barra_somar_1); //DEBUG
+  // Print("barra_somar_2: " +barra_somar_2); //DEBUG
+  //  Print("MediaMovel20.Valor(barra_somar_2): " + MediaMovel20.Valor(barra_somar_2)); //DEBUG
+
+
+  delete(MediaMovel20);
 
   if(direcao_ma == 1 && preco > valor_ma ) retorno = 1;
   if(direcao_ma == -1 && preco < valor_ma ) retorno = -1;
 
-//  Print("Direcao(int barra = 0): " + retorno); //DEBUG
+  //  Print("Direcao(int barra = 0): " + retorno); //DEBUG
   return retorno;
 }
 
+MqlRates Halley::Preco(int barra = 0)
+{
+
+  barra = barra + 1;
+
+
+    MqlRates rates[];
+    ArraySetAsSeries(rates,true);
+    int copied=CopyRates(Symbol(),PERIOD_CURRENT,0,200,rates);
+
+
+
+    return rates[barra];
+
+
+}
 
 void Halley::Avalia()
 {
   int mudanca = 0;
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+  datetime DiaHojeStart =  StringToTime(TimeToString(TimeCurrent(),TIME_DATE) + " 00:01");
+
 
   if(Condicoes.Horario())
   {
+    if(O_Stops.Tipo_Posicao() == 0)
+    {
+    for(int i=0;i<n_ultimos;i++)
+    {
+      if(Formato(i) < 0 && (Direcao(i) > 0 || Opera_Somente_Formato) && daotick_geral <  Preco(i).low && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op <=0 )
+      {
+      Opera_Mercado *opera = new Opera_Mercado;
+      Print("Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).low + " | Hora: " + Preco(i).time) ;
+      opera.AbrePosicao(-1,"Halley: " + "Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).low + " | Hora: " + Preco(i).time);
+      UltimoFormato = Preco(i).time;
+      delete(opera);
+      }
 
-    Print("Formato: " + Formato(0));
+      if(Formato(i) > 0 && (Direcao(i) < 0 || Opera_Somente_Formato) && daotick_geral >  Preco(i).high && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op >=0 )
+      //if(Formato(i) > 0 && (Direcao(i) < 0 || Opera_Somente_Formato) < 0 && daotick_geral >  Preco(i).high && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op >=0 )
+      //Eu fiz cagada aqui, mas fez muito dinheiro,  (Direcao(i) < 0 || Opera_Somente_Formato) < 0 ,
+      {
+      Opera_Mercado *opera = new Opera_Mercado;
+      Print("Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).high  + " | Hora: " + Preco(i).time) ;
+      opera.AbrePosicao(1,"Halley: " + "Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).low + " | Hora: " + Preco(i).time);
+      UltimoFormato = Preco(i).time;
+      delete(opera);
+      }
+    }
+    }
+
+
+
+    //if(Formato(0) != 0) Print("Formato(0): " + Formato(0) + " | Direcao: " + Direcao(0)) ; //DEBUG
+    // Print("Formato(0): " + Formato(0) + " | Direcao: " + Direcao(0)) ; //DEBUG
+
+    // Print("Formato(0): " + Formato(0) + " | Formato(1): " + Formato(1) + " | Formato(2): " + Formato(2)) ;
+    // Print("Direcao(0): " + Direcao(0) + " | Direcao(1): " + Direcao(1) + " | Direcao(2): " + Direcao(2)) ;
+
+    // if( Formato(0) == true && Direcao(0) == 1 ) Print("Identificado 0");
+    // if( Formato(1) == true && Direcao(1) == 1 ) Print("Identificado 1");
+    // if( Formato(2) == true && Direcao(2) == 1 ) Print("Identificado 2");
+
+
 
     Opera_Mercado *opera = new Opera_Mercado;
-  //  if(O_Stops.Tipo_Posicao() == 0 )   opera.AbrePosicao(-1,"Halley: ");
+    //  if(O_Stops.Tipo_Posicao() == 0 )   opera.AbrePosicao(-1,"Halley: ");
     delete(opera);
 
     //  Print("Halley: " + DoubleToString(Valor_Halley_atual)); //DEBUG

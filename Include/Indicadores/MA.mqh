@@ -16,7 +16,7 @@ class MA
 void MA::MA(int ma_period = 3,ENUM_MA_METHOD ma_method = MODE_SMA, ENUM_TIMEFRAMES Periodos_MA = PERIOD_CURRENT,int ma_shift = 0,ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE)
 {
   HandleMA = 0;
-  HandleMA = iMA(NULL,Periodos_MA,ma_period,ma_shift,ma_method,applied_price) ;
+  HandleMA = iMA(Symbol(),Periodos_MA,ma_period,ma_shift,ma_method,applied_price) ;
   // ChartIndicatorAdd(0,0,HandleMA);
 
   // Print("Handle Stoch: " + IntegerToString(HandleMA));
@@ -36,6 +36,10 @@ double MA::Valor(int barra = 0)
      int MA_copied = CopyBuffer(HandleMA,0,0,barra+5,_MA);
 
      retorno = _MA[barra];
+     // Print("MA Barra: " + barra); //DEBUG
+     // Print("_MA[barra]: " + _MA[barra]); //DEBUG
+     // Print("_MA[0]: " + _MA[0]); //DEBUG
+     // Print("HandleMA: " + HandleMA); //DEBUG
 
      return(retorno);
 }

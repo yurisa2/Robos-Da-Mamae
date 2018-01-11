@@ -5,5 +5,16 @@
 
 input string Halley_Label = "Configs do Halley";  // -----------H-A-L-L-E-Y----------------
 input bool Fechamento_MeQ_Abertura = true; //Fechamento < Abertura
-input double n_vezes = 2;  // Quantas vezes sombra > corpo
-input double n_ultimos = 3;  // Verificar quantos Candles para trás
+input double n_vezes = 2;  //Quantas vezes sombra > corpo
+input double n_ultimos = 3;  //Verificar quantos Candles para trás
+input double prop_sombra = 2; //Proporção minima entre as duas sombras
+input bool Opera_Somente_Formato = false; //Opera Somente Formato
+enum Tipo_Op
+{
+  Martelo = 1,
+  Todos = 0,
+  SStar  = -1
+};
+input Tipo_Op Halley_Tipo_op = 0;
+
+datetime UltimoFormato = NULL;

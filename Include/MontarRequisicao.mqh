@@ -46,6 +46,7 @@ void Opera_Mercado::AbrePosicao(int order_type, string comentario_req)
            CTrade *trade=new CTrade();
            trade.OrderDelete(ticket);
            delete trade;
+           Print("Deletando Ordens Pendentes");
          }
        }
      }
@@ -55,7 +56,12 @@ void Opera_Mercado::AbrePosicao(int order_type, string comentario_req)
 void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentario_req)
    {
 
+     do
      ZeraOrdensP();
+     while(OrdersTotal() > 0);
+
+
+
      CTrade *requisicao_montar = new CTrade;
      if(Condicoes_Basicas.Condicao())
      {

@@ -41,7 +41,7 @@ int  Halley::Formato(int barra = 0)
 
   //ShootingStar
 
-  if(rates[barra+1].close > rates[barra+1].open) //Candle de alta
+  if(rates[barra+1].close >= rates[barra+1].open) //Candle de alta
   {
     corpo = MathAbs(rates[barra+1].close - rates[barra+1].open);
     sombra =  MathAbs(rates[barra+1].high - rates[barra+1].close);
@@ -54,7 +54,7 @@ int  Halley::Formato(int barra = 0)
     }
   }
 
-  if(rates[barra+1].close < rates[barra+1].open)  //Candle de baixa
+  if(rates[barra+1].close <= rates[barra+1].open)  //Candle de baixa
   {
     corpo = MathAbs(rates[barra+1].open - rates[barra+1].close);
     sombra =  MathAbs(rates[barra+1].high - rates[barra+1].open);
@@ -88,7 +88,7 @@ int  Halley::Formato(int barra = 0)
 
   //Mijolnir
 
-  if(rates[barra+1].close > rates[barra+1].open) //Candle de alta
+  if(rates[barra+1].close >= rates[barra+1].open) //Candle de alta
   {
     corpo = MathAbs(rates[barra+1].close - rates[barra+1].open);
     sombra =  MathAbs(rates[barra+1].open - rates[barra+1].low);
@@ -101,7 +101,7 @@ int  Halley::Formato(int barra = 0)
     }
   }
 
-  if(rates[barra+1].close < rates[barra+1].open)  //Candle de baixa
+  if(rates[barra+1].close <= rates[barra+1].open)  //Candle de baixa
   {
     corpo = MathAbs(rates[barra+1].open - rates[barra+1].close);
     sombra =  MathAbs(rates[barra+1].close - rates[barra+1].low);

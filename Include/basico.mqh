@@ -227,6 +227,9 @@ void DetectaNovaBarra()
 void Operacoes_No_Timer()
 {
 
+
+
+
     TaDentroDoHorario_RT = TaDentroDoHorario(HorarioInicio,HorarioFim);
     Encerra_Ops_Dia();
 
@@ -268,6 +271,7 @@ void Init_Padrao ()
 
   Liquidez_Teste_inicio = conta.Equity();
   Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
+  Volume_Step = SymbolInfoDouble(_Symbol,SYMBOL_VOLUME_STEP);
 
   ArrumaMinutos();
 

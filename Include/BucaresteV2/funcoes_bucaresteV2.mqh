@@ -36,6 +36,9 @@ void Bucareste::Avalia()
 
     mudanca = hilo.Mudanca();
 
+    //if(mudanca != 0 ) Print("Mudanca: " + mudanca); //DEBUG
+
+
     if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(mudanca,"BucaresteV2: ");
     if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() != 0 && Buca_Encerra_Indicador)   opera.FechaPosicao();
 

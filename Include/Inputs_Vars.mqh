@@ -67,6 +67,7 @@ input int EM_Vezes_Picote = 2;                                                  
 int EM_Contador_Picote = 0;
 
 double Tick_Size = 0;
+double Volume_Step = 0;
 
 //VARS
 

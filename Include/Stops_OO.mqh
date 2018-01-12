@@ -58,49 +58,130 @@ void Stops::No_Tick()
 
 double Stops::Distribuidor_Parcial(int Seletor_Volume)
 {
-  int Num_Stops_Configurados = 0;
-  double vol_tp1 = 1;
-  double vol_tp2 = 0;
-  double vol_tp3 = 0;
-  double div_bruta = 0;
-  double mod_bruto = 0;
-  double inteiro = 0;
-  double retorno = NULL;
+  double retorno = -1;
 
-  if(TakeProfit > 0) Num_Stops_Configurados = 1;
-  if(TakeProfit2 > 0 ) Num_Stops_Configurados = 2;
-  if(TakeProfit3 > 0) Num_Stops_Configurados = 3;
-  // Print("Num_Stops_Configurados: " + DoubleToString(Num_Stops_Configurados)); //DEBUG
+  int Niveis_Preenchidos = 0;
+  int Niveis_Por_Steps = 0;
+  int Niveis_Calculados = 0;
 
-  div_bruta = Lotes / Num_Stops_Configurados;
-  mod_bruto = MathMod(Lotes,Num_Stops_Configurados);
-  inteiro = MathFloor(div_bruta);
 
-  if(inteiro > 1) vol_tp1 = inteiro;
-  vol_tp2 = inteiro;
-  vol_tp3 = inteiro;
 
-  if(mod_bruto == 1) vol_tp1++;
-  if(mod_bruto == 2)
+  int TP1_Steps = 0;
+  int TP2_Steps = 0;
+  int TP3_Steps = 0;
+
+  double Steps_por_TPL = 0;
+
+  if(Volume_Step == 0) Volume_Step = 1;
+
+
+  double Lotes_Steps = MathFloor(Lotes / Volume_Step);
+
+  if(Lotes_Steps < 0)
   {
-  vol_tp1++;
-  vol_tp2++;
+    Alert("Volume abaixo do Volume step (Minimo para operar) ");
+    ExpertRemove();
   }
 
-  if(Seletor_Volume == 0)
-  {
-  if(vol_tp3 > 0) retorno = 3;
-  if(vol_tp3 == 0) retorno = 2;
-  if(vol_tp2 == 0) retorno = 1;
-  // Print("Num Stops: " + DoubleToString(retorno)); //DEBUG
-  }
+  Print("Lotes_Steps: " + Lotes_Steps); //DEBUG
 
-  if(Seletor_Volume == 1) retorno = vol_tp1;
-  if(Seletor_Volume == 2) retorno = vol_tp2;
-  if(Seletor_Volume == 3) retorno = vol_tp3;
+  //Seletor_Volume = 0 - Retorna Quantos Niveis de STOP 1,2 ou 3
+  //Seletor_Volume = 1..3 - Retorna o VOLUME do nivel 1..3 de STOP
+
+  if(TakeProfit > 0) Niveis_Preenchidos = 1;
+  if(TakeProfit2 > 0) Niveis_Preenchidos = 2;
+  if(TakeProfit3 > 0) Niveis_Preenchidos = 3;
+
+  Steps_por_TPL = MathFloor(Lotes_Steps / Niveis_Preenchidos);  //Isso aqui retorna quantos Steps por Nível (Divisao Simples)
+
+// Aqui precisa determinar (usando MIN) quantos niveis vai usar...
+
+if(Steps_por_TPL <= 3) Niveis_Por_Steps = Steps_por_TPL;
+else Niveis_Por_Steps = 3;
+
+// Print("Niveis_Por_Steps: " + Niveis_Por_Steps); //DEBUG
+
+Niveis_Calculados  = MathMin(Niveis_Preenchidos,Niveis_Por_Steps);
+
+if(Seletor_Volume == 0)
+{
+retorno = Niveis_Calculados;
+return retorno;
+}
+
+
+// Se tem o suficiente para todos os niveis, distribua
+
+if(Niveis_Calculados == 1 && Seletor_Volume == 1)
+{
+ retorno = Lotes_Steps;
+ return retorno;
+}
+
+if(Niveis_Calculados == 2 && Seletor_Volume == 1)
+{
+ retorno = Lotes_Steps;
+}
+
+
+
+  // Agora Arrumar a casa
+
+  if(MathMod(Lotes_Steps, Niveis_Preenchidos) == 1);
+
+  //orrigir o volume (Acho que é VOLUME_STEPS * VOlume_Step)
 
   return retorno;
 }
+
+// double Stops::Distribuidor_Parcial(int Seletor_Volume)
+// {
+//   int Num_Stops_Configurados = 0;
+//   double vol_tp1 = 1;
+//   double vol_tp2 = 0;
+//   double vol_tp3 = 0;
+//   double div_bruta = 0;
+//   double mod_bruto = 0;
+//   double inteiro = 0;
+//   double retorno = NULL;
+//
+//   if(TakeProfit > 0) Num_Stops_Configurados = 1;
+//   if(TakeProfit2 > 0 ) Num_Stops_Configurados = 2;
+//   if(TakeProfit3 > 0) Num_Stops_Configurados = 3;
+//   // Print("Num_Stops_Configurados: " + DoubleToString(Num_Stops_Configurados)); //DEBUG
+//
+//   div_bruta = Lotes / Num_Stops_Configurados;
+//
+//   mod_bruto = MathMod(Lotes,Num_Stops_Configurados);
+//   inteiro = MathFloor(div_bruta);
+//
+//   Print("Stops_OO Inteiro: " + DoubleToString(inteiro)); //DEBUG
+//
+//   if(inteiro > 1) vol_tp1 = inteiro;
+//   vol_tp2 = inteiro;
+//   vol_tp3 = inteiro;
+//
+//   if(mod_bruto == 1) vol_tp1++;
+//   if(mod_bruto == 2)
+//   {
+//   vol_tp1++;
+//   vol_tp2++;
+//   }
+//
+//   if(Seletor_Volume == 0)
+//   {
+//   if(vol_tp3 > 0) retorno = 3;
+//   if(vol_tp3 == 0) retorno = 2;
+//   if(vol_tp2 == 0) retorno = 1;
+//   // Print("Num Stops: " + DoubleToString(retorno)); //DEBUG
+//   }
+//
+//   if(Seletor_Volume == 1) retorno = vol_tp1;
+//   if(Seletor_Volume == 2) retorno = vol_tp2;
+//   if(Seletor_Volume == 3) retorno = vol_tp3;
+//
+//   return retorno;
+// }
 
 void Stops::TakeProfit_Calcula()
 {
@@ -120,23 +201,30 @@ void Stops::TakeProfit_Calcula()
   //DEFINE O MULTIPLICADOR DA BANDA
   if(Tipo_Limite == 471)
   {
-  BB *Banda_BB = new BB();
-  delta_bb = Banda_BB.BB_High(0) - Banda_BB.BB_Low(0);
-  delete(Banda_BB);
+    BB *Banda_BB = new BB();
+    //delta_bb = Banda_BB.BB_High(0) - Banda_BB.BB_Low(0);  //Antigo
+    delta_bb = Banda_BB.BB_Delta_Bruto(0);
+    delete(Banda_BB);
   }
 
   if(Tipo_Limite == 55) delta_bb = 1;
   //FIM DA DEFINICAO MULTIPLICADOR DA BANDA
 
+  //Aqui da pau no proporcional pq nao se acerta com o Tick Size, o certo é pegar o valor d
+  //do negócio, deixar o TPC em tick size e
 
-  tpc1 = TakeProfit * delta_bb;
-  tpc1 = MathRound(valor + (tpc1 * (Tipo_Posicao() * Tick_Size))); //Por enquanto TEMPLATE
 
-  tpc2 = TakeProfit2 * delta_bb;
-  tpc2 = MathRound(valor + (tpc2 * (Tipo_Posicao() * Tick_Size))); //Por enquanto TEMPLATE
+  tpc1 = (TakeProfit * delta_bb)/Tick_Size;
+  tpc1 = MathFloor(tpc1) * Tick_Size;
+  tpc1 = valor + (tpc1 * (Tipo_Posicao() * Tick_Size));
 
-  tpc3 = TakeProfit3 * delta_bb;
-  tpc3 = MathRound(valor + (tpc3 * (Tipo_Posicao() * Tick_Size))); //Por enquanto TEMPLATE
+  tpc2 = (TakeProfit2 * delta_bb)/Tick_Size;
+  tpc2 = MathFloor(tpc2) * Tick_Size;
+  tpc2 = valor + (tpc2 * (Tipo_Posicao() * Tick_Size));
+
+  tpc3 = (TakeProfit3 * delta_bb)/Tick_Size;
+  tpc3 = MathFloor(tpc3) * Tick_Size;
+  tpc3 = valor + (tpc3 * (Tipo_Posicao() * Tick_Size));
 
   if(Tipo_Posicao() > 0) Tipo_Ordem_TP = ORDER_TYPE_SELL_LIMIT;
   if(Tipo_Posicao() < 0) Tipo_Ordem_TP = ORDER_TYPE_BUY_LIMIT;
@@ -234,9 +322,10 @@ void Stops::Setar_Ordens_Vars_Static()
   double sl = valor - (StopLoss * (Tipo_Posicao() * Tick_Size));
   double tp1 = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
   double tp2 = valor + (TakeProfit2 * (Tipo_Posicao() * Tick_Size));
-  double tp3 = valor + (TakeProfit3 * (Tipo_Posicao() * Tick_Size) *100); //Tem que arrumar depois
+  //double tp3 = valor + (TakeProfit3 * (Tipo_Posicao() * Tick_Size) *100); //Tem que arrumar depois
+  double tp3 = 0; //Tem que arrumar depois
 
-  if(TakeProfit == 0) tp3 = valor + Tipo_Posicao() * Tick_Size * 100;
+  // if(TakeProfit == 0) tp3 = valor + Tipo_Posicao() * Tick_Size * 100;
 
 
   //Print("StopLoss Fixo: " + DoubleToString(sl) + " | " + "StopLoss Fixo: " + DoubleToString(sl)); //DEBUG
@@ -257,14 +346,21 @@ void Stops::Setar_Ordens_Vars_Proporcional()
   double tp = 0;
 
   BB *Banda_BB = new BB();
-  delta_bb = Banda_BB.BB_High(0) - Banda_BB.BB_Low(0);
+  //delta_bb = Banda_BB.BB_High(0) - Banda_BB.BB_Low(0);  //Antigo
+  delta_bb = Banda_BB.BB_Delta_Bruto(0);
   delete(Banda_BB);
 
-  StopLoss_Proporcional = StopLoss * delta_bb;
+  //Print("delta_bb: " + delta_bb); //DEBUG
+
+
+  StopLoss_Proporcional = (StopLoss * delta_bb); //Aqui Ja Sai em Tick_Size
+  //Print("StopLoss_Proporcional: " + StopLoss_Proporcional + " Ticks"); //DEBUG
+  StopLoss_Proporcional = MathFloor(StopLoss_Proporcional) * Tick_Size;
+  //Print("StopLoss_Proporcional MathFloor * Tick_Size: " + StopLoss_Proporcional); //DEBUG
 
   if(TakeProfit == 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
 
-  double sl = MathRound(valor - (StopLoss_Proporcional * (Tipo_Posicao())));
+  double sl = valor - (StopLoss_Proporcional * (Tipo_Posicao()));
 
   Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
   Print("StopLoss Prop: " + DoubleToString(sl)); //DEBUG

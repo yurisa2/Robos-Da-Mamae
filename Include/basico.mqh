@@ -240,7 +240,7 @@ void Encerra_Ops_Dia()
 
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
 
-  if(!Condicoes.Horario())
+  if(!Condicoes.Horario() && ZerarFinalDoDia)
   {
     if(O_Stops.Tipo_Posicao() != 0)
     {

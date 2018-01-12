@@ -92,42 +92,19 @@ double Stops::Distribuidor_Parcial(int Seletor_Volume)
   if(TakeProfit2 > 0) Niveis_Preenchidos = 2;
   if(TakeProfit3 > 0) Niveis_Preenchidos = 3;
 
-  Steps_por_TPL = MathFloor(Lotes_Steps / Niveis_Preenchidos);  //Isso aqui retorna quantos Steps por Nível (Divisao Simples)
+  //Print("Niveis_Preenchidos: " + Niveis_Preenchidos); //DEBUG
 
-// Aqui precisa determinar (usando MIN) quantos niveis vai usar...
+  Steps_por_TPL = (Lotes_Steps / Niveis_Preenchidos);  //Isso aqui retorna quantos Steps por Nível (Divisao Simples)
+  Print("Steps_por_TPL: " + Steps_por_TPL); //DEBUG
 
-if(Steps_por_TPL <= 3) Niveis_Por_Steps = Steps_por_TPL;
-else Niveis_Por_Steps = 3;
+  int Sobra_Lotes_Niveis = Lotes_Steps % Niveis_Preenchidos;
 
-// Print("Niveis_Por_Steps: " + Niveis_Por_Steps); //DEBUG
+  if(Sobra_Lotes_Niveis == 1 && Steps_por_TPL < 1) Niveis_Por_Steps = 1;
+  if(Sobra_Lotes_Niveis == 2 && Steps_por_TPL < 1) Niveis_Por_Steps = 2;
 
-Niveis_Calculados  = MathMin(Niveis_Preenchidos,Niveis_Por_Steps);
+  if(Sobra_Lotes_Niveis == 1 && Steps_por_TPL > 1) Niveis_Por_Steps = 1 + MathFloor(Steps_por_TPL);
+  if(Sobra_Lotes_Niveis == 2 && Steps_por_TPL > 1) Niveis_Por_Steps = 2 + MathFloor(Steps_por_TPL);
 
-if(Seletor_Volume == 0)
-{
-retorno = Niveis_Calculados;
-return retorno;
-}
-
-
-// Se tem o suficiente para todos os niveis, distribua
-
-if(Niveis_Calculados == 1 && Seletor_Volume == 1)
-{
- retorno = Lotes_Steps;
- return retorno;
-}
-
-if(Niveis_Calculados == 2 && Seletor_Volume == 1)
-{
- retorno = Lotes_Steps;
-}
-
-
-
-  // Agora Arrumar a casa
-
-  if(MathMod(Lotes_Steps, Niveis_Preenchidos) == 1);
 
   //orrigir o volume (Acho que é VOLUME_STEPS * VOlume_Step)
 

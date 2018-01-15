@@ -24,8 +24,8 @@ void HiLo_OO::HiLo_OO(int Periodo_Hilo = 4)
 
 int HiLo_OO::Direcao()
 {
-  MA *MediaMovelAlta = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_HIGH);
-  MA *MediaMovelBaixa = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_LOW);
+  MA *MediaMovelAlta = new MA(Periodos_Inputs,MODE_SMA,TimeFrame,0,PRICE_HIGH);
+  MA *MediaMovelBaixa = new MA(Periodos_Inputs,MODE_SMA,TimeFrame,0,PRICE_LOW);
   int direcao = 0;
   int i = 0;
 
@@ -52,8 +52,8 @@ int HiLo_OO::Direcao()
 
 int HiLo_OO::Mudanca()
 {
-  MA *MediaMovelAlta = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_HIGH);
-  MA *MediaMovelBaixa = new MA(Periodos_Inputs,MODE_SMA,PERIOD_CURRENT,0,PRICE_LOW);
+  MA *MediaMovelAlta = new MA(Periodos_Inputs,MODE_SMA,TimeFrame,0,PRICE_HIGH);
+  MA *MediaMovelBaixa = new MA(Periodos_Inputs,MODE_SMA,TimeFrame,0,PRICE_LOW);
   int retorno = 0;
 
   int historico_direcao[];
@@ -61,7 +61,7 @@ int HiLo_OO::Mudanca()
   //Pega O historico
   MqlRates rates[];
    ArraySetAsSeries(rates,true);
-   int copied=CopyRates(Symbol(),0,0,200,rates);
+   int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
 
    int i = ArraySize(rates);
    ArrayResize(historico_direcao,i);

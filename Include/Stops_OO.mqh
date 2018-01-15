@@ -68,7 +68,7 @@ double Stops::Distribuidor_Parcial(int Seletor_Volume)
   if(Seletor_Volume == 0 )
   {
     retorno = TPLs;
-    Print("TPLs: " + DoubleToString(TPLs));
+    //Print("TPLs: " + DoubleToString(TPLs)); //DEBUG
     return retorno;
   }
 
@@ -270,9 +270,15 @@ void Stops::Setar_Ordens_Vars_Proporcional()
   StopLoss_Proporcional = MathFloor(StopLoss_Proporcional) * Tick_Size;
   //Print("StopLoss_Proporcional MathFloor * Tick_Size: " + StopLoss_Proporcional); //DEBUG
 
+  double sl_max = Limite_Maximo_SL_Tick_Size * Tick_Size;   //Pontos máximo
+
+  StopLoss_Proporcional = MathMin(StopLoss_Proporcional, sl_max);
+
   if(TakeProfit == 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
 
   double sl = valor - (StopLoss_Proporcional * (Tipo_Posicao()));
+
+
 
   Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
   Print("StopLoss Prop: " + DoubleToString(sl)); //DEBUG

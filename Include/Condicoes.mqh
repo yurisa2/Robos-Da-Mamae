@@ -59,7 +59,7 @@ bool  Condicoes_Basicas_OO::Banda_Permite()
   //Pega O historico
   MqlRates rates[];
   ArraySetAsSeries(rates,true);
-  int copied=CopyRates(Symbol(),0,0,200,rates);
+  int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
   // delta_media_candle = (((rates[1].high + rates[2].high + rates[3].high) / 3 ) - ((rates[1].low + rates[2].low + rates[3].low) / 3 )/Tick_Size);
   delta_media_candle = (rates[1].high - rates[1].low);
 

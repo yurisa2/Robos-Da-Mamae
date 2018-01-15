@@ -16,9 +16,9 @@ void Operacoes_No_tick()
   daotick_geral = daotick()-Calcula_Spread_RT; //Legacy
   daotick_venda = daotick(-1);
   daotick_compra = daotick(1);
-  Saldo_Do_Dia_RT = Saldo_Dia_Valor();
+//  Saldo_Do_Dia_RT = Saldo_Dia_Valor();
 
-  Saldo_Dia_Permite_RT = Saldo_Dia_Permite();
+//  Saldo_Dia_Permite_RT = Saldo_Dia_Permite();
 
   //Fim das Vars Atualizadas Globalmente
 
@@ -26,7 +26,8 @@ void Operacoes_No_tick()
 
   O_Stops.No_Tick();
 
-
+    Encerra_Ops_Dia();
+    
   /////////////////////////////////////////////////
 
   DetectaNovaBarra();

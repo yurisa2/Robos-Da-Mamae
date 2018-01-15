@@ -60,6 +60,15 @@ ENUM_INIT_RETCODE VerificaInit ()
     return(INIT_PARAMETERS_INCORRECT);
   }
 
+// Inicio da verificação de TakeProfit2
+
+if((TakeProfit_Volume + TakeProfit_Volume2 + TakeProfit_Volume3) != 0 && Lotes != (TakeProfit_Volume + TakeProfit_Volume2 + TakeProfit_Volume3))
+{
+  MessageBox("Volume de Take Profit não bate com o Volume de entrada ","Erro de Inicialização",MB_OK);
+  Print("Volume de Take Profit não bate com o Volume de entrada  "," - Erro de Inicialização");
+  return(INIT_PARAMETERS_INCORRECT);
+}
+
 
   return INIT_SUCCEEDED;
 

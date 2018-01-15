@@ -58,107 +58,42 @@ void Stops::No_Tick()
 
 double Stops::Distribuidor_Parcial(int Seletor_Volume)
 {
-  double retorno = -1;
+  double retorno = 1;
+  double TPLs = 0;
 
-  int Niveis_Preenchidos = 0;
-  int Niveis_Por_Steps = 0;
-  int Niveis_Calculados = 0;
+  if(TakeProfit > 0 && TakeProfit_Volume > 0 ) TPLs++;
+  if(TakeProfit2 > 0 && TakeProfit_Volume2 > 0 ) TPLs++;
+  if(TakeProfit3 > 0 && TakeProfit_Volume3 > 0 ) TPLs++;
 
-
-
-  int TP1_Steps = 0;
-  int TP2_Steps = 0;
-  int TP3_Steps = 0;
-
-  double Steps_por_TPL = 0;
-
-  if(Volume_Step == 0) Volume_Step = 1;
-
-
-  double Lotes_Steps = MathFloor(Lotes / Volume_Step);
-
-  if(Lotes_Steps < 0)
+  if(Seletor_Volume == 0 )
   {
-    Alert("Volume abaixo do Volume step (Minimo para operar) ");
-    ExpertRemove();
+    retorno = TPLs;
+    Print("TPLs: " + DoubleToString(TPLs));
+    return retorno;
   }
 
-  Print("Lotes_Steps: " + Lotes_Steps); //DEBUG
+  if(Seletor_Volume == 1 )
+  {
+    retorno = TakeProfit_Volume;
+    return retorno;
+  }
 
-  //Seletor_Volume = 0 - Retorna Quantos Niveis de STOP 1,2 ou 3
-  //Seletor_Volume = 1..3 - Retorna o VOLUME do nivel 1..3 de STOP
+  if(Seletor_Volume == 2 )
+  {
+    retorno = TakeProfit_Volume2;
+    return retorno;
+  }
 
-  if(TakeProfit > 0) Niveis_Preenchidos = 1;
-  if(TakeProfit2 > 0) Niveis_Preenchidos = 2;
-  if(TakeProfit3 > 0) Niveis_Preenchidos = 3;
+  if(Seletor_Volume == 3 )
+  {
+    retorno = TakeProfit_Volume3;
+    return retorno;
+  }
 
-  //Print("Niveis_Preenchidos: " + Niveis_Preenchidos); //DEBUG
-
-  Steps_por_TPL = (Lotes_Steps / Niveis_Preenchidos);  //Isso aqui retorna quantos Steps por Nível (Divisao Simples)
-  Print("Steps_por_TPL: " + Steps_por_TPL); //DEBUG
-
-  int Sobra_Lotes_Niveis = Lotes_Steps % Niveis_Preenchidos;
-
-  if(Sobra_Lotes_Niveis == 1 && Steps_por_TPL < 1) Niveis_Por_Steps = 1;
-  if(Sobra_Lotes_Niveis == 2 && Steps_por_TPL < 1) Niveis_Por_Steps = 2;
-
-  if(Sobra_Lotes_Niveis == 1 && Steps_por_TPL > 1) Niveis_Por_Steps = 1 + MathFloor(Steps_por_TPL);
-  if(Sobra_Lotes_Niveis == 2 && Steps_por_TPL > 1) Niveis_Por_Steps = 2 + MathFloor(Steps_por_TPL);
-
-
-  //orrigir o volume (Acho que é VOLUME_STEPS * VOlume_Step)
 
   return retorno;
 }
 
-// double Stops::Distribuidor_Parcial(int Seletor_Volume)
-// {
-//   int Num_Stops_Configurados = 0;
-//   double vol_tp1 = 1;
-//   double vol_tp2 = 0;
-//   double vol_tp3 = 0;
-//   double div_bruta = 0;
-//   double mod_bruto = 0;
-//   double inteiro = 0;
-//   double retorno = NULL;
-//
-//   if(TakeProfit > 0) Num_Stops_Configurados = 1;
-//   if(TakeProfit2 > 0 ) Num_Stops_Configurados = 2;
-//   if(TakeProfit3 > 0) Num_Stops_Configurados = 3;
-//   // Print("Num_Stops_Configurados: " + DoubleToString(Num_Stops_Configurados)); //DEBUG
-//
-//   div_bruta = Lotes / Num_Stops_Configurados;
-//
-//   mod_bruto = MathMod(Lotes,Num_Stops_Configurados);
-//   inteiro = MathFloor(div_bruta);
-//
-//   Print("Stops_OO Inteiro: " + DoubleToString(inteiro)); //DEBUG
-//
-//   if(inteiro > 1) vol_tp1 = inteiro;
-//   vol_tp2 = inteiro;
-//   vol_tp3 = inteiro;
-//
-//   if(mod_bruto == 1) vol_tp1++;
-//   if(mod_bruto == 2)
-//   {
-//   vol_tp1++;
-//   vol_tp2++;
-//   }
-//
-//   if(Seletor_Volume == 0)
-//   {
-//   if(vol_tp3 > 0) retorno = 3;
-//   if(vol_tp3 == 0) retorno = 2;
-//   if(vol_tp2 == 0) retorno = 1;
-//   // Print("Num Stops: " + DoubleToString(retorno)); //DEBUG
-//   }
-//
-//   if(Seletor_Volume == 1) retorno = vol_tp1;
-//   if(Seletor_Volume == 2) retorno = vol_tp2;
-//   if(Seletor_Volume == 3) retorno = vol_tp3;
-//
-//   return retorno;
-// }
 
 void Stops::TakeProfit_Calcula()
 {

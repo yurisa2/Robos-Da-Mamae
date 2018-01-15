@@ -45,8 +45,11 @@ input double StopLoss = 0;                                                 //Sto
 input double MoverSL = 0;                                              //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
 input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operacão)
 input double TakeProfit = 0;                                               //Take Profit (0 desliga)
+input double TakeProfit_Volume = 0;                                               //Volume TakeProfit
 input double TakeProfit2 = 0;                                               //Take Profit2 (0 desliga)
+input double TakeProfit_Volume2 = 0;                                               //Volume TakeProfit2
 input double TakeProfit3 = 0;                                               //Take Profit3 (0 desliga)
+input double TakeProfit_Volume3 = 0;                                              //Volume TakeProfit3
 input bool Zerar_SL_TP = 1;                                                 //Zerar SL na realização parcial
 input double Trailing_stop = 0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)

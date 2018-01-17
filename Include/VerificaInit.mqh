@@ -69,6 +69,20 @@ if((TakeProfit_Volume + TakeProfit_Volume2 + TakeProfit_Volume3) != 0 && Lotes !
   return(INIT_PARAMETERS_INCORRECT);
 }
 
+if(TakeProfit3 != 0 && TakeProfit3 <= TakeProfit2)
+{
+  MessageBox("Erro no TP3 ","Erro de Inicialização",MB_OK);
+  Print("Erro no TP3   "," - Erro de Inicialização");
+  return(INIT_PARAMETERS_INCORRECT);
+}
+
+if(TakeProfit2 != 0 && TakeProfit2 <= TakeProfit)
+{
+  MessageBox("Erro no TP2 ","Erro de Inicialização",MB_OK);
+  Print("Erro no TP2   "," - Erro de Inicialização");
+  return(INIT_PARAMETERS_INCORRECT);
+}
+
 
   return INIT_SUCCEEDED;
 

@@ -55,10 +55,9 @@ void Opera_Mercado::AbrePosicao(int order_type, string comentario_req)
    /////////////////////////////////////////// Final da req.
 void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentario_req)
    {
+     Sleep(200);
 
-     do
-     ZeraOrdensP();
-     while(OrdersTotal() > 0);
+
 
      //Print("Posicao_Mercado"); //DEBUG
 
@@ -66,6 +65,10 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
      CTrade *requisicao_montar = new CTrade;
      if(Condicoes_Basicas.Condicao())
      {
+       do
+       ZeraOrdensP();
+       while(OrdersTotal() > 0);
+
      requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
 
      if(Tipo_Limite == 55) O_Stops.Setar_Ordens_Vars_Static();

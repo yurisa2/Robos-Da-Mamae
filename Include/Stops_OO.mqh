@@ -125,18 +125,23 @@ void Stops::TakeProfit_Calcula()
   //Aqui da pau no proporcional pq nao se acerta com o Tick Size, o certo é pegar o valor d
   //do negócio, deixar o TPC em tick size e
 
+  //Print("delta_bb: " + delta_bb);  //DEBUG
 
   tpc1 = (TakeProfit * delta_bb)/Tick_Size;
   tpc1 = MathFloor(tpc1) * Tick_Size;
-  tpc1 = valor + (tpc1 * (Tipo_Posicao() * Tick_Size));
+  //Print("MathFloor(tpc1) * Tick_Size: " + tpc1); //DEBUG
+  tpc1 = valor + (tpc1 * (Tipo_Posicao()));
+  //Print("TPC1: " + tpc1); //DEBUG
 
   tpc2 = (TakeProfit2 * delta_bb)/Tick_Size;
   tpc2 = MathFloor(tpc2) * Tick_Size;
-  tpc2 = valor + (tpc2 * (Tipo_Posicao() * Tick_Size));
+  tpc2 = valor + (tpc2 * (Tipo_Posicao()));
+  //Print("TPC2: " + tpc2); //DEBUG
 
   tpc3 = (TakeProfit3 * delta_bb)/Tick_Size;
   tpc3 = MathFloor(tpc3) * Tick_Size;
-  tpc3 = valor + (tpc3 * (Tipo_Posicao() * Tick_Size));
+  tpc3 = valor + (tpc3 * (Tipo_Posicao()));
+  //Print("TPC3: " + tpc3); //DEBUG
 
   if(Tipo_Posicao() > 0) Tipo_Ordem_TP = ORDER_TYPE_SELL_LIMIT;
   if(Tipo_Posicao() < 0) Tipo_Ordem_TP = ORDER_TYPE_BUY_LIMIT;

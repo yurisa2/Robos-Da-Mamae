@@ -23,6 +23,9 @@
 #include <Condicoes.mqh>
 #include <Comentario.mqh>
 
+
+
+
 //#include <Expert\Expert.mqh>
 
 //--- object for performing trade operations
@@ -272,6 +275,8 @@ void Init_Padrao ()
 
   ArrumaMinutos();
 
+
+  File_Init();
 }
 
 void IniciaDia ()

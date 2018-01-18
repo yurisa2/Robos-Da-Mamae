@@ -127,18 +127,20 @@ void Stops::TakeProfit_Calcula()
 
   //Print("delta_bb: " + delta_bb);  //DEBUG
 
-  tpc1 = (TakeProfit * delta_bb)/Tick_Size;
+  tpc1 = (TakeProfit * delta_bb);
   tpc1 = MathFloor(tpc1) * Tick_Size;
   //Print("MathFloor(tpc1) * Tick_Size: " + tpc1); //DEBUG
   tpc1 = valor + (tpc1 * (Tipo_Posicao()));
   //Print("TPC1: " + tpc1); //DEBUG
+  //Print("TickSize: " + Tick_Size); //DEBUG
 
-  tpc2 = (TakeProfit2 * delta_bb)/Tick_Size;
+
+  tpc2 = (TakeProfit2 * delta_bb);
   tpc2 = MathFloor(tpc2) * Tick_Size;
   tpc2 = valor + (tpc2 * (Tipo_Posicao()));
   //Print("TPC2: " + tpc2); //DEBUG
 
-  tpc3 = (TakeProfit3 * delta_bb)/Tick_Size;
+  tpc3 = (TakeProfit3 * delta_bb);
   tpc3 = MathFloor(tpc3) * Tick_Size;
   tpc3 = valor + (tpc3 * (Tipo_Posicao()));
   //Print("TPC3: " + tpc3); //DEBUG
@@ -242,10 +244,10 @@ void Stops::Setar_Ordens_Vars_Static()
   //double tp3 = valor + (TakeProfit3 * (Tipo_Posicao() * Tick_Size) *100); //Tem que arrumar depois
   double tp3 = 0; //Tem que arrumar depois
 
-  // if(TakeProfit == 0) tp3 = valor + Tipo_Posicao() * Tick_Size * 100;
+  //if(TakeProfit == 0) tp3 = valor + (Tipo_Posicao() * Tick_Size * 100);
 
 
-  //Print("StopLoss Fixo: " + DoubleToString(sl) + " | " + "StopLoss Fixo: " + DoubleToString(sl)); //DEBUG
+  Print("StopLoss Fixo: " + DoubleToString(sl)); //DEBUG
 
   tradionices.PositionModify(Symbol(),sl,tp3);
 
@@ -285,8 +287,8 @@ void Stops::Setar_Ordens_Vars_Proporcional()
 
 
 
-  Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
-  Print("StopLoss Prop: " + DoubleToString(sl)); //DEBUG
+  //Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
+  //Print("StopLoss Prop: " + DoubleToString(sl)); //DEBUG
 
   tradionices.PositionModify(Symbol(),sl,tp);
   TakeProfit_Calcula();

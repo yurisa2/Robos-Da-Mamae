@@ -75,6 +75,17 @@ double BB::BB_High(int barra = 0)
   return(retorno);
 }
 
+double BB::BB_Base(int barra = 0)
+{
+  double _BB_Base[];
+  double retorno = 0;
+  ArraySetAsSeries(_BB_Base, true);
+  CopyBuffer(HandleBBOO,0,0,barra+5,_BB_Base);
+
+  retorno = (_BB_Base[barra]);
+  return(retorno);
+}
+
 double BB::BB_Delta_Bruto(int barra = 0)
 {
   double retorno = 0;

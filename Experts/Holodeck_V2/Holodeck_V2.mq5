@@ -15,8 +15,7 @@
 
 #include <Inputs_Vars.mqh>
 
-#include <Holodeck_V2\holodeck_inputs.mqh>
-#include <Holodeck_V2\holodeck_funcoes.mqh>
+
 
 #include <Indicadores\BB.mqh>
 
@@ -33,6 +32,9 @@
 #include <MontarRequisicao.mqh>
 //#include <Bucareste\InitBucareste.mqh>
 #include <VerificaInit.mqh>
+
+#include <Holodeck_V2\holodeck_inputs.mqh>
+#include <Holodeck_V2\holodeck_funcoes.mqh>
 
 #include <File_Writer.mqh>
 

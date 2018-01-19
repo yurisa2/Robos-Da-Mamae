@@ -61,18 +61,18 @@ void OnTimer()
 
   Operacoes_No_Timer();
 
-  Holodeck *holo = new Holodeck;
-  holo.Timer();
-  delete(holo);
-
-
+//  Holodeck *holo = new Holodeck;
+//  holo.Timer();
+//  delete(holo);
 }
 
 void OnTick()
 {
+  Operacoes_No_tick();
 
-   Operacoes_No_tick();
-
+  Holodeck *holo = new Holodeck;
+  holo.Avalia();
+  delete(holo);
 }
 
 double OnTester()

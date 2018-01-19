@@ -15,6 +15,7 @@ class BB
   );
 
   double BB_Low(int barra = 0);
+  double BB_Base(int barra = 0);
   double BB_High(int barra = 0);
   double BB_Delta_Bruto(int barra = 0);
   double BB_Posicao_Percent(int barra = 0);

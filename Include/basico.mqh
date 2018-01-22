@@ -229,6 +229,7 @@ void DetectaNovaBarra()
 
 void Operacoes_No_Timer()
 {
+  Encerra_Ops_Dia();
 
   //  TaDentroDoHorario_RT = TaDentroDoHorario(HorarioInicio,HorarioFim);
 

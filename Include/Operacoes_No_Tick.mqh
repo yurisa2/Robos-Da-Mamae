@@ -26,7 +26,6 @@ void Operacoes_No_tick()
 
   O_Stops.No_Tick();
 
-    Encerra_Ops_Dia();
     
   /////////////////////////////////////////////////
 

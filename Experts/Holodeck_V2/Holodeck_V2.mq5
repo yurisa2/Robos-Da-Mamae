@@ -57,6 +57,21 @@ void OnTimer()
 {
   IniciaDia();
 
+  Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+
+  if(Condicoes.Horario())
+  {
+  
+ Operacoes_No_tick();
+
+  Holodeck *holo = new Holodeck;
+  holo.Avalia();
+  delete(holo);
+  
+  
+  }
+    delete(Condicoes);
+
   if(!Otimizacao) Comentario();
 
   Operacoes_No_Timer();
@@ -68,12 +83,9 @@ void OnTimer()
 
 void OnTick()
 {
-  Operacoes_No_tick();
 
-  Holodeck *holo = new Holodeck;
-  holo.Avalia();
-  delete(holo);
 }
+
 
 double OnTester()
 {

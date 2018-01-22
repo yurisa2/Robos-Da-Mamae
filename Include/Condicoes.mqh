@@ -23,7 +23,6 @@ bool Condicoes_Basicas_OO::Horario()
 {
   string DiaHoraInicio;
   string DiaHoraFim;
-  bool RetornoHorario =false;
 
   Agora = TimeCurrent();
 
@@ -37,9 +36,10 @@ bool Condicoes_Basicas_OO::Horario()
   if(Agora>=StringToTime(DiaHoraInicio) && Agora<=StringToTime(DiaHoraFim))
   {
 
-      RetornoHorario = true;
+      return true;
   }
-  return(RetornoHorario);
+  else return false;
+
 }
 
 bool Condicoes_Basicas_OO::Operacao_Em_Curso()

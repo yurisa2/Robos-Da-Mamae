@@ -53,12 +53,12 @@ ENUM_INIT_RETCODE VerificaInit ()
     return(INIT_PARAMETERS_INCORRECT);
   }
 
-  if(PontoDeMudancaSL > MoverSL || (MoverSL==0 && PontoDeMudancaSL <0))
-  {
-    MessageBox("PontoDeMudancaSL > MoverSL ou Mover Desligado e PMSL menor que zero","Erro de Inicialização",MB_OK);
-    Print("PontoDeMudancaSL > MoverSL"," - Erro de Inicialização");
-    return(INIT_PARAMETERS_INCORRECT);
-  }
+  // if(PontoDeMudancaSL > MoverSL || (MoverSL==0 && PontoDeMudancaSL <0))
+  // {
+  //   MessageBox("PontoDeMudancaSL > MoverSL ou Mover Desligado e PMSL menor que zero","Erro de Inicialização",MB_OK);
+  //   Print("PontoDeMudancaSL > MoverSL"," - Erro de Inicialização");
+  //   return(INIT_PARAMETERS_INCORRECT);
+  // }
 
 // Inicio da verificação de TakeProfit2
 

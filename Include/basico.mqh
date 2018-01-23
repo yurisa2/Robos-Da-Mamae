@@ -184,7 +184,7 @@ void Comentario ()
 
   Comentario_Simples+   //AQUI EH O ESPECIFICO DA ORDEM
 
-  " | Picotes: "+IntegerToString(EM_Contador_Picote)+" | "+
+  " | "+
 
   Segundos_Fim_Barra() +
   " | Saldo exec: " + DoubleToString(Saldo_Do_Dia_RT,2) +
@@ -304,16 +304,4 @@ void IniciaDia ()
       Sleep(1000);
     } //If do Horario
   } //If do Ja zerou
-}
-
-bool Condicoes_Basicas_Gerais()
-{
-  double retorno = true;
-  double Operacoes_Feitas_Permite = false;
-
-  if(OperacoesFeitas < (Limite_Operacoes*2)) Operacoes_Feitas_Permite = true;
-
-  if(!JaZerou || !Operacoes_Feitas_Permite || !TaDentroDoHorario_RT || ! Saldo_Dia_Permite_RT) retorno = false;
-
-return retorno;
 }

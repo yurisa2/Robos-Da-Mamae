@@ -15,6 +15,8 @@ class Condicoes_Basicas_OO
 
   private:
   bool Banda_Permite();
+  bool Banda_Bruta_Permite();
+  bool Volume_Permite();
 
 
 };
@@ -77,10 +79,35 @@ bool  Condicoes_Basicas_OO::Banda_Permite()
 
 bool Condicoes_Basicas_OO::Condicao()
 {
-  if(!Operacao_Em_Curso() && Horario() && Banda_Permite()) return true;
+  if(!Operacao_Em_Curso() && Horario() && Banda_Permite() && Volume_Permite() && Banda_Bruta_Permite()) return true;
   else return false;
 }
 
+bool  Condicoes_Basicas_OO::Volume_Permite()
+{
+  bool retorno = true;
 
+  Volumes *Volumes_OO = new Volumes(NULL,TimeFrame);
+  double Volume_FW = Volumes_OO.Valor(1) ;
+
+  if(Volume_FW < Limite_Volume_Min || Volume_FW > Limite_Volume_Max) retorno = false;
+  else retorno =  true;
+
+  delete(Volumes_OO);
+  return retorno;
+}
+
+bool  Condicoes_Basicas_OO::Banda_Bruta_Permite()
+{
+  bool retorno = false;
+
+  BB *Banda = new BB;
+
+  if(Banda.BB_Delta_Bruto() < Limite_BB_Bruta_Min || Limite_BB_Bruta_Min > Limite_BB_Bruta_Max) retorno =  false;
+  else retorno =  true;
+  delete(Banda);
+
+  return retorno;
+}
 
 Condicoes_Basicas_OO Condicoes_Basicas;

@@ -15,5 +15,7 @@ enum Tipo_Op
   SStar  = -1
 };
 input Tipo_Op Halley_Tipo_op = 0;
+input bool Utiliza_SL_Setup = false;
+
 
 datetime UltimoFormato = NULL;

@@ -12,8 +12,6 @@ class Halley
   int Forma_Direcao(int barra = 0);
   MqlRates Halley::Preco(int barra = 0);
 
-
-
 };
 
 
@@ -185,6 +183,8 @@ void Halley::Avalia()
 //      Print("Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).low + " | Hora: " + Preco(i).time) ;
       opera.AbrePosicao(-1,"Halley: " + "Formato("+IntegerToString(i)+"): " + DoubleToString(Formato(i)) + " | Direcao: " + DoubleToString(Direcao(i)) + " | Preco("+IntegerToString(i)+"): " + DoubleToString(Preco(i).low) + " | Hora: " + DoubleToString(Preco(i).time));
       UltimoFormato = Preco(i).time;
+      double sl = Preco(i).high;
+      if(Utiliza_SL_Setup) opera.SetaSL(sl);
       delete(opera);
     }
 
@@ -196,6 +196,8 @@ void Halley::Avalia()
   //    Print("Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).high  + " | Hora: " + Preco(i).time) ;
       opera.AbrePosicao(1,"Halley: " + "Formato("+IntegerToString(i)+"): " + DoubleToString(Formato(i)) + " | Direcao: " + DoubleToString(Direcao(i)) + " | Preco("+IntegerToString(i)+"): " + DoubleToString(Preco(i).low) + " | Hora: " + DoubleToString(Preco(i).time));
       UltimoFormato = Preco(i).time;
+      double sl = Preco(i).low;
+      if(Utiliza_SL_Setup) opera.SetaSL(sl);
       delete(opera);
       }
     }
@@ -227,26 +229,5 @@ void Halley::Avalia()
 
 void Halley::Timer()
 {
-
-  /////// Inicio Apagar ordens pendentes
-  // if(O_Stops.Tipo_Posicao() == 0)
-  // {
-  //   int ord_total=OrdersTotal();
-  //   if(ord_total > 0)
-  //   {
-  //     for(int i=ord_total-1;i>=0;i--)
-  //     {
-  //       ulong ticket=OrderGetTicket(i);
-  //       if(OrderSelect(ticket) && OrderGetString(ORDER_SYMBOL)==Symbol())
-  //       {
-  //         CTrade *trade=new CTrade();
-  //         trade.OrderDelete(ticket);
-  //         delete trade;
-  //       }
-  //     }
-  //   }
-  // }
-  /////// FIM Apagar ordens pendentes
-
-
+//AQUI FICAVA O CODEGO DE ZERAR PENDENTES
 }

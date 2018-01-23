@@ -17,6 +17,7 @@ class Opera_Mercado
   void AbrePosicao(int order_type, string comentario_req);
   void FechaPosicao();
   void ZeraOrdensP();
+  void SetaSL(double sl);
 
   private:
   void Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentario_req);
@@ -87,5 +88,17 @@ void Opera_Mercado::FechaPosicao()
      requisicao_montar.PositionClose(Symbol());
 
      delete(requisicao_montar);
+   }
+   /////////////////////////////////////////// Fechar Posicao
+
+   /////////////////////////////////////////// Fechar Posicao.
+void Opera_Mercado::SetaSL(double sl)
+   {
+     if(O_Stops.Tipo_Posicao() != 0)
+     {
+     CTrade *tradionices = new CTrade;
+     tradionices.PositionModify(Symbol(),sl,0);
+     delete(tradionices);
+   }
    }
    /////////////////////////////////////////// Fechar Posicao

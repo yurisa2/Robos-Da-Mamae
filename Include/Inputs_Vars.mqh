@@ -58,10 +58,11 @@ input double Trailing_stop_start = 0;                                      //Ini
 input string Limites_Label  =  "Limites e Condicões de entrada";   // Limites e condições de entrada
 input double Limite_Volume_Min = 0;                                //Limite Minimo Volume (Absoluto)
 input double Limite_Volume_Max = 999999;                                //Limite Maximo Volume (Absoluto)
-input double Limite_BB_Bruta_Min = 0;                                //Limite BB_Bruta  (*Tick Size)
-input double Limite_BB_Bruta_Max = 999999;                                //Limite BB_Bruta (*Tick Size)
+input double Limite_BB_Bruta_Min = 0;                                //Limite BB_Bruta Min  (*Tick Size)
+input double Limite_BB_Bruta_Max = 999999;                                //Limite BB_Bruta Max (*Tick Size)
 input double Limite_Minimo_Tick_Size = 0;                          //Limite Minimo (BB Delta) para operar (*Tick Size)
 input double Limite_Maximo_Tick_Size = 9999;                          //Limite Maximo (BB Delta) para operar (*Tick Size)
+
 //
 // input string _Escalpelador_Maluco  =  "USANDO TICK SIZE E PROP - CUIDADO----";
 // input bool Usa_EM = false;                                                       //Usa Escalpelador Maluco

@@ -23,6 +23,25 @@
 #include <Condicoes.mqh>
 #include <Comentario.mqh>
 
+#include <Indicadores\AC.mqh>
+#include <Indicadores\AD.mqh>
+#include <Indicadores\ADX.mqh>
+#include <Indicadores\ATR.mqh>
+#include <Indicadores\BB.mqh>
+#include <Indicadores\BearsPower.mqh>
+#include <Indicadores\BullsPower.mqh>
+#include <Indicadores\BWMFI.mqh>
+#include <Indicadores\CCI.mqh>
+#include <Indicadores\DeMarker.mqh>
+#include <Indicadores\HiLo_OO.mqh>
+#include <Indicadores\MA.mqh>
+#include <Indicadores\MACD.mqh>
+#include <Indicadores\MFI.mqh>
+#include <Indicadores\Momentum.mqh>
+#include <Indicadores\RSI_OO.mqh>
+#include <Indicadores\Stoch.mqh>
+#include <Indicadores\Volumes.mqh>
+#include <Indicadores\WPR.mqh>
 
 
 

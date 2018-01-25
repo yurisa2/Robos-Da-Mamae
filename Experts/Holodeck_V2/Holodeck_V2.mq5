@@ -15,19 +15,6 @@
 
 #include <Inputs_Vars.mqh>
 
-
-
-#include <Indicadores\BB.mqh>
-
-#include <Indicadores\ADX.mqh>
-#include <Indicadores\MA.mqh>
-#include <Indicadores\RSI_OO.mqh>
-#include <Indicadores\HiLo_OO.mqh>
-#include <Indicadores\MFI.mqh>
-#include <Indicadores\Stoch.mqh>
-#include <Indicadores\Volumes.mqh>
-#include <Indicadores\MACD.mqh>
-
 #include <Stops_OO.mqh>
 #include <MontarRequisicao.mqh>
 //#include <Bucareste\InitBucareste.mqh>

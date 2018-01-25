@@ -32,7 +32,7 @@ double AD::Valor(int barra = 0)
      double _AD[];
      double retorno = NULL;
 
-     ArraySetAsSeries(_AD true);
+     ArraySetAsSeries(_AD,true);
      if(HandleAD == 0)
      int AD_copied = CopyBuffer(HandleAD,0,0,barra+5,_AD);
 

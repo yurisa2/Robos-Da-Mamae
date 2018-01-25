@@ -32,7 +32,7 @@ double WPR::Valor(int barra = 0)
      double _WPR[];
      double retorno = NULL;
 
-     ArraySetAsSeries(_WPR true);
+     ArraySetAsSeries(_WPR,true);
      if(HandleWPR == 0)
      int WPR_copied = CopyBuffer(HandleWPR,0,0,barra+5,_WPR);
 

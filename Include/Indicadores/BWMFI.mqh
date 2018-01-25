@@ -32,7 +32,7 @@ double BWMFI::Valor(int barra = 0)
      double _BWMFI[];
      double retorno = NULL;
 
-     ArraySetAsSeries(_BWMFI true);
+     ArraySetAsSeries(_BWMFI,true);
      if(HandleBWMFI == 0)
      int BWMFI_copied = CopyBuffer(HandleBWMFI,0,0,barra+5,_BWMFI);
 

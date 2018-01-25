@@ -16,7 +16,7 @@ class DeMarker
 void DeMarker::DeMarker()
 {
   HandleDeMarker = 0;
-  HandleDeMarker = iDeMarker(Symbol(),TimeFrame,13,MODE_EMA,VOLUME_TICK) ;
+  HandleDeMarker = iDeMarker(Symbol(),TimeFrame,14) ;
   // ChartIndicatorAdd(0,0,HandleMA);
 
   // Print("Handle Stoch: " + IntegerToString(HandleMA));
@@ -32,7 +32,7 @@ double DeMarker::Valor(int barra = 0)
      double _DeMarker[];
      double retorno = NULL;
 
-     ArraySetAsSeries(_DeMarker true);
+     ArraySetAsSeries(_DeMarker,true);
      if(HandleDeMarker == 0)
      int DeMarker_copied = CopyBuffer(HandleDeMarker,0,0,barra+5,_DeMarker);
 

@@ -33,7 +33,6 @@ double CCI::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_CCI,true);
-     if(HandleCCI == 0)
      int CCI_copied = CopyBuffer(HandleCCI,0,0,barra+5,_CCI);
 
      retorno = _CCI[barra];

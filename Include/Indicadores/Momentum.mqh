@@ -33,7 +33,6 @@ double Momentum::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_Momentum,true);
-     if(HandleMomentum == 0)
      int Momentum_copied = CopyBuffer(HandleMomentum,0,0,barra+5,_Momentum);
 
      retorno = _Momentum[barra];

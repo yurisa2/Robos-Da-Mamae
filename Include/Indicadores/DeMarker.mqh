@@ -33,7 +33,6 @@ double DeMarker::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_DeMarker,true);
-     if(HandleDeMarker == 0)
      int DeMarker_copied = CopyBuffer(HandleDeMarker,0,0,barra+5,_DeMarker);
 
      retorno = _DeMarker[barra];

@@ -33,7 +33,6 @@ double BearsPower::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_BearsPower,true);
-     if(HandleBearsPower == 0)
      int BearsPower_copied = CopyBuffer(HandleBearsPower,0,0,barra+5,_BearsPower);
 
      retorno = _BearsPower[barra];

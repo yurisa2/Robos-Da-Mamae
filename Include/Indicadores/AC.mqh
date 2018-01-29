@@ -33,7 +33,6 @@ double AC::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_AC,true);
-     if(HandleAC == 0)
      int AC_copied = CopyBuffer(HandleAC,0,0,barra+5,_AC);
 
      retorno = _AC[barra];

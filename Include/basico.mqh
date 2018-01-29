@@ -33,6 +33,7 @@
 #include <Indicadores\BWMFI.mqh>
 #include <Indicadores\CCI.mqh>
 #include <Indicadores\DeMarker.mqh>
+#include <Indicadores\DP.mqh>
 #include <Indicadores\HiLo_OO.mqh>
 #include <Indicadores\MA.mqh>
 #include <Indicadores\MACD.mqh>

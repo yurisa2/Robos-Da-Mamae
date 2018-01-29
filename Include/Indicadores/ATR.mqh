@@ -33,7 +33,6 @@ double ATR::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_ATR,true);
-     if(HandleATR == 0)
      int ATR_copied = CopyBuffer(HandleATR,0,0,barra+5,_ATR);
 
      retorno = _ATR[barra];

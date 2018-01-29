@@ -33,7 +33,6 @@ double BullsPower::Valor(int barra = 0)
      double retorno = NULL;
 
      ArraySetAsSeries(_BullsPower,true);
-     if(HandleBullsPower == 0)
      int BullsPower_copied = CopyBuffer(HandleBullsPower,0,0,barra+5,_BullsPower);
 
      retorno = _BullsPower[barra];

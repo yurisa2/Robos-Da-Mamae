@@ -112,6 +112,8 @@ double BB::BB_Posicao_Percent(int barra = 0)
   {
     MqlRates rates[];
     CopyRates(simbolo,periodos,0,barra+1,rates);
+    ArraySetAsSeries(rates,true);
+
     // Print("BB Barra: " + barra); //DEBUG
     trans_size = rates[barra].close - BB_Low(barra);
   }

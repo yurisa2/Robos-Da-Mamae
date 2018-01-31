@@ -93,6 +93,9 @@ bool  Condicoes_Basicas_OO::Volume_Permite()
   if(Volume_FW < Limite_Volume_Min || Volume_FW > Limite_Volume_Max) retorno = false;
   else retorno =  true;
 
+  // if(retorno) Print("Volume_Permite() - ok"); //DEBUG
+
+
   delete(Volumes_OO);
   return retorno;
 }
@@ -106,6 +109,8 @@ bool  Condicoes_Basicas_OO::Banda_Bruta_Permite()
   if(Banda.BB_Delta_Bruto() < Limite_BB_Bruta_Min || Limite_BB_Bruta_Min > Limite_BB_Bruta_Max) retorno =  false;
   else retorno =  true;
   delete(Banda);
+
+  // if(retorno) Print("Banda_Bruta_Permite() - ok"); //DEBUG
 
   return retorno;
 }

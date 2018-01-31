@@ -95,7 +95,6 @@ void Holodeck::Avalia()
       ultimo_rompimento_operado = ultimo_rompimento;
     }
 
-
     if(Direcao() < 0
     && daotick_geral < (O_BB.BB_Base() - (rompimento_mediana * Tick_Size)) )
     {
@@ -105,8 +104,8 @@ void Holodeck::Avalia()
       ultimo_rompimento_operado = ultimo_rompimento;
     }
 
-    Print("ultimo_rompimento_operado: " + TimeToString(ultimo_rompimento_operado)); //DEBUG
-    Print("ultimo_rompimento: " + TimeToString(ultimo_rompimento)); //DEBUG
+    // Print("ultimo_rompimento_operado: " + TimeToString(ultimo_rompimento_operado)); //DEBUG
+    // Print("ultimo_rompimento: " + TimeToString(ultimo_rompimento)); //DEBUG
   }
 
   delete(Condicoes);

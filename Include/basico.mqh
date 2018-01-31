@@ -325,3 +325,21 @@ void IniciaDia ()
     } //If do Horario
   } //If do Ja zerou
 }
+
+
+MqlRates Preco(int barra = 0)
+{
+
+  barra = barra + 1;
+
+
+    MqlRates rates[];
+    ArraySetAsSeries(rates,true);
+    int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
+
+
+
+    return rates[barra];
+
+
+}

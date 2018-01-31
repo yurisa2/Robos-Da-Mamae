@@ -37,7 +37,7 @@ int Holodeck::Rompimento_Bandas(int barra)
   int retorno = 0;
 
   MqlRates rates[];
-  CopyRates(Symbol(),TimeFrame,0,barra+10,rates);
+  CopyRates(Symbol(),TimeFrame,0,barra+1,rates);
   ArraySetAsSeries(rates,true);
   double preco_min = rates[barra].low;
   double preco_max = rates[barra].high;
@@ -47,6 +47,8 @@ int Holodeck::Rompimento_Bandas(int barra)
 
   // if(retorno !=0) Print("Rompimento_Bandas" + IntegerToString(retorno));
   //if(retorno !=0)  Print("Rompimento_Bandas: " + IntegerToString(retorno) + "  |   barra: " + IntegerToString(barra) + "  |  Hora: " + TimeToString(rates[barra].time));
+
+  if(retorno != 0) ultimo_rompimento = Preco(barra).time;
 
   return retorno;
 }
@@ -80,7 +82,9 @@ void Holodeck::Avalia()
   if(Toque_Mediana() &&
   Direcao() != 0 &&
   Condicoes.Horario() &&
-  O_Stops.Tipo_Posicao() == 0)
+  O_Stops.Tipo_Posicao() == 0 &&
+  ultimo_rompimento_operado != ultimo_rompimento
+  )
   {
     if(Direcao() > 0
     && daotick_geral > (O_BB.BB_Base() + (rompimento_mediana * Tick_Size)) )
@@ -88,6 +92,7 @@ void Holodeck::Avalia()
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(1,"Valor: " + DoubleToString(daotick_geral));
       delete(opera);
+      ultimo_rompimento_operado = ultimo_rompimento;
     }
 
 
@@ -97,7 +102,11 @@ void Holodeck::Avalia()
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(-1,"Valor: " + DoubleToString(daotick_geral));
       delete(opera);
+      ultimo_rompimento_operado = ultimo_rompimento;
     }
+
+    Print("ultimo_rompimento_operado: " + TimeToString(ultimo_rompimento_operado)); //DEBUG
+    Print("ultimo_rompimento: " + TimeToString(ultimo_rompimento)); //DEBUG
   }
 
   delete(Condicoes);

@@ -329,17 +329,20 @@ void IniciaDia ()
 
 MqlRates Preco(int barra = 0)
 {
-
   barra = barra + 1;
-
-
     MqlRates rates[];
     ArraySetAsSeries(rates,true);
     int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
 
-
-
     return rates[barra];
+}
 
+MqlRates PrecoAtual()
+{
+  // Rates Structure for the data of the Last incomplete BAR
+     MqlRates BarData[1];
+     CopyRates(Symbol(), Period(), 0, 1, BarData); // Copy the data of last incomplete BAR
 
+  // Copy latest close prijs.
+     return BarData[0];
 }

@@ -27,17 +27,21 @@ void Ibsen::Ibsen()
 
 void Ibsen::Comentario()
 {
-  if(!Otimizacao) Comentario_Robo = "\n Candle / Banda ABSOLUTO: " + DoubleToString(Candle_x_BB_abs());
-  if(!Otimizacao) Comentario_Robo += "\n Candle / Banda FORA DA BANDA: " + DoubleToString(Candle_x_BB_out());
-  // if(!Otimizacao) Comentario_Robo += "\n tamanho_candle: " + DoubleToString(PrecoAtual().high - PrecoAtual().low); //DEBUG
-  if(!Otimizacao) Comentario_Robo += "\n BB_Posicao_Percent: " + DoubleToString(O_BB.BB_Posicao_Percent()); //DEBUG
+  //AQUI ESTA COMENTADO PARA PERFORMANCE DE OTIMIZACAO
+
+  // if(!Otimizacao) Comentario_Robo = "\n Candle / Banda ABSOLUTO: " + DoubleToString(Candle_x_BB_abs());
+  // if(!Otimizacao) Comentario_Robo += "\n Candle / Banda FORA DA BANDA: " + DoubleToString(Candle_x_BB_out());
+  // // if(!Otimizacao) Comentario_Robo += "\n tamanho_candle: " + DoubleToString(PrecoAtual().high - PrecoAtual().low); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n BB_Posicao_Percent: " + DoubleToString(O_BB.BB_Posicao_Percent()); //DEBUG
 }
 
 double Ibsen::Candle_x_BB_abs()
 {
   double retorno = 0;
+  double proporcao = 0;
   double tamanho_candle = (PrecoAtual().high - PrecoAtual().low) / Tick_Size;
-  double proporcao = tamanho_candle / O_BB.BB_Delta_Bruto() * 100;
+
+  if(O_BB.BB_Delta_Bruto() != 0) proporcao = tamanho_candle / O_BB.BB_Delta_Bruto() * 100;
 
   retorno = proporcao;
 
@@ -54,7 +58,8 @@ double Ibsen::Candle_x_BB_out()
   if(PrecoAtual().close > O_BB.BB_High()) tamanho_fora = PrecoAtual().close - O_BB.BB_High();
   if(PrecoAtual().close < O_BB.BB_Low()) tamanho_fora = O_BB.BB_Low() -  PrecoAtual().close;
 
-  retorno = tamanho_fora / BB_delta_absoluto * 100;
+  if(BB_delta_absoluto == 0) retorno = 0;
+  else retorno = tamanho_fora / BB_delta_absoluto * 100;
 
   return retorno;
 }

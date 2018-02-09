@@ -29,10 +29,18 @@ void Ibsen::Comentario()
 {
   //AQUI ESTA COMENTADO PARA PERFORMANCE DE OTIMIZACAO
 
-  // if(!Otimizacao) Comentario_Robo = "\n Candle / Banda ABSOLUTO: " + DoubleToString(Candle_x_BB_abs());
-  // if(!Otimizacao) Comentario_Robo += "\n Candle / Banda FORA DA BANDA: " + DoubleToString(Candle_x_BB_out());
-  // // if(!Otimizacao) Comentario_Robo += "\n tamanho_candle: " + DoubleToString(PrecoAtual().high - PrecoAtual().low); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n BB_Posicao_Percent: " + DoubleToString(O_BB.BB_Posicao_Percent()); //DEBUG
+  MACD *MACD_oo = new MACD;
+
+  if(!Otimizacao) Comentario_Robo = "\n Candle / Banda ABSOLUTO: " + DoubleToString(Candle_x_BB_abs());
+  if(!Otimizacao) Comentario_Robo += "\n Candle / Banda FORA DA BANDA: " + DoubleToString(Candle_x_BB_out());
+  // if(!Otimizacao) Comentario_Robo += "\n tamanho_candle: " + DoubleToString(PrecoAtual().high - PrecoAtual().low); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n BB_Posicao_Percent: " + DoubleToString(O_BB.BB_Posicao_Percent()); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Cx_BB_High: " + DoubleToString(O_BB.Cx_BB_High(0)); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Cx_BB_Base: " + DoubleToString(O_BB.Cx_BB_Base(0)); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Cx_BB_Low: " + DoubleToString(O_BB.Cx_BB_Low(0)); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n MACD : " + DoubleToString(MACD_oo.Cx()); //DEBUG
+
+  delete(MACD_oo);
 }
 
 double Ibsen::Candle_x_BB_abs()

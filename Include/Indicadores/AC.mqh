@@ -7,6 +7,7 @@ class AC
   public:
   void AC();
   double Valor(int barra = 0);
+  double Cx(int barra = 0);
 
   private:
   int HandleAC;
@@ -42,4 +43,24 @@ double AC::Valor(int barra = 0)
      // Print("HandleAC: " + HandleAC); //DEBUG
 
      return(retorno);
+}
+
+
+double AC::Cx(int barra = 0)
+{
+  double retorno = NULL;
+  double y1 = 0;
+  double y2 = 0;
+  double y3 = 0;
+
+  y1 = Valor(barra+2);
+  y2 = Valor(barra+1);
+  y3 = Valor(barra);
+
+  Matematica *mat = new Matematica;
+  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  delete(mat);
+
+
+  return(retorno);
 }

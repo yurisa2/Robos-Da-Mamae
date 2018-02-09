@@ -14,6 +14,7 @@
 #include <Posicao.mqh>
 #include <OnTrade.mqh>
 #include <Totalizador.mqh>
+#include <Matematica.mqh>
 #include <Graficos.mqh>
 
 

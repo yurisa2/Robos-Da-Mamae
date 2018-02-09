@@ -2,51 +2,51 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-class CCI
+class OBV
 {
   public:
-  void CCI();
+  void OBV();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
 
   private:
-  int HandleCCI;
+  int HandleOBV;
 
 };
 
-void CCI::CCI()
+void OBV::OBV()
 {
-  HandleCCI = 0;
-  HandleCCI = iCCI(Symbol(),TimeFrame,20,PRICE_CLOSE) ;
+  HandleOBV = 0;
+  HandleOBV = iOBV(Symbol(),TimeFrame,VOLUME_TICK) ;
   // ChartIndicatorAdd(0,0,HandleMA);
 
   // Print("Handle Stoch: " + IntegerToString(HandleMA));
 
-  if(HandleCCI == 0)
+  if(HandleOBV == 0)
   {
     ExpertRemove();
   }
 }
 
-double CCI::Valor(int barra = 0)
+double OBV::Valor(int barra = 0)
 {
-     double _CCI[];
+     double _OBV[];
      double retorno = NULL;
 
-     ArraySetAsSeries(_CCI,true);
-     int CCI_copied = CopyBuffer(HandleCCI,0,0,barra+5,_CCI);
+     ArraySetAsSeries(_OBV,true);
+     int OBV_copied = CopyBuffer(HandleOBV,0,0,barra+5,_OBV);
 
-     retorno = _CCI[barra];
-     // Print("CCI Barra: " + barra); //DEBUG
-     // Print("_CCI[barra]: " + _CCI[barra]); //DEBUG
-     // Print("_CCI[0]: " + _CCI[0]); //DEBUG
-     // Print("HandleCCI: " + HandleCCI); //DEBUG
+     retorno = _OBV[barra];
+     // Print("OBV Barra: " + barra); //DEBUG
+     // Print("_OBV[barra]: " + _OBV[barra]); //DEBUG
+     // Print("_OBV[0]: " + _OBV[0]); //DEBUG
+     // Print("HandleOBV: " + HandleOBV); //DEBUG
 
      return(retorno);
 }
 
 
-double CCI::Cx(int barra = 0)
+double OBV::Cx(int barra = 0)
 {
   double retorno = NULL;
   double y1 = 0;

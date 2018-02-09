@@ -32,7 +32,7 @@ void File_Init() {
     File *arquivo = new File();
     delete(arquivo);
 
-    FileWrite(file_handle_w, "io;hora;ativo;posicao;direcao;lucro;AC;AD;ADX;ATR;BB_Delta_Bruto;Banda_Delta_Valor;BB_Posicao_Percent;BullsP;BearsP;BWMFI;CCI;DeMarker;DP_DMM20;DP_PAAMM20;DP_MM20MM50;DP_D;hilo_direcao;MACD;MFI;Momentum;RSI;Stoch;Volume;WPR");
+    FileWrite(file_handle_w, "io;hora;ativo;posicao;direcao;lucro;AC;AC_cx;AD;AD_cx;ADX;adx_cx;ATR;ATR_cx;BB_Delta_Bruto;BB_Delta_Bruto_cx;Banda_Delta_Valor;BB_Posicao_Percent;BB_Posicao_Percent_Cx;BullsP;BullsP_cx;BearsP;BearsP_cx;BWMFI;BWMFI_cx;CCI;CCI_cx;DeMarker;DeMarker_cx;DP_DMM20;DP_PAAMM20;DP_MM20MM50;DP_D;hilo_direcao;MACD;MACD_cx_0;MACD_cx_1;MFI;MFI_cx;Momentum;Momentum_cx;RSI;RSI_cx;Stoch;Stoch_Cx_0;Stoch_Cx_1;Volume;Volume_cx;WPR;WPR_cx");
     //FileFlush(file_handle_w);
   }
 }
@@ -45,29 +45,49 @@ class File
 
   private:
   double AC_Var;
+  double AC_cx;
   double AD_Var;
+  double AD_cx;
   double ADX_FW;
+  double adx_cx;
   double ATR_Var;
+  double ATR_cx;
   double BB_Delta_Bruto;
+  double BB_Delta_Bruto_Cx;
   double Banda_Delta_Valor;
   double BB_Posicao_Percent;
+  double BB_Posicao_Percent_Cx;
   double BullsP_Var;
+  double BullsP_Var_Cx;
   double BearsP_Var;
+  double BearsP_Var_Cx;
   double BWMFI_Var;
+  double BWMFI_Var_Cx;
   double CCI_Var;
+  double CCI_Var_Cx;
   double DeMarker_Var;
+  double DeMarker_Var_Cx;
   int DP_DMM20;
   int DP_PAAMM20;
   int DP_MM20MM50;
   int DP_D;
   int Hilo_Direcao;
   double MACD_FW;
+  double MACD_Cx_0;
+  double MACD_Cx_1;
   double MFI_FW;
+  double MFI_Cx;
   double Momentum_Var;
+  double Momentum_Var_Cx;
   double RSI_Var;
+  double RSI_Var_Cx;
   double Stoch_FW;
+  double Stoch_Cx_0;
+  double Stoch_Cx_1;
   double Volume_FW;
+  double Volume_Cx;
   double WPR_Var;
+  double WPR_Var_Cx;
 
 
 
@@ -99,29 +119,49 @@ File::File()
   WPR *WPR_Ind = new WPR();
 
   AC_Var  =  AC_Ind.Valor(0)  ;
+  AC_cx  =  AC_Ind.Cx(0)  ;
   AD_Var   =  AD_Ind.Valor(0)  ;
+  AD_cx   =  AD_Ind.Cx(0)  ;
   ADX_FW  = ADX_OO.Valor(0) ;
+  adx_cx  = ADX_OO.Cx(0)  ;
   ATR_Var =   ATR_Ind.Valor(0) ;
+  ATR_cx =   ATR_Ind.Cx(0);
   BB_Delta_Bruto = Banda_BB.BB_Delta_Bruto(0) ;
+  BB_Delta_Bruto_Cx = Banda_BB.Cx_BB_Delta_Bruto(0) ;
   Banda_Delta_Valor = Banda_BB.Banda_Delta_Valor() ;
   BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(0) ;
+  BB_Posicao_Percent_Cx = Banda_BB.Cx_BB_Posicao_Percent(0) ;
   BullsP_Var =   BullsPower_Ind.Valor(1) ;
+  BullsP_Var_Cx =   BullsPower_Ind.Cx(0);
   BearsP_Var =   BearsPower_Ind.Valor(1) ;
+  BearsP_Var_Cx =   BearsPower_Ind.Cx(0);
   BWMFI_Var =   BWMFI_Ind.Valor(1) ;
+  BWMFI_Var_Cx =   BWMFI_Ind.Cx(0);
   CCI_Var =  CCI_Ind.Valor(0)  ;
+  CCI_Var_Cx =  CCI_Ind.Cx(0);
   DeMarker_Var =  DeMarker_Ind.Valor(0)  ;
+  DeMarker_Var_Cx =  DeMarker_Ind.Cx(0);
   DP_DMM20 = DP_Ind.DirecaoMM20(0);
   DP_PAAMM20 = DP_Ind.PrecoRMM20(0);
   DP_MM20MM50 = DP_Ind.MM20AcimaAbaixoMM50(0);
   DP_D = DP_Ind.Direcao(0);
   Hilo_Direcao = hilo.Direcao() ;
   MACD_FW = macd.Valor(0) ;
+  MACD_Cx_0 = macd.Cx(0,0) ;
+  MACD_Cx_1 = macd.Cx(1,0) ;
   MFI_FW = MFI_OO.Valor(0) ;
+  MFI_Cx = MFI_OO.Cx(0);
   Momentum_Var =  Momentum_OO.Valor(0)  ;
+  Momentum_Var_Cx =  Momentum_OO.Cx(0);
   RSI_Var =  RSI_OO.Valor(0)  ;
+  RSI_Var_Cx =  RSI_OO.Cx(0)  ;
   Stoch_FW = Stoch_OO.Valor(0) ;
+  Stoch_Cx_0 = Stoch_OO.Cx(0,0) ;
+  Stoch_Cx_1 = Stoch_OO.Cx(1,0) ;
   Volume_FW = Volumes_OO.Valor(1) ;
+  Volume_Cx = Volumes_OO.Cx(1) ;
   WPR_Var = WPR_Ind.Valor(0)   ;
+  WPR_Var_Cx = WPR_Ind.Cx(0)   ;
 
   delete(AC_Ind);
   delete(AD_Ind);
@@ -179,27 +219,49 @@ void File::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DEAL_ENTR
   + "\";\"" +
   DoubleToString(AC_Var)
   + "\";\"" +
+  DoubleToString(AC_cx)
+  + "\";\"" +
   DoubleToString(AD_Var)
+  + "\";\"" +
+  DoubleToString(AD_cx)
   + "\";\"" +
   DoubleToString(ADX_FW)
   + "\";\"" +
+  DoubleToString(adx_cx)
+  + "\";\"" +
   DoubleToString(ATR_Var)
   + "\";\"" +
+  DoubleToString(ATR_cx)
+  + "\";\"" +
   DoubleToString(BB_Delta_Bruto)
+  + "\";\"" +
+  DoubleToString(BB_Delta_Bruto_Cx)
   + "\";\"" +
   DoubleToString(Banda_Delta_Valor)
   + "\";\"" +
   DoubleToString(BB_Posicao_Percent)
   + "\";\"" +
+  DoubleToString(BB_Posicao_Percent_Cx)
+  + "\";\"" +
   DoubleToString(BullsP_Var)
+  + "\";\"" +
+  DoubleToString(BullsP_Var_Cx)
   + "\";\"" +
   DoubleToString(BearsP_Var)
   + "\";\"" +
+  DoubleToString(BearsP_Var_Cx)
+  + "\";\"" +
   DoubleToString(BWMFI_Var)
+  + "\";\"" +
+  DoubleToString(BWMFI_Var_Cx)
   + "\";\"" +
   DoubleToString(CCI_Var)
   + "\";\"" +
+  DoubleToString(CCI_Var_Cx)
+  + "\";\"" +
   DoubleToString(DeMarker_Var)
+  + "\";\"" +
+  DoubleToString(DeMarker_Var_Cx)
   + "\";\"" +
   DoubleToString(DP_DMM20)
   + "\";\"" +
@@ -213,18 +275,35 @@ void File::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DEAL_ENTR
   + "\";\"" +
   DoubleToString(MACD_FW)
   + "\";\"" +
+  DoubleToString(MACD_Cx_0)
+  + "\";\"" +
+  DoubleToString(MACD_Cx_1)
+  + "\";\"" +
   DoubleToString(MFI_FW)
+  + "\";\"" +
+  DoubleToString(MFI_Cx)
   + "\";\"" +
   DoubleToString(Momentum_Var)
   + "\";\"" +
+  DoubleToString(Momentum_Var_Cx)
+  + "\";\"" +
   DoubleToString(RSI_Var)
+  + "\";\"" +
+  DoubleToString(RSI_Var_Cx)
   + "\";\"" +
   DoubleToString(Stoch_FW)
   + "\";\"" +
+  DoubleToString(Stoch_Cx_0)
+  + "\";\"" +
+  DoubleToString(Stoch_Cx_1)
+  + "\";\"" +
   DoubleToString(Volume_FW)
   + "\";\"" +
+  DoubleToString(Volume_Cx)
+  + "\";\"" +
   DoubleToString(WPR_Var)
-
+  + "\";\"" +
+  DoubleToString(WPR_Var_Cx)
   + "\""
   ;
 

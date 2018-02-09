@@ -7,6 +7,7 @@ class MA
   public:
   void MA(int ma_period = 3,ENUM_MA_METHOD ma_method = MODE_SMA, ENUM_TIMEFRAMES Periodos_MA = PERIOD_CURRENT,int ma_shift = 0,ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE);
   double Valor(int barra = 0);
+  double Cx(int barra = 0);
 
   private:
   int HandleMA;
@@ -42,4 +43,24 @@ double MA::Valor(int barra = 0)
      // Print("HandleMA: " + HandleMA); //DEBUG
 
      return(retorno);
+}
+
+
+double MA::Cx(int barra = 0)
+{
+  double retorno = NULL;
+  double y1 = 0;
+  double y2 = 0;
+  double y3 = 0;
+
+  y1 = Valor(barra+2);
+  y2 = Valor(barra+1);
+  y3 = Valor(barra);
+
+  Matematica *mat = new Matematica;
+  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  delete(mat);
+
+
+  return(retorno);
 }

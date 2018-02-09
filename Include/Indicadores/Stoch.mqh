@@ -7,6 +7,7 @@ class Stoch
   public:
   void Stoch(int STOCH_k_period = 10,int STOCH_d_period = 3,int STOCH_slowing = 3,ENUM_TIMEFRAMES STOCH_periods = PERIOD_CURRENT,string symbol = NULL, ENUM_MA_METHOD STOCH_method = MODE_SMA,ENUM_STO_PRICE STOCH_price = STO_LOWHIGH);
   double Valor(int buffer = 0, int barra = 0);
+  double Cx(int buffer = 0, int barra = 0);
 
   private:
   int HandleStoch;
@@ -38,4 +39,24 @@ double Stoch::Valor(int buffer = 0, int barra = 0)
      retorno = _Stoch[barra];
 
      return(retorno);
+}
+
+
+double Stoch::Cx(int buffer = 0, int barra = 0)
+{
+  double retorno = NULL;
+  double y1 = 0;
+  double y2 = 0;
+  double y3 = 0;
+
+  y1 = Valor(buffer,barra+2);
+  y2 = Valor(buffer,barra+1);
+  y3 = Valor(buffer,barra);
+
+  Matematica *mat = new Matematica;
+  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  delete(mat);
+
+
+  return(retorno);
 }

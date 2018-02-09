@@ -21,6 +21,14 @@ class BB
   double BB_Posicao_Percent(int barra = 0);
   double Banda_Delta_Valor();
 
+  double Cx_BB_Low(int barra = 0);
+  double Cx_BB_Base(int barra = 0);
+  double Cx_BB_High(int barra = 0);
+  double Cx_BB_Delta_Bruto(int barra = 0);
+  double Cx_BB_Posicao_Percent(int barra = 0);
+
+
+
   private:
   int HandleBBOO;
   string simbolo;
@@ -144,4 +152,103 @@ double BB::Banda_Delta_Valor()
   // Print("delta: " + delta);
 
   return delta;
+}
+
+double BB::Cx_BB_Low(int barra = 0)
+{
+  double retorno = NULL;
+  double y1 = 0;
+  double y2 = 0;
+  double y3 = 0;
+
+  y1 = BB_Low(barra+2);
+  y2 = BB_Low(barra+1);
+  y3 = BB_Low(barra);
+
+  Matematica *mat = new Matematica;
+  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  delete(mat);
+
+
+  return(retorno);
+}
+
+double BB::Cx_BB_Base(int barra = 0)
+{
+  double retorno = NULL;
+  double y1 = 0;
+  double y2 = 0;
+  double y3 = 0;
+
+  y1 = BB_Base(barra+2);
+  y2 = BB_Base(barra+1);
+  y3 = BB_Base(barra);
+
+  Matematica *mat = new Matematica;
+  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  delete(mat);
+
+
+  return(retorno);
+}
+
+
+double BB::Cx_BB_High(int barra = 0)
+{
+  double retorno = NULL;
+  double y1 = 0;
+  double y2 = 0;
+  double y3 = 0;
+
+  y1 = BB_High(barra+2);
+  y2 = BB_High(barra+1);
+  y3 = BB_High(barra);
+
+  Matematica *mat = new Matematica;
+  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  delete(mat);
+
+
+  return(retorno);
+}
+
+
+
+double BB::Cx_BB_Delta_Bruto(int barra = 0)
+{
+  double retorno = NULL;
+  double y1 = 0;
+  double y2 = 0;
+  double y3 = 0;
+
+  y1 = BB_Delta_Bruto(barra+2);
+  y2 = BB_Delta_Bruto(barra+1);
+  y3 = BB_Delta_Bruto(barra);
+
+  Matematica *mat = new Matematica;
+  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  delete(mat);
+
+
+  return(retorno);
+}
+
+
+double BB::Cx_BB_Posicao_Percent(int barra = 0)
+{
+  double retorno = NULL;
+  double y1 = 0;
+  double y2 = 0;
+  double y3 = 0;
+
+  y1 = BB_Posicao_Percent(barra+2);
+  y2 = BB_Posicao_Percent(barra+1);
+  y3 = BB_Posicao_Percent(barra);
+
+  Matematica *mat = new Matematica;
+  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  delete(mat);
+
+
+  return(retorno);
 }

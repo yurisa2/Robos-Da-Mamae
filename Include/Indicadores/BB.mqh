@@ -26,6 +26,11 @@ class BB
   double Cx_BB_High(int barra = 0);
   double Cx_BB_Delta_Bruto(int barra = 0);
   double Cx_BB_Posicao_Percent(int barra = 0);
+  double Normalizado_BB_Low(int barra = 0);
+  double Normalizado_BB_Base(int barra = 0);
+  double Normalizado_BB_High(int barra = 0);
+  double Normalizado_BB_Delta_Bruto(int barra = 0);
+  double Normalizado_BB_Posicao_Percent(int barra = 0);
 
 
 
@@ -231,6 +236,7 @@ double BB::Cx_BB_Delta_Bruto(int barra = 0)
   return(retorno);
 }
 
+
 double BB::Cx_BB_Posicao_Percent(int barra = 0)
 {
   double retorno = NULL;
@@ -245,6 +251,107 @@ double BB::Cx_BB_Posicao_Percent(int barra = 0)
 
   Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
   retorno = mat.Coeficiente_Angular;
+  delete(mat);
+
+  return(retorno);
+}
+
+
+/////////////////////////////////
+
+double BB::Normalizado_BB_Low(int barra = 0)
+{
+  double retorno = NULL;
+
+  double y1 = BB_Low(barra+6);
+  double y2 = BB_Low(barra+5);
+  double y3 = BB_Low(barra+4);
+  double y4 = BB_Low(barra+3);
+  double y5 = BB_Low(barra+2);
+  double y6 = BB_Low(barra+1);
+  double y7 = BB_Low(barra);
+
+  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  retorno = mat.Valor_Normalizado;
+  delete(mat);
+
+  return(retorno);
+}
+
+double BB::Normalizado_BB_Base(int barra = 0)
+{
+  double retorno = NULL;
+
+  double y1 = BB_Base(barra+6);
+  double y2 = BB_Base(barra+5);
+  double y3 = BB_Base(barra+4);
+  double y4 = BB_Base(barra+3);
+  double y5 = BB_Base(barra+2);
+  double y6 = BB_Base(barra+1);
+  double y7 = BB_Base(barra);
+
+  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  retorno = mat.Valor_Normalizado;
+  delete(mat);
+
+  return(retorno);
+}
+
+
+double BB::Normalizado_BB_High(int barra = 0)
+{
+  double retorno = NULL;
+
+  double y1 = BB_High(barra+6);
+  double y2 = BB_High(barra+5);
+  double y3 = BB_High(barra+4);
+  double y4 = BB_High(barra+3);
+  double y5 = BB_High(barra+2);
+  double y6 = BB_High(barra+1);
+  double y7 = BB_High(barra);
+
+  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  retorno = mat.Valor_Normalizado;
+  delete(mat);
+
+  return(retorno);
+}
+
+
+
+double BB::Normalizado_BB_Delta_Bruto(int barra = 0)
+{
+  double retorno = NULL;
+
+  double y1 = BB_Delta_Bruto(barra+6);
+  double y2 = BB_Delta_Bruto(barra+5);
+  double y3 = BB_Delta_Bruto(barra+4);
+  double y4 = BB_Delta_Bruto(barra+3);
+  double y5 = BB_Delta_Bruto(barra+2);
+  double y6 = BB_Delta_Bruto(barra+1);
+  double y7 = BB_Delta_Bruto(barra);
+
+  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  retorno = mat.Valor_Normalizado;
+  delete(mat);
+
+  return(retorno);
+}
+
+double BB::Normalizado_BB_Posicao_Percent(int barra = 0)
+{
+  double retorno = NULL;
+
+  double y1 = BB_Posicao_Percent(barra+6);
+  double y2 = BB_Posicao_Percent(barra+5);
+  double y3 = BB_Posicao_Percent(barra+4);
+  double y4 = BB_Posicao_Percent(barra+3);
+  double y5 = BB_Posicao_Percent(barra+2);
+  double y6 = BB_Posicao_Percent(barra+1);
+  double y7 = BB_Posicao_Percent(barra);
+
+  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  retorno = mat.Valor_Normalizado;
   delete(mat);
 
   return(retorno);

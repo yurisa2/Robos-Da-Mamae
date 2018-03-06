@@ -8,6 +8,7 @@ class CCI
   void CCI();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
+  double Normalizado(int barra = 0);
 
   private:
   int HandleCCI;
@@ -60,6 +61,26 @@ double CCI::Cx(int barra = 0)
 
   Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
   retorno = mat.Coeficiente_Angular;
+  delete(mat);
+
+
+  return(retorno);
+}
+
+double CCI::Normalizado(int barra = 0)
+{
+  double retorno = NULL;
+
+  double y1 = Valor(barra+6);
+  double y2 = Valor(barra+5);
+  double y3 = Valor(barra+4);
+  double y4 = Valor(barra+3);
+  double y5 = Valor(barra+2);
+  double y6 = Valor(barra+1);
+  double y7 = Valor(barra);
+
+  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  retorno = mat.Valor_Normalizado;
   delete(mat);
 
 

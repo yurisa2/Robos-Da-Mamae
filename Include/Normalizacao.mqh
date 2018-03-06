@@ -18,17 +18,40 @@ class Normalizacao
   double normalizado_1;
   double normalizado_2;
   double normalizado_3;
-
-
 };
 
 double Normalizacao::Coeficiente_Angular_3()
 {
-  double retorno = 0;
+  double retorno = NULL;
+
+  double ya = normalizado_1;
+  double yb = normalizado_2;
+  double yc = normalizado_3;
+
+  double y_media = (ya + yb + yc ) /3;
+
+  double aF1 = -1;
+  double bF1 = 0;
+  double cF1 = 1;
+
+  double aF2 = ya - y_media;
+  double bF2 = yb - y_media;
+  double cF2 = yc - y_media;
+
+  double aF3 = aF1 * aF2;
+  double bF3 = bF1 * bF2;
+  double cF3 = cF1 * cF2;
+
+  double aF4 = 1;
+  double bF4 = 0;
+  double cF4 = 1;
+
+  double beta = (aF3 + bF3 + cF3) / (aF4 + bF4 + cF4);
+
+  retorno = MathArctan(beta);
 
   return retorno;
 }
-
 
 Normalizacao::Normalizacao(double y1, double y2, double y3,  double y4, double y5,  double y6,  double y7)
 {

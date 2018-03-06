@@ -231,7 +231,6 @@ double BB::Cx_BB_Delta_Bruto(int barra = 0)
   return(retorno);
 }
 
-
 double BB::Cx_BB_Posicao_Percent(int barra = 0)
 {
   double retorno = NULL;

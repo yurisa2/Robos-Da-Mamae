@@ -33,12 +33,31 @@ void Ibsen::Comentario()
 
   if(!Otimizacao) Comentario_Robo = "\n Candle / Banda ABSOLUTO: " + DoubleToString(Candle_x_BB_abs());
   if(!Otimizacao) Comentario_Robo += "\n Candle / Banda FORA DA BANDA: " + DoubleToString(Candle_x_BB_out());
-  // if(!Otimizacao) Comentario_Robo += "\n tamanho_candle: " + DoubleToString(PrecoAtual().high - PrecoAtual().low); //DEBUG
   if(!Otimizacao) Comentario_Robo += "\n BB_Posicao_Percent: " + DoubleToString(O_BB.BB_Posicao_Percent()); //DEBUG
-  if(!Otimizacao) Comentario_Robo += "\n Cx_BB_High: " + DoubleToString(O_BB.Cx_BB_High(0)); //DEBUG
-  if(!Otimizacao) Comentario_Robo += "\n Cx_BB_Base: " + DoubleToString(O_BB.Cx_BB_Base(0)); //DEBUG
-  if(!Otimizacao) Comentario_Robo += "\n Cx_BB_Low: " + DoubleToString(O_BB.Cx_BB_Low(0)); //DEBUG
-  if(!Otimizacao) Comentario_Robo += "\n MACD : " + DoubleToString(MACD_oo.Cx()); //DEBUG
+
+  // if(!Otimizacao) Comentario_Robo += "\n MACD 7: " + DoubleToString(MACD_oo.Valor(0,6)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD 6: " + DoubleToString(MACD_oo.Valor(0,5)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD 5: " + DoubleToString(MACD_oo.Valor(0,4)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD 4: " + DoubleToString(MACD_oo.Valor(0,3)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD 3: " + DoubleToString(MACD_oo.Valor(0,2)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD 2: " + DoubleToString(MACD_oo.Valor(0,1)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD 1: " + DoubleToString(MACD_oo.Valor(0,0)); //DEBUG
+  //
+  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 7: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,6)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 6: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,5)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 5: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,4)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 4: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,3)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 3: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,2)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 2: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,1)); //DEBUG
+  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 1: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,0)); //DEBUG
+
+  if(!Otimizacao) Comentario_Robo += "\n MACD Cx(0) : " + DoubleToString(MACD_oo.Cx(0)); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n MACD Cx(1) : " + DoubleToString(MACD_oo.Cx(1)); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Normalizacao_Valores_MACD(0,0,-1) : " + DoubleToString(MACD_oo.Normalizacao_Valores_MACD(0,0,0)); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Normalizacao_Valores_MACD(0,-1,-1) : " + DoubleToString(MACD_oo.Normalizacao_Valores_MACD(0,-1,-1)); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Distancia_Linha_Zero() : " + DoubleToString(MACD_oo.Distancia_Linha_Zero()); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Distancia_Linha_Sinal() : " + DoubleToString(MACD_oo.Distancia_Linha_Sinal()); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Diferenca_Angulo_Linha_Sinal() : " + DoubleToString(MACD_oo.Diferenca_Angulo_Linha_Sinal()); //DEBUG
 
   delete(MACD_oo);
 }

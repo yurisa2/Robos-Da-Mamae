@@ -89,10 +89,6 @@ class File
   double WPR_Var;
   double WPR_Var_Cx;
 
-
-
-
-
 };
 
 
@@ -147,8 +143,8 @@ File::File()
   DP_D = DP_Ind.Direcao(0);
   Hilo_Direcao = hilo.Direcao() ;
   MACD_FW = macd.Valor(0) ;
-  MACD_Cx_0 = macd.Cx(0,0) ;
-  MACD_Cx_1 = macd.Cx(1,0) ;
+  MACD_Cx_0 = macd.Cx(0) ;
+  MACD_Cx_1 = macd.Cx(1) ;
   MFI_FW = MFI_OO.Valor(0) ;
   MFI_Cx = MFI_OO.Cx(0);
   Momentum_Var =  Momentum_OO.Valor(0)  ;

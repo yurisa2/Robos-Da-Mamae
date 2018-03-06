@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class CCI
@@ -49,16 +49,17 @@ double CCI::Valor(int barra = 0)
 double CCI::Cx(int barra = 0)
 {
   double retorno = NULL;
-  double y1 = 0;
-  double y2 = 0;
-  double y3 = 0;
 
-  y1 = Valor(barra+2);
-  y2 = Valor(barra+1);
-  y3 = Valor(barra);
+  double y1 = Valor(barra+6);
+  double y2 = Valor(barra+5);
+  double y3 = Valor(barra+4);
+  double y4 = Valor(barra+3);
+  double y5 = Valor(barra+2);
+  double y6 = Valor(barra+1);
+  double y7 = Valor(barra);
 
-  Matematica *mat = new Matematica;
-  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
+  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  retorno = mat.Coeficiente_Angular;
   delete(mat);
 
 

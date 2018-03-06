@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 
@@ -45,19 +45,20 @@ double ADX::Valor(int buffer = 0, int barra = 0)
 
 double ADX::Cx(int buffer = 0, int barra = 0)
 {
-  double retorno = NULL;
-  double y1 = 0;
-  double y2 = 0;
-  double y3 = 0;
+    double retorno = NULL;
 
-  y1 = Valor(buffer,barra+2);
-  y2 = Valor(buffer,barra+1);
-  y3 = Valor(buffer,barra);
+    double y1 = Valor(buffer,barra+6);
+    double y2 = Valor(buffer,barra+5);
+    double y3 = Valor(buffer,barra+4);
+    double y4 = Valor(buffer,barra+3);
+    double y5 = Valor(buffer,barra+2);
+    double y6 = Valor(buffer,barra+1);
+    double y7 = Valor(buffer,barra);
 
-  Matematica *mat = new Matematica;
-  retorno = mat.Coeficiente_Angular_3(y1,y2,y3);
-  delete(mat);
+    Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+    retorno = mat.Coeficiente_Angular;
+    delete(mat);
 
 
-  return(retorno);
+    return(retorno);
 }

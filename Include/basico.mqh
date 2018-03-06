@@ -14,7 +14,7 @@
 #include <Posicao.mqh>
 #include <OnTrade.mqh>
 #include <Totalizador.mqh>
-#include <Matematica.mqh>
+#include <Normalizacao.mqh>
 #include <Graficos.mqh>
 
 
@@ -88,7 +88,7 @@ bool TaDentroDoHorario(string HoraInicio, string HoraFim)
 ////////////////////////////////////////////
 
 //////////////////////// DAOTICK ///////////
-////// Função Pega Tick e devolve a hora e o valor da porra do ativo
+////// Funï¿½ï¿½o Pega Tick e devolve a hora e o valor da porra do ativo
 double daotick(int tipo = 0)
 {
   double retornoTick = 0;
@@ -100,7 +100,7 @@ double daotick(int tipo = 0)
   }
   else Print("SymbolInfoTick() failed, error = ",GetLastError());
 
-  retornoTick = last_tick.ask; // ASK eh bom pra compra, pra venda é bid
+  retornoTick = last_tick.ask; // ASK eh bom pra compra, pra venda ï¿½ bid
 
   if(tipo == -1)
   {
@@ -146,7 +146,7 @@ string Segundos_Fim_Barra()
 //         Sleep(1000);
 //         SendMail(Descricao_Robo+"Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
 //       }
-//       Print(Descricao_Robo+"Depois da Ultima Operação: ",IntegerToString(Operacoes));
+//       Print(Descricao_Robo+"Depois da Ultima Operaï¿½ï¿½o: ",IntegerToString(Operacoes));
 //       Sleep(5000);
 //     } // Fim do ta dentro do horario
 //   } // Fim do JaDeuFinal
@@ -287,7 +287,7 @@ void Init_Padrao ()
   data_inicio_execucao = TimeCurrent();
 
 
-  Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
+  Print("Descriï¿½ï¿½o: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
   Print("TimeMagic: ",IntegerToString(TimeMagic));
 

@@ -55,7 +55,6 @@ double Normalizacao::Coeficiente_Angular_3()
 
 Normalizacao::Normalizacao(double y1, double y2, double y3,  double y4, double y5,  double y6,  double y7)
 {
-  Coeficiente_Angular = Coeficiente_Angular_3();
 
   double Valor[7];
   Valor[6] = y1;
@@ -74,4 +73,7 @@ Normalizacao::Normalizacao(double y1, double y2, double y3,  double y4, double y
   normalizado_1 = (Valor[2] - Z_min) / (Z_max - Z_min);
   normalizado_2 = (Valor[1] - Z_min) / (Z_max - Z_min);
   normalizado_3 = (Valor[3] - Z_min) / (Z_max - Z_min);
+
+  
+  Coeficiente_Angular = Coeficiente_Angular_3();
 }

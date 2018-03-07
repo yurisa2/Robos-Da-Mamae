@@ -8,6 +8,7 @@ class OBV
   void OBV();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
+  double Normalizado(int barra = 0);
 
   private:
   int HandleOBV;

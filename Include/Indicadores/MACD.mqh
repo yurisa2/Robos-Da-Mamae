@@ -10,7 +10,7 @@ class MACD
   void MACD(int fast_ema_period = 12,int slow_ema_period = 26,int signal_period = 9,string symbol = NULL, ENUM_TIMEFRAMES period = PERIOD_CURRENT, ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE);
   double Valor(int buffer = 0, int barra = 0);
   double Cx(int buffer = 0);
-  double MACD::Normalizacao_Valores_MACD(int buffer = 0, int ponteiro = 0, int universo = -1);
+  double MACD::Normalizacao_Valores_MACD(int buffer = 0, int ponteiro = 0, int universo = -1); //Universo 0 = Linha MACD, 1 = Sinal, -1 = INCLUI O ZERO
   double MACD::Distancia_Linha_Zero(int ponteiro = 0);
   double MACD::Distancia_Linha_Sinal(int ponteiro = 0);
   double MACD::Diferenca_Angulo_Linha_Sinal();

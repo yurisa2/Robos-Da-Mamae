@@ -7,19 +7,59 @@ class Ibsen
   Ibsen();
   void Comentario();
   void Avalia();
-  void Timer();
-  double Candle_x_BB_abs();
-  double Candle_x_BB_out();
-  int Direcao();
-
+  double LinMACD; //0 - Main line
+  double LinSinal; //1 - Signal Line
+  double m1; //Cx MACD
+  double m2; //Cx Sinal
+  double distancia; //distância do indicador Histograma MACD ao eixo zero;
+  double alpha; //ângulo da reta obtido pela regressão linear dos três últimos
+  double HIST; //HIST = Indicador Histograma MACD
+  double MOMENTO; //HIST = Indicador Histograma MACD
+  double SINAL;
+  double MACD_Resultado; //Resultado da Tabela 1
+  double Volume_Resultado; //Mais Ou Menos Fuzzy
+  double Ibsen::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL);
+  double Ibsen::Fuzzy_Momento();
+  double Ibsen::Fuzzy_Sinal();
 
 
   private:
-
+  void Ibsen::Dados();
+  double Ibsen::Crisp_MACD();
 
 };
 
 void Ibsen::Ibsen()
+{
+
+  Dados();
+
+}
+
+void Ibsen::Dados()
+{
+  MACD *MACD_oo = new MACD;
+  OBV *OBV_oo = new OBV;
+
+
+  LinMACD = MACD_oo.Valor(0,0); //0 - Main line
+  LinSinal = MACD_oo.Valor(1,0); //1 - Signal Line
+  m1 = MACD_oo.Cx(0); //Cx MACD
+  m2 = MACD_oo.Cx(1); //Cx Sinal
+  distancia = MACD_oo.Distancia_Linha_Zero(); //distância do indicador Histograma MACD ao eixo zero;
+  MACD_Resultado = Crisp_MACD();
+  Volume_Resultado = OBV_oo.Cx();
+  alpha =  MACD_oo.Cx(0); //Cx MACD
+  delete(MACD_oo);
+  delete(OBV_oo);
+
+  HIST = Fuzzy_HIST(distancia,alpha);
+  MOMENTO = Fuzzy_Momento();
+  SINAL = Fuzzy_Sinal();
+
+}
+
+void Ibsen::Avalia()
 {
 
 
@@ -30,101 +70,29 @@ void Ibsen::Comentario()
   //AQUI ESTA COMENTADO PARA PERFORMANCE DE OTIMIZACAO
 
   MACD *MACD_oo = new MACD;
+  OBV *OBV_oo = new OBV;
 
-  if(!Otimizacao) Comentario_Robo = "\n Candle / Banda ABSOLUTO: " + DoubleToString(Candle_x_BB_abs());
-  if(!Otimizacao) Comentario_Robo += "\n Candle / Banda FORA DA BANDA: " + DoubleToString(Candle_x_BB_out());
-  if(!Otimizacao) Comentario_Robo += "\n BB_Posicao_Percent: " + DoubleToString(O_BB.BB_Posicao_Percent()); //DEBUG
-
-  // if(!Otimizacao) Comentario_Robo += "\n MACD 7: " + DoubleToString(MACD_oo.Valor(0,6)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD 6: " + DoubleToString(MACD_oo.Valor(0,5)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD 5: " + DoubleToString(MACD_oo.Valor(0,4)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD 4: " + DoubleToString(MACD_oo.Valor(0,3)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD 3: " + DoubleToString(MACD_oo.Valor(0,2)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD 2: " + DoubleToString(MACD_oo.Valor(0,1)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD 1: " + DoubleToString(MACD_oo.Valor(0,0)); //DEBUG
-  //
-  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 7: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,6)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 6: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,5)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 5: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,4)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 4: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,3)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 3: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,2)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 2: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,1)); //DEBUG
-  // if(!Otimizacao) Comentario_Robo += "\n MACD a Risca 1: " + DoubleToString(MACD_oo.Normalizacao_Valores(0,0)); //DEBUG
-
-  if(!Otimizacao) Comentario_Robo += "\n MACD Cx(0) : " + DoubleToString(MACD_oo.Cx(0)); //DEBUG
+  if(!Otimizacao) Comentario_Robo = "\n MACD Cx(0) : " + DoubleToString(MACD_oo.Cx(0)); //DEBUG
   if(!Otimizacao) Comentario_Robo += "\n MACD Cx(1) : " + DoubleToString(MACD_oo.Cx(1)); //DEBUG
-  if(!Otimizacao) Comentario_Robo += "\n Normalizacao_Valores_MACD(0,0,-1) : " + DoubleToString(MACD_oo.Normalizacao_Valores_MACD(0,0,0)); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n Normalizacao_Valores_MACD(0,0,0) : " + DoubleToString(MACD_oo.Normalizacao_Valores_MACD(0,0,0)); //DEBUG
   if(!Otimizacao) Comentario_Robo += "\n Normalizacao_Valores_MACD(0,-1,-1) : " + DoubleToString(MACD_oo.Normalizacao_Valores_MACD(0,-1,-1)); //DEBUG
   if(!Otimizacao) Comentario_Robo += "\n Distancia_Linha_Zero() : " + DoubleToString(MACD_oo.Distancia_Linha_Zero()); //DEBUG
   if(!Otimizacao) Comentario_Robo += "\n Distancia_Linha_Sinal() : " + DoubleToString(MACD_oo.Distancia_Linha_Sinal()); //DEBUG
   if(!Otimizacao) Comentario_Robo += "\n Diferenca_Angulo_Linha_Sinal() : " + DoubleToString(MACD_oo.Diferenca_Angulo_Linha_Sinal()); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n MACD_Resultado : " + DoubleToString(MACD_Resultado); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n HIST : " + DoubleToString(HIST); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n MOMENTO : " + DoubleToString(MOMENTO); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n VOLUME : " + DoubleToString(Volume_Resultado); //DEBUG
+  if(!Otimizacao) Comentario_Robo += "\n SINAL : " + DoubleToString(SINAL); //DEBUG
 
+  delete(OBV_oo);
   delete(MACD_oo);
 }
 
-double Ibsen::Candle_x_BB_abs()
-{
-  double retorno = 0;
-  double proporcao = 0;
-  double tamanho_candle = (PrecoAtual().high - PrecoAtual().low) / Tick_Size;
 
-  if(O_BB.BB_Delta_Bruto() != 0) proporcao = tamanho_candle / O_BB.BB_Delta_Bruto() * 100;
-
-  retorno = proporcao;
-
-  return retorno;
-
-}
-
-double Ibsen::Candle_x_BB_out()
-{
-  double retorno = 0;
-  double BB_delta_absoluto = O_BB.BB_Delta_Bruto() * Tick_Size;
-  double tamanho_fora = 0;
-
-  if(PrecoAtual().close > O_BB.BB_High()) tamanho_fora = PrecoAtual().close - O_BB.BB_High();
-  if(PrecoAtual().close < O_BB.BB_Low()) tamanho_fora = O_BB.BB_Low() -  PrecoAtual().close;
-
-  if(BB_delta_absoluto == 0) retorno = 0;
-  else retorno = tamanho_fora / BB_delta_absoluto * 100;
-
-  return retorno;
-}
-
-int Ibsen::Direcao()
-{
-int retorno = 0;
-
-if(O_BB.BB_Posicao_Percent() > 100) retorno = -1;
-if(O_BB.BB_Posicao_Percent() < 0) retorno = 1;
-
-
-
-return retorno;
-}
-
-
-void Ibsen::Avalia()
-{
-
- if(Candle_x_BB_out() > tamanho_candle_para_fora_p)
- {
-   Opera_Mercado *opera = new Opera_Mercado;
-
-   opera.AbrePosicao(Direcao(),"Ibsen: " + "BB_%"+DoubleToString(O_BB.BB_Posicao_Percent())+" | Candle_x_BB_out: " + DoubleToString(Candle_x_BB_out()));
-
-   delete(opera);
- }
-
-}
-
-
-
-void Ibsen::Timer()
-{
-
-
-}
+#include <ibsen\ibsen_MACD.mqh>
+#include <ibsen\ibsen_MOMENTO.mqh>
+#include <ibsen\ibsen_SINAL.mqh>
 
 BB O_BB(TimeFrame,NULL,p_bb);
-Ibsen Ibsen_o ;
+//Ibsen Ibsen_o ;

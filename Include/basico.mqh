@@ -40,6 +40,7 @@
 #include <Indicadores\MACD.mqh>
 #include <Indicadores\MFI.mqh>
 #include <Indicadores\Momentum.mqh>
+#include <Indicadores\OBV.mqh>
 #include <Indicadores\RSI_OO.mqh>
 #include <Indicadores\Stoch.mqh>
 #include <Indicadores\Volumes.mqh>

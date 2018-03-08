@@ -31,7 +31,7 @@ input double custo_operacao = 1.36;                                        //$ P
 
 
 string Descricao_Robo = Descricao_Robo_Alpha;
-input int Tipo_Comentario = 1;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
+input int Tipo_Comentario = 2;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
 input bool Otimizacao = false;                                          //Parametro para otimizacao
 
 input string Limite = "----------USANDO TICK SIZE-----------";

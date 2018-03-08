@@ -1,45 +1,7 @@
 /* -*- C++ -*- */
 
 
-double Ibsen::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito alto)
-{
-  int retorno = 0;
-
-  OBV *OBV_oo = new OBV;
-  MACD *MACD_oo = new MACD;
-
-
-
-  double LinMACD = MACD_oo.Valor(0,0); //0 - Main line
-  double LinSinal = MACD_oo.Valor(1,0); //1 - Signal Line
-  double m1 = MACD_oo.Cx(0); //Cx MACD
-  double m2 = MACD_oo.Cx(1); //Cx Sinal
-  double distancia = MACD_oo.Distancia_Linha_Zero(); //distância do indicador Histograma MACD ao eixo zero;
-
-  if(LinMACD > 0 && LinMACD > LinSinal && m1 > 0 && m1 > m2) retorno = 2; //1
-  if(LinMACD > 0 && LinMACD > LinSinal && m1 > 0 && m1 < m2) retorno = 1; //2
-  if(LinMACD > 0 && LinMACD > LinSinal && m1 < 0) retorno = 0; //3
-  if(LinMACD < 0 && LinMACD > LinSinal && m1 > 0 && m1 > m2) retorno = 1; //4
-  if(LinMACD < 0 && LinMACD > LinSinal && m1 > 0 && m1 < m2) retorno = 1; //5
-  if(LinMACD < 0 && LinMACD > LinSinal && m1 < 0) retorno = 0; //6
-  if(LinMACD < 0 && LinMACD < LinSinal && m1 < 0 && m1 < m2) retorno = -2; //7
-  if(LinMACD < 0 && LinMACD < LinSinal && m1 < 0 && m1 > m2) retorno = -1; //8
-  if(LinMACD < 0 && LinMACD < LinSinal && m1 > 0) retorno = 0; //9
-  if(LinMACD > 0 && LinMACD < LinSinal && m1 < 0 && m1 < m2) retorno = -1; //10
-  if(LinMACD > 0 && LinMACD < LinSinal && m1 < 0 && m1 > m2) retorno = -1; //11
-  if(LinMACD > 0 && LinMACD < LinSinal && m1 > 0) retorno = 0; //12
-  if(LinMACD == 0 && m1 > 0) retorno = 2; //13
-  if(LinMACD == 0 && m1 < 0) retorno = -2; //14
-  if(m1 == 0) retorno = 0; //15
-
-  delete(MACD_oo);
-  return retorno;
-}
-
-
-//Tabela2 - MACD Crisp HIST
-
-double Ibsen::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL) //Tabela 2 pag 101   |  -2 a 2 (Muito baixo a muito alto)
+double Ibsen::Fuzzy_CEV() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
 
@@ -57,6 +19,16 @@ double Ibsen::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL)
      fvAlpha.Terms().Add(new CFuzzyTerm("Alto", new CTriangularMembershipFunction(0.098,0.196,0.392)));
      fvAlpha.Terms().Add(new CFuzzyTerm("MuitoAlto", new CTrapezoidMembershipFunction(0.196,0.392,1.57,1.570)));
      fsHIST.Input().Add(fvAlpha);
+
+
+     CFuzzyVariable *fvMOMENTO=new CFuzzyVariable("MOMENTO",0,100);
+     fvMOMENTO.Terms().Add(new CFuzzyTerm("MuitoBaixo_M", new CTrapezoidMembershipFunction(0,0,10,20)));
+     fvMOMENTO.Terms().Add(new CFuzzyTerm("Baixo_M", new CTriangularMembershipFunction(10,20,30)));
+     fvMOMENTO.Terms().Add(new CFuzzyTerm("Neutro_M", new CTrapezoidMembershipFunction(20,30,70,80)));
+     fvMOMENTO.Terms().Add(new CFuzzyTerm("Alto_M", new CTriangularMembershipFunction(70,80,90)));
+     fvMOMENTO.Terms().Add(new CFuzzyTerm("MuitoAlto_M", new CTrapezoidMembershipFunction(80,90,100,100)));
+     fsHIST.Input().Add(fvMOMENTO);
+
   //--- Create Output
      CFuzzyVariable *fvHIST=new CFuzzyVariable("HIST",-1.57,1.57);
      fvHIST.Terms().Add(new CFuzzyTerm("MuitoBaixo", new CTrapezoidMembershipFunction(-1.57,-1.570,-0.392,-0.196)));
@@ -67,7 +39,7 @@ double Ibsen::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL)
      fsHIST.Output().Add(fvHIST);
   //--- Create three Mamdani fuzzy rule
      CMamdaniFuzzyRule *rule1 = fsHIST.ParseRule("if (distancia is Zero) and (alpha is Alto) then HIST is MuitoAlto");
-     CMamdaniFuzzyRule *rule2 = fsHIST.ParseRule("if (distancia is Zero) and (alpha is Baixo) then HIST is MuitoBaixo");
+     CMamdaniFuzzyRule *rule2 = fsHIST.ParseRule("if (MOMENTO is MuitoBaixo_M) and (alpha is Baixo) then HIST is MuitoBaixo");
      CMamdaniFuzzyRule *rule3 = fsHIST.ParseRule("if (alpha is Alto) then HIST is Alto");
      CMamdaniFuzzyRule *rule4 = fsHIST.ParseRule("if (alpha is MuitoAlto) then HIST is MuitoAlto");
      CMamdaniFuzzyRule *rule5 = fsHIST.ParseRule("if (alpha is Baixo) then HIST is Baixo");
@@ -85,10 +57,17 @@ double Ibsen::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL)
      CList *in=new CList;
      CDictionary_Obj_Double *p_od_distancia = new CDictionary_Obj_Double;
      CDictionary_Obj_Double *p_od_alpha = new CDictionary_Obj_Double;
-     p_od_distancia.SetAll(fvDistancia, HIST_distancia);
-     p_od_alpha.SetAll(fvAlpha, HIST_alpha);
+     p_od_distancia.SetAll(fvDistancia, 0);
+     p_od_alpha.SetAll(fvAlpha, -1);
      in.Add(p_od_distancia);
      in.Add(p_od_alpha);
+
+     CDictionary_Obj_Double *p_od_Momento = new CDictionary_Obj_Double;
+     p_od_Momento.SetAll(fvMOMENTO, 0);
+     in.Add(p_od_Momento);
+
+
+
   //--- Get result
      CList *result;
      CDictionary_Obj_Double *p_od_Ipsus;

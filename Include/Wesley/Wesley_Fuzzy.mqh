@@ -1,8 +1,6 @@
 /* -*- C++ -*- */
 //+------------------------------------------------------------------+
 
-
-
 double Wesley::Fuzzy_Respo(
   double Banda = 0, double Rsi = 50, double Estocastico = 50, double MoneyFI = 50,
 double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL = 50, double Wesley_ADX = 50

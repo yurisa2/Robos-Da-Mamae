@@ -61,7 +61,6 @@ double Ibsen::Fuzzy_Momento() //Tabela 3 pag 103   |  -2 a 2 (Muito baixo a muit
      CMamdaniFuzzyRule *rule13b = fsMomento.ParseRule("if IFR is MuitoBaixo and EST is MuitoBaixo then MOMENTO is MuitoBaixo");
      CMamdaniFuzzyRule *rule14 = fsMomento.ParseRule("if IFR is MuitoBaixo and EST is MuitoBaixo then MOMENTO is MuitoBaixo");
      CMamdaniFuzzyRule *rule14b = fsMomento.ParseRule("if IFR is MuitoBaixo and EST is Baixo then MOMENTO is MuitoBaixo");
-//Revisar todas as regras 2x2 DEBUG
   //--- Add three Mamdani fuzzy rule in system
      fsMomento.Rules().Add(rule1);
      fsMomento.Rules().Add(rule1b);

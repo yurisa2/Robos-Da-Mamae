@@ -148,7 +148,12 @@ double MACD::Normalizacao_Valores_MACD(int buffer = 0, int ponteiro = 0, int uni
   if(ponteiro == -1) zi = 0;
   else zi = Valor(buffer,ponteiro);
 
-  retorno = (zi - Z_Minimo) / (Z_Maximo - Z_Minimo);
+
+  double Z_max_menos_Z_min = Z_Maximo - Z_Minimo;
+  if(Z_max_menos_Z_min == 0) Z_max_menos_Z_min = 0.00000000000000000000000001;
+
+
+  retorno = (zi - Z_Minimo) / (Z_max_menos_Z_min);
 
   return(retorno);
 }

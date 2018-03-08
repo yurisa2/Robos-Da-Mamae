@@ -57,23 +57,26 @@ Normalizacao::Normalizacao(double y1, double y2, double y3,  double y4, double y
 {
 
   double Valor[7];
-  Valor[6] = y1;
-  Valor[5] = y2;
-  Valor[4] = y3;
+  Valor[0] = y1;
+  Valor[1] = y2;
+  Valor[2] = y3;
   Valor[3] = y4;
-  Valor[2] = y5;
-  Valor[1] = y6;
-  Valor[0] = y7;
+  Valor[4] = y5;
+  Valor[5] = y6;
+  Valor[6] = y7;
 
   double Z_min = Valor[ArrayMinimum(Valor)];
   double Z_max = Valor[ArrayMaximum(Valor)];
 
-  Valor_Normalizado = (Valor[0] - Z_min) / (Z_max - Z_min);
+  double Z_max_Zmin = Z_max - Z_min;
+  if(Z_max_Zmin == 0 ) Z_max_Zmin = 0.000000000000000000001;
 
-  normalizado_1 = (Valor[2] - Z_min) / (Z_max - Z_min);
-  normalizado_2 = (Valor[1] - Z_min) / (Z_max - Z_min);
-  normalizado_3 = (Valor[3] - Z_min) / (Z_max - Z_min);
+  Valor_Normalizado = (y7 - Z_min) / (Z_max_Zmin);
 
-  
+  normalizado_1 = (y5 - Z_min) / (Z_max_Zmin);
+  normalizado_2 = (y6 - Z_min) / (Z_max_Zmin);
+  normalizado_3 = (y7 - Z_min) / (Z_max_Zmin);
+
+
   Coeficiente_Angular = Coeficiente_Angular_3();
 }

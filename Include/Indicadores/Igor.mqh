@@ -1,10 +1,10 @@
 /* -*- C++ -*- */
 
-class Ibsen
+class Igor
 {
 
   public:
-  Ibsen();
+  Igor();
   void Comentario();
   void Avalia();
   double alpha; //ângulo da reta obtido pela regressão linear dos três últimos
@@ -15,26 +15,26 @@ class Ibsen
   double Volume_Resultado; //Mais Ou Menos Fuzzy
   double Entrada_fvHIST_M; //Mais Ou Menos Fuzzy
   double Entrada_fvMACD_M; //Mais Ou Menos Fuzzy
-  double Ibsen::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL);
-  double Ibsen::Fuzzy_Momento();
-  double Ibsen::Fuzzy_Sinal();
-  double Ibsen::Fuzzy_CEV(); //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
+  double Igor::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL);
+  double Igor::Fuzzy_Momento();
+  double Igor::Fuzzy_Sinal();
+  double Igor::Fuzzy_CEV(); //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
 
 
   private:
-  void Ibsen::Dados();
-  double Ibsen::Crisp_MACD();
+  void Igor::Dados();
+  double Igor::Crisp_MACD();
 
 };
 
-void Ibsen::Ibsen()
+void Igor::Igor()
 {
 
   Dados();
 
 }
 
-void Ibsen::Dados()
+void Igor::Dados()
 {
   OBV *OBV_oo = new OBV;
   MACD *MACD_oo = new MACD;
@@ -52,13 +52,13 @@ void Ibsen::Dados()
   delete(MACD_oo);
 }
 
-void Ibsen::Avalia()
+void Igor::Avalia()
 {
 
 
 }
 
-void Ibsen::Comentario()
+void Igor::Comentario()
 {
   //AQUI ESTA COMENTADO PARA PERFORMANCE DE OTIMIZACAO
   //alpha = MACD_oo.Cx(0)
@@ -90,7 +90,7 @@ void Ibsen::Comentario()
 }
 
 
-double Ibsen::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito alto)
+double Igor::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito alto)
 {
   int retorno = 0;
 
@@ -128,7 +128,7 @@ double Ibsen::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito a
 
 //Tabela2 - MACD Crisp HIST
 
-double Ibsen::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL) //Tabela 2 pag 101   |  -2 a 2 (Muito baixo a muito alto)
+double Igor::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL) //Tabela 2 pag 101   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
 
@@ -198,7 +198,7 @@ return retorno;
 
 //Tabela3 - MOMENTO Pag 103
 
-double Ibsen::Fuzzy_Momento() //Tabela 3 pag 103   |  -2 a 2 (Muito baixo a muito alto)
+double Igor::Fuzzy_Momento() //Tabela 3 pag 103   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
 
@@ -320,7 +320,7 @@ return retorno;
 /* -*- C++ -*- */
 
 
-double Ibsen::Fuzzy_Sinal() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
+double Igor::Fuzzy_Sinal() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
   MACD *MACD_oo = new MACD;
@@ -449,7 +449,7 @@ return retorno;
 /* -*- C++ -*- */
 
 
-double Ibsen::Fuzzy_CEV() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
+double Igor::Fuzzy_CEV() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
   double input_momento = 0;
@@ -675,6 +675,3 @@ double Ibsen::Fuzzy_CEV() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito al
 
   return retorno;
 }
-
-
-#include <ibsen\ibsen_file.mqh>

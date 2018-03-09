@@ -36,6 +36,7 @@
 #include <Indicadores\DeMarker.mqh>
 #include <Indicadores\DP.mqh>
 #include <Indicadores\HiLo_OO.mqh>
+#include <Indicadores\Igor.mqh>
 #include <Indicadores\MA.mqh>
 #include <Indicadores\MACD.mqh>
 #include <Indicadores\MFI.mqh>

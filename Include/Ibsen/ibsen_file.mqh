@@ -3,7 +3,7 @@ int file_handle_w_ibsen = -1;
 
 void File_Init_ibsen()
 {
-       file_handle_w_ibsen=FileOpen("ibsen.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI);
+       file_handle_w_ibsen=FileOpen(TimeFrame+"ibsen.csv",FILE_WRITE|FILE_CSV|FILE_COMMON|FILE_ANSI);
 
 }
 

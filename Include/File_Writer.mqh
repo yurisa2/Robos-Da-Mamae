@@ -114,22 +114,22 @@ File::File()
   Volumes *Volumes_OO = new Volumes(NULL,TimeFrame);
   WPR *WPR_Ind = new WPR();
 
-  AC_Var  =  AC_Ind.Valor(0)  ;
+  AC_Var  =  AC_Ind.Normalizado(0)  ;
   AC_cx  =  AC_Ind.Cx(0)  ;
-  AD_Var   =  AD_Ind.Valor(0)  ;
+  AD_Var   =  AD_Ind.Normalizado(0)  ;
   AD_cx   =  AD_Ind.Cx(0)  ;
   ADX_FW  = ADX_OO.Valor(0) ;
   adx_cx  = ADX_OO.Cx(0)  ;
-  ATR_Var =   ATR_Ind.Valor(0) ;
+  ATR_Var =   ATR_Ind.Normalizado(0) ;
   ATR_cx =   ATR_Ind.Cx(0);
   BB_Delta_Bruto = Banda_BB.BB_Delta_Bruto(0) ;
   BB_Delta_Bruto_Cx = Banda_BB.Cx_BB_Delta_Bruto(0) ;
   Banda_Delta_Valor = Banda_BB.Banda_Delta_Valor() ;
   BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(0) ;
   BB_Posicao_Percent_Cx = Banda_BB.Cx_BB_Posicao_Percent(0) ;
-  BullsP_Var =   BullsPower_Ind.Valor(1) ;
+  BullsP_Var =   BullsPower_Ind.Normalizado(1) ;
   BullsP_Var_Cx =   BullsPower_Ind.Cx(0);
-  BearsP_Var =   BearsPower_Ind.Valor(1) ;
+  BearsP_Var =   BearsPower_Ind.Normalizado(1) ;
   BearsP_Var_Cx =   BearsPower_Ind.Cx(0);
   BWMFI_Var =   BWMFI_Ind.Valor(1) ;
   BWMFI_Var_Cx =   BWMFI_Ind.Cx(0);
@@ -154,7 +154,7 @@ File::File()
   Stoch_FW = Stoch_OO.Valor(0) ;
   Stoch_Cx_0 = Stoch_OO.Cx(0,0) ;
   Stoch_Cx_1 = Stoch_OO.Cx(1,0) ;
-  Volume_FW = Volumes_OO.Valor(1) ;
+  Volume_FW = Volumes_OO.Normalizado(1) ;
   Volume_Cx = Volumes_OO.Cx(1) ;
   WPR_Var = WPR_Ind.Valor(0)   ;
   WPR_Var_Cx = WPR_Ind.Cx(0)   ;

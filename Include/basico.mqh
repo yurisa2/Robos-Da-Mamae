@@ -17,6 +17,7 @@
 #include <Normalizacao.mqh>
 #include <Graficos.mqh>
 
+#include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
 
 #include <Lib_CisNewBar.mqh>
 #include <Operacoes_No_tick.mqh>

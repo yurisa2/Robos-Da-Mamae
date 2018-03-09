@@ -48,7 +48,7 @@
 #include <Indicadores\Volumes.mqh>
 #include <Indicadores\WPR.mqh>
 
-
+#include <File_Writer.mqh>
 
 //#include <Expert\Expert.mqh>
 

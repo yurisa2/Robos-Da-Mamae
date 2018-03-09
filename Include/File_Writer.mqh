@@ -94,6 +94,8 @@ class File
 
 File::File()
 {
+
+  double conv = 180 / 3.14159265359;
   AC *AC_Ind = new AC();
   AD *AD_Ind = new AD();
   ADX *ADX_OO = new ADX(14,TimeFrame);
@@ -114,50 +116,50 @@ File::File()
   Volumes *Volumes_OO = new Volumes(NULL,TimeFrame);
   WPR *WPR_Ind = new WPR();
 
-  AC_Var  =  AC_Ind.Normalizado(0)  ;
-  AC_cx  =  AC_Ind.Cx(0)  ;
-  AD_Var   =  AD_Ind.Normalizado(0)  ;
-  AD_cx   =  AD_Ind.Cx(0)  ;
+  AC_Var  =  AC_Ind.Normalizado(0)*100  ;
+  AC_cx  =  AC_Ind.Cx(0)*conv  ;
+  AD_Var   =  AD_Ind.Normalizado(0)*100  ;
+  AD_cx   =  AD_Ind.Cx(0)*conv  ;
   ADX_FW  = ADX_OO.Valor(0) ;
-  adx_cx  = ADX_OO.Cx(0)  ;
-  ATR_Var =   ATR_Ind.Normalizado(0) ;
-  ATR_cx =   ATR_Ind.Cx(0);
+  adx_cx  = ADX_OO.Cx(0)*conv  ;
+  ATR_Var =   ATR_Ind.Normalizado(0)*100 ;
+  ATR_cx =   ATR_Ind.Cx(0)*conv;
   BB_Delta_Bruto = Banda_BB.BB_Delta_Bruto(0) ;
   BB_Delta_Bruto_Cx = Banda_BB.Cx_BB_Delta_Bruto(0) ;
   Banda_Delta_Valor = Banda_BB.Banda_Delta_Valor() ;
   BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(0) ;
   BB_Posicao_Percent_Cx = Banda_BB.Cx_BB_Posicao_Percent(0) ;
-  BullsP_Var =   BullsPower_Ind.Normalizado(1) ;
-  BullsP_Var_Cx =   BullsPower_Ind.Cx(0);
-  BearsP_Var =   BearsPower_Ind.Normalizado(1) ;
-  BearsP_Var_Cx =   BearsPower_Ind.Cx(0);
+  BullsP_Var =   BullsPower_Ind.Normalizado(1)*100 ;
+  BullsP_Var_Cx =   BullsPower_Ind.Cx(0)*conv;
+  BearsP_Var =   BearsPower_Ind.Normalizado(1)*100 ;
+  BearsP_Var_Cx =   BearsPower_Ind.Cx(0)*conv;
   BWMFI_Var =   BWMFI_Ind.Valor(1) ;
-  BWMFI_Var_Cx =   BWMFI_Ind.Cx(0);
+  BWMFI_Var_Cx =   BWMFI_Ind.Cx(0)*conv;
   CCI_Var =  CCI_Ind.Valor(0)  ;
-  CCI_Var_Cx =  CCI_Ind.Cx(0);
+  CCI_Var_Cx =  CCI_Ind.Cx(0)*conv;
   DeMarker_Var =  DeMarker_Ind.Valor(0)  ;
-  DeMarker_Var_Cx =  DeMarker_Ind.Cx(0);
+  DeMarker_Var_Cx =  DeMarker_Ind.Cx(0)*conv;
   DP_DMM20 = DP_Ind.DirecaoMM20(0);
   DP_PAAMM20 = DP_Ind.PrecoRMM20(0);
   DP_MM20MM50 = DP_Ind.MM20AcimaAbaixoMM50(0);
   DP_D = DP_Ind.Direcao(0);
   Hilo_Direcao = hilo.Direcao() ;
   MACD_FW = macd.Valor(0) ;
-  MACD_Cx_0 = macd.Cx(0) ;
-  MACD_Cx_1 = macd.Cx(1) ;
+  MACD_Cx_0 = macd.Cx(0)*conv ;
+  MACD_Cx_1 = macd.Cx(1)*conv ;
   MFI_FW = MFI_OO.Valor(0) ;
-  MFI_Cx = MFI_OO.Cx(0);
+  MFI_Cx = MFI_OO.Cx(0)*conv;
   Momentum_Var =  Momentum_OO.Valor(0)  ;
-  Momentum_Var_Cx =  Momentum_OO.Cx(0);
+  Momentum_Var_Cx =  Momentum_OO.Cx(0)*conv;
   RSI_Var =  RSI_OO.Valor(0)  ;
-  RSI_Var_Cx =  RSI_OO.Cx(0)  ;
+  RSI_Var_Cx =  RSI_OO.Cx(0)*conv  ;
   Stoch_FW = Stoch_OO.Valor(0) ;
-  Stoch_Cx_0 = Stoch_OO.Cx(0,0) ;
-  Stoch_Cx_1 = Stoch_OO.Cx(1,0) ;
-  Volume_FW = Volumes_OO.Normalizado(1) ;
-  Volume_Cx = Volumes_OO.Cx(1) ;
+  Stoch_Cx_0 = Stoch_OO.Cx(0,0)*conv ;
+  Stoch_Cx_1 = Stoch_OO.Cx(1,0)*conv ;
+  Volume_FW = Volumes_OO.Normalizado(1)*100 ;
+  Volume_Cx = Volumes_OO.Cx(1)*conv ;
   WPR_Var = WPR_Ind.Valor(0)   ;
-  WPR_Var_Cx = WPR_Ind.Cx(0)   ;
+  WPR_Var_Cx = WPR_Ind.Cx(0)*conv   ;
 
   delete(AC_Ind);
   delete(AD_Ind);

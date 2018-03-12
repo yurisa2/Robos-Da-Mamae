@@ -48,12 +48,6 @@ void OnTimer()
 
   Operacoes_No_Timer();
 
-  // Zwift *Zwift_oo = new Zwift;
-  //
-  // Zwift_oo.Avalia();
-  // Zwift_oo.Comentario();
-  //
-  // delete Zwift_oo;
 
 }
 
@@ -81,5 +75,11 @@ double OnTester()
 
 void OnNewBar()
 {
+  Zwift *Zwift_oo = new Zwift;
+
+  Zwift_oo.Avalia();
+  Zwift_oo.Comentario();
+
+  delete Zwift_oo;
 
 }

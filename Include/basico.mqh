@@ -219,9 +219,9 @@ void Comentario ()
 
 Comentario_Debug_funcao();
 
-if(Tipo_Comentario == 0) Comment(Comentario_Simples);
-if(Tipo_Comentario == 1) Comment(Comentario_Avancado);
-if(Tipo_Comentario == 2) Comment(Comentario_Debug);
+if(Tipo_Comentario == 0 && !Otimizacao) Comment(Comentario_Simples);
+if(Tipo_Comentario == 1 && !Otimizacao) Comment(Comentario_Avancado);
+if(Tipo_Comentario == 2 && !Otimizacao) Comment(Comentario_Debug);
 
 }
 

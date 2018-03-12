@@ -12,9 +12,10 @@ class Igor
   double Entrada_fvHIST_M; //Mais Ou Menos Fuzzy
   double Entrada_fvMACD_M; //Mais Ou Menos Fuzzy
   double Igor::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL);
-  double Igor::Fuzzy_Momento();
+  double Igor::Fuzzy_Momento(int barra = 0);
   double Igor::Fuzzy_Sinal();
   double Igor::Fuzzy_CEV(); //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
+  ENUM_TIMEFRAMES Igor_TF; //TimeFrames especifico do indicador
 
 
   private:
@@ -26,21 +27,14 @@ class Igor
 void Igor::Igor()
 {
 
+
   Dados();
 
 }
 
 void Igor::Dados()
 {
-  OBV *OBV_oo = new OBV;
-  MACD *MACD_oo = new MACD;
 
-
-  MACD_Resultado = Crisp_MACD();
-  Volume_Resultado = OBV_oo.Cx(1);
-
-  delete(OBV_oo);
-  delete(MACD_oo);
 }
 
 void Igor::Avalia()
@@ -163,7 +157,7 @@ return retorno;
 
 //Tabela3 - MOMENTO Pag 103
 
-double Igor::Fuzzy_Momento() //Tabela 3 pag 103   |  -2 a 2 (Muito baixo a muito alto)
+double Igor::Fuzzy_Momento(int barra = 0) //Tabela 3 pag 103   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
 
@@ -259,8 +253,8 @@ double Igor::Fuzzy_Momento() //Tabela 3 pag 103   |  -2 a 2 (Muito baixo a muito
      CList *in=new CList;
      CDictionary_Obj_Double *p_od_IFR = new CDictionary_Obj_Double;
      CDictionary_Obj_Double *p_od_EST = new CDictionary_Obj_Double;
-     p_od_IFR.SetAll(fvIFR, IFR.Valor());
-     p_od_EST.SetAll(fvEST, EST.Valor());
+     p_od_IFR.SetAll(fvIFR, IFR.Valor(barra));
+     p_od_EST.SetAll(fvEST, EST.Valor(0,barra));
      in.Add(p_od_IFR);
      in.Add(p_od_EST);
   //--- Get result

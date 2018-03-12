@@ -4,6 +4,7 @@
 //|                        Copyright 2017, Sa2 INVESTMENT            |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
+
 #property copyright "Operador de igor."
 #property link      "http://www.sa2.com.br"
 
@@ -47,8 +48,15 @@ void OnTimer()
   Comentario();
 
   Operacoes_No_Timer();
+  if(!Otimizacao)
+  {
+    Zwift *Zwift_oo = new Zwift;
 
+    Zwift_oo.Avalia();
+    Zwift_oo.Comentario();
 
+    delete Zwift_oo;
+  }
 }
 
 void OnTick()

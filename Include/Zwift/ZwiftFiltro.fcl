@@ -1,0 +1,75 @@
+FUNCTION_BLOCK Sinal
+
+VAR_INPUT
+AC: REAL;
+ACX: REAL;
+BBDB: REAL;
+BBDV: REAL;
+CCI: REAL;
+END_VAR
+
+VAR_OUTPUT
+FILTRO: REAL;
+END_VAR
+
+FUZZIFY AC
+RANGE := (0.000 .. 1.000);
+TERM BOM := Triangle (0.240, 0.350, 0.460);
+TERM RUIM := Triangle (0.120, 0.240, 0.360);
+END_FUZZIFY
+
+FUZZIFY ACX
+RANGE := (-1.570 .. 1.570);
+TERM RUIM := Triangle (-0.500, -0.180, -0.100);
+TERM BOM := Triangle (-0.200, -0.108, 1.000);
+END_FUZZIFY
+
+FUZZIFY BBDB
+RANGE := (0.000 .. 200.000);
+TERM BOM := Triangle (104.000, 132.000, 200.000);
+TERM RUIM := Triangle (50.000, 104.000, 132.000);
+END_FUZZIFY
+
+FUZZIFY BBDV
+RANGE := (0.000 .. 300.000);
+TERM BOM := Triangle (227.000, 260.000, 300.000);
+TERM RUIM := Triangle (100.000, 224.000, 260.000);
+END_FUZZIFY
+
+FUZZIFY CCI
+RANGE := (-1.000 .. 0.000);
+TERM RUIM := Triangle (-0.900, -0.640, -0.552);
+TERM BOM := Triangle (-0.640, -0.550, -0.300);
+END_FUZZIFY
+
+DEFUZZIFY FILTRO
+RANGE := (0.000 .. 100.000);
+TERM MuitoBaixo := Trapezoid (0.000, 0.000, 10.000, 20.000);
+TERM Baixo := Triangle (10.000, 20.000, 30.000);
+TERM Neutro := Trapezoid (20.000, 30.000, 70.000, 80.000);
+TERM Alto := Triangle (70.000, 80.000, 90.000);
+TERM MuitoAlto := Trapezoid (80.000, 90.000, 100.000, 100.000);
+
+METHOD : COG;
+ACCU : MAX;
+DEFAULT := nan;
+END_DEFUZZIFY
+
+RULEBLOCK 
+AND : MIN;
+OR : MAX;
+ACT : MIN;
+
+RULE 1 : if AC is BOM then FILTRO is MuitoAlto
+RULE 2 : if AC is RUIM then FILTRO is MuitoBaixo
+RULE 3 : if ACX is BOM then FILTRO is MuitoAlto
+RULE 4 : if ACX is RUIM then FILTRO is MuitoBaixo
+RULE 5 : if BBDB is BOM then FILTRO is MuitoAlto
+RULE 6 : if BBDB is RUIM then FILTRO is MuitoBaixo
+RULE 7 : if BBDV is BOM then FILTRO is MuitoAlto
+RULE 8 : if BBDV is RUIM then FILTRO is MuitoBaixo
+RULE 9 : if CCI is BOM then FILTRO is MuitoAlto
+RULE 10 : if CCI is RUIM then FILTRO is MuitoBaixo
+END_RULEBLOCK
+
+END_FUNCTION_BLOCK

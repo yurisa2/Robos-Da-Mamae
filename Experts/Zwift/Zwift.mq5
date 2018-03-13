@@ -48,15 +48,7 @@ void OnTimer()
   Comentario();
 
   Operacoes_No_Timer();
-  if(!Otimizacao)
-  {
-    Zwift *Zwift_oo = new Zwift;
 
-    Zwift_oo.Avalia();
-    Zwift_oo.Comentario();
-
-    delete Zwift_oo;
-  }
 }
 
 void OnTick()

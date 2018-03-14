@@ -50,7 +50,7 @@ void Zwift::Avalia()
     Opera_Mercado *opera = new Opera_Mercado;
 
     if(Igor_oo.Fuzzy_CEV() > Zwift_limite_superior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(-1,"Igor_oo: " + DoubleToString(Igor_oo.Fuzzy_CEV()));
-    if(Igor_oo.Fuzzy_CEV() < Zwift_limite_inferior && O_Stops.Tipo_Posicao() == 0 && Filtro() > 50)   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(Igor_oo.Fuzzy_CEV()));
+    if(Igor_oo.Fuzzy_CEV() < Zwift_limite_inferior && O_Stops.Tipo_Posicao() == 0 && (!Zwift_Filtro_Fuzzy || (Zwift_Filtro_Fuzzy && Filtro() > 50)) )   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(Igor_oo.Fuzzy_CEV()));
     if(Igor_oo.Fuzzy_CEV() >= 50 && O_Stops.Tipo_Posicao() > 0 && Zwift_sair_indicador)        opera.FechaPosicao() ;
     if(Igor_oo.Fuzzy_CEV() <= 50 && O_Stops.Tipo_Posicao() < 0 && Zwift_sair_indicador)        opera.FechaPosicao() ;
 

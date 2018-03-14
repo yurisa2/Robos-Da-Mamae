@@ -32,7 +32,7 @@ void File_Init() {
     File *arquivo = new File();
     delete(arquivo);
 
-    FileWrite(file_handle_w, "io;hora;ativo;posicao;direcao;lucro;AC;AC_cx;AD;AD_cx;ADX;adx_cx;ATR;ATR_cx;BB_Delta_Bruto;BB_Delta_Bruto_cx;Banda_Delta_Valor;BB_Posicao_Percent;BB_Posicao_Percent_Cx;BullsP;BullsP_cx;BearsP;BearsP_cx;BWMFI;BWMFI_cx;CCI;CCI_cx;DeMarker;DeMarker_cx;DP_DMM20;DP_PAAMM20;DP_MM20MM50;DP_D;hilo_direcao;MACD;MACD_cx_0;MACD_cx_1;MFI;MFI_cx;Momentum;Momentum_cx;RSI;RSI_cx;Stoch;Stoch_Cx_0;Stoch_Cx_1;Volume;Volume_cx;WPR;WPR_cx");
+    FileWrite(file_handle_w, "io;hora;ativo;posicao;direcao;lucro;AC;AC_cx;AD;AD_cx;ADX;adx_cx;ATR;ATR_cx;BB_Delta_Bruto;BB_Delta_Bruto_cx;Banda_Delta_Valor;BB_Posicao_Percent;BB_Posicao_Percent_Cx;BullsP;BullsP_cx;BearsP;BearsP_cx;BWMFI;BWMFI_cx;CCI;CCI_cx;DeMarker;DeMarker_cx;DP_DMM20;DP_PAAMM20;DP_MM20MM50;DP_D;hilo_direcao;MACD;MACD_cx_0;MACD_cx_1;MACD_Diff_Angulo_LS;MACD_Distancia_Linha_Sinal;MACD_Distancia_Linha_Zero;MACD_Normalizacao;MACD_Normalizacao_Zero;MFI;MFI_cx;Momentum;Momentum_cx;RSI;RSI_cx;Stoch;Stoch_Cx_0;Stoch_Cx_1;Volume;Volume_cx;WPR;WPR_cx");
     //FileFlush(file_handle_w);
   }
 }
@@ -75,6 +75,11 @@ class File
   double MACD_FW;
   double MACD_Cx_0;
   double MACD_Cx_1;
+  double MACD_Diff_Angulo_LS;
+  double MACD_Distancia_Linha_Sinal;
+  double MACD_Distancia_Linha_Zero;
+  double MACD_Normalizacao;
+  double MACD_Normalizacao_Zero;
   double MFI_FW;
   double MFI_Cx;
   double Momentum_Var;
@@ -147,6 +152,11 @@ File::File()
   MACD_FW = macd.Valor(0) ;
   MACD_Cx_0 = macd.Cx(0)*conv ;
   MACD_Cx_1 = macd.Cx(1)*conv ;
+  MACD_Diff_Angulo_LS = macd.Diferenca_Angulo_Linha_Sinal()*conv;
+  MACD_Distancia_Linha_Sinal = macd.Distancia_Linha_Sinal()*100;
+  MACD_Distancia_Linha_Zero = macd.Distancia_Linha_Zero()*100;
+  MACD_Normalizacao = macd.Normalizacao_Valores_MACD(0,0,0)*100;
+  MACD_Normalizacao_Zero = macd.Normalizacao_Valores_MACD(0,0,-1)*100;
   MFI_FW = MFI_OO.Valor(0) ;
   MFI_Cx = MFI_OO.Cx(0)*conv;
   Momentum_Var =  Momentum_OO.Valor(0)  ;
@@ -276,6 +286,16 @@ void File::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DEAL_ENTR
   DoubleToString(MACD_Cx_0)
   + "\";\"" +
   DoubleToString(MACD_Cx_1)
+  + "\";\"" +
+  DoubleToString(MACD_Diff_Angulo_LS)
+  + "\";\"" +
+  DoubleToString(MACD_Distancia_Linha_Sinal)
+  + "\";\"" +
+  DoubleToString(MACD_Distancia_Linha_Zero)
+  + "\";\"" +
+  DoubleToString(MACD_Normalizacao)
+  + "\";\"" +
+  DoubleToString(MACD_Normalizacao_Zero)
   + "\";\"" +
   DoubleToString(MFI_FW)
   + "\";\"" +

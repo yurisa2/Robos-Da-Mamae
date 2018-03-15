@@ -84,30 +84,30 @@ double Zwift::Filtro()
   //--- Mamdani Fuzzy System
   CMamdaniFuzzySystem *fsFILTRO=new CMamdaniFuzzySystem();
   //--- Create first input variables for the system
-  CFuzzyVariable *fvAC=new CFuzzyVariable("AC",-1,1);
-  fvAC.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(0.24,0.35,0.46)));
-  fvAC.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(0.120,0.240,0.36)));
-  fsFILTRO.Input().Add(fvAC);
-  //--- Create second input variables for the system
-  CFuzzyVariable *fvACX=new CFuzzyVariable("ACX",-1.57,1.57);
-  fvACX.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(-0.2,-0.108,1)));
-  fvACX.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(-0.5,-0.18,-0.1)));
-  fsFILTRO.Input().Add(fvACX);
+  // CFuzzyVariable *fvAC=new CFuzzyVariable("AC",-1,1);
+  // fvAC.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(0.24,0.35,0.46)));
+  // fvAC.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(0.120,0.240,0.36)));
+  // fsFILTRO.Input().Add(fvAC);
+  // //--- Create second input variables for the system
+  // CFuzzyVariable *fvACX=new CFuzzyVariable("ACX",-1.57,1.57);
+  // fvACX.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(-0.2,-0.108,1)));
+  // fvACX.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(-0.5,-0.18,-0.1)));
+  // fsFILTRO.Input().Add(fvACX);
   //--- Create Output
   CFuzzyVariable *fvBBDB=new CFuzzyVariable("BBDB",0,200);
-  fvBBDB.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(104,132,200)));
-  fvBBDB.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(50,104,132)));
+  fvBBDB.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(80,90,150)));
+  fvBBDB.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(20,80,90)));
   fsFILTRO.Input().Add(fvBBDB);
   //--- Create Output
   CFuzzyVariable *fvBBDV=new CFuzzyVariable("BBDV",0,300);
-  fvBBDV.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(227,260,300)));
-  fvBBDV.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(100,224,260)));
+  fvBBDV.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(154,191,228)));
+  fvBBDV.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(117,154,191)));
   fsFILTRO.Input().Add(fvBBDV);
   //--- Create Output
-  CFuzzyVariable *fvCCI=new CFuzzyVariable("CCI",-1,0);
-  fvCCI.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(-0.64,-0.55,-0.3)));
-  fvCCI.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(-0.9,-0.64,-0.552)));
-  fsFILTRO.Input().Add(fvCCI);
+  // CFuzzyVariable *fvCCI=new CFuzzyVariable("CCI",-1,0);
+  // fvCCI.Terms().Add(new CFuzzyTerm("BOM", new CTriangularMembershipFunction(-0.64,-0.55,-0.3)));
+  // fvCCI.Terms().Add(new CFuzzyTerm("RUIM", new CTriangularMembershipFunction(-0.9,-0.64,-0.552)));
+  // fsFILTRO.Input().Add(fvCCI);
   //--- Create Output
   CFuzzyVariable *fvFILTRO=new CFuzzyVariable("FILTRO",0,100);
   fvFILTRO.Terms().Add(new CFuzzyTerm("MuitoBaixo", new CTrapezoidMembershipFunction(0,0,10,20)));
@@ -117,44 +117,44 @@ double Zwift::Filtro()
   fvFILTRO.Terms().Add(new CFuzzyTerm("MuitoAlto", new CTrapezoidMembershipFunction(80,90,100,100)));
   fsFILTRO.Output().Add(fvFILTRO);
   //--- Create three Mamdani fuzzy rule
-  CMamdaniFuzzyRule *rule1 = fsFILTRO.ParseRule("if (AC is BOM) then FILTRO is MuitoAlto");
-  CMamdaniFuzzyRule *rule2 = fsFILTRO.ParseRule("if (AC is RUIM) then FILTRO is MuitoBaixo");
-  CMamdaniFuzzyRule *rule3 = fsFILTRO.ParseRule("if (ACX is BOM) then FILTRO is MuitoAlto");
-  CMamdaniFuzzyRule *rule4 = fsFILTRO.ParseRule("if (ACX is RUIM) then FILTRO is MuitoBaixo");
+  // CMamdaniFuzzyRule *rule1 = fsFILTRO.ParseRule("if (AC is BOM) then FILTRO is MuitoAlto");
+  // CMamdaniFuzzyRule *rule2 = fsFILTRO.ParseRule("if (AC is RUIM) then FILTRO is MuitoBaixo");
+  // CMamdaniFuzzyRule *rule3 = fsFILTRO.ParseRule("if (ACX is BOM) then FILTRO is MuitoAlto");
+  // CMamdaniFuzzyRule *rule4 = fsFILTRO.ParseRule("if (ACX is RUIM) then FILTRO is MuitoBaixo");
   CMamdaniFuzzyRule *rule5 = fsFILTRO.ParseRule("if (BBDB is BOM) then FILTRO is MuitoAlto");
   CMamdaniFuzzyRule *rule6 = fsFILTRO.ParseRule("if (BBDB is RUIM) then FILTRO is MuitoBaixo");
   CMamdaniFuzzyRule *rule7 = fsFILTRO.ParseRule("if (BBDV is BOM) then FILTRO is MuitoAlto");
   CMamdaniFuzzyRule *rule8 = fsFILTRO.ParseRule("if (BBDV is RUIM) then FILTRO is MuitoBaixo");
-  CMamdaniFuzzyRule *rule9 = fsFILTRO.ParseRule("if (CCI is BOM) then FILTRO is MuitoAlto");
-  CMamdaniFuzzyRule *rule10 = fsFILTRO.ParseRule("if (CCI is RUIM) then FILTRO is MuitoBaixo");
+  // CMamdaniFuzzyRule *rule9 = fsFILTRO.ParseRule("if (CCI is BOM) then FILTRO is MuitoAlto");
+  // CMamdaniFuzzyRule *rule10 = fsFILTRO.ParseRule("if (CCI is RUIM) then FILTRO is MuitoBaixo");
   //--- Add three Mamdani fuzzy rule in system
-  fsFILTRO.Rules().Add(rule1);
-  fsFILTRO.Rules().Add(rule2);
-  fsFILTRO.Rules().Add(rule3);
-  fsFILTRO.Rules().Add(rule4);
+  // fsFILTRO.Rules().Add(rule1);
+  // fsFILTRO.Rules().Add(rule2);
+  // fsFILTRO.Rules().Add(rule3);
+  // fsFILTRO.Rules().Add(rule4);
   fsFILTRO.Rules().Add(rule5);
   fsFILTRO.Rules().Add(rule6);
   fsFILTRO.Rules().Add(rule7);
   fsFILTRO.Rules().Add(rule8);
-  fsFILTRO.Rules().Add(rule9);
-  fsFILTRO.Rules().Add(rule10);
+  // fsFILTRO.Rules().Add(rule9);
+  // fsFILTRO.Rules().Add(rule10);
   //--- Set input value
   CList *in=new CList;
-  CDictionary_Obj_Double *p_od_AC = new CDictionary_Obj_Double;
-  CDictionary_Obj_Double *p_od_ACX = new CDictionary_Obj_Double;
+  // CDictionary_Obj_Double *p_od_AC = new CDictionary_Obj_Double;
+  // CDictionary_Obj_Double *p_od_ACX = new CDictionary_Obj_Double;
   CDictionary_Obj_Double *p_od_BBDB = new CDictionary_Obj_Double;
   CDictionary_Obj_Double *p_od_BBDV = new CDictionary_Obj_Double;
-  CDictionary_Obj_Double *p_od_CCI = new CDictionary_Obj_Double;
-  p_od_AC.SetAll(fvAC, AC_v);
-  p_od_ACX.SetAll(fvACX, ACX_v);
+  // CDictionary_Obj_Double *p_od_CCI = new CDictionary_Obj_Double;
+  // p_od_AC.SetAll(fvAC, AC_v);
+  // p_od_ACX.SetAll(fvACX, ACX_v);
   p_od_BBDB.SetAll(fvBBDB, BBDB_v);
   p_od_BBDV.SetAll(fvBBDV, BBDV_v);
-  p_od_CCI.SetAll(fvCCI, CCI_v);
-  in.Add(p_od_AC);
-  in.Add(p_od_ACX);
+  // p_od_CCI.SetAll(fvCCI, CCI_v);
+  // in.Add(p_od_AC);
+  // in.Add(p_od_ACX);
   in.Add(p_od_BBDB);
   in.Add(p_od_BBDV);
-  in.Add(p_od_CCI);
+  // in.Add(p_od_CCI);
   //--- Get result
   CList *result;
   CDictionary_Obj_Double *p_od_Ipsus;

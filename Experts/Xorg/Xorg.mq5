@@ -20,8 +20,8 @@
 #include <MontarRequisicao.mqh>
 #include <VerificaInit.mqh>
 
-#include <Zwift\zwift_funcoes.mqh>
-#include <Zwift\zwift_inputs.mqh>
+#include <Xorg\xorg_funcoes.mqh>
+#include <Xorg\xorg_inputs.mqh>
 
 
 
@@ -75,14 +75,14 @@ double OnTester()
 
 void OnNewBar()
 {
-  Zwift *Zwift_oo = new Zwift;
+  Xorg *Xorg_oo = new Xorg;
 
-  Zwift_oo.Avalia();
-  Zwift_oo.Comentario();
+  Xorg_oo.Avalia();
+  Xorg_oo.Comentario();
 
-  delete Zwift_oo;
+  delete Xorg_oo;
 
 
-   Print("Nova Parar");
+//   Print("Nova Barra Xorg");
 
 }

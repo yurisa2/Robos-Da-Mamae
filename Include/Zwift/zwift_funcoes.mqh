@@ -49,10 +49,13 @@ void Zwift::Avalia()
     Igor *Igor_oo = new Igor;
     Opera_Mercado *opera = new Opera_Mercado;
 
-    if(Igor_oo.Fuzzy_CEV() > Zwift_limite_superior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(-1,"Igor_oo: " + DoubleToString(Igor_oo.Fuzzy_CEV()));
-    if(Igor_oo.Fuzzy_CEV() < Zwift_limite_inferior && O_Stops.Tipo_Posicao() == 0 && (!Zwift_Filtro_Fuzzy || (Zwift_Filtro_Fuzzy && Filtro() > 50)) )   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(Igor_oo.Fuzzy_CEV()));
-    if(Igor_oo.Fuzzy_CEV() >= 50 && O_Stops.Tipo_Posicao() > 0 && Zwift_sair_indicador)        opera.FechaPosicao() ;
-    if(Igor_oo.Fuzzy_CEV() <= 50 && O_Stops.Tipo_Posicao() < 0 && Zwift_sair_indicador)        opera.FechaPosicao() ;
+    double CEV = Igor_oo.Fuzzy_CEV();
+
+
+    if(CEV > Zwift_limite_superior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(-1,"Igor_oo: " + DoubleToString(CEV));
+    if(CEV < Zwift_limite_inferior && O_Stops.Tipo_Posicao() == 0 && (!Zwift_Filtro_Fuzzy || (Zwift_Filtro_Fuzzy && Filtro() > 50)) )   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(CEV));
+    if(Zwift_sair_indicador && CEV >= 50 && O_Stops.Tipo_Posicao() > 0)        opera.FechaPosicao() ;
+    if(Zwift_sair_indicador && CEV <= 50 && O_Stops.Tipo_Posicao() < 0)        opera.FechaPosicao() ;
 
     delete Igor_oo;
     delete opera;

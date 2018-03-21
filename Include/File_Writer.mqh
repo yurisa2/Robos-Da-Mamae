@@ -142,7 +142,7 @@ File::File()
   BWMFI_Var_Cx =   BWMFI_Ind.Cx(0)*conv;
   CCI_Var =  CCI_Ind.Valor(0)  ;
   CCI_Var_Cx =  CCI_Ind.Cx(0)*conv;
-  DeMarker_Var =  DeMarker_Ind.Valor(0)  ;
+  DeMarker_Var =  DeMarker_Ind.Valor(0)*100  ;
   DeMarker_Var_Cx =  DeMarker_Ind.Cx(0)*conv;
   DP_DMM20 = DP_Ind.DirecaoMM20(0);
   DP_PAAMM20 = DP_Ind.PrecoRMM20(0);

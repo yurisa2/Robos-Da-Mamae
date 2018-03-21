@@ -28,6 +28,12 @@
 
 int OnInit()
 {
+
+   FiltroF *filtro_teste = new FiltroF;
+   Print("a1Neutro" + filtro_teste.Calculator(0.24,0.35).a1Neutro);
+   Print("bRuim" + filtro_teste.Calculator(0.24,0.35).bRuim);
+   delete(filtro_teste);
+  
   Init_Padrao();
 
 
@@ -39,6 +45,8 @@ int OnInit()
   {
     return INIT_SUCCEEDED;
   }
+   
+
 }
 
 void OnTimer()

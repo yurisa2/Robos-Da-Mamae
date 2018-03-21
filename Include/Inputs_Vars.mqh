@@ -55,14 +55,6 @@ input bool   Zerar_SL_TP = 1;                                                 //
 input double Trailing_stop = 0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 
-input string Limites_Label  =  "Limites e Condicões de entrada";   // Limites e condições de entrada
-input double Limite_Volume_Min = 0;                                //Limite Minimo Volume (Absoluto)
-input double Limite_Volume_Max = 999999;                                //Limite Maximo Volume (Absoluto)
-input double Limite_BB_Bruta_Min = 0;                                //Limite BB_Bruta Min  (*Tick Size)
-input double Limite_BB_Bruta_Max = 999999;                                //Limite BB_Bruta Max (*Tick Size)
-input double Limite_Minimo_Tick_Size = 0;                          //Limite Minimo (BB Delta) para operar (*Tick Size)
-input double Limite_Maximo_Tick_Size = 9999;                          //Limite Maximo (BB Delta) para operar (*Tick Size)
-
 //
 // input string _Escalpelador_Maluco  =  "USANDO TICK SIZE E PROP - CUIDADO----";
 // input bool Usa_EM = false;                                                       //Usa Escalpelador Maluco
@@ -143,5 +135,11 @@ double Saldo_Do_Dia_RT = 0;
 double Calcula_Spread_RT = 0;
 //bool Saldo_Dia_Permite_RT = 0;
 bool TaDentroDoHorario_RT = 0;
+
+//FIM DAS VDG
+///////////////////////////////////////////
+
+double Filtro_Fuzzy_AC_Bom = 0;
+double Filtro_Fuzzy_AC_Ruim = 0;
 
 //FIM DAS VDG

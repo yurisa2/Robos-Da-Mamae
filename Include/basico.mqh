@@ -47,6 +47,7 @@
 #include <Indicadores\Stoch.mqh>
 #include <Indicadores\Volumes.mqh>
 #include <Indicadores\WPR.mqh>
+#include <Filtro_Fuzzy.mqh>
 
 #include <File_Writer.mqh>
 

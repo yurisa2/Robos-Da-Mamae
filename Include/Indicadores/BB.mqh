@@ -102,9 +102,11 @@ double BB::BB_Delta_Bruto(int barra = 0)
 {
   double retorno = 0;
   double delta_BB = 0;
+  double TS_Div = 0.00000000001;
 
+  if(Tick_Size > 0)  TS_Div = Tick_Size;
   delta_BB = BB_High(barra) - BB_Low(barra);
-  retorno = delta_BB / Tick_Size;
+  retorno = delta_BB / TS_Div;
 
   return retorno;
 }

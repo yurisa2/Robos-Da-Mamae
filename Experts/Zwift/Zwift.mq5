@@ -48,6 +48,12 @@ void OnTimer()
   Comentario();
 
   Operacoes_No_Timer();
+  if(Tipo_Comentario == 2)
+  {
+  Zwift *Zwift_oo = new Zwift;
+  Zwift_oo.Comentario();
+  delete Zwift_oo;
+   }
 
 }
 
@@ -82,7 +88,5 @@ void OnNewBar()
 
   delete Zwift_oo;
 
-
-   Print("Nova Parar");
 
 }

@@ -139,7 +139,7 @@ bool TaDentroDoHorario_RT = 0;
 //FIM DAS VDG
 ///////////////////////////////////////////
 
-double Filtro_Fuzzy_AC_Bom = 0;
-double Filtro_Fuzzy_AC_Ruim = 0;
+input double Filtro_Fuzzy_AC_Bom = 80;
+input double Filtro_Fuzzy_AC_Ruim = 90;
 
 //FIM DAS VDG

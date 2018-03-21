@@ -4,7 +4,7 @@
 class FiltroF
 {
   public:
-  FiltroF() {};
+  FiltroF() {Aquisicao();};
   ~FiltroF() {};
   double Fuzzy();
   void Aquisicao();
@@ -35,8 +35,8 @@ class FiltroF
   // Matrix_Fuzzy muz;
   Matrix_Fuzzy Calculator(double Bom, double Ruim);
 
-  private:
   double AC_Var;
+  private:
   double AC_cx;
   double AD_Var;
   double AD_cx;
@@ -105,24 +105,27 @@ double FiltroF::Fuzzy()
 
   //--- Create first input variables for the system
 
-  if((Filtro_Fuzzy_AC_Bom - Filtro_Fuzzy_AC_Ruim) != 0 )
+  if((Filtro_Fuzzy_AC_Bom - Filtro_Fuzzy_AC_Ruim) != 0)
   {
   Matrix_Fuzzy matriz;
   matriz = Calculator(Filtro_Fuzzy_AC_Bom,Filtro_Fuzzy_AC_Ruim);
-  CFuzzyVariable *fvAC_Ind=new CFuzzyVariable("AC_Ind",0,200);
-  fvFILTRO.Terms().Add(new CFuzzyTerm("Neutro1", new CTrapezoidMembershipFunction(matriz.a1Neutro,matriz.b1Neutro,matriz.c1Neutro,matriz.d1Neutro)));
-  fvFILTRO.Terms().Add(new CFuzzyTerm("MuitoRuim", new CTriangularMembershipFunction(matriz.aMuitoRuim,matriz.bMuitoRuim,matriz.cMuitoRuim)));
-  fvFILTRO.Terms().Add(new CFuzzyTerm("Ruim", new CTriangularMembershipFunction(matriz.aRuim,matriz.bRuim,matriz.cRuim)));
-  fvFILTRO.Terms().Add(new CFuzzyTerm("Bom", new CTriangularMembershipFunction(matriz.aBom,matriz.bBom,matriz.cBom)));
-  fvFILTRO.Terms().Add(new CFuzzyTerm("MuitoBom", new CTriangularMembershipFunction(matriz.aMuitoBom,matriz.bMuitoBom,matriz.cMuitoBom)));
-  fvFILTRO.Terms().Add(new CFuzzyTerm("Neutro2", new CTrapezoidMembershipFunction(matriz.a2Neutro,matriz.b2Neutro,matriz.c2Neutro,matriz.d2Neutro)));
+  Print("matriz.a1Neutro: "+matriz.a1Neutro);
+  Print("matriz.d2Neutro: "+matriz.d2Neutro);
+
+  CFuzzyVariable *fvAC_Ind=new CFuzzyVariable("AC_Ind",matriz.a1Neutro,matriz.d2Neutro);
+  fvAC_Ind.Terms().Add(new CFuzzyTerm("NeutroA", new CTrapezoidMembershipFunction(matriz.a1Neutro,matriz.b1Neutro,matriz.c1Neutro,matriz.d1Neutro)));
+  fvAC_Ind.Terms().Add(new CFuzzyTerm("MuitoRuim", new CTriangularMembershipFunction(matriz.aMuitoRuim,matriz.bMuitoRuim,matriz.cMuitoRuim)));
+  fvAC_Ind.Terms().Add(new CFuzzyTerm("Ruim", new CTriangularMembershipFunction(matriz.aRuim,matriz.bRuim,matriz.cRuim)));
+  fvAC_Ind.Terms().Add(new CFuzzyTerm("Bom", new CTriangularMembershipFunction(matriz.aBom,matriz.bBom,matriz.cBom)));
+  fvAC_Ind.Terms().Add(new CFuzzyTerm("MuitoBom", new CTriangularMembershipFunction(matriz.aMuitoBom,matriz.bMuitoBom,matriz.cMuitoBom)));
+  fvAC_Ind.Terms().Add(new CFuzzyTerm("NeutroB", new CTrapezoidMembershipFunction(matriz.a2Neutro,matriz.b2Neutro,matriz.c2Neutro,matriz.d2Neutro)));
   fsFILTRO.Input().Add(fvAC_Ind);
-  CMamdaniFuzzyRule *Ac_Neutro1 = fsFILTRO.ParseRule("if (AC_Ind is Neutro1) then FILTRO is Neutro");
+  CMamdaniFuzzyRule *Ac_Neutro1 = fsFILTRO.ParseRule("if (AC_Ind is NeutroA) then FILTRO is Neutro");
   CMamdaniFuzzyRule *Ac_MuitoRuim = fsFILTRO.ParseRule("if (AC_Ind is MuitoRuim) then FILTRO is MuitoRuim");
   CMamdaniFuzzyRule *Ac_Ruim = fsFILTRO.ParseRule("if (AC_Ind is Ruim) then FILTRO is Ruim");
   CMamdaniFuzzyRule *Ac_Bom = fsFILTRO.ParseRule("if (AC_Ind is Bom) then FILTRO is Bom");
   CMamdaniFuzzyRule *Ac_MuitoBom = fsFILTRO.ParseRule("if (AC_Ind is MuitoBom) then FILTRO is MuitoBom");
-  CMamdaniFuzzyRule *Ac_Neutro2 = fsFILTRO.ParseRule("if (AC_Ind is Neutro2) then FILTRO is Neutro");
+  CMamdaniFuzzyRule *Ac_Neutro2 = fsFILTRO.ParseRule("if (AC_Ind is NeutroB) then FILTRO is Neutro");
   fsFILTRO.Rules().Add(Ac_Neutro1);
   fsFILTRO.Rules().Add(Ac_MuitoRuim);
   fsFILTRO.Rules().Add(Ac_Ruim);
@@ -134,20 +137,6 @@ double FiltroF::Fuzzy()
   p_od_AC_Ind.SetAll(fvAC_Ind, AC_Var);
   }
 
-  //--- Create second input variables for the system
-
-
-  //--- Create three Mamdani fuzzy rule
-  CMamdaniFuzzyRule *rule1 = fsFILTRO.ParseRule("if (banda_bollinger is compra )  then tendencia is re_compra");
-  CMamdaniFuzzyRule *rule2 = fsFILTRO.ParseRule("if (banda_bollinger is venda )  then tendencia is re_venda");
-  CMamdaniFuzzyRule *rule3 = fsFILTRO.ParseRule("if (banda_bollinger is neutro) then tendencia is re_faz_nada");
-  //--- Add three Mamdani fuzzy rule in system
-  fsFILTRO.Rules().Add(rule1);
-  fsFILTRO.Rules().Add(rule2);
-  fsFILTRO.Rules().Add(rule3);
-
-  CDictionary_Obj_Double *p_od_Rsi=new CDictionary_Obj_Double;
-  in.Add(p_od_Rsi);
   //--- Get result
   CList *result;
   CDictionary_Obj_Double *p_od_Ipsus;
@@ -289,17 +278,15 @@ Matrix_Fuzzy FiltroF::Calculator(double Bom, double Ruim)
   double Nc = Bom + (1000*Diff);
   double Nd = Bom + (1000*Diff);
 
-  muz.a1Neutro = Ia;
-  muz.b1Neutro = Ib;
-  muz.c1Neutro = Ic;
-  muz.d1Neutro = Id;
-  muz.a2Neutro = Na;
-  muz.b2Neutro = Nb;
-  muz.c2Neutro = Nc;
-  muz.d2Neutro = Nd;
+
+
 
   if(Diff > 0)
   {
+    muz.a1Neutro = Ia;
+    muz.b1Neutro = Ib;
+    muz.c1Neutro = Ic;
+    muz.d1Neutro = Id;
     muz.aRuim = Ja;
     muz.bRuim = Jb;
     muz.cRuim = Jc;
@@ -312,21 +299,34 @@ Matrix_Fuzzy FiltroF::Calculator(double Bom, double Ruim)
     muz.aBom = Ma;
     muz.bBom = Mb;
     muz.cBom = Mc;
+    muz.a2Neutro = Na;
+    muz.b2Neutro = Nb;
+    muz.c2Neutro = Nc;
+    muz.d2Neutro = Nd;
+
   }
   if(Diff < 0)
   {
-    muz.aRuim = Mc;
-    muz.bRuim = Mb;
-    muz.cRuim = Ma;
-    muz.aMuitoRuim = Lc;
-    muz.bMuitoRuim = Lb;
-    muz.cMuitoRuim = La;
-    muz.aMuitoBom = Kc;
-    muz.bMuitoBom = Kb;
-    muz.cMuitoBom = Ka;
-    muz.aBom = Jc;
-    muz.bBom = Jb;
-    muz.cBom = Ja;
+    muz.a1Neutro = Nd;
+    muz.b1Neutro = Nc;
+    muz.c1Neutro = Nb;
+    muz.d1Neutro = Na;
+    muz.aRuim = Jc;
+    muz.bRuim = Jb;
+    muz.cRuim = Ja;
+    muz.aMuitoRuim = Kc;
+    muz.bMuitoRuim = Kb;
+    muz.cMuitoRuim = Ka;
+    muz.aMuitoBom = Lc;
+    muz.bMuitoBom = Lb;
+    muz.cMuitoBom = La;
+    muz.aBom = Mc;
+    muz.bBom = Mb;
+    muz.cBom = Ma;
+    muz.a2Neutro = Id;
+    muz.b2Neutro = Ic;
+    muz.c2Neutro = Ib;
+    muz.d2Neutro = Ia;
   }
 
 

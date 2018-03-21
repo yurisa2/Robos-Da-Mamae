@@ -30,8 +30,8 @@ int OnInit()
 {
 
    FiltroF *filtro_teste = new FiltroF;
-   Print("a1Neutro" + filtro_teste.Calculator(0.24,0.35).a1Neutro);
-   Print("bRuim" + filtro_teste.Calculator(0.24,0.35).bRuim);
+   Print("Fuzzy(): " + filtro_teste.Fuzzy());
+   Print("Ac_Var(): " + filtro_teste.AC_Var);
    delete(filtro_teste);
   
   Init_Padrao();

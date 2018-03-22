@@ -138,8 +138,7 @@ bool TaDentroDoHorario_RT = 0;
 
 //FIM DAS VDG
 ///////////////////////////////////////////
-
-input double Filtro_Fuzzy_AC_Bom = 80;
-input double Filtro_Fuzzy_AC_Ruim = 90;
+input string Label_Filtro_Fuzzy = "---------- FILTRO FUZZY ----------";
+input bool Filtro_Fuzzy_Ligado = false;
 
 //FIM DAS VDG

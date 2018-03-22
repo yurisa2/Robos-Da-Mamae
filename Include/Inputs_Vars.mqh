@@ -141,4 +141,6 @@ bool TaDentroDoHorario_RT = 0;
 input string Label_Filtro_Fuzzy = "---------- FILTRO FUZZY ----------";
 input bool Filtro_Fuzzy_Ligado = false;
 
+double filtro_fuzzy_arquivo = 0;
+
 //FIM DAS VDG

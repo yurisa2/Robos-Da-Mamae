@@ -2,6 +2,7 @@ class Aquisicao {
 
   public:
   Aquisicao();
+  void Aquisicao::Dados();
   double Busca_Var(string Var);
   double AC_Var;
   double AC_cx;
@@ -58,6 +59,10 @@ class Aquisicao {
 };
 
 void Aquisicao::Aquisicao()
+{
+Dados();
+}
+void Aquisicao::Dados()
 {
   double conv = 180 / 3.14159265359;
 
@@ -152,6 +157,7 @@ void Aquisicao::Aquisicao()
   delete(Stoch_OO);
   delete(Volumes_OO);
   delete(WPR_Ind);
+
 }
 
 double Aquisicao::Busca_Var(string Var)

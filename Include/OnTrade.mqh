@@ -323,8 +323,14 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 if(!Otimizacao)
                 {
                 File *arquivo = new File();
+                FiltroF *filtro_fuzzy = new FiltroF;
+
                 arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()),0,DEAL_ENTRY_IN);
+                filtro_ind.Dados();
+                filtro_fuzzy_arquivo = filtro_fuzzy.Fuzzy();
                 delete(arquivo);
+                delete(filtro_fuzzy);
+
                 }
               }
 
@@ -337,8 +343,11 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 if(!Otimizacao)
                 {
                 File *arquivo = new File();
+                File_Filtro *arquivo_filtro = new File_Filtro();
                 arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
+                arquivo_filtro.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
                 delete(arquivo);
+                delete(arquivo_filtro);
               }
 
                 if(deal_vol>0.0)

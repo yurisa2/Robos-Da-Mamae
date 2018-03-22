@@ -51,6 +51,7 @@
 #include <Filtro_Fuzzy.mqh>
 
 #include <File_Writer.mqh>
+#include <File_Writer_Filtro.mqh>
 #include <File_Reader.mqh>
 
 //#include <Expert\Expert.mqh>
@@ -305,6 +306,7 @@ void Init_Padrao ()
 
 
   File_Init();
+  File_Filtro_Init();
 }
 
 void IniciaDia ()

@@ -126,6 +126,8 @@ double FiltroF::Fuzzy()
   }
   delete(file_read);
 
+  if(Filtro_Fuzzy_Ligado)
+  {
   //--- Get result
   CList *result;
   CDictionary_Obj_Double *p_od_Ipsus;
@@ -134,9 +136,9 @@ double FiltroF::Fuzzy()
   //   Print("Ipsus, escala: ",p_od_Ipsus.Value());
 
   retorno = p_od_Ipsus.Value();
-
-  delete in;
   delete result;
+}
+  delete in;
   delete fsFILTRO;
 
   delete ind;

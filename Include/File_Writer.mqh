@@ -32,7 +32,7 @@ void File_Init() {
     File *arquivo = new File();
     delete(arquivo);
 
-    FileWrite(file_handle_w, "io;hora;ativo;posicao;direcao;lucro;AC;AC_cx;AD;AD_cx;ADX;adx_cx;ATR;ATR_cx;BB_Delta_Bruto;BB_Delta_Bruto_cx;Banda_Delta_Valor;BB_Posicao_Percent;BB_Posicao_Percent_Cx;BullsP;BullsP_cx;BearsP;BearsP_cx;BWMFI;BWMFI_cx;CCI;CCI_cx;DeMarker;DeMarker_cx;DP_DMM20;DP_PAAMM20;DP_MM20MM50;DP_D;hilo_direcao;MACD;MACD_cx_0;MACD_cx_1;MACD_Diff_Angulo_LS;MACD_Distancia_Linha_Sinal;MACD_Distancia_Linha_Zero;MACD_Normalizacao;MACD_Normalizacao_Zero;MFI;MFI_cx;Momentum;Momentum_cx;RSI;RSI_cx;Stoch;Stoch_Cx_0;Stoch_Cx_1;Volume;Volume_cx;WPR;WPR_cx");
+    FileWrite(file_handle_w, "io;hora;ativo;posicao;direcao;lucro;AC;AC_cx;AD;AD_cx;ADX;adx_cx;ATR;ATR_cx;BB_Delta_Bruto;BB_Delta_Bruto_cx;Banda_Delta_Valor;BB_Posicao_Percent;BB_Posicao_Percent_Cx;BullsP;BullsP_cx;BearsP;BearsP_cx;BWMFI;BWMFI_cx;CCI;CCI_cx;DeMarker;DeMarker_cx;DP_DMM20;DP_PAAMM20;DP_MM20MM50;DP_D;hilo_direcao;MACD;MACD_cx_0;MACD_cx_1;MACD_Diff_Angulo_LS;MACD_Distancia_Linha_Sinal;MACD_Distancia_Linha_Zero;MACD_Normalizacao;MACD_Normalizacao_Zero;MFI;MFI_cx;Momentum;Momentum_cx;RSI;RSI_cx;Stoch;Stoch_Cx_0;Stoch_Cx_1;Volume;Volume_cx;WPR;WPR_cx;Filtro_Fuzzy");
     //FileFlush(file_handle_w);
   }
 }
@@ -62,6 +62,8 @@ File::~File()
 void File::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DEAL_ENTRY io)
 {
   Aquisicao *ind = new Aquisicao;
+  FiltroF *filtro_fuzzy = new FiltroF;
+
 
   FileSeek(file_handle_w,0,SEEK_END);
 
@@ -175,11 +177,14 @@ void File::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DEAL_ENTR
   DoubleToString(ind.WPR_Var)
   + "\";\"" +
   DoubleToString(ind.WPR_Var_Cx)
+  + "\"" +
+  DoubleToString(filtro_fuzzy.Fuzzy())
   + "\""
   ;
 
   FileWrite(file_handle_w,Line);
   FileFlush(file_handle_w);
+  delete(filtro_fuzzy);
 
   delete ind;
 }

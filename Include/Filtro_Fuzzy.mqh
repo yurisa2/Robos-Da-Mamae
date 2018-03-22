@@ -93,6 +93,8 @@ double FiltroF::Fuzzy()
     bom =  StringToDouble(Valores[1]);
     ruim = StringToDouble(Valores[2]);
 
+    if(ind.Busca_Var(VAR) != NULL)
+    {
     Matrix_Fuzzy matriz;
     matriz = Calculator(bom,ruim,Var_Input);
 
@@ -119,6 +121,8 @@ double FiltroF::Fuzzy()
     CDictionary_Obj_Double *p_od_AC_Ind=new CDictionary_Obj_Double;
     in.Add(p_od_AC_Ind);
     p_od_AC_Ind.SetAll(fvVAR, Var_Input);
+  }
+
   }
   delete(file_read);
 

@@ -29,11 +29,16 @@ void Zwift::Comentario()
   {
     Igor *Igor_oo = new Igor;
     BB *BB_oo = new BB;
+    FiltroF *filtro_teste = new FiltroF;
+    // Print("Filtro_Fuzzy(): " + DoubleToString(filtro_teste.Fuzzy()));
+
+
 
     if(!Otimizacao) Comentario_Robo = " Igor CEV: " + DoubleToString(Igor_oo.Fuzzy_CEV()) ;
     if(!Otimizacao) Comentario_Robo += "\n BB_Posicao_Percent: " + DoubleToString(BB_oo.BB_Posicao_Percent ()) ;
+    if(!Otimizacao) Comentario_Robo += "\n Filtro_Fuzzy: " + DoubleToString(filtro_teste.Fuzzy()) ;
 
-
+    delete(filtro_teste);
     delete BB_oo;
     delete Igor_oo;
   }

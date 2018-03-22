@@ -12,6 +12,7 @@ class File_Read
   public:
   void File_Read::File_Read(string InpFileName="teste.txt", string InpDirectoryName="Data");
   string linha_str_array[];
+  string linha_str_array_cols[1][256];
   int num_linhas;
 
   private:
@@ -27,8 +28,8 @@ class File_Read
 
     if(file_handle_r!=INVALID_HANDLE)
     {
-      PrintFormat("Arquivo: %s existe",InpFileName);
-      PrintFormat("Pasta: %s\\Files\\",TerminalInfoString(TERMINAL_DATA_PATH));
+      // PrintFormat("Arquivo: %s existe",InpFileName);
+      // PrintFormat("Pasta: %s\\Files\\",TerminalInfoString(TERMINAL_DATA_PATH));
       //--- additional variables
       int    str_size;
       string str;
@@ -44,6 +45,7 @@ class File_Read
         str=FileReadString(file_handle_r,str_size);
         //--- print the string
         // PrintFormat(str);
+
         ArrayResize(linha_str_array,i+1);
         linha_str_array[i] = str;
         i++;
@@ -52,8 +54,8 @@ class File_Read
       }
       //--- close the file
       FileClose(file_handle_r);
-      PrintFormat("Arquivo Lido, %s foi fechado",InpFileName);
+    //  PrintFormat("Arquivo Lido, %s foi fechado",InpFileName);
     }
     else
-    PrintFormat("Impossivel abrir %s, Erro = %d",InpFileName,GetLastError());
+  PrintFormat("Impossivel abrir %s, Erro = %d",InpFileName,GetLastError());
   }

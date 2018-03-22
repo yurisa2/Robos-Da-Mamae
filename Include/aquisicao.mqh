@@ -2,6 +2,7 @@ class Aquisicao {
 
   public:
   Aquisicao();
+  double Busca_Var(string Var);
   double AC_Var;
   double AC_cx;
   double AD_Var;
@@ -151,4 +152,60 @@ void Aquisicao::Aquisicao()
   delete(Stoch_OO);
   delete(Volumes_OO);
   delete(WPR_Ind);
+}
+
+double Aquisicao::Busca_Var(string Var)
+{
+  if(Var == "AC_Var") return AC_Var;
+  if(Var == "AC_cx") return AC_cx;
+  if(Var == "AD_Var") return AD_Var;
+  if(Var == "AD_cx") return AD_cx;
+  if(Var == "ADX_FW") return ADX_FW;
+  if(Var == "adx_cx") return adx_cx;
+  if(Var == "ATR_Var") return ATR_Var;
+  if(Var == "ATR_cx") return ATR_cx;
+  if(Var == "BB_Delta_Bruto") return BB_Delta_Bruto;
+  if(Var == "BB_Delta_Bruto_Cx") return BB_Delta_Bruto_Cx;
+  if(Var == "Banda_Delta_Valor") return Banda_Delta_Valor;
+  if(Var == "BB_Posicao_Percent") return BB_Posicao_Percent;
+  if(Var == "BB_Posicao_Percent_Cx") return BB_Posicao_Percent_Cx;
+  if(Var == "BullsP_Var") return BullsP_Var;
+  if(Var == "BullsP_Var_Cx") return BullsP_Var_Cx;
+  if(Var == "BearsP_Var") return BearsP_Var;
+  if(Var == "BearsP_Var_Cx") return BearsP_Var_Cx;
+  if(Var == "BWMFI_Var") return BWMFI_Var;
+  if(Var == "BWMFI_Var_Cx") return BWMFI_Var_Cx;
+  if(Var == "CCI_Var") return CCI_Var;
+  if(Var == "CCI_Var_Cx") return CCI_Var_Cx;
+  if(Var == "DeMarker_Var") return DeMarker_Var;
+  if(Var == "DeMarker_Var_Cx") return DeMarker_Var_Cx;
+  if(Var == "DP_DMM20") return DP_DMM20;
+  if(Var == "DP_PAAMM20") return DP_PAAMM20;
+  if(Var == "DP_MM20MM50") return DP_MM20MM50;
+  if(Var == "DP_D") return DP_D;
+  if(Var == "Hilo_Direcao") return Hilo_Direcao;
+  if(Var == "MACD_FW") return MACD_FW;
+  if(Var == "MACD_Cx_0") return MACD_Cx_0;
+  if(Var == "MACD_Cx_1") return MACD_Cx_1;
+  if(Var == "MACD_Diff_Angulo_LS") return MACD_Diff_Angulo_LS;
+  if(Var == "MACD_Distancia_Linha_Sinal") return MACD_Distancia_Linha_Sinal;
+  if(Var == "MACD_Distancia_Linha_Zero") return MACD_Distancia_Linha_Zero;
+  if(Var == "MACD_Normalizacao") return MACD_Normalizacao;
+  if(Var == "MACD_Normalizacao_Zero") return MACD_Normalizacao_Zero;
+  if(Var == "MFI_FW") return MFI_FW;
+  if(Var == "MFI_Cx") return MFI_Cx;
+  if(Var == "Momentum_Var") return Momentum_Var;
+  if(Var == "Momentum_Var_Cx") return Momentum_Var_Cx;
+  if(Var == "RSI_Var") return RSI_Var;
+  if(Var == "RSI_Var_Cx") return RSI_Var_Cx;
+  if(Var == "Stoch_FW") return Stoch_FW;
+  if(Var == "Stoch_Cx_0") return Stoch_Cx_0;
+  if(Var == "Stoch_Cx_1") return Stoch_Cx_1;
+  if(Var == "Volume_FW") return Volume_FW;
+  if(Var == "Volume_Cx") return Volume_Cx;
+  if(Var == "WPR_Var") return WPR_Var;
+  if(Var == "WPR_Var_Cx") return WPR_Var_Cx;
+
+  return NULL;
+
 }

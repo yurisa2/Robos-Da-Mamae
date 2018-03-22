@@ -28,10 +28,7 @@
 
 int OnInit()
 {
-   File_Read *file_read = new File_Read("teste2.txt");
-   Print("file_read.str_array[0]: " + file_read.linha_str_array[0]);
-   Print("file_read.num_linhas: " + file_read.num_linhas);
-   delete(file_read);
+
    
    FiltroF *filtro_teste = new FiltroF;
    Print("Fuzzy(): " + DoubleToString(filtro_teste.Fuzzy()));

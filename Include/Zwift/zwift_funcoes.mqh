@@ -58,7 +58,7 @@ void Zwift::Avalia()
 
 
     if(CEV > Zwift_limite_superior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(-1,"Igor_oo: " + DoubleToString(CEV));
-    if(CEV < Zwift_limite_inferior && O_Stops.Tipo_Posicao() == 0 && (!Zwift_Filtro_Fuzzy || (Zwift_Filtro_Fuzzy && Filtro() > 50)) )   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(CEV));
+    if(CEV < Zwift_limite_inferior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(CEV));
     if(Zwift_sair_indicador && CEV >= 50 && O_Stops.Tipo_Posicao() > 0)        opera.FechaPosicao() ;
     if(Zwift_sair_indicador && CEV <= 50 && O_Stops.Tipo_Posicao() < 0)        opera.FechaPosicao() ;
 

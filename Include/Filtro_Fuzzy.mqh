@@ -8,6 +8,8 @@ class FiltroF
   ~FiltroF() {};
   double Fuzzy();
   void Aquisicao();
+  int Leitor_Arquivo_Calcula_Medias();
+  int FiltroF::Escreve_Medias_Filtro();
 
   struct Matrix_Fuzzy
   {
@@ -36,16 +38,16 @@ class FiltroF
   // Matrix_Fuzzy muz;
   Matrix_Fuzzy Calculator(double Bom, double Ruim, double Var_Input);
 
+  string Rotulos[] ;
+  double Medias_Positivas[56];
+  double Medias_Negativas[56];
+
   private:
 
 };
 
 double FiltroF::Fuzzy()
 {
-
-
-
-
   Aquisicao *ind = new Aquisicao;
 
   double retorno = 0;
@@ -72,7 +74,7 @@ double FiltroF::Fuzzy()
   double bom = NULL;
   double ruim = NULL;
 
-  File_Read *file_read = new File_Read("zwift-filtro-fuzzy.fuz");
+  File_Read *file_read = new File_Read("zwift-filtro-fuzzy.fuz", "");
 
   for(int i=0; i<file_read.num_linhas ; i++)
   {
@@ -95,49 +97,49 @@ double FiltroF::Fuzzy()
 
     if(ind.Busca_Var(VAR) != NULL)
     {
-    Matrix_Fuzzy matriz;
-    matriz = Calculator(bom,ruim,Var_Input);
+      Matrix_Fuzzy matriz;
+      matriz = Calculator(bom,ruim,Var_Input);
 
-    CFuzzyVariable *fvVAR=new CFuzzyVariable(VAR,matriz.a1Neutro,matriz.d2Neutro);
-    fvVAR.Terms().Add(new CFuzzyTerm("NeutroA", new CTrapezoidMembershipFunction(matriz.a1Neutro,matriz.b1Neutro,matriz.c1Neutro,matriz.d1Neutro)));
-    fvVAR.Terms().Add(new CFuzzyTerm("MuitoRuim", new CTriangularMembershipFunction(matriz.aMuitoRuim,matriz.bMuitoRuim,matriz.cMuitoRuim)));
-    fvVAR.Terms().Add(new CFuzzyTerm("Ruim", new CTriangularMembershipFunction(matriz.aRuim,matriz.bRuim,matriz.cRuim)));
-    fvVAR.Terms().Add(new CFuzzyTerm("Bom", new CTriangularMembershipFunction(matriz.aBom,matriz.bBom,matriz.cBom)));
-    fvVAR.Terms().Add(new CFuzzyTerm("MuitoBom", new CTriangularMembershipFunction(matriz.aMuitoBom,matriz.bMuitoBom,matriz.cMuitoBom)));
-    fvVAR.Terms().Add(new CFuzzyTerm("NeutroB", new CTrapezoidMembershipFunction(matriz.a2Neutro,matriz.b2Neutro,matriz.c2Neutro,matriz.d2Neutro)));
-    fsFILTRO.Input().Add(fvVAR);
-    CMamdaniFuzzyRule *Ac_Neutro1 = fsFILTRO.ParseRule("if ("+ VAR +" is NeutroA) then FILTRO is Neutro");
-    CMamdaniFuzzyRule *Ac_MuitoRuim = fsFILTRO.ParseRule("if ("+ VAR +" is MuitoRuim) then FILTRO is MuitoRuim");
-    CMamdaniFuzzyRule *Ac_Ruim = fsFILTRO.ParseRule("if ("+ VAR +" is Ruim) then FILTRO is Ruim");
-    CMamdaniFuzzyRule *Ac_Bom = fsFILTRO.ParseRule("if ("+ VAR +" is Bom) then FILTRO is Bom");
-    CMamdaniFuzzyRule *Ac_MuitoBom = fsFILTRO.ParseRule("if ("+ VAR +" is MuitoBom) then FILTRO is MuitoBom");
-    CMamdaniFuzzyRule *Ac_Neutro2 = fsFILTRO.ParseRule("if ("+ VAR +" is NeutroB) then FILTRO is Neutro");
-    fsFILTRO.Rules().Add(Ac_Neutro1);
-    fsFILTRO.Rules().Add(Ac_MuitoRuim);
-    fsFILTRO.Rules().Add(Ac_Ruim);
-    fsFILTRO.Rules().Add(Ac_Bom);
-    fsFILTRO.Rules().Add(Ac_MuitoBom);
-    fsFILTRO.Rules().Add(Ac_Neutro2);
-    CDictionary_Obj_Double *p_od_AC_Ind=new CDictionary_Obj_Double;
-    in.Add(p_od_AC_Ind);
-    p_od_AC_Ind.SetAll(fvVAR, Var_Input);
-  }
+      CFuzzyVariable *fvVAR=new CFuzzyVariable(VAR,matriz.a1Neutro,matriz.d2Neutro);
+      fvVAR.Terms().Add(new CFuzzyTerm("NeutroA", new CTrapezoidMembershipFunction(matriz.a1Neutro,matriz.b1Neutro,matriz.c1Neutro,matriz.d1Neutro)));
+      fvVAR.Terms().Add(new CFuzzyTerm("MuitoRuim", new CTriangularMembershipFunction(matriz.aMuitoRuim,matriz.bMuitoRuim,matriz.cMuitoRuim)));
+      fvVAR.Terms().Add(new CFuzzyTerm("Ruim", new CTriangularMembershipFunction(matriz.aRuim,matriz.bRuim,matriz.cRuim)));
+      fvVAR.Terms().Add(new CFuzzyTerm("Bom", new CTriangularMembershipFunction(matriz.aBom,matriz.bBom,matriz.cBom)));
+      fvVAR.Terms().Add(new CFuzzyTerm("MuitoBom", new CTriangularMembershipFunction(matriz.aMuitoBom,matriz.bMuitoBom,matriz.cMuitoBom)));
+      fvVAR.Terms().Add(new CFuzzyTerm("NeutroB", new CTrapezoidMembershipFunction(matriz.a2Neutro,matriz.b2Neutro,matriz.c2Neutro,matriz.d2Neutro)));
+      fsFILTRO.Input().Add(fvVAR);
+      CMamdaniFuzzyRule *Ac_Neutro1 = fsFILTRO.ParseRule("if ("+ VAR +" is NeutroA) then FILTRO is Neutro");
+      CMamdaniFuzzyRule *Ac_MuitoRuim = fsFILTRO.ParseRule("if ("+ VAR +" is MuitoRuim) then FILTRO is MuitoRuim");
+      CMamdaniFuzzyRule *Ac_Ruim = fsFILTRO.ParseRule("if ("+ VAR +" is Ruim) then FILTRO is Ruim");
+      CMamdaniFuzzyRule *Ac_Bom = fsFILTRO.ParseRule("if ("+ VAR +" is Bom) then FILTRO is Bom");
+      CMamdaniFuzzyRule *Ac_MuitoBom = fsFILTRO.ParseRule("if ("+ VAR +" is MuitoBom) then FILTRO is MuitoBom");
+      CMamdaniFuzzyRule *Ac_Neutro2 = fsFILTRO.ParseRule("if ("+ VAR +" is NeutroB) then FILTRO is Neutro");
+      fsFILTRO.Rules().Add(Ac_Neutro1);
+      fsFILTRO.Rules().Add(Ac_MuitoRuim);
+      fsFILTRO.Rules().Add(Ac_Ruim);
+      fsFILTRO.Rules().Add(Ac_Bom);
+      fsFILTRO.Rules().Add(Ac_MuitoBom);
+      fsFILTRO.Rules().Add(Ac_Neutro2);
+      CDictionary_Obj_Double *p_od_AC_Ind=new CDictionary_Obj_Double;
+      in.Add(p_od_AC_Ind);
+      p_od_AC_Ind.SetAll(fvVAR, Var_Input);
+    }
 
   }
   delete(file_read);
 
   if(Filtro_Fuzzy_Ligado)
   {
-  //--- Get result
-  CList *result;
-  CDictionary_Obj_Double *p_od_Ipsus;
-  result=fsFILTRO.Calculate(in);
-  p_od_Ipsus=result.GetNodeAtIndex(0);
-  //   Print("Ipsus, escala: ",p_od_Ipsus.Value());
+    //--- Get result
+    CList *result;
+    CDictionary_Obj_Double *p_od_Ipsus;
+    result=fsFILTRO.Calculate(in);
+    p_od_Ipsus=result.GetNodeAtIndex(0);
+    //   Print("Ipsus, escala: ",p_od_Ipsus.Value());
 
-  retorno = p_od_Ipsus.Value();
-  delete result;
-}
+    retorno = p_od_Ipsus.Value();
+    delete result;
+  }
   delete in;
   delete fsFILTRO;
 
@@ -225,3 +227,137 @@ Matrix_Fuzzy FiltroF::Calculator(double Bom, double Ruim, double Var_Input)
 
   return muz;
 }
+
+int FiltroF::Leitor_Arquivo_Calcula_Medias()
+{
+  File_Read *file_read = new File_Read("Filtro_Fuzzy.csv","");
+
+  if(ArraySize(file_read.linha_str_array) == 0) return NULL;
+  StringSplit(file_read.linha_str_array[0],StringGetCharacter(",",0),Rotulos);
+
+  // Print("file_read.linha_str_array[0]: " + file_read.linha_str_array[0]);
+  // Print("ArraySize(Rotulos): " + ArraySize(Rotulos));
+
+
+  int Num_Rotulos = ArraySize(Rotulos); // HOJE TA EM 56 - Ou Pensa em algo melhor ou nunca mais muda a porra das colunas
+
+  string Linhas[][56]; //Ou Pensa em algo melhor ou nunca mais muda a porra das colunas Fomato: Linha[#][Rotulo]
+
+  ArrayResize(Linhas,file_read.num_linhas);
+
+  string Linhas_Positivas[][56];
+  string Linhas_Negativas[][56];
+
+
+  for(int i=1; i<file_read.num_linhas ; i++)  // LE LINHA POR LINHA (COMECA EM 1 PARA MATAR O ROTULO)
+  {
+    string Linha_Separada[56];
+    StringSplit(file_read.linha_str_array[i],StringGetCharacter(",",0),Linha_Separada);
+
+    for(int Rotulo=0; Rotulo<Num_Rotulos ; Rotulo++)  // LE Rotulo e Coloca na linyha
+    {
+      Linhas[i][Rotulo] = Linha_Separada[Rotulo];
+    }
+    // Print("FiltroF::Leitor_Arquivo_Calcula_Medias() file_read.linha_str_array[i]" + file_read.linha_str_array[i]);
+  }
+
+
+  // Print("Num_Rotulos" + Num_Rotulos);
+  // Print("Linhas" + ArrayRange(Linhas,0));
+  // Print("Rotulos[55]" + Rotulos[5]);
+  // Print("Linhas[0][55]" + Linhas[1][5]);
+
+  //Bloco de Linhas POSITIVAS
+  for(int i=1; i<file_read.num_linhas ; i++)  // LE LINHA POR LINHA (COMECA EM 1 PARA MATAR O ROTULO)
+  {
+    string Linha_Separada[56];
+    StringSplit(file_read.linha_str_array[i],StringGetCharacter(",",0),Linha_Separada);
+
+
+    if(StringToDouble(Linha_Separada[5]) >= 0){
+      ArrayResize(Linhas_Positivas,ArrayRange(Linhas_Positivas,0)+1);
+      for(int Rotulo=0; Rotulo<Num_Rotulos ; Rotulo++)  // LE Rotulo e Coloca na linyha
+      {
+        Linhas_Positivas[ArrayRange(Linhas_Positivas,0)-1][Rotulo] = Linha_Separada[Rotulo]; //Linha CORE
+      }}
+
+      // Print("FiltroF::Leitor_Arquivo_Calcula_Medias() file_read.linha_str_array[i]" + file_read.linha_str_array[i]);
+    }
+    // FIM Bloco de Linhas POSITIVAS
+
+    //Bloco de Linhas NEGATIVAS
+    for(int i=1; i<file_read.num_linhas ; i++)  // LE LINHA POR LINHA (COMECA EM 1 PARA MATAR O ROTULO)
+    {
+      string Linha_Separada[56];
+      StringSplit(file_read.linha_str_array[i],StringGetCharacter(",",0),Linha_Separada);
+
+
+      if(StringToDouble(Linha_Separada[5]) < 0){
+        ArrayResize(Linhas_Negativas,ArrayRange(Linhas_Negativas,0)+1);
+        for(int Rotulo=0; Rotulo<Num_Rotulos ; Rotulo++)  // LE Rotulo e Coloca na linyha
+        {
+          Linhas_Negativas[ArrayRange(Linhas_Negativas,0)-1][Rotulo] = Linha_Separada[Rotulo]; //Linha CORE
+        }}
+
+        // Print("FiltroF::Leitor_Arquivo_Calcula_Medias() file_read.linha_str_array[i]" + file_read.linha_str_array[i]);
+      }
+      // FIM Bloco de Linhas NEGATIVAS
+
+
+      // Print("ArrayRange(Linhas_Positivas,0)" + ArrayRange(Linhas_Positivas,0));
+      // Print("ArrayRange(Linhas_Negativas,0)" + ArrayRange(Linhas_Negativas,0));
+
+      for(int Coluna = 0; Coluna <56;Coluna++)
+      {
+        double Media_Coluna = 0;
+        double Soma_Coluna = 0;
+        for(int Linha = 1; Linha<=ArrayRange(Linhas_Positivas,0);Linha++)
+        {
+          Soma_Coluna = Soma_Coluna + StringToDouble(Linhas_Positivas[Linha-1][Coluna]);
+          Media_Coluna = Soma_Coluna / Linha;
+        }
+        Medias_Positivas[Coluna] = Media_Coluna;
+      }
+
+      for(int Coluna = 0; Coluna <56;Coluna++)
+      {
+        double Media_Coluna = 0;
+        double Soma_Coluna = 0;
+        for(int Linha = 1; Linha<=ArrayRange(Linhas_Negativas,0);Linha++)
+        {
+          Soma_Coluna = Soma_Coluna + StringToDouble(Linhas_Negativas[Linha-1][Coluna]);
+          Media_Coluna = Soma_Coluna / Linha;
+        }
+        Medias_Negativas[Coluna] = Media_Coluna;
+        Medias_Negativas[Coluna] = Media_Coluna;
+      }
+
+      // Print("Rotulos[5]" + Rotulos[5]);
+      // Print("Medias_Positivas[5]" + Medias_Positivas[5]);
+      // Print("Medias_Negativas[5]" + Medias_Negativas[5]);
+      return 1;
+    }
+
+    int FiltroF::Escreve_Medias_Filtro()
+    {
+      if(Leitor_Arquivo_Calcula_Medias() == NULL) return NULL;
+
+      int file_handle_arquivo_Filtro = FileOpen("zwift-filtro-fuzzy.fuz", FILE_WRITE|FILE_TXT|FILE_COMMON|FILE_ANSI|FILE_SHARE_WRITE);
+
+      string Line = "";
+
+      for(int i=6;i<55;i++)
+      {
+        Line += Rotulos[i];
+        Line += ",";
+        Line += DoubleToString(Medias_Positivas[i]);
+        Line += ",";
+        Line += DoubleToString(Medias_Negativas[i]);
+        Line +="\n";
+      }
+
+      FileWrite(file_handle_arquivo_Filtro,Line);
+      FileFlush(file_handle_arquivo_Filtro);
+      FileClose(file_handle_arquivo_Filtro);
+      return 1;
+    }

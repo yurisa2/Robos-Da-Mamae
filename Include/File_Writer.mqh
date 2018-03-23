@@ -177,7 +177,7 @@ void File::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DEAL_ENTR
   DoubleToString(ind.WPR_Var)
   + "\";\"" +
   DoubleToString(ind.WPR_Var_Cx)
-  + "\"" +
+  + "\";\"" +
   DoubleToString(filtro_fuzzy.Fuzzy())
   + "\""
   ;

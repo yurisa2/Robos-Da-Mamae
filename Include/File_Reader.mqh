@@ -24,7 +24,7 @@ class File_Read
     int file_handle_r = -1;
 
     ResetLastError();
-    file_handle_r=FileOpen(InpDirectoryName+"//"+InpFileName,FILE_READ|FILE_TXT|FILE_ANSI);
+    file_handle_r=FileOpen(InpDirectoryName+"//"+InpFileName,FILE_READ|FILE_TXT|FILE_ANSI|FILE_COMMON|FILE_SHARE_READ);
 
     if(file_handle_r!=INVALID_HANDLE)
     {
@@ -57,5 +57,5 @@ class File_Read
     //  PrintFormat("Arquivo Lido, %s foi fechado",InpFileName);
     }
     else
-  PrintFormat("Impossivel abrir %s, Erro = %d",InpFileName,GetLastError());
+  PrintFormat("Impossivel abrir (Leitura) %s, Erro = %d",InpFileName,GetLastError());
   }

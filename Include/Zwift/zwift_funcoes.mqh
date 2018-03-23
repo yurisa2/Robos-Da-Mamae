@@ -63,7 +63,6 @@ void Zwift::Avalia()
 
     delete Igor_oo;
     delete opera;
-
   }
 
   delete(Condicoes);

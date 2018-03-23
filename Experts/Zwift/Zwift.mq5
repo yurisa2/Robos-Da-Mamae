@@ -32,7 +32,7 @@ int OnInit()
    
    FiltroF *filtro_teste = new FiltroF;
    Print("Fuzzy(): " + DoubleToString(filtro_teste.Fuzzy()));
-
+   filtro_teste.Escreve_Medias_Filtro();
    delete(filtro_teste);
   
   Init_Padrao();

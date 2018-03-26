@@ -140,6 +140,8 @@ bool TaDentroDoHorario_RT = 0;
 ///////////////////////////////////////////
 input string Label_Filtro_Fuzzy = "---------- FILTRO FUZZY ----------";
 input bool Filtro_Fuzzy_Ligado = false;
+input bool Filtro_Fuzzy_Escreve_Estatistica = false;
+input bool Filtro_Fuzzy_Escreve_Fuz = false;
 
 double filtro_fuzzy_arquivo = 0;
 

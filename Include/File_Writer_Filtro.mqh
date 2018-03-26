@@ -9,33 +9,27 @@
 
 
 string file_name_filtro     = "Filtro_Fuzzy.csv";
-// string file_name_filtro     = "teste.txt";
 int file_handle_w_filtro = -1;
 Aquisicao filtro_ind;
 
 void File_Filtro_Init() {
-  // ...
 
-  //Print("file_name_filtro: " + file_name_filtro);
-
-
-
-  if(!Otimizacao) file_handle_w_filtro = FileOpen(file_name_filtro, FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_COMMON|FILE_SHARE_WRITE);
-  // file_handle_w_filtro = FileOpen(file_name_filtro, FILE_WRITE|FILE_CSV|FILE_ANSI);
-  if (file_handle_w_filtro <= 0 && !Otimizacao) {
-    Print("Error opening rep-file: " + file_name_filtro);
-    //ExpertRemove();
-  }
-
+if(Filtro_Fuzzy_Escreve_Estatistica)
+{
+  file_handle_w_filtro = FileOpen(file_name_filtro, FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_COMMON|FILE_SHARE_WRITE);
 
   if ( file_handle_w_filtro > 0 && !Otimizacao) {
+    //
+    // File_Filtro *arquivo_filtro = new File_Filtro();
+    // delete(arquivo_filtro);
 
-    File_Filtro *arquivo_filtro = new File_Filtro();
-    delete(arquivo_filtro);
+    FileWrite(file_handle_w_filtro, "io,hora,ativo,posicao,direcao,lucro,AC_Var,AC_cx,AD_Var,AD_cx,ADX_FW,adx_cx,ATR_Var,ATR_cx,BB_Delta_Bruto,BB_Delta_Bruto_Cx,Banda_Delta_Valor,BB_Posicao_Percent,BB_Posicao_Percent_Cx,BullsP_Var,BullsP_Var_Cx,BearsP_Var,BearsP_Var_Cx,BWMFI_Var,BWMFI_Var_Cx,CCI_Var,CCI_Var_Cx,DeMarker_Var,DeMarker_Var_Cx,DP_DMM20,DP_PAAMM20,DP_MM20MM50,DP_D,Hilo_Direcao,MACD_FW,MACD_Cx_0,MACD_Cx_1,MACD_Diff_Angulo_LS,MACD_Distancia_Linha_Sinal,MACD_Distancia_Linha_Zero,MACD_Normalizacao,MACD_Normalizacao_Zero,MFI_FW,MFI_Cx,Momentum_Var,Momentum_Var_Cx,RSI_Var,RSI_Var_Cx,Stoch_FW,Stoch_Cx_0,Stoch_Cx_1,Volume_FW,Volume_Cx,WPR_Var,WPR_Var_Cx,Filtro_Fuzzy");
+    FileFlush(file_handle_w_filtro);
+    FileClose(file_handle_w_filtro);
 
-    FileWrite(file_handle_w_filtro, "io,hora,ativo,posicao,direcao,lucro,AC,AC_cx,AD,AD_cx,ADX,adx_cx,ATR,ATR_cx,BB_Delta_Bruto,BB_Delta_Bruto_cx,Banda_Delta_Valor,BB_Posicao_Percent,BB_Posicao_Percent_Cx,BullsP,BullsP_cx,BearsP,BearsP_cx,BWMFI,BWMFI_cx,CCI,CCI_cx,DeMarker,DeMarker_cx,DP_DMM20,DP_PAAMM20,DP_MM20MM50,DP_D,hilo_direcao,MACD,MACD_cx_0,MACD_cx_1,MACD_Diff_Angulo_LS,MACD_Distancia_Linha_Sinal,MACD_Distancia_Linha_Zero,MACD_Normalizacao,MACD_Normalizacao_Zero,MFI,MFI_cx,Momentum,Momentum_cx,RSI,RSI_cx,Stoch,Stoch_Cx_0,Stoch_Cx_1,Volume,Volume_cx,WPR,WPR_cx,Filtro_Fuzzy");
     //File_FiltroFlush(file_handle_w_filtro);
   }
+}
 }
 
 class File_Filtro
@@ -52,7 +46,15 @@ class File_Filtro
 
 File_Filtro::File_Filtro()
 {
-
+  if(Filtro_Fuzzy_Escreve_Estatistica)
+  {
+  file_handle_w_filtro = FileOpen(file_name_filtro, FILE_WRITE|FILE_READ|FILE_TXT|FILE_ANSI|FILE_COMMON);
+  // file_handle_w_filtro = FileOpen(file_name_filtro, FILE_WRITE|FILE_CSV|FILE_ANSI);
+  if (file_handle_w_filtro <= 0 && !Otimizacao) {
+    PrintFormat("Erro Abrindo o arquivo %s Erro: %s: ",file_name_filtro,GetLastError());
+  }
+  FileSeek(file_handle_w_filtro,0,SEEK_END);
+}
 }
 
 File_Filtro::~File_Filtro()
@@ -62,6 +64,8 @@ File_Filtro::~File_Filtro()
 
 void File_Filtro::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DEAL_ENTRY io)
 {
+  if(Filtro_Fuzzy_Escreve_Estatistica)
+  {
   FileSeek(file_handle_w_filtro,0,SEEK_END);
 
   string Line = "" +
@@ -178,7 +182,9 @@ void File_Filtro::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DE
   DoubleToString(filtro_fuzzy_arquivo)
   + ""
   ;
-
+  FileSeek(file_handle_w_filtro,0,SEEK_END);
   FileWrite(file_handle_w_filtro,Line);
   FileFlush(file_handle_w_filtro);
+  FileClose(file_handle_w_filtro);
+}
 }

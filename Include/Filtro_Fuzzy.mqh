@@ -74,8 +74,9 @@ double FiltroF::Fuzzy()
   double bom = NULL;
   double ruim = NULL;
 
-  File_Read *file_read = new File_Read("zwift-filtro-fuzzy.fuz", "");
+  int regras = 0;
 
+  File_Read *file_read = new File_Read("zwift-filtro-fuzzy.fuz", "");
   for(int i=0; i<file_read.num_linhas ; i++)
   {
     string Valores[10];
@@ -95,7 +96,11 @@ double FiltroF::Fuzzy()
     bom =  StringToDouble(Valores[1]);
     ruim = StringToDouble(Valores[2]);
 
-    if(ind.Busca_Var(VAR) != NULL)
+    double Histerese = 0;
+    // if(bom != 0 && ruim != 0) Histerese = MathAbs(1 - (MathMin(bom,ruim) / MathMax(bom,ruim))); //DEBUG First Try
+    if(bom != 0 && ruim != 0) Histerese = MathAbs(1 - (MathMin(bom,ruim) / MathMax(bom,ruim))); //DEBUG First Try
+
+    if(ind.Busca_Var(VAR) != NULL && (bom - ruim) != 0 && bom != 0 && ruim != 0 && Histerese > 0.3)
     {
       Matrix_Fuzzy matriz;
       matriz = Calculator(bom,ruim,Var_Input);
@@ -123,12 +128,12 @@ double FiltroF::Fuzzy()
       CDictionary_Obj_Double *p_od_AC_Ind=new CDictionary_Obj_Double;
       in.Add(p_od_AC_Ind);
       p_od_AC_Ind.SetAll(fvVAR, Var_Input);
+
+      regras++;
     }
-
   }
-  delete(file_read);
 
-  if(Filtro_Fuzzy_Ligado)
+  if(Filtro_Fuzzy_Ligado && regras > 0) //Observar o que leva a calcular
   {
     //--- Get result
     CList *result;
@@ -143,6 +148,7 @@ double FiltroF::Fuzzy()
   delete in;
   delete fsFILTRO;
 
+  delete(file_read);
   delete ind;
 
   return retorno;
@@ -232,7 +238,11 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
 {
   File_Read *file_read = new File_Read("Filtro_Fuzzy.csv","");
 
-  if(ArraySize(file_read.linha_str_array) == 0) return NULL;
+  if(ArraySize(file_read.linha_str_array) == 0)
+  {
+    delete(file_read);
+    return NULL;
+  }
   StringSplit(file_read.linha_str_array[0],StringGetCharacter(",",0),Rotulos);
 
   // Print("file_read.linha_str_array[0]: " + file_read.linha_str_array[0]);
@@ -306,58 +316,61 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
 
       // Print("ArrayRange(Linhas_Positivas,0)" + ArrayRange(Linhas_Positivas,0));
       // Print("ArrayRange(Linhas_Negativas,0)" + ArrayRange(Linhas_Negativas,0));
-
-      for(int Coluna = 0; Coluna <56;Coluna++)
+      if(file_read.num_linhas > 50)
       {
-        double Media_Coluna = 0;
-        double Soma_Coluna = 0;
-        for(int Linha = 1; Linha<=ArrayRange(Linhas_Positivas,0);Linha++)
+        for(int Coluna = 0; Coluna <56;Coluna++)
         {
-          Soma_Coluna = Soma_Coluna + StringToDouble(Linhas_Positivas[Linha-1][Coluna]);
-          Media_Coluna = Soma_Coluna / Linha;
+          double Media_Coluna = 0;
+          double Soma_Coluna = 0;
+          for(int Linha = 1; Linha<=ArrayRange(Linhas_Positivas,0);Linha++)
+          {
+            Soma_Coluna = Soma_Coluna + StringToDouble(Linhas_Positivas[Linha-1][Coluna]);
+            Media_Coluna = Soma_Coluna / Linha;
+          }
+          Medias_Positivas[Coluna] = Media_Coluna;
         }
-        Medias_Positivas[Coluna] = Media_Coluna;
-      }
 
-      for(int Coluna = 0; Coluna <56;Coluna++)
-      {
-        double Media_Coluna = 0;
-        double Soma_Coluna = 0;
-        for(int Linha = 1; Linha<=ArrayRange(Linhas_Negativas,0);Linha++)
+        for(int Coluna = 0; Coluna <56;Coluna++)
         {
-          Soma_Coluna = Soma_Coluna + StringToDouble(Linhas_Negativas[Linha-1][Coluna]);
-          Media_Coluna = Soma_Coluna / Linha;
+          double Media_Coluna = 0;
+          double Soma_Coluna = 0;
+          for(int Linha = 1; Linha<=ArrayRange(Linhas_Negativas,0);Linha++)
+          {
+            Soma_Coluna = Soma_Coluna + StringToDouble(Linhas_Negativas[Linha-1][Coluna]);
+            Media_Coluna = Soma_Coluna / Linha;
+          }
+          Medias_Negativas[Coluna] = Media_Coluna;
         }
-        Medias_Negativas[Coluna] = Media_Coluna;
-        Medias_Negativas[Coluna] = Media_Coluna;
       }
-
       // Print("Rotulos[5]" + Rotulos[5]);
       // Print("Medias_Positivas[5]" + Medias_Positivas[5]);
       // Print("Medias_Negativas[5]" + Medias_Negativas[5]);
+      delete(file_read);
       return 1;
     }
 
     int FiltroF::Escreve_Medias_Filtro()
     {
       if(Leitor_Arquivo_Calcula_Medias() == NULL) return NULL;
-
-      int file_handle_arquivo_Filtro = FileOpen("zwift-filtro-fuzzy.fuz", FILE_WRITE|FILE_TXT|FILE_COMMON|FILE_ANSI|FILE_SHARE_WRITE);
-
-      string Line = "";
-
-      for(int i=6;i<55;i++)
+      if(Filtro_Fuzzy_Escreve_Fuz)
       {
-        Line += Rotulos[i];
-        Line += ",";
-        Line += DoubleToString(Medias_Positivas[i]);
-        Line += ",";
-        Line += DoubleToString(Medias_Negativas[i]);
-        Line +="\n";
-      }
+        int file_handle_arquivo_Filtro = FileOpen("zwift-filtro-fuzzy.fuz", FILE_WRITE|FILE_TXT|FILE_COMMON|FILE_ANSI|FILE_SHARE_WRITE);
 
-      FileWrite(file_handle_arquivo_Filtro,Line);
-      FileFlush(file_handle_arquivo_Filtro);
-      FileClose(file_handle_arquivo_Filtro);
+        string Line = "";
+
+        for(int i=6;i<55;i++)
+        {
+          Line += Rotulos[i];
+          Line += ",";
+          Line += DoubleToString(Medias_Positivas[i]);
+          Line += ",";
+          Line += DoubleToString(Medias_Negativas[i]);
+          Line +="\n";
+        }
+
+        FileWrite(file_handle_arquivo_Filtro,Line);
+        FileFlush(file_handle_arquivo_Filtro);
+        FileClose(file_handle_arquivo_Filtro);
+      }
       return 1;
     }

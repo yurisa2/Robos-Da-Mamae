@@ -52,17 +52,19 @@ void Zwift::Avalia()
   {
     Igor *Igor_oo = new Igor;
     Opera_Mercado *opera = new Opera_Mercado;
+    FiltroF *filtro_fuzzy = new FiltroF;
 
     double CEV = Igor_oo.Fuzzy_CEV();
 
 
     if(CEV > Zwift_limite_superior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(-1,"Igor_oo: " + DoubleToString(CEV));
-    if(CEV < Zwift_limite_inferior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(CEV));
+    if(CEV < Zwift_limite_inferior && O_Stops.Tipo_Posicao() == 0 && (filtro_fuzzy.Fuzzy() >= 50 || filtro_fuzzy.Fuzzy() == 0)  )   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(CEV));
     if(Zwift_sair_indicador && CEV >= 50 && O_Stops.Tipo_Posicao() > 0)        opera.FechaPosicao() ;
     if(Zwift_sair_indicador && CEV <= 50 && O_Stops.Tipo_Posicao() < 0)        opera.FechaPosicao() ;
 
     delete Igor_oo;
     delete opera;
+    delete filtro_fuzzy;
   }
 
   delete(Condicoes);

@@ -342,10 +342,13 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 //Print("Saiu myDealInfo.PositionId() " + myDealInfo.PositionId());
                 if(!Otimizacao)
                 {
+                FiltroF *filtro_teste = new FiltroF;
                 File *arquivo = new File();
                 File_Filtro *arquivo_filtro = new File_Filtro();
                 arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
                 arquivo_filtro.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
+                filtro_teste.Escreve_Medias_Filtro();
+                delete(filtro_teste);
                 delete(arquivo);
                 delete(arquivo_filtro);
               }

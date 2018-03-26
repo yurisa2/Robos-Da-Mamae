@@ -12,19 +12,21 @@ class File_Read
   public:
   void File_Read::File_Read(string InpFileName="teste.txt", string InpDirectoryName="Data");
   string linha_str_array[];
-  string linha_str_array_cols[1][256];
   int num_linhas;
 
   private:
-
+  int File_Read::Retorna_Indice_Arquivo_Virtual(string Nome_Arquivo);
 };
 
-  void File_Read::File_Read(string InpFileName="teste.txt", string InpDirectoryName="Data")
-  {
-    int file_handle_r = -1;
+void File_Read::File_Read(string InpFileName="teste.txt", string InpDirectoryName="Data")
+{
+  int file_handle_r = -1;
+  string InpFileNameCompleto = Nome_Robo + "." + IntegerToString(Rand_Geral) + "." + EnumToString(TimeFrame) + InpFileName;
 
+  if(Filtro_Fuzzy_Arquivo_Fisico)
+  {
     ResetLastError();
-    file_handle_r=FileOpen(InpDirectoryName+"//"+InpFileName,FILE_READ|FILE_TXT|FILE_ANSI|FILE_COMMON|FILE_SHARE_READ);
+    file_handle_r=FileOpen(InpDirectoryName+"//"+InpFileNameCompleto,FILE_READ|FILE_TXT|FILE_ANSI|FILE_COMMON|FILE_SHARE_READ);
 
     if(file_handle_r!=INVALID_HANDLE)
     {
@@ -50,12 +52,62 @@ class File_Read
         linha_str_array[i] = str;
         i++;
         num_linhas = i;
-
       }
       //--- close the file
       FileClose(file_handle_r);
-    //  PrintFormat("Arquivo Lido, %s foi fechado",InpFileName);
+      //  PrintFormat("Arquivo Lido, %s foi fechado",InpFileName);
     }
-    else
-  PrintFormat("Impossivel abrir (Leitura) %s, Erro = %d",InpFileName,GetLastError());
+    else {
+      PrintFormat("Impossivel abrir (Leitura) %s, Erro = %d",InpFileName,GetLastError());
+      File_Gen *arquivo_generico = new File_Gen(InpFileName,"CREATE");
+      arquivo_generico.Linha("");
+      delete arquivo_generico;
+    }
   }
+
+  if(!Filtro_Fuzzy_Arquivo_Fisico)
+  {
+    int Indice_Arquivo = Retorna_Indice_Arquivo_Virtual(InpFileNameCompleto);
+    if(Indice_Arquivo == -1)
+    {
+      File_Gen *arquivo_generico = new File_Gen(InpFileName,"CREATE");
+      arquivo_generico.Linha("");
+      delete arquivo_generico;
+      Indice_Arquivo = Retorna_Indice_Arquivo_Virtual(InpFileNameCompleto);
+    }
+    num_linhas  = StringSplit(Arquivos[Indice_Arquivo][1],StringGetCharacter("\n",0),linha_str_array);
+
+    // num_linhas--;
+    // if(linha_str_array[num_linhas-1] == "\n")
+    // {
+    //   Print("Ultima linha era só pulinho MOTHAFUCKA");
+    //   ExpertRemove();
+    // }
+    // PrintFormat("Teste indice: %i ",Indice_Arquivo);
+  }
+}
+
+int File_Read::Retorna_Indice_Arquivo_Virtual(string Nome_Arquivo)
+{
+  int retorno = -1;
+  int Tamanho_Array_Arquivos = ArrayRange(Arquivos,0);
+
+  for(int i=0; i<Tamanho_Array_Arquivos; i++)
+  {
+    if(Arquivos[i][0] == Nome_Arquivo)
+    {
+     retorno = i;
+     // PrintFormat("Achei o Arquivo, é o Indice: %i",i);
+   }
+  }
+
+if(retorno == -1)
+{
+File_Gen *arquivo_generico = new File_Gen(Nome_Arquivo,"CREATE");
+retorno = arquivo_generico.Cria_Arquivo_Virtual(Nome_Arquivo);
+delete arquivo_generico;
+Print("Tive QUe Criar aqui Na leitura");
+}
+
+return retorno;
+}

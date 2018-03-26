@@ -1,6 +1,5 @@
 /* -*- C++ -*- */
 
-
 class FiltroF
 {
   public:
@@ -76,7 +75,7 @@ double FiltroF::Fuzzy()
 
   int regras = 0;
 
-  File_Read *file_read = new File_Read("zwift-filtro-fuzzy.fuz", "");
+  File_Read *file_read = new File_Read(".zwift-filtro-fuzzy.fuz", "");
   for(int i=0; i<file_read.num_linhas ; i++)
   {
     string Valores[10];
@@ -89,7 +88,6 @@ double FiltroF::Fuzzy()
     // Print("Valor RUIM: " + Valores[2]);
     // Print("Valor INPUT: " + DoubleToString(ind.Busca_Var(VAR)));
 
-
     VAR = Valores[0];
     // Var_Input = ind.Busca_Var(VAR);
     Var_Input = ind.Busca_Var(VAR);
@@ -97,11 +95,16 @@ double FiltroF::Fuzzy()
     ruim = StringToDouble(Valores[2]);
 
     double Histerese = 0;
-    // if(bom != 0 && ruim != 0) Histerese = MathAbs(1 - (MathMin(bom,ruim) / MathMax(bom,ruim))); //DEBUG First Try
-    if(bom != 0 && ruim != 0) Histerese = MathAbs(1 - (MathMin(bom,ruim) / MathMax(bom,ruim))); //DEBUG First Try
+    double H_Diff = MathMax(bom,ruim) - MathMin(bom,ruim);
+    if(bom != 0 && ruim != 0) Histerese = H_Diff/MathMax(bom,ruim); //Matematicamente  Mais Correto
 
-    if(ind.Busca_Var(VAR) != NULL && (bom - ruim) != 0 && bom != 0 && ruim != 0 && Histerese > 0.3)
+    if(ind.Busca_Var(VAR) != NULL && (bom - ruim) != 0 && bom != 0 && ruim != 0 && Histerese > Filtro_Fuzzy_Histerese)
     {
+
+      // File_Gen *arquivo_generico = new File_Gen("variaveis-usadas.var");
+      // arquivo_generico.Linha(TimeToString(TimeCurrent()) + " - " + VAR + ": " + DoubleToString(Var_Input,5) + " | bom: " + Valores[1] + " | ruim:" + Valores[2]);
+      // delete arquivo_generico;
+
       Matrix_Fuzzy matriz;
       matriz = Calculator(bom,ruim,Var_Input);
 
@@ -153,7 +156,6 @@ double FiltroF::Fuzzy()
 
   return retorno;
 }
-
 
 Matrix_Fuzzy FiltroF::Calculator(double Bom, double Ruim, double Var_Input)
 {
@@ -236,7 +238,7 @@ Matrix_Fuzzy FiltroF::Calculator(double Bom, double Ruim, double Var_Input)
 
 int FiltroF::Leitor_Arquivo_Calcula_Medias()
 {
-  File_Read *file_read = new File_Read("Filtro_Fuzzy.csv","");
+  File_Read *file_read = new File_Read(".Filtro_Fuzzy.csv","");
 
   if(ArraySize(file_read.linha_str_array) == 0)
   {
@@ -246,8 +248,9 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
   StringSplit(file_read.linha_str_array[0],StringGetCharacter(",",0),Rotulos);
 
   // Print("file_read.linha_str_array[0]: " + file_read.linha_str_array[0]);
+  // Print("file_read.linha_str_array[1]: " + file_read.linha_str_array[1]);
+  // Print("file_read.linha_str_array[2]: " + file_read.linha_str_array[2]);
   // Print("ArraySize(Rotulos): " + ArraySize(Rotulos));
-
 
   int Num_Rotulos = ArraySize(Rotulos); // HOJE TA EM 56 - Ou Pensa em algo melhor ou nunca mais muda a porra das colunas
 
@@ -258,19 +261,24 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
   string Linhas_Positivas[][56];
   string Linhas_Negativas[][56];
 
+  //CALCULA O NUMERO DE LINHAS PARA O FILTRO FUZZY //ARRUMAR PQ NAO TA CLARO QUAL EH O MENOR NUMERO (ENVOLVER ERRO DE INPUT)
+  int Start_Linha_Geral = 1;
 
-  for(int i=1; i<file_read.num_linhas ; i++)  // LE LINHA POR LINHA (COMECA EM 1 PARA MATAR O ROTULO)
+  Start_Linha_Geral = Filtro_Fuzzy_Ultimas_Linhas + 1;
+
+  if(Filtro_Fuzzy_Ultimas_Linhas == 0) Start_Linha_Geral = 1;
+
+  for(int i=Start_Linha_Geral; i<file_read.num_linhas ; i++)  // LE LINHA POR LINHA (COMECA EM 1 PARA MATAR O ROTULO) LIMITAR AS LINHAS AQUI PARA NAO DIVIDIR
   {
     string Linha_Separada[56];
     StringSplit(file_read.linha_str_array[i],StringGetCharacter(",",0),Linha_Separada);
 
-    for(int Rotulo=0; Rotulo<Num_Rotulos ; Rotulo++)  // LE Rotulo e Coloca na linyha
+    for(int Rotulo=0; Rotulo<Num_Rotulos ; Rotulo++)  // LE Rotulo e Coloca na linha
     {
       Linhas[i][Rotulo] = Linha_Separada[Rotulo];
     }
     // Print("FiltroF::Leitor_Arquivo_Calcula_Medias() file_read.linha_str_array[i]" + file_read.linha_str_array[i]);
   }
-
 
   // Print("Num_Rotulos" + Num_Rotulos);
   // Print("Linhas" + ArrayRange(Linhas,0));
@@ -282,7 +290,6 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
   {
     string Linha_Separada[56];
     StringSplit(file_read.linha_str_array[i],StringGetCharacter(",",0),Linha_Separada);
-
 
     if(StringToDouble(Linha_Separada[5]) >= 0){
       ArrayResize(Linhas_Positivas,ArrayRange(Linhas_Positivas,0)+1);
@@ -301,7 +308,6 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
       string Linha_Separada[56];
       StringSplit(file_read.linha_str_array[i],StringGetCharacter(",",0),Linha_Separada);
 
-
       if(StringToDouble(Linha_Separada[5]) < 0){
         ArrayResize(Linhas_Negativas,ArrayRange(Linhas_Negativas,0)+1);
         for(int Rotulo=0; Rotulo<Num_Rotulos ; Rotulo++)  // LE Rotulo e Coloca na linyha
@@ -313,16 +319,15 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
       }
       // FIM Bloco de Linhas NEGATIVAS
 
-
       // Print("ArrayRange(Linhas_Positivas,0)" + ArrayRange(Linhas_Positivas,0));
       // Print("ArrayRange(Linhas_Negativas,0)" + ArrayRange(Linhas_Negativas,0));
-      if(file_read.num_linhas > 50)
+      if(file_read.num_linhas > Filtro_Fuzzy_Num_Linhas)     //AQUI ELE LIMITA O START DAS LINHAS
       {
         for(int Coluna = 0; Coluna <56;Coluna++)
         {
           double Media_Coluna = 0;
           double Soma_Coluna = 0;
-          for(int Linha = 1; Linha<=ArrayRange(Linhas_Positivas,0);Linha++)
+          for(int Linha = 1; Linha<=ArrayRange(Linhas_Positivas,0);Linha++) //PARA LIMITAR O CONJUNTO DE ULTIMAS LINHAS
           {
             Soma_Coluna = Soma_Coluna + StringToDouble(Linhas_Positivas[Linha-1][Coluna]);
             Media_Coluna = Soma_Coluna / Linha;
@@ -354,10 +359,7 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
       if(Leitor_Arquivo_Calcula_Medias() == NULL) return NULL;
       if(Filtro_Fuzzy_Escreve_Fuz)
       {
-        int file_handle_arquivo_Filtro = FileOpen("zwift-filtro-fuzzy.fuz", FILE_WRITE|FILE_TXT|FILE_COMMON|FILE_ANSI|FILE_SHARE_WRITE);
-
         string Line = "";
-
         for(int i=6;i<55;i++)
         {
           Line += Rotulos[i];
@@ -367,10 +369,9 @@ int FiltroF::Leitor_Arquivo_Calcula_Medias()
           Line += DoubleToString(Medias_Negativas[i]);
           Line +="\n";
         }
-
-        FileWrite(file_handle_arquivo_Filtro,Line);
-        FileFlush(file_handle_arquivo_Filtro);
-        FileClose(file_handle_arquivo_Filtro);
+        File_Gen *arquivo_generico = new File_Gen(".zwift-filtro-fuzzy.fuz","CREATE");
+        arquivo_generico.Linha(Line);
+        delete arquivo_generico;
       }
       return 1;
     }

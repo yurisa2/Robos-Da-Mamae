@@ -8,7 +8,8 @@
 #property link      "http://www.sa2.com.br"
 
 
-string file_name     = IntegerToString(MathRand()) + ".csv";
+string file_name     =  Nome_Robo + "." + IntegerToString(Rand_Geral) + "." + EnumToString(TimeFrame) + ".Stats.csv";
+
 // string file_name     = "teste.txt";
 int file_handle_w = -1;
 

@@ -7,6 +7,8 @@
 #property copyright "PetroSa, Robs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
+int Rand_Geral = MathRand();
+
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
 //#include <Charts\Chart.mqh>
@@ -51,6 +53,7 @@
 #include <Filtro_Fuzzy.mqh>
 
 #include <File_Writer.mqh>
+#include <File_Writer_Gen.mqh>
 #include <File_Writer_Filtro.mqh>
 #include <File_Reader.mqh>
 
@@ -294,7 +297,7 @@ void Init_Padrao ()
   data_inicio_execucao = TimeCurrent();
 
 
-  Print("Descriï¿½ï¿½o: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
+  Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
   Print("TimeMagic: ",IntegerToString(TimeMagic));
 
@@ -307,6 +310,7 @@ void Init_Padrao ()
 
   File_Init();
   File_Filtro_Init();
+
 }
 
 void IniciaDia ()

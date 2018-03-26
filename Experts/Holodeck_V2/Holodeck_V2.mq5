@@ -8,12 +8,13 @@
 #property link      "http://www.sa2.com.br"
 
 #property version   "2.0" //Usando posicoes
-
+string Nome_Robo = "Holodeck"; 
+#include <Inputs_Vars.mqh>
 #include <basico.mqh>
 
 #include <FuncoesGerais.mqh>
 
-#include <Inputs_Vars.mqh>
+
 
 #include <Stops_OO.mqh>
 #include <MontarRequisicao.mqh>

@@ -8,29 +8,18 @@
 #property link      "http://www.sa2.com.br"
 
 
-string file_name_filtro     = "Filtro_Fuzzy.csv";
-int file_handle_w_filtro = -1;
 Aquisicao filtro_ind;
 
 void File_Filtro_Init() {
 
-if(Filtro_Fuzzy_Escreve_Estatistica)
-{
-  file_handle_w_filtro = FileOpen(file_name_filtro, FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_COMMON|FILE_SHARE_WRITE);
+  File_Gen *arquivo_generico = new File_Gen(".Filtro_Fuzzy.csv");
 
-  if ( file_handle_w_filtro > 0 && !Otimizacao) {
-    //
-    // File_Filtro *arquivo_filtro = new File_Filtro();
-    // delete(arquivo_filtro);
+  string Linha0  = "io,hora,ativo,posicao,direcao,lucro,AC_Var,AC_cx,AD_Var,AD_cx,ADX_FW,adx_cx,ATR_Var,ATR_cx,BB_Delta_Bruto,BB_Delta_Bruto_Cx,Banda_Delta_Valor,BB_Posicao_Percent,BB_Posicao_Percent_Cx,BullsP_Var,BullsP_Var_Cx,BearsP_Var,BearsP_Var_Cx,BWMFI_Var,BWMFI_Var_Cx,CCI_Var,CCI_Var_Cx,DeMarker_Var,DeMarker_Var_Cx,DP_DMM20,DP_PAAMM20,DP_MM20MM50,DP_D,Hilo_Direcao,MACD_FW,MACD_Cx_0,MACD_Cx_1,MACD_Diff_Angulo_LS,MACD_Distancia_Linha_Sinal,MACD_Distancia_Linha_Zero,MACD_Normalizacao,MACD_Normalizacao_Zero,MFI_FW,MFI_Cx,Momentum_Var,Momentum_Var_Cx,RSI_Var,RSI_Var_Cx,Stoch_FW,Stoch_Cx_0,Stoch_Cx_1,Volume_FW,Volume_Cx,WPR_Var,WPR_Var_Cx,Filtro_Fuzzy";
 
-    FileWrite(file_handle_w_filtro, "io,hora,ativo,posicao,direcao,lucro,AC_Var,AC_cx,AD_Var,AD_cx,ADX_FW,adx_cx,ATR_Var,ATR_cx,BB_Delta_Bruto,BB_Delta_Bruto_Cx,Banda_Delta_Valor,BB_Posicao_Percent,BB_Posicao_Percent_Cx,BullsP_Var,BullsP_Var_Cx,BearsP_Var,BearsP_Var_Cx,BWMFI_Var,BWMFI_Var_Cx,CCI_Var,CCI_Var_Cx,DeMarker_Var,DeMarker_Var_Cx,DP_DMM20,DP_PAAMM20,DP_MM20MM50,DP_D,Hilo_Direcao,MACD_FW,MACD_Cx_0,MACD_Cx_1,MACD_Diff_Angulo_LS,MACD_Distancia_Linha_Sinal,MACD_Distancia_Linha_Zero,MACD_Normalizacao,MACD_Normalizacao_Zero,MFI_FW,MFI_Cx,Momentum_Var,Momentum_Var_Cx,RSI_Var,RSI_Var_Cx,Stoch_FW,Stoch_Cx_0,Stoch_Cx_1,Volume_FW,Volume_Cx,WPR_Var,WPR_Var_Cx,Filtro_Fuzzy");
-    FileFlush(file_handle_w_filtro);
-    FileClose(file_handle_w_filtro);
+  arquivo_generico.Linha(Linha0);
+  delete arquivo_generico;
 
-    //File_FiltroFlush(file_handle_w_filtro);
   }
-}
-}
 
 class File_Filtro
 {
@@ -46,15 +35,7 @@ class File_Filtro
 
 File_Filtro::File_Filtro()
 {
-  if(Filtro_Fuzzy_Escreve_Estatistica)
-  {
-  file_handle_w_filtro = FileOpen(file_name_filtro, FILE_WRITE|FILE_READ|FILE_TXT|FILE_ANSI|FILE_COMMON);
-  // file_handle_w_filtro = FileOpen(file_name_filtro, FILE_WRITE|FILE_CSV|FILE_ANSI);
-  if (file_handle_w_filtro <= 0 && !Otimizacao) {
-    PrintFormat("Erro Abrindo o arquivo %s Erro: %s: ",file_name_filtro,GetLastError());
-  }
-  FileSeek(file_handle_w_filtro,0,SEEK_END);
-}
+
 }
 
 File_Filtro::~File_Filtro()
@@ -64,9 +45,7 @@ File_Filtro::~File_Filtro()
 
 void File_Filtro::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DEAL_ENTRY io)
 {
-  if(Filtro_Fuzzy_Escreve_Estatistica)
-  {
-  FileSeek(file_handle_w_filtro,0,SEEK_END);
+  File_Gen *arquivo_generico = new File_Gen(".Filtro_Fuzzy.csv");
 
   string Line = "" +
   EnumToString(io)
@@ -182,9 +161,7 @@ void File_Filtro::Escreve(string posicao_fw,string direcao,double lucro, ENUM_DE
   DoubleToString(filtro_fuzzy_arquivo)
   + ""
   ;
-  FileSeek(file_handle_w_filtro,0,SEEK_END);
-  FileWrite(file_handle_w_filtro,Line);
-  FileFlush(file_handle_w_filtro);
-  FileClose(file_handle_w_filtro);
-}
+  arquivo_generico.Linha(Line);
+  delete arquivo_generico;
+
 }

@@ -4,17 +4,19 @@
 //|                        Copyright 2017, Sa2 INVESTMENT            |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-
+string Nome_Robo = "Zwift"; 
 #property copyright "Operador de igor."
 #property link      "http://www.sa2.com.br"
 
 #property version   "1.0" //Low Profit Scalping
 
+#include <Inputs_Vars.mqh>
+
 #include <basico.mqh>
 
 #include <FuncoesGerais.mqh>
 
-#include <Inputs_Vars.mqh>
+
 
 #include <Stops_OO.mqh>
 #include <MontarRequisicao.mqh>
@@ -29,8 +31,8 @@
 int OnInit()
 {
 
-
- 
+      
+        
   Init_Padrao();
 
 
@@ -92,6 +94,5 @@ void OnNewBar()
   Zwift_oo.Comentario();
 
   delete Zwift_oo;
-
 
 }

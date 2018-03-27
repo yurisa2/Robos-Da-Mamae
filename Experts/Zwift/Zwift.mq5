@@ -95,4 +95,16 @@ void OnNewBar()
 
   delete Zwift_oo;
 
+  Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+    Opera_Mercado *opera = new Opera_Mercado;
+
+  if(!Condicoes.Horario())
+  {
+if(O_Stops.Tipo_Posicao() != 0)        opera.FechaPosicao() ;
+  }
+  
+      delete opera;
+  delete(Condicoes);
+
+
 }

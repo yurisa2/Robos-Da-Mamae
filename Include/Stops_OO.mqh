@@ -335,6 +335,8 @@ double Stops::Valor_Negocio()
   posiciones.Select(Symbol());
   double valor = posiciones.PriceOpen();
 
+  if(valor == 0 || valor == NULL) valor = daotick_geral;
+
   delete(posiciones);
   return valor;
 }

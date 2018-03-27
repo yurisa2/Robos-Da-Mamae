@@ -58,11 +58,7 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
    {
      Sleep(200);
 
-
-
      //Print("Posicao_Mercado"); //DEBUG
-
-
      CTrade *requisicao_montar = new CTrade;
      if(Condicoes_Basicas.Condicao())
      {
@@ -77,7 +73,6 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
 
      }
      delete(requisicao_montar);
-
    }
    /////////////////////////////////////////// Final da req.
 

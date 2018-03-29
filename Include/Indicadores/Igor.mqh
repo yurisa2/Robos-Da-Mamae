@@ -5,8 +5,6 @@ class Igor
 
   public:
   Igor();
-  void Comentario();
-  void Avalia();
   double MACD_Resultado; //Resultado da Tabela 1
   double Volume_Resultado; //Mais Ou Menos Fuzzy
   double Entrada_fvHIST_M; //Mais Ou Menos Fuzzy
@@ -27,25 +25,6 @@ class Igor
 void Igor::Igor()
 {
 
-
-  Dados();
-
-}
-
-void Igor::Dados()
-{
-
-}
-
-void Igor::Avalia()
-{
-
-
-}
-
-void Igor::Comentario()
-{
-
 }
 
 
@@ -55,8 +34,6 @@ double Igor::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito al
 
   OBV *OBV_oo = new OBV;
   MACD *MACD_oo = new MACD;
-
-
 
   double LinMACD = MACD_oo.Valor(0,0); //0 - Main line
   double LinSinal = MACD_oo.Valor(1,0); //1 - Signal Line
@@ -152,8 +129,6 @@ double Igor::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL) 
 
 return retorno;
 }
-
-/* -*- C++ -*- */
 
 //Tabela3 - MOMENTO Pag 103
 
@@ -427,8 +402,6 @@ double Igor::Fuzzy_CEV() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alt
   CMamdaniFuzzySystem *fsCEV=new CMamdaniFuzzySystem();
 
   CList *in=new CList;
-
-
 
   //--- Create first input variables for the system
   CFuzzyVariable *fvMOMENTO=new CFuzzyVariable("MOMENTO",0,100);

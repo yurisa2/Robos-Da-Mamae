@@ -342,12 +342,12 @@ void IniciaDia ()
 
 MqlRates Preco(int barra = 0)
 {
-  barra = barra + 1;
-    MqlRates rates[];
-    ArraySetAsSeries(rates,true);
-    int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
+  // barra = barra + 1;
+    MqlRates rates_Preco[];
+    ArraySetAsSeries(rates_Preco,true);
+    int copied=CopyRates(Symbol(),0,0,200,rates_Preco);
 
-    return rates[barra];
+    return rates_Preco[barra];
 }
 
 MqlRates PrecoAtual()
@@ -358,4 +358,15 @@ MqlRates PrecoAtual()
 
   // Copy latest close prijs.
      return BarData[0];
+}
+
+double n_(double valor, double min, double max)
+{
+  double retorno = NULL;
+  retorno = valor;
+
+  if(valor <= min ) retorno = min;
+  if(valor >= max ) retorno = max;
+
+  return retorno;
 }

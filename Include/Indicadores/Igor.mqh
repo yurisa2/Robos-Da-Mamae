@@ -110,8 +110,12 @@ double Igor::Fuzzy_HIST(double HIST_distancia = NULL, double HIST_alpha = NULL) 
      CList *in=new CList;
      CDictionary_Obj_Double *p_od_distancia = new CDictionary_Obj_Double;
      CDictionary_Obj_Double *p_od_alpha = new CDictionary_Obj_Double;
-     p_od_distancia.SetAll(fvDistancia, HIST_distancia);
-     p_od_alpha.SetAll(fvAlpha, HIST_alpha);
+
+     double n_HIST_distancia = n_(HIST_distancia,-1,1);
+     double n_HIST_alpha = n_(HIST_alpha,-1.57,1.57);
+
+     p_od_distancia.SetAll(fvDistancia, n_HIST_distancia);
+     p_od_alpha.SetAll(fvAlpha, n_HIST_alpha);
      in.Add(p_od_distancia);
      in.Add(p_od_alpha);
   //--- Get result
@@ -225,11 +229,14 @@ double Igor::Fuzzy_Momento(int barra = 0) //Tabela 3 pag 103   |  -2 a 2 (Muito 
   RSI *IFR = new RSI;
   Stoch *EST = new Stoch;
 
+    double n_IFR = n_(IFR.Valor(barra),0,100);
+    double n_EST = n_(EST.Valor(0,barra),0,100);
+
      CList *in=new CList;
      CDictionary_Obj_Double *p_od_IFR = new CDictionary_Obj_Double;
      CDictionary_Obj_Double *p_od_EST = new CDictionary_Obj_Double;
-     p_od_IFR.SetAll(fvIFR, IFR.Valor(barra));
-     p_od_EST.SetAll(fvEST, EST.Valor(0,barra));
+     p_od_IFR.SetAll(fvIFR, n_IFR);
+     p_od_EST.SetAll(fvEST, n_EST);
      in.Add(p_od_IFR);
      in.Add(p_od_EST);
   //--- Get result
@@ -355,11 +362,16 @@ double Igor::Fuzzy_Sinal() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito a
     Entrada_fvMACD_M = Entrada_fvMACD;
     Entrada_fvHIST_M = Entrada_fvHIST;
 
+    double n_Entrada_fvMACD = n_(Entrada_fvMACD,-2,2);
+    double n_Entrada_fvHIST = n_(Entrada_fvHIST,-1.57,1.57);
+
+
+
      CList *in=new CList;
      CDictionary_Obj_Double *p_od_Hist = new CDictionary_Obj_Double;
      CDictionary_Obj_Double *p_od_MACD = new CDictionary_Obj_Double;
-     p_od_Hist.SetAll(fvHIST, Entrada_fvHIST);
-     p_od_MACD.SetAll(fvMACD, Entrada_fvMACD);   //DESCOMENTAR COM URGENCIA
+     p_od_Hist.SetAll(fvHIST, n_Entrada_fvHIST);
+     p_od_MACD.SetAll(fvMACD, n_Entrada_fvMACD);   //DESCOMENTAR COM URGENCIA
      in.Add(p_od_Hist);
      in.Add(p_od_MACD);
   //--- Get result
@@ -392,12 +404,17 @@ double Igor::Fuzzy_CEV() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alt
 
   OBV *OBV_oo = new OBV;
 
-  input_momento = Fuzzy_Momento();
-  input_volume = OBV_oo.Cx();
-  input_sinal = Fuzzy_Sinal();
+  input_momento = n_(Fuzzy_Momento(),0,100);
+  input_volume = n_(OBV_oo.Cx(),-1.57,1.57);
+  input_sinal = n_(Fuzzy_Sinal(),0,100);
+
+
 
 
   delete OBV_oo;
+
+
+
   //--- Mamdani Fuzzy System
   CMamdaniFuzzySystem *fsCEV=new CMamdaniFuzzySystem();
 

@@ -66,7 +66,15 @@ void OnTimer()
 
 void OnTick()
 {
+if(!Zumba_Tempo_real)
+{
+  Zumba *Zumba_oo = new Zumba;
 
+  Zumba_oo.Avalia();
+  Zumba_oo.Comentario();
+
+  delete Zumba_oo;
+}
 Operacoes_No_tick();
 
 
@@ -88,13 +96,15 @@ double OnTester()
 
 void OnNewBar()
 {
+if(!Zumba_Tempo_real)
+{
   Zumba *Zumba_oo = new Zumba;
 
   Zumba_oo.Avalia();
   Zumba_oo.Comentario();
 
   delete Zumba_oo;
-
+}
 
 
 }

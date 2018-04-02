@@ -64,8 +64,8 @@ void Zumba::Avalia()
 
     if(ZUMBA > Zumba_limite_superior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(-1,"Igor_oo: " + DoubleToString(ZUMBA));
     if(ZUMBA < Zumba_limite_inferior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(ZUMBA,3));
-    if(Zumba_sair_indicador && ZUMBA >= 50 && O_Stops.Tipo_Posicao() > 0)        opera.FechaPosicao() ;
-    if(Zumba_sair_indicador && ZUMBA <= 50 && O_Stops.Tipo_Posicao() < 0)        opera.FechaPosicao() ;
+    if(Zumba_sair_indicador && ZUMBA >= (Zumba_limite_inferior + Zumba_dist_sair) && O_Stops.Tipo_Posicao() > 0)        opera.FechaPosicao() ;
+    if(Zumba_sair_indicador && ZUMBA <=  (Zumba_limite_superior - Zumba_dist_sair) && O_Stops.Tipo_Posicao() < 0)        opera.FechaPosicao() ;
 
     delete BB_oo;
     delete Igor_oo;

@@ -66,7 +66,7 @@ void OnTimer()
 
 void OnTick()
 {
-if(!Zumba_Tempo_real)
+if(Zumba_Tempo_real)
 {
   Zumba *Zumba_oo = new Zumba;
 

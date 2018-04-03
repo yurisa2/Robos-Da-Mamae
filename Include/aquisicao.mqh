@@ -145,10 +145,13 @@ void Aquisicao::Dados()
   delete(AD_Ind);
   delete(ADX_OO);
   delete(ATR_Ind);
+  delete(Banda_BB);
+  delete(DP_Ind);
   delete(BullsPower_Ind);
   delete(BearsPower_Ind);
   delete(BWMFI_Ind);
   delete(CCI_Ind);
+  delete(DeMarker_Ind);
   delete(hilo);
   delete(macd);
   delete(MFI_OO);

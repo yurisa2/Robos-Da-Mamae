@@ -57,6 +57,7 @@ double Igor::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito al
   if(LinMACD == 0 && m1 < 0) retorno = -2; //14
   if(m1 == 0) retorno = 0; //15
 
+  delete(OBV_oo);
   delete(MACD_oo);
   return retorno;
 }

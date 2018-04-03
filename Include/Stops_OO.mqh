@@ -149,87 +149,87 @@ void Stops::TakeProfit_Calcula()
   if(Tipo_Posicao() < 0) Tipo_Ordem_TP = ORDER_TYPE_BUY_LIMIT;
 
   CTrade *tradionices = new CTrade;
-// Inicio das ordens efetivas
+  // Inicio das ordens efetivas
   if(Distribuidor_Parcial(0) == 1)
   {
     tradionices.OrderOpen(
-    Symbol(),
-    Tipo_Ordem_TP,
-    Distribuidor_Parcial(1),
-    0,
-    tpc1,
-    0,
-    0,
-    ORDER_TIME_DAY,
-    dtHoje
+      Symbol(),
+      Tipo_Ordem_TP,
+      Distribuidor_Parcial(1),
+      0,
+      tpc1,
+      0,
+      0,
+      ORDER_TIME_DAY,
+      dtHoje
     );
 
   }
   if(Distribuidor_Parcial(0) == 2)
   {
     tradionices.OrderOpen(
-    Symbol(),
-    Tipo_Ordem_TP,
-    Distribuidor_Parcial(1),
-    0,
-    tpc1,
-    0,
-    0,
-    ORDER_TIME_DAY,
-    dtHoje
+      Symbol(),
+      Tipo_Ordem_TP,
+      Distribuidor_Parcial(1),
+      0,
+      tpc1,
+      0,
+      0,
+      ORDER_TIME_DAY,
+      dtHoje
     );
     tradionices.OrderOpen(
-    Symbol(),
-    Tipo_Ordem_TP,
-    Distribuidor_Parcial(2),
-    0,
-    tpc2,
-    0,
-    0,
-    ORDER_TIME_DAY,
-    dtHoje
+      Symbol(),
+      Tipo_Ordem_TP,
+      Distribuidor_Parcial(2),
+      0,
+      tpc2,
+      0,
+      0,
+      ORDER_TIME_DAY,
+      dtHoje
     );
   }
   if(Distribuidor_Parcial(0) == 3)
   {
     tradionices.OrderOpen(
-    Symbol(),
-    Tipo_Ordem_TP,
-    Distribuidor_Parcial(1),
-    0,
-    tpc1,
-    0,
-    0,
-    ORDER_TIME_DAY,
-    dtHoje
+      Symbol(),
+      Tipo_Ordem_TP,
+      Distribuidor_Parcial(1),
+      0,
+      tpc1,
+      0,
+      0,
+      ORDER_TIME_DAY,
+      dtHoje
     );
 
     tradionices.OrderOpen(
-    Symbol(),
-    Tipo_Ordem_TP,
-    Distribuidor_Parcial(2),
-    0,
-    tpc2,
-    0,
-    0,
-    ORDER_TIME_DAY,
-    dtHoje
+      Symbol(),
+      Tipo_Ordem_TP,
+      Distribuidor_Parcial(2),
+      0,
+      tpc2,
+      0,
+      0,
+      ORDER_TIME_DAY,
+      dtHoje
     );
 
     tradionices.OrderOpen(
-    Symbol(),
-    Tipo_Ordem_TP,
-    Distribuidor_Parcial(3),
-    0,
-    tpc3,
-    0,
-    0,
-    ORDER_TIME_DAY,
-    dtHoje
+      Symbol(),
+      Tipo_Ordem_TP,
+      Distribuidor_Parcial(3),
+      0,
+      tpc3,
+      0,
+      0,
+      ORDER_TIME_DAY,
+      dtHoje
     );
     delete(tradionices);
   }
-//Fim das ordens efetivas
+  //Fim das ordens efetivas
 
 
 }
@@ -244,7 +244,9 @@ void Stops::Setar_Ordens_Vars_Static()
   //double tp3 = valor + (TakeProfit3 * (Tipo_Posicao() * Tick_Size) *100); //Tem que arrumar depois
   double tp3 = 0; //Tem que arrumar depois
 
-  //if(TakeProfit == 0) tp3 = valor + (Tipo_Posicao() * Tick_Size * 100);
+
+
+  if(tp3 == 0) tp3 = valor + (Tipo_Posicao() * Tick_Size * TakeProfit3);
 
 
   Print("StopLoss Fixo: " + DoubleToString(sl)); //DEBUG

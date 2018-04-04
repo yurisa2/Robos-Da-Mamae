@@ -238,18 +238,31 @@ void Stops::Setar_Ordens_Vars_Static()
 {
   CTrade *tradionices = new CTrade;
   double valor = Valor_Negocio();
-  double sl = valor - (StopLoss * (Tipo_Posicao() * Tick_Size));
-  double tp1 = valor + (TakeProfit * (Tipo_Posicao() * Tick_Size));
-  double tp2 = valor + (TakeProfit2 * (Tipo_Posicao() * Tick_Size));
-  //double tp3 = valor + (TakeProfit3 * (Tipo_Posicao() * Tick_Size) *100); //Tem que arrumar depois
-  double tp3 = 0; //Tem que arrumar depois
+  int Tipo_Posicao_ = Tipo_Posicao();
 
+  double sl = valor - (StopLoss * (Tipo_Posicao_ * Tick_Size));
+  double tp1 = valor + (TakeProfit * (Tipo_Posicao_ * Tick_Size));
+  double tp2 = valor + (TakeProfit2 * (Tipo_Posicao_ * Tick_Size));
+  double tp3 = valor + (TakeProfit3 * (Tipo_Posicao_ * Tick_Size)); //Tem que arrumar depois
+  // double tp3 = 0; //Tem que arrumar depois
 
-
-  if(tp3 == 0) tp3 = valor + (Tipo_Posicao() * Tick_Size * TakeProfit3);
+  if(TakeProfit3 == 0 && TakeProfit2 == 0) tp3 = tp1 + (2 * Tick_Size * Tipo_Posicao_);
+  if(TakeProfit3 == 0 && TakeProfit2 != 0) tp3 = tp2 + (2 * Tick_Size * Tipo_Posicao_);
 
 
   Print("StopLoss Fixo: " + DoubleToString(sl)); //DEBUG
+
+  if(Aleta_Operacao && !Otimizacao)
+  {
+    string alerta_op = "sl: " + DoubleToString(sl);
+    alerta_op += " | TP1: ";
+    alerta_op += DoubleToString(tp1);
+    alerta_op += " | TP2: ";
+    alerta_op += DoubleToString(tp2);
+    alerta_op += " | TP3: ";
+    alerta_op += DoubleToString(tp3);
+    Alert(alerta_op);
+  }
 
   tradionices.PositionModify(Symbol(),sl,tp3);
 

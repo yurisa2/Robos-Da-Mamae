@@ -32,7 +32,7 @@ void Zumba::Comentario()
     double CEV = Igor_oo.Fuzzy_CEV();
     double BBPP = BB_oo.BB_Posicao_Percent();
 
-    double ZUMBA = Zumba_Ind(CEV,BBPP);
+    double ZUMBA = Zumba_Ind(n_(CEV,0,100),n_(BBPP,-50,150));
 
 
     if(!Otimizacao) Comentario_Robo = " Igor CEV: " + DoubleToString(Igor_oo.Fuzzy_CEV()) ;
@@ -55,15 +55,13 @@ void Zumba::Avalia()
     Opera_Mercado *opera = new Opera_Mercado;
     BB *BB_oo = new BB;
 
-
     double CEV = Igor_oo.Fuzzy_CEV();
     double BBPP = BB_oo.BB_Posicao_Percent();
 
     double ZUMBA = Zumba_Ind(n_(CEV,0,100),n_(BBPP,-50,150));
 
-
-    if(ZUMBA > Zumba_limite_superior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(-1,"Igor_oo: " + DoubleToString(ZUMBA,3));
-    if(ZUMBA < Zumba_limite_inferior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(1,"Igor_oo: " + DoubleToString(ZUMBA,3));
+    if(ZUMBA > Zumba_limite_superior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(-1,"ZMB: " + DoubleToString(ZUMBA,3) + "p:" + EnumToString(TimeFrame));
+    if(ZUMBA < Zumba_limite_inferior && O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(1,"ZMB: " + DoubleToString(ZUMBA,3)+ "p:" + EnumToString(TimeFrame));
     if(Zumba_sair_indicador && ZUMBA >= (Zumba_limite_inferior + Zumba_dist_sair) && O_Stops.Tipo_Posicao() > 0)        opera.FechaPosicao() ;
     if(Zumba_sair_indicador && ZUMBA <=  (Zumba_limite_superior - Zumba_dist_sair) && O_Stops.Tipo_Posicao() < 0)        opera.FechaPosicao() ;
 

@@ -89,11 +89,8 @@ double Stops::Distribuidor_Parcial(int Seletor_Volume)
     retorno = TakeProfit_Volume3;
     return retorno;
   }
-
-
   return retorno;
 }
-
 
 void Stops::TakeProfit_Calcula()
 {
@@ -239,6 +236,13 @@ void Stops::Setar_Ordens_Vars_Static()
   CTrade *tradionices = new CTrade;
   double valor = Valor_Negocio();
   int Tipo_Posicao_ = Tipo_Posicao();
+  int loopes = 0;
+
+  if(Tipo_Posicao_ == 0 && loopes <= 5) {
+    Sleep(400);
+    Tipo_Posicao_ = Tipo_Posicao();
+    loopes++;
+  }
 
   double sl = valor - (StopLoss * (Tipo_Posicao_ * Tick_Size));
   double tp1 = valor + (TakeProfit * (Tipo_Posicao_ * Tick_Size));
@@ -285,7 +289,12 @@ void Stops::Setar_Ordens_Vars_Proporcional()
   delete(Banda_BB);
 
   //Print("delta_bb: " + delta_bb); //DEBUG
+  int loopes = 0;
 
+  if( Tipo_Posicao() == 0 && loopes <= 5) {
+    Sleep(400);
+    loopes++;
+  }
 
   StopLoss_Proporcional = (StopLoss * delta_bb); //Aqui Ja Sai em Tick_Size
   //Print("StopLoss_Proporcional: " + StopLoss_Proporcional + " Ticks"); //DEBUG
@@ -349,8 +358,11 @@ double Stops::Valor_Negocio()
 
   posiciones.Select(Symbol());
   double valor = posiciones.PriceOpen();
+  // Print("Valor da Valor_Negocio() antes do IF: " + DoubleToString(valor));
 
   if(valor == 0 || valor == NULL) valor = daotick_geral;
+
+  // Print("Valor da Valor_Negocio() depois do IF: " + DoubleToString(valor));
 
   delete(posiciones);
   return valor;

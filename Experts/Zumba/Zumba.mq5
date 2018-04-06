@@ -88,6 +88,9 @@ double OnTester()
 
   Totalizador *totalizator = new Totalizador();
   resultado = totalizator.ganho_liquido();
+  
+  //Print("Negocios: " + totalizator.negocios);
+  //  Print("SaldoLiquido: " + totalizator.ganho_liquido());
   delete(totalizator);
 
   return resultado;

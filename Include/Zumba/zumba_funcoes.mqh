@@ -81,19 +81,19 @@ double Zumba::Zumba_Ind(double Igor_CEV, double BBPP)
     CMamdaniFuzzySystem *fsZumba=new CMamdaniFuzzySystem();
     //--- Create first input variables for the system
     CFuzzyVariable *fvIgor_CEV=new CFuzzyVariable("Igor",0,100);
-    fvIgor_CEV.Terms().Add(new CFuzzyTerm("MuitoBaixo", new CTrapezoidMembershipFunction(0.000, 0.000, 10.000, 20.000)));
-    fvIgor_CEV.Terms().Add(new CFuzzyTerm("Baixo", new CTriangularMembershipFunction(10.000, 20.000, 30.000)));
-    fvIgor_CEV.Terms().Add(new CFuzzyTerm("Neutro", new CTrapezoidMembershipFunction(20.000, 30.000, 70.000, 80.000)));
-    fvIgor_CEV.Terms().Add(new CFuzzyTerm("Alto", new CTriangularMembershipFunction(70.000, 80.000, 90.000)));
-    fvIgor_CEV.Terms().Add(new CFuzzyTerm("MuitoAlto", new CTrapezoidMembershipFunction(80.000, 90.000, 100.000, 100.000)));
+    fvIgor_CEV.Terms().Add(new CFuzzyTerm("MuitoBaixo", new CTrapezoidMembershipFunction(0.000, 0.000, 10.000-Zumba_Agressao_Igor, 20.000-Zumba_Agressao_Igor)));
+    fvIgor_CEV.Terms().Add(new CFuzzyTerm("Baixo", new CTriangularMembershipFunction(10.000-Zumba_Agressao_Igor, 20.000-Zumba_Agressao_Igor, 30.000-Zumba_Agressao_Igor)));
+    fvIgor_CEV.Terms().Add(new CFuzzyTerm("Neutro", new CTrapezoidMembershipFunction(20.000-Zumba_Agressao_Igor, 30.000-Zumba_Agressao_Igor, 70.000+Zumba_Agressao_Igor, 80.000+Zumba_Agressao_Igor)));
+    fvIgor_CEV.Terms().Add(new CFuzzyTerm("Alto", new CTriangularMembershipFunction(70.000+Zumba_Agressao_Igor, 80.000+Zumba_Agressao_Igor, 90.000+Zumba_Agressao_Igor)));
+    fvIgor_CEV.Terms().Add(new CFuzzyTerm("MuitoAlto", new CTrapezoidMembershipFunction(80.000+Zumba_Agressao_Igor, 90.000+Zumba_Agressao_Igor, 100.000, 100.000)));
     fsZumba.Input().Add(fvIgor_CEV);
     //--- Create second input variables for the system
     CFuzzyVariable *fv_BBPP=new CFuzzyVariable("BBPP",-50,150);
-    fv_BBPP.Terms().Add(new CFuzzyTerm("MuitoBaixo", new CTrapezoidMembershipFunction(-50.000, -50.000, -20.000, 0.000)));
-    fv_BBPP.Terms().Add(new CFuzzyTerm("Baixo", new CTriangularMembershipFunction(-20.000, 0.000, 20.000)));
-    fv_BBPP.Terms().Add(new CFuzzyTerm("Neutro", new CTrapezoidMembershipFunction(0.000, 20.000, 80.000, 100.000)));
-    fv_BBPP.Terms().Add(new CFuzzyTerm("Alto", new CTriangularMembershipFunction(80.000, 100.000, 120.000)));
-    fv_BBPP.Terms().Add(new CFuzzyTerm("MuitoAlto", new CTrapezoidMembershipFunction(100.000, 120.000, 150.000, 150.000)));
+    fv_BBPP.Terms().Add(new CFuzzyTerm("MuitoBaixo", new CTrapezoidMembershipFunction(-50.000, -50.000, -30.000-Zumba_Agressao_BBPP, -10.000-Zumba_Agressao_BBPP)));
+    fv_BBPP.Terms().Add(new CFuzzyTerm("Baixo", new CTriangularMembershipFunction(-30.000-Zumba_Agressao_BBPP, -10.000-Zumba_Agressao_BBPP, 10.000-Zumba_Agressao_BBPP)));
+    fv_BBPP.Terms().Add(new CFuzzyTerm("Neutro", new CTrapezoidMembershipFunction(-10.000-Zumba_Agressao_BBPP, 10.000-Zumba_Agressao_BBPP, 90.000+Zumba_Agressao_BBPP, 110.000+Zumba_Agressao_BBPP)));
+    fv_BBPP.Terms().Add(new CFuzzyTerm("Alto", new CTriangularMembershipFunction(90.000+Zumba_Agressao_BBPP, 110.000+Zumba_Agressao_BBPP, 130.000+Zumba_Agressao_BBPP)));
+    fv_BBPP.Terms().Add(new CFuzzyTerm("MuitoAlto", new CTrapezoidMembershipFunction(110.000+Zumba_Agressao_BBPP, 130.000+Zumba_Agressao_BBPP, 150.000, 150.000)));
     fsZumba.Input().Add(fv_BBPP);
     //--- Create Output
     CFuzzyVariable *fvHALLEY=new CFuzzyVariable("ZUMBA",0,100);

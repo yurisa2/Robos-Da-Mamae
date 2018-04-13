@@ -250,9 +250,8 @@ void Stops::Setar_Ordens_Vars_Static()
   double tp3 = valor + (TakeProfit3 * (Tipo_Posicao_ * Tick_Size)); //Tem que arrumar depois
   // double tp3 = 0; //Tem que arrumar depois
 
-  if(TakeProfit3 == 0 && TakeProfit2 == 0) tp3 = tp1 + (2 * Tick_Size * Tipo_Posicao_);
-  if(TakeProfit3 == 0 && TakeProfit2 != 0) tp3 = tp2 + (2 * Tick_Size * Tipo_Posicao_);
-
+  if(TakeProfit3 == 0 && TakeProfit2 == 0) tp3 = tp1 + (1000 * Tick_Size * Tipo_Posicao_);
+  if(TakeProfit3 == 0 && TakeProfit2 != 0) tp3 = tp2 + (1000 * Tick_Size * Tipo_Posicao_);
 
   Print("StopLoss Fixo: " + DoubleToString(sl)); //DEBUG
 

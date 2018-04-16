@@ -56,6 +56,7 @@ int Rand_Geral = MathRand();
 #include <File_Writer_Gen.mqh>
 #include <File_Writer_Filtro.mqh>
 #include <File_Reader.mqh>
+#include <ML.mqh>
 
 //#include <Expert\Expert.mqh>
 

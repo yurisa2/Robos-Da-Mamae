@@ -3,6 +3,7 @@
 //+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
 #include <Math\Alglib\alglib.mqh>
+#include <ML.mqh>
 
 //+------------------------------------------------------------------+
 
@@ -10,17 +11,19 @@
 //+------------------------------------------------------------------+
 void OnStart()
 {
+  ML *machine_learning = new ML;
+
   CAlglib algebra;
   CMultilayerPerceptronShell network;
 
   int epochs = 100;
-  int amostras = 100 ;
+  int amostras = 20 ;
   int restarts = 4 ;
   double wstep = 0.001 ;
   double decay = 0.01 ;
 
 
-  CMatrixDouble xy(amostras+1,10);
+  string linha_entradas;
 
 for(int i = 0; i < amostras; i++) {
   double numero1 = numero();
@@ -37,20 +40,34 @@ for(int i = 0; i < amostras; i++) {
   // Print("Numero: " + numero2);
   // Print("classifica: " + classifica(numero1,numero2));
   // Print("i: " + i);
+  string resultado = classifica(numero1,numero2,numero3,numero4,numero5,numero6,numero7,numero8,numero9);
 
-  xy[i].Set(0,numero1);
-  xy[i].Set(1,numero2);
-  xy[i].Set(2,numero3);
-  xy[i].Set(3,numero4);
-  xy[i].Set(4,numero5);
-  xy[i].Set(5,numero6);
-  xy[i].Set(6,numero7);
-  xy[i].Set(7,numero8);
-  xy[i].Set(8,numero9);
-  xy[i].Set(9,classifica(numero1,numero2,numero3,numero4,numero5,numero6,numero7,numero8,numero9));
-
+  linha_entradas = numero1 + "," + numero2 + "," + numero3 + "," + numero4 + "," + numero5 + "," + numero6 + "," + numero7 + "," + numero8 + "," + numero9 + "," + resultado;
+  machine_learning.Append(linha_entradas);
 
 }
+
+machine_learning.ML_Save("teste_ML.txt");
+Print("machine_learning.ML_Save.entradas"+machine_learning.entradas);
+
+CMatrixDouble xy(amostras+1,machine_learning.entradas);
+for(int i = 0; i < amostras; i++) {
+  for(int j = 0; j < machine_learning.entradas; j ++)
+  {
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+    xy[i].Set(j,machine_learning.Matriz[i][j]);
+  }
+}
+
+
 
   double x[] = {0,0,0,0,0,0,0,0,0};
   double y[] = {0,0};
@@ -60,8 +77,11 @@ for(int i = 0; i < amostras; i++) {
   int resposta;
 
   algebra.MLPCreateC2(9,10,6,2,network);
-  algebra.MLPTrainLM(network,xy,amostras,decay,restarts,resposta,infotreino);
-  // algebra.MLPTrainLBFGS(network,xy,amostras,decay,restarts,wstep,epochs,resposta,infotreino);
+  // algebra.MLPTrainLM(network,xy,amostras,decay,restarts,resposta,infotreino);
+  algebra.MLPTrainLBFGS(network,xy,amostras,decay,restarts,wstep,epochs,resposta,infotreino);
+
+  SalvaRede(network,"Networken");
+
 
    Print("Erro? " + algebra.MLPRMSError(network,xy,amostras));
 
@@ -125,6 +145,7 @@ for(int i = 0; i < amostras; i++) {
   Print("y[0]: "+y[0]);
   Print("y[1]: "+y[1]);
 
+  delete machine_learning;
 }
 //+------------------------------------------------------------------+
 
@@ -169,3 +190,55 @@ else retorno = 0;
 
 return retorno;
 }
+
+
+bool SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "")
+{
+  int flw =0;
+   int k= 0, i= 0, j= 0, numCapas= 0, arNeurCapa[], neurCapa1= 1, funcTipo= 0, puntFichRed= 9999;
+   double umbral= 0, peso= 0, media= 0, sigma= 0;
+   if(nombArch=="") nombArch= "copiaSegurRed";
+   nombArch= nombArch+".red";
+   FileDelete(nombArch, FILE_COMMON);
+   ResetLastError();
+   puntFichRed= FileOpen(nombArch, FILE_WRITE|FILE_BIN|FILE_COMMON);
+
+      numCapas= CAlglib::MLPGetLayersCount(objRed);
+  flw = FileWriteDouble(puntFichRed, numCapas)>0;
+      ArrayResize(arNeurCapa, numCapas);
+      for(k= 0; k<numCapas; k++)
+      {
+         arNeurCapa[k]= CAlglib::MLPGetLayerSize(objRed, k);
+      flw = FileWriteDouble(puntFichRed, arNeurCapa[k])>0;
+      }
+      for(k= 0; k<numCapas; k++)
+      {
+         for(i= 0; i<arNeurCapa[k]; i++)
+         {
+            if(k==0)
+            {
+               CAlglib::MLPGetInputScaling(objRed, i, media, sigma);
+               FileWriteDouble(puntFichRed, media);
+               FileWriteDouble(puntFichRed, sigma);
+            }
+            else if(k==numCapas-1)
+            {
+               CAlglib::MLPGetOutputScaling(objRed, i, media, sigma);
+               FileWriteDouble(puntFichRed, media);
+               FileWriteDouble(puntFichRed, sigma);
+            }
+            CAlglib::MLPGetNeuronInfo(objRed, k, i, funcTipo, umbral);
+            FileWriteDouble(puntFichRed, funcTipo);
+            FileWriteDouble(puntFichRed, umbral);
+            for(j= 0; k<(numCapas-1) && j<arNeurCapa[k+1]; j++)
+            {
+               peso= CAlglib::MLPGetWeight(objRed, k, i, k+1, j);
+            flw = FileWriteDouble(puntFichRed, peso)>0;
+            }
+         }
+      }
+      FileFlush(puntFichRed);
+      FileClose(puntFichRed);
+      return(1);
+
+   }

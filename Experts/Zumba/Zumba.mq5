@@ -111,3 +111,8 @@ if(!Zumba_Tempo_real)
 }
 
 }
+
+void on_trade_robo::on_trade_robo(int es=0)
+{
+  io = es;
+};

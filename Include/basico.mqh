@@ -370,3 +370,11 @@ double n_(double valor, double min, double max)
 
   return retorno;
 }
+
+class on_trade_robo {
+public:
+on_trade_robo(int es=0);
+
+  int io;
+
+};

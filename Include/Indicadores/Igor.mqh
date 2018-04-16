@@ -32,8 +32,8 @@ double Igor::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito al
 {
   int retorno = 0;
 
-  OBV *OBV_oo = new OBV;
-  MACD *MACD_oo = new MACD(12,26,9,Symbol(),TimeFrameIgor);
+  OBV *OBV_oo = new OBV(Igor_TF);
+  MACD *MACD_oo = new MACD(12,26,9,Symbol(),Igor_TF);
 
   double LinMACD = MACD_oo.Valor(0,0); //0 - Main line
   double LinSinal = MACD_oo.Valor(1,0); //1 - Signal Line
@@ -265,7 +265,7 @@ return retorno;
 double Igor::Fuzzy_Sinal() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
-  MACD *MACD_oo = new MACD(12,26,9,Symbol(),TimeFrameIgor);
+  MACD *MACD_oo = new MACD(12,26,9,Symbol(),Igor_TF);
 
 
 
@@ -403,7 +403,7 @@ double Igor::Fuzzy_CEV() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alt
   double input_volume = 0;
   double input_sinal = 0;
 
-  OBV *OBV_oo = new OBV;
+  OBV *OBV_oo = new OBV(Igor_TF);
 
   input_momento = n_(Fuzzy_Momento(),0,100);
   input_volume = n_(OBV_oo.Cx(),-1.57,1.57);

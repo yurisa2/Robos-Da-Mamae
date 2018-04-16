@@ -27,7 +27,7 @@ void Zumba::Comentario()
   if(Tipo_Comentario > 0)
   {
     Igor *Igor_oo = new Igor;
-    BB *BB_oo = new BB;
+    BB *BB_oo = new BB(TimeFrame);
 
     double CEV = Igor_oo.Fuzzy_CEV();
     double BBPP = BB_oo.BB_Posicao_Percent();

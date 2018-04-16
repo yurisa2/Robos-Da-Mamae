@@ -9,4 +9,3 @@ input double Zumba_dist_sair = 10;
 input bool Zumba_Tempo_real = false;
 input double Zumba_Agressao_Igor = 0; //Agressão Igor MAX 10
 input double Zumba_Agressao_BBPP = 0; //Agressão BBPP MAX 20
-input ENUM_TIMEFRAMES TimeFrameIgor = PERIOD_M5; //Periodo Igor

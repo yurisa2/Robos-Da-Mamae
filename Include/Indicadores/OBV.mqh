@@ -5,7 +5,7 @@
 class OBV
 {
   public:
-  void OBV();
+  void OBV(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT);
   double Valor(int barra = 0);
   double Cx(int barra = 0);
   double Normalizado(int barra = 0);
@@ -15,10 +15,10 @@ class OBV
 
 };
 
-void OBV::OBV()
+void OBV::OBV(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT)
 {
   HandleOBV = 0;
-  HandleOBV = iOBV(Symbol(),TimeFrame,VOLUME_TICK) ;
+  HandleOBV = iOBV(Symbol(),periodo,VOLUME_TICK) ;
   // ChartIndicatorAdd(0,0,HandleMA);
 
   // Print("Handle Stoch: " + IntegerToString(HandleMA));

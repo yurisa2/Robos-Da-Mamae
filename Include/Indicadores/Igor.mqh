@@ -4,7 +4,7 @@ class Igor
 {
 
   public:
-  Igor();
+  Igor(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT);
   double MACD_Resultado; //Resultado da Tabela 1
   double Volume_Resultado; //Mais Ou Menos Fuzzy
   double Entrada_fvHIST_M; //Mais Ou Menos Fuzzy
@@ -22,9 +22,9 @@ class Igor
 
 };
 
-void Igor::Igor()
+void Igor::Igor(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT)
 {
-
+  Igor_TF = periodo;
 }
 
 
@@ -33,7 +33,7 @@ double Igor::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito al
   int retorno = 0;
 
   OBV *OBV_oo = new OBV;
-  MACD *MACD_oo = new MACD(NULL,NULL,NULL,NULL,TimeFrame);
+  MACD *MACD_oo = new MACD(12,26,9,Symbol(),TimeFrameIgor);
 
   double LinMACD = MACD_oo.Valor(0,0); //0 - Main line
   double LinSinal = MACD_oo.Valor(1,0); //1 - Signal Line
@@ -227,8 +227,8 @@ double Igor::Fuzzy_Momento(int barra = 0) //Tabela 3 pag 103   |  -2 a 2 (Muito 
      fsMomento.Rules().Add(rule14b);
   //--- Set input value
 
-  RSI *IFR = new RSI(NULL,TimeFrame);
-  Stoch *EST = new Stoch(NULL,NULL,NULL,TimeFrame);
+  RSI *IFR = new RSI(14,Igor_TF);
+  Stoch *EST = new Stoch(10,3,3,Igor_TF);
 
     double n_IFR = n_(IFR.Valor(barra),0,100);
     double n_EST = n_(EST.Valor(0,barra),0,100);
@@ -265,7 +265,7 @@ return retorno;
 double Igor::Fuzzy_Sinal() //Tabela 4 pag 103   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
-  MACD *MACD_oo = new MACD;
+  MACD *MACD_oo = new MACD(12,26,9,Symbol(),TimeFrameIgor);
 
 
 

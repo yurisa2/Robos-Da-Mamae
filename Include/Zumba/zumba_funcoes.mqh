@@ -26,8 +26,8 @@ void Zumba::Comentario()
 {
   if(Tipo_Comentario > 0)
   {
-    Igor *Igor_oo = new Igor;
-    BB *BB_oo = new BB(TimeFrame);
+    Igor *Igor_oo = new Igor(TimeFrameIgor);
+    BB *BB_oo = new BB(TimeFrameIgor);
 
     double CEV = Igor_oo.Fuzzy_CEV();
     double BBPP = BB_oo.BB_Posicao_Percent();
@@ -51,9 +51,9 @@ void Zumba::Avalia()
 
   if(Condicoes.Horario())
   {
-    Igor *Igor_oo = new Igor;
+    Igor *Igor_oo = new Igor(TimeFrameIgor);
     Opera_Mercado *opera = new Opera_Mercado;
-    BB *BB_oo = new BB;
+    BB *BB_oo = new BB(TimeFrameIgor);
 
     double CEV = Igor_oo.Fuzzy_CEV();
     double BBPP = BB_oo.BB_Posicao_Percent();

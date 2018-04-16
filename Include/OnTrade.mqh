@@ -332,6 +332,10 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 delete(filtro_fuzzy);
 
                 }
+
+                on_trade_robo *trade_especifico = new on_trade_robo(1);
+                delete trade_especifico;
+
               }
 
               //--- if the market was exited
@@ -352,6 +356,9 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 delete(arquivo);
                 delete(arquivo_filtro);
               }
+
+              on_trade_robo *trade_especifico = new on_trade_robo(-1);
+              delete trade_especifico;
 
                 if(deal_vol>0.0)
                 {

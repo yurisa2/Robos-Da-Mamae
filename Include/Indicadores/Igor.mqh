@@ -33,7 +33,7 @@ double Igor::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito al
   int retorno = 0;
 
   OBV *OBV_oo = new OBV;
-  MACD *MACD_oo = new MACD;
+  MACD *MACD_oo = new MACD(NULL,NULL,NULL,NULL,TimeFrame);
 
   double LinMACD = MACD_oo.Valor(0,0); //0 - Main line
   double LinSinal = MACD_oo.Valor(1,0); //1 - Signal Line
@@ -227,8 +227,8 @@ double Igor::Fuzzy_Momento(int barra = 0) //Tabela 3 pag 103   |  -2 a 2 (Muito 
      fsMomento.Rules().Add(rule14b);
   //--- Set input value
 
-  RSI *IFR = new RSI;
-  Stoch *EST = new Stoch;
+  RSI *IFR = new RSI(NULL,TimeFrame);
+  Stoch *EST = new Stoch(NULL,NULL,NULL,TimeFrame);
 
     double n_IFR = n_(IFR.Valor(barra),0,100);
     double n_EST = n_(EST.Valor(0,barra),0,100);

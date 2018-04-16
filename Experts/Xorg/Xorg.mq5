@@ -88,3 +88,8 @@ void OnNewBar()
 //   Print("Nova Barra Xorg");
 
 }
+
+void on_trade_robo::on_trade_robo(int es=0)
+{
+  io = es;
+};

@@ -108,3 +108,7 @@ if(O_Stops.Tipo_Posicao() != 0)        opera.FechaPosicao() ;
 
 
 }
+void on_trade_robo::on_trade_robo(int es=0)
+{
+  io = es;
+};

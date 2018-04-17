@@ -8,7 +8,7 @@
 #property link      "http://www.sa2.com.br"
 
 int Rand_Geral = MathRand();
-
+#include <Math\Alglib\alglib.mqh>
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
 //#include <Charts\Chart.mqh>

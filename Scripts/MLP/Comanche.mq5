@@ -31,14 +31,12 @@ void OnStart()
   // Print("machine_learning.entradas " + machine_learning.entradas);
 
 
-  CMatrixDouble xy(amostras+1,machine_learning.entradas-1);
+  CMatrixDouble xy(amostras+1,machine_learning.entradas);
   for(int i = 0; i < amostras; i++) {
     for(int j = 0; j < machine_learning.entradas; j++)
     {
-      for(int k = 0; k < machine_learning.entradas-1; k++)
-      {
-        xy[k].Set(j,machine_learning.Matriz[i][j]);
-      }
+        xy[i].Set(j,machine_learning.Matriz[i][j]);
+        PrintFormat("xy[%i].Set(%i,machine_learning.Matriz[%i][%i]) Valor: %i",i,j,i,j,machine_learning.Matriz[i][j]);
     }
   }
 

@@ -15,7 +15,7 @@ class ML
   string Lines[];
   void Append(string Linha);
   double Matriz[][200];
-  int entradas;
+  int entradas; //colunas ativas (sem -9999)
   bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 9,int nNeuronCapa1 = 10,int nNeuronCapa2 = 6,int nNeuronSal = 2);
   bool SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 9,int nNeuronCapa1 = 10,int nNeuronCapa2 = 6,int nNeuronSal = 2);
   void ML_Load(string NomeArquivo);

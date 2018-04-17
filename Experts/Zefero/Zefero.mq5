@@ -28,10 +28,9 @@ string Nome_Robo = "Zefero";
 
 
 
-
 int OnInit()
 {
-
+   
 
 
   Init_Padrao();
@@ -94,3 +93,8 @@ void OnNewBar()
 
 
 }
+
+void OnDeinit(const int reason)
+  {
+          machine_learning.ML_Save("Zefero.hist");
+  }

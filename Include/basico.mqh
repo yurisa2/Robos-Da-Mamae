@@ -374,7 +374,8 @@ double n_(double valor, double min, double max)
 
 class on_trade_robo {
 public:
-on_trade_robo(int es=0);
+on_trade_robo(int es=0, double lucro = 0);
+double Profit;
 
   int io;
 

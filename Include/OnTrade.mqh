@@ -357,7 +357,9 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 delete(arquivo_filtro);
               }
 
-              on_trade_robo *trade_especifico = new on_trade_robo(-1);
+              on_trade_robo *trade_especifico = new on_trade_robo(-1,myDealInfo.Profit());
+              // trade_especifico.Profit = myDealInfo.Profit();
+              // Print("Profit ONTRADE: " + myDealInfo.Profit());
               delete trade_especifico;
 
                 if(deal_vol>0.0)

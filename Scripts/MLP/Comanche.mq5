@@ -15,9 +15,9 @@ void OnStart()
   CAlglib algebra;
   CMultilayerPerceptronShell network;
 
-  int epochs = 100;
+  int epochs = 1000;
   int amostras;
-  int restarts = 4 ;
+  int restarts = 5 ;
   double wstep = 0.001 ;
   double decay = 0.01 ;
 
@@ -36,26 +36,26 @@ void OnStart()
     for(int j = 0; j < machine_learning.entradas; j++)
     {
         xy[i].Set(j,machine_learning.Matriz[i][j]);
-        PrintFormat("xy[%i].Set(%i,machine_learning.Matriz[%i][%i]) Valor: %i",i,j,i,j,machine_learning.Matriz[i][j]);
+        // PrintFormat("xy[%i].Set(%i,machine_learning.Matriz[%i][%i]) Valor: %i",i,j,i,j,machine_learning.Matriz[i][j]);
+        // Print("machine_learning.Matriz[i][j] " + machine_learning.Matriz[i][j]);
     }
   }
 
   // double x[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
   // double y[] = {0,0};
+
+  CMLPReportShell infotreino;
+
+  int resposta;
+
+  algebra.MLPCreateC2(machine_learning.entradas-1,18,30,2,network);
+  // algebra.MLPTrainLM(network,xy,amostras,decay,restarts,resposta,infotreino);
+  algebra.MLPTrainLBFGS(network,xy,amostras,decay,restarts,wstep,epochs,resposta,infotreino);
+
+  machine_learning.SalvaRede(network,"Networken_Valendo");
+
   //
-  // CMLPReportShell infotreino;
-  //
-  // int resposta;
-  //
-  // algebra.MLPCreateC2(9,10,6,2,network);
-  // // algebra.MLPTrainLM(network,xy,amostras,decay,restarts,resposta,infotreino);
-  // algebra.MLPTrainLBFGS(network,xy,amostras,decay,restarts,wstep,epochs,resposta,infotreino);
-  //
-  // machine_learning.SalvaRede(network,"Networken");
-  //
-  // int handleTeste= FileOpen("teste", FILE_WRITE|FILE_BIN|FILE_COMMON);
-  //
-  // Print("Erro? " + algebra.MLPRMSError(network,xy,amostras));
+  Print("Erro? " + algebra.MLPRMSError(network,xy,amostras));
   //
   // x[0] = 0.61;
   // x[1] = 0.56;

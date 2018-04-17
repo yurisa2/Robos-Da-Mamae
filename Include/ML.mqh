@@ -15,7 +15,8 @@ class ML
   string Lines[];
   void Append(string Linha);
   double Matriz[][200];
-  int entradas; //colunas ativas (sem -9999)
+  int numero_linhas;
+  int entradas; //colunas ativas (sem NULL)
   bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 9,int nNeuronCapa1 = 10,int nNeuronCapa2 = 6,int nNeuronSal = 2);
   bool SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 9,int nNeuronCapa1 = 10,int nNeuronCapa2 = 6,int nNeuronSal = 2);
   void ML_Load(string NomeArquivo);
@@ -40,7 +41,7 @@ void ML::ML_Save(string NomeArquivo)
 void ML::ML_Load(string NomeArquivo)
 {
   int Handle_Arquivo_Leitura = FileOpen(NomeArquivo, FILE_READ|FILE_TXT|FILE_ANSI|FILE_COMMON);
-  int num_linhas;
+  int num_linhas = 0;
 
 
   if(Handle_Arquivo_Leitura!=INVALID_HANDLE)
@@ -70,6 +71,7 @@ void ML::ML_Load(string NomeArquivo)
       i++;
       num_linhas = i;
     }
+  numero_linhas = num_linhas;
     //--- close the file
     FileClose(Handle_Arquivo_Leitura);
     //  PrintFormat("Arquivo Lido, %s foi fechado",InpFileName);
@@ -96,10 +98,10 @@ void ML::Append(string Linha)
   {
     Matriz[comeco][i] = StringToDouble(linha_temp[i]);
   }
-  //Preenche o resto com -9999
+  //Preenche o resto com NULL
   for(int i = num_linhas;i<200;i++)
   {
-    Matriz[comeco][i] = -9999;
+    Matriz[comeco][i] = NULL;
   }
 }
 

@@ -7,33 +7,35 @@
 //+------------------------------------------------------------------+
 
 //+------------------------------------------------------------------+
-input int segunda_camada = 6;
-input int terceira_camada = 3;
-int epochs = 10;
-int restarts_ = 1 ;
+
+input int epochs = 1000;
+input int segunda_camada = 10;
+input int terceira_camada = 6;
+input int quarta_camada = 2;
+input int restarts_ = 5 ;
+input double wstep_ = 0.001 ;
+input double decay_ = 0.01 ;
+input bool Salva_Arquivo = false;
+input string nome_arquivo = "Zefero_Corte.hist";
 
 double mse = 0;
 //+-----------------------------------------------------------------+
 void OnInit()
 {
-  int amostras;
-
     ML *machine_learning = new ML;
 
     CAlglib algebra;
     CMultilayerPerceptronShell network;
 
-    double wstep = 0.001 ;
-    double decay = 0.01 ;
+    int amostras;
 
-    machine_learning.ML_Load("Zefero_Corte.hist");
+    machine_learning.ML_Load(nome_arquivo);
 
     amostras = machine_learning.numero_linhas;
-    // machine_learning.entradas;
 
-    // Print("Amostras " + amostras);
-    // Print("machine_learning.num_linhas " + machine_learning.numero_linhas);
-    // Print("machine_learning.entradas " + machine_learning.entradas);
+
+    Print("machine_learning.num_linhas " + IntegerToString(machine_learning.numero_linhas));
+    Print("machine_learning.entradas " + IntegerToString(machine_learning.entradas));
 
 
     CMatrixDouble xy(amostras+1,machine_learning.entradas);
@@ -41,45 +43,27 @@ void OnInit()
       for(int j = 0; j < machine_learning.entradas; j++)
       {
           xy[i].Set(j,machine_learning.Matriz[i][j]);
-          // PrintFormat("xy[%i].Set(%i,machine_learning.Matriz[%i][%i]) Valor: %i",i,j,i,j,machine_learning.Matriz[i][j]);
-          // Print("machine_learning.Matriz[i][j] " + machine_learning.Matriz[i][j]);
       }
     }
-
-    // double x[] = {0,0,0,0,0,0,0,0,0,0,0,0,0,0};
-    // double y[] = {0,0};
 
     CMLPReportShell infotreino;
 
     int resposta;
 
-    algebra.MLPCreateC2(machine_learning.entradas-1,segunda_camada,terceira_camada,2,network);
-    // algebra.MLPTrainLM(network,xy,amostras,decay,restarts_,resposta,infotreino);
-    algebra.MLPTrainLBFGS(network,xy,amostras,decay,restarts_,wstep,epochs,resposta,infotreino);
+    algebra.MLPCreateC2(machine_learning.entradas-1,segunda_camada,terceira_camada,quarta_camada,network);
+    // algebra.MLPTrainLM(network,xy,amostras,decay_,restarts,resposta,infotreino);
+    algebra.MLPTrainLBFGS(network,xy,amostras,decay_,restarts_,wstep_,epochs,resposta,infotreino);
 
-     
-    machine_learning.SalvaRede(network,"Networken_teste_ultimo_extremo",machine_learning.entradas-1,segunda_camada,terceira_camada,2);
+    string Nome_Arquivo = nome_arquivo+"."+IntegerToString(machine_learning.entradas-1)+"-"
+    +IntegerToString(segunda_camada)+"-"+IntegerToString(terceira_camada)+"-"+IntegerToString(quarta_camada);
+    if(Salva_Arquivo) machine_learning.SalvaRede(network,Nome_Arquivo,machine_learning.entradas-1,segunda_camada,terceira_camada,quarta_camada);
 
-    //
-    // Print("Erro? " + algebra.MLPRMSError(network,xy,amostras));
     mse = algebra.MLPRMSError(network,xy,amostras);
-    // x[0] = 0.61;
-    // x[1] = 0.56;
-    // x[2] = 0.45;
-    // x[3] = 0.83;
-    // x[4] = 0.72;
-    // x[5] = 0.61;
-    // x[6] = 0.82;
-    // x[7] = 0.93;
-    // x[8] = 0.51;
-    // algebra.MLPProcess(network,x,y);
-    //
-    // Print("Pouco Maior "+x[0]+x[1]+x[2]+x[3]+x[4]+x[5]+x[6]+x[7]+x[8]);
-    // Print("y[0]: "+y[0]);
-    // Print("y[1]: "+y[1]);
+
+    Print("Erro? " + DoubleToString(algebra.MLPRMSError(network,xy,amostras)));
 
     delete machine_learning;
-
+    ExpertRemove();
 }
 //+------------------------------------------------------------------+
 

@@ -76,6 +76,7 @@ void ML::ML_Load(string NomeArquivo)
     FileClose(Handle_Arquivo_Leitura);
     //  PrintFormat("Arquivo Lido, %s foi fechado",InpFileName);
   }
+  else Print("Problema do arquivo no ML Load" + NomeArquivo);
 
   FileFlush(Handle_Arquivo_Leitura);
 }

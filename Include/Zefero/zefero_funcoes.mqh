@@ -78,6 +78,7 @@ void on_trade_robo::on_trade_robo(int es=0, double lucro = 0) //in = 1 |  out = 
 {
   io = es;
   if(io == -1) dados_nn.Saida(lucro);
+  if(io == 1) dados_nn.Dados_Entrada();
 };
 
 

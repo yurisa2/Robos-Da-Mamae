@@ -17,8 +17,8 @@ class ML
   double Matriz[][200];
   int numero_linhas;
   int entradas; //colunas ativas (sem NULL)
-  bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 9,int nNeuronCapa1 = 10,int nNeuronCapa2 = 6,int nNeuronSal = 2);
-  bool SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 9,int nNeuronCapa1 = 10,int nNeuronCapa2 = 6,int nNeuronSal = 2);
+  bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
+  bool SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
   void ML_Load(string NomeArquivo);
 
   private:
@@ -106,12 +106,12 @@ void ML::Append(string Linha)
 }
 
 
-bool ML::SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 9,int nNeuronCapa1 = 10,int nNeuronCapa2 = 6,int nNeuronSal = 2)
+bool ML::SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2)
 {bool redSalvada= false;
   int k= 0, i= 0, j= 0, numCapas= 0, arNeurCapa[], neurCapa1= 1, funcTipo= 0, puntFichRed= 9999;
   double umbral= 0, peso= 0, media= 0, sigma= 0;
   if(nombArch=="") nombArch= "copiaSegurRed";
-  nombArch= nombArch+".red";
+  nombArch= nombArch;
   FileDelete(nombArch, FILE_COMMON);
   ResetLastError();
   puntFichRed= FileOpen(nombArch, FILE_WRITE|FILE_BIN|FILE_COMMON);
@@ -159,15 +159,21 @@ bool ML::SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int n
 }
 
 
-bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 9,int nNeuronCapa1 = 10,int nNeuronCapa2 = 6,int nNeuronSal = 2)
+bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2)
 {
   bool exito= false;
   int k= 0, i= 0, j= 0, nEntradas= 0, nSalidas= 0, nPesos= 0,
   numCapas= 0, arNeurCapa[], funcTipo= 0, puntFichRed= 9999;
   double umbral= 0, peso= 0, media= 0, sigma= 0;
   if(nombArch=="") nombArch= "copiaSegurRed";
-  nombArch= nombArch+".red";
-  puntFichRed= FileOpen(nombArch, FILE_READ|FILE_BIN|FILE_COMMON);
+  nombArch= nombArch;
+  puntFichRed= FileOpen(nombArch, FILE_READ|FILE_BIN|FILE_COMMON|FILE_SHARE_READ);
+  if(puntFichRed==INVALID_HANDLE)
+  {
+    Print("Deu pau no arquivo do LEvanta amigo!");
+    Print("nombArch " + nombArch);
+
+  }
   exito= puntFichRed!=INVALID_HANDLE;
   if(exito)
   {

@@ -7,10 +7,10 @@
 //+------------------------------------------------------------------+
 
 //+------------------------------------------------------------------+
-input int segunda_camada = 18;
-input int terceira_camada = 30;
-int epochs = 1000;
-int restarts_ = 5 ;
+input int segunda_camada = 6;
+input int terceira_camada = 3;
+int epochs = 10;
+int restarts_ = 1 ;
 
 double mse = 0;
 //+-----------------------------------------------------------------+
@@ -26,7 +26,7 @@ void OnInit()
     double wstep = 0.001 ;
     double decay = 0.01 ;
 
-    machine_learning.ML_Load("Zefero.hist");
+    machine_learning.ML_Load("Zefero_Corte.hist");
 
     amostras = machine_learning.numero_linhas;
     // machine_learning.entradas;
@@ -57,7 +57,8 @@ void OnInit()
     // algebra.MLPTrainLM(network,xy,amostras,decay,restarts_,resposta,infotreino);
     algebra.MLPTrainLBFGS(network,xy,amostras,decay,restarts_,wstep,epochs,resposta,infotreino);
 
-    machine_learning.SalvaRede(network,"Networken_Valendo");
+     
+    machine_learning.SalvaRede(network,"Networken_teste_ultimo_extremo",machine_learning.entradas-1,segunda_camada,terceira_camada,2);
 
     //
     // Print("Erro? " + algebra.MLPRMSError(network,xy,amostras));

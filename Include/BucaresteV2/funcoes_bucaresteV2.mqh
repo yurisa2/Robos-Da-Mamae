@@ -39,7 +39,11 @@ void Bucareste::Avalia()
     //if(mudanca != 0 ) Print("Mudanca: " + mudanca); //DEBUG
 
 
-    if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() == 0)   opera.AbrePosicao(mudanca,"BucaresteV2: ");
+    if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() == 0)
+{
+      if(mudanca == Buca_Compra_Venda || Buca_Compra_Venda == 0 ) opera.AbrePosicao(mudanca,"BucaresteV2: ");
+}
+
     if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() != 0 && Buca_Encerra_Indicador)   opera.FechaPosicao();
 
     delete(opera);

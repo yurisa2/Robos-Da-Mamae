@@ -26,11 +26,16 @@ string Nome_Robo = "Zefero";
 #include <Zefero\zefero_funcoes.mqh>
 #include <Zefero\zefero_inputs.mqh>
 
-
+#include <BucaresteV2\bucaresteV2_inputs.mqh>
+#include <BucaresteV2\funcoes_bucaresteV2.mqh>
 
 int OnInit()
 {
-   
+   int nNeuronEntra = 14;
+   int nNeuronCapa1 = 60;
+   int nNeuronCapa2 = 60;
+   int nNeuronSal = 2;
+ // machine_learning.Levanta(rede_network,"zefero14-10-6-2",14,10,6,2);
 
 
   Init_Padrao();
@@ -55,7 +60,9 @@ void OnTimer()
   Comentario();
 
   Operacoes_No_Timer();
-
+  Zefero *Zefero_oo = new Zefero;
+  Zefero_oo.Comentario();
+  delete Zefero_oo;
 }
 
 void OnTick()
@@ -85,16 +92,15 @@ double OnTester()
 void OnNewBar()
 {
 
-  Zefero *Zefero_oo = new Zefero;
-
-  Zefero_oo.Entra();
-
-  delete Zefero_oo;
-
-
+  Bucareste *Buca = new Bucareste;
+  Buca.Avalia();
+  delete(Buca);
 }
+
+
+
 
 void OnDeinit(const int reason)
   {
-          machine_learning.ML_Save("Zefero.hist");
+          machine_learning.ML_Save("Zefero_Bucareste.hist");
   }

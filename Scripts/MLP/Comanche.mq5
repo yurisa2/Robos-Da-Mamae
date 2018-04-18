@@ -20,8 +20,11 @@ void OnStart()
   int restarts = 5 ;
   double wstep = 0.001 ;
   double decay = 0.01 ;
+  int segunda_camada = 10;
+  int terceira_camada = 6;
+  int quarta_camada = 2;
 
-  machine_learning.ML_Load("Zefero.hist");
+  machine_learning.ML_Load("Zefero_Corte.hist");
 
   amostras = machine_learning.numero_linhas;
   // machine_learning.entradas;
@@ -48,14 +51,16 @@ void OnStart()
 
   int resposta;
 
-  algebra.MLPCreateC2(machine_learning.entradas-1,18,30,2,network);
+  algebra.MLPCreateC2(machine_learning.entradas-1,segunda_camada,terceira_camada,quarta_camada,network);
   // algebra.MLPTrainLM(network,xy,amostras,decay,restarts,resposta,infotreino);
   algebra.MLPTrainLBFGS(network,xy,amostras,decay,restarts,wstep,epochs,resposta,infotreino);
 
-  machine_learning.SalvaRede(network,"Networken_Valendo");
+  string Nome_Arquivo = "zefero"+IntegerToString(machine_learning.entradas-1)+"-"
+  +IntegerToString(segunda_camada)+"-"+IntegerToString(terceira_camada)+"-"+IntegerToString(quarta_camada);
+  machine_learning.SalvaRede(network,Nome_Arquivo,machine_learning.entradas-1,segunda_camada,terceira_camada,quarta_camada);
 
   //
-  Print("Erro? " + algebra.MLPRMSError(network,xy,amostras));
+  Print("Erro? " + DoubleToString(algebra.MLPRMSError(network,xy,amostras)));
   //
   // x[0] = 0.61;
   // x[1] = 0.56;

@@ -19,7 +19,7 @@ input int HoraDeFim = 17;                                                  //Hor
 input int MinutoDeFim = 27;                                                //Minuto de Fim
 input bool   ZerarFinalDoDia = true;                                       //Encerra operações no final do dia (execução extendida)
 input string Descricao_Robo_Alpha = "";                                    //Descriçõo para logs e mensagens
-input bool Aleta_Operacao = false;                                          //Aparece um alerta quando entra     
+input bool Aleta_Operacao = false;                                          //Aparece um alerta quando entra
 //string Descricao_Robo = Descricao_Robo(); +"|"+Descricao_Robo_Alpha;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
@@ -138,17 +138,39 @@ double Calcula_Spread_RT = 0;
 bool TaDentroDoHorario_RT = 0;
 
 //FIM DAS VDG
-///////////////////////////////////////////
-input string Label_Filtro_Fuzzy = "---------- FILTRO FUZZY ----------";
-input bool Filtro_Fuzzy_Ligado = false;
-input bool Filtro_Fuzzy_Arquivo_Fisico = false;
-input bool Filtro_Fuzzy_Escreve_Estatistica = false;
-input bool Filtro_Fuzzy_Escreve_Fuz = false;
-input double Filtro_Fuzzy_Limite = 51;
-input int Filtro_Fuzzy_Num_Linhas = 20;
-input int Filtro_Fuzzy_Ultimas_Linhas = 100;
-input double Filtro_Fuzzy_Histerese = 0.3;
+/////////////////////////////////////////// TEMP OFF
+// input string Label_Filtro_Fuzzy = "---------- FILTRO FUZZY ----------";
+// input bool Filtro_Fuzzy_Ligado = false;
+// input bool Filtro_Fuzzy_Arquivo_Fisico = false;
+// input bool Filtro_Fuzzy_Escreve_Estatistica = false;
+// input bool Filtro_Fuzzy_Escreve_Fuz = false;
+// input double Filtro_Fuzzy_Limite = 51;
+// input int Filtro_Fuzzy_Num_Linhas = 20;
+// input int Filtro_Fuzzy_Ultimas_Linhas = 100;
+// input double Filtro_Fuzzy_Histerese = 0.3;
+string Label_Filtro_Fuzzy = "---------- FILTRO FUZZY ----------";
+bool Filtro_Fuzzy_Ligado = false;
+bool Filtro_Fuzzy_Arquivo_Fisico = false;
+bool Filtro_Fuzzy_Escreve_Estatistica = false;
+bool Filtro_Fuzzy_Escreve_Fuz = false;
+double Filtro_Fuzzy_Limite = 51;
+int Filtro_Fuzzy_Num_Linhas = 20;
+int Filtro_Fuzzy_Ultimas_Linhas = 100;
+double Filtro_Fuzzy_Histerese = 0.3;
 
 double filtro_fuzzy_arquivo = 0;
-
-//FIM DAS VDG
+/////////////////////////////////////////// TEMP OFF
+input string Label_Filtro_RNA = "---------- RNA ----------";
+input bool rna_on = false;
+input bool rna_on_treino = false;
+input int rna_epochs = 1000;
+input int rna_segunda_camada = 10;
+input int rna_terceira_camada = 6;
+input int rna_quarta_camada = 2;
+input int rna_restarts_ = 5 ;
+input double rna_wstep_ = 0.001 ;
+input double rna_decay_ = 0.01 ;
+input bool rna_Salva_Arquivo_rede = false;
+input string rna_nome_arquivo_rede = "Zefero.rede";
+input bool rna_Salva_Arquivo_hist = false;
+input string rna_nome_arquivo_hist = "Zefero.hist";

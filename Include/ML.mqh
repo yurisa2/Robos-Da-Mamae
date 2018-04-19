@@ -14,12 +14,14 @@ class ML
   void  ML_Save(string NomeArquivo);
   string Lines[];
   void Append(string Linha);
-  double Matriz[][200];
+  double Matriz[][30];
   int numero_linhas;
   int entradas; //colunas ativas (sem NULL)
   bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
   bool SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
   void ML_Load(string NomeArquivo);
+  void Treino();
+
 
   private:
   int Handle_Arquivo;
@@ -71,7 +73,7 @@ void ML::ML_Load(string NomeArquivo)
       i++;
       num_linhas = i;
     }
-  numero_linhas = num_linhas;
+    numero_linhas = num_linhas;
     //--- close the file
     FileClose(Handle_Arquivo_Leitura);
     //  PrintFormat("Arquivo Lido, %s foi fechado",InpFileName);
@@ -84,26 +86,27 @@ void ML::ML_Load(string NomeArquivo)
 void ML::Append(string Linha)
 {
   int comeco = ArraySize(Lines);
-
+  numero_linhas = 0;
   int num_linhas;
 
   ArrayResize(Lines,ArraySize(Lines)+1);
   Lines[comeco] += Linha;
 
-  string linha_temp[200];
+  string linha_temp[30];
   ArrayResize(Matriz,ArraySize(Matriz)+1);
   num_linhas = StringSplit(Linha,StringGetCharacter(",",0),linha_temp);
   entradas = num_linhas;
 
-  for(int i=0; i<200;i++)
+  for(int i=0; i<30;i++)
   {
     Matriz[comeco][i] = StringToDouble(linha_temp[i]);
   }
   //Preenche o resto com NULL
-  for(int i = num_linhas;i<200;i++)
+  for(int i = num_linhas;i<30;i++)
   {
     Matriz[comeco][i] = NULL;
   }
+  numero_linhas = ArraySize(Lines);
 }
 
 
@@ -171,7 +174,7 @@ bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNe
   puntFichRed= FileOpen(nombArch, FILE_READ|FILE_BIN|FILE_COMMON|FILE_SHARE_READ);
   if(puntFichRed==INVALID_HANDLE)
   {
-    Print("Deu pau no arquivo do LEvanta amigo!");
+    Print("Deu pau no arquivo do Levanta amigo!");
     Print("nombArch " + nombArch);
 
   }
@@ -222,3 +225,43 @@ bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNe
   FileClose(puntFichRed);
   return(exito);
 }
+
+void ML::Treino()
+{
+  CAlglib algebra_trn;
+  CMultilayerPerceptronShell network_trn;
+  CMLPReportShell infotreino_trn;
+
+  int amostras = this.numero_linhas; //Verificar a Matrix
+
+
+  CMatrixDouble xy(amostras+1,this.entradas);
+  for(int i = 0; i < amostras; i++) {
+    for(int j = 0; j < this.entradas; j++)
+    {
+      xy[i].Set(j,this.Matriz[i][j]);
+    }
+  }
+
+  int resposta_trn;
+
+  PrintFormat("Iniciando Treino em %i Amostras",amostras);
+
+  algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_quarta_camada,network_trn);
+  // algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,restarts,resposta_trn,infotreino_trn);
+  algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
+  double mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
+
+  string Nome_Arquivo = rna_nome_arquivo_rede+"."+IntegerToString(this.entradas-1)+"-"
+  +IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada)+"-"
+  +IntegerToString(rna_quarta_camada)+".e"+DoubleToString(mse)+".trn";
+
+  if(rna_Salva_Arquivo_rede)
+  this.SalvaRede(network_trn,Nome_Arquivo,this.entradas-1,
+    rna_segunda_camada,rna_terceira_camada,rna_quarta_camada);
+
+
+    Print("Erro? " + DoubleToString(algebra_trn.MLPRMSError(network_trn,xy,amostras)));
+  }
+
+  ML machine_learning;

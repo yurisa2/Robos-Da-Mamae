@@ -55,8 +55,12 @@ void OnInit()
     algebra.MLPTrainLBFGS(network,xy,amostras,decay_,restarts_,wstep_,epochs,resposta,infotreino);
 
     string Nome_Arquivo = nome_arquivo+"."+IntegerToString(machine_learning.entradas-1)+"-"
-    +IntegerToString(segunda_camada)+"-"+IntegerToString(terceira_camada)+"-"+IntegerToString(quarta_camada);
-    if(Salva_Arquivo) machine_learning.SalvaRede(network,Nome_Arquivo,machine_learning.entradas-1,segunda_camada,terceira_camada,quarta_camada);
+    +IntegerToString(segunda_camada)+"-"+IntegerToString(terceira_camada)+"-"
+    +IntegerToString(quarta_camada).".trn";
+
+    if(Salva_Arquivo)
+    machine_learning.SalvaRede(network,Nome_Arquivo,machine_learning.entradas-1,
+      segunda_camada,terceira_camada,quarta_camada);
 
     mse = algebra.MLPRMSError(network,xy,amostras);
 

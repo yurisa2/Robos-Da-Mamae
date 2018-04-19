@@ -382,3 +382,28 @@ class on_trade_robo {
   int io;
 
 };
+
+void on_trade_robo::on_trade_robo(int es=0, double lucro = 0) //in = 1 |  out = -1
+{
+  io = es;
+  if(io == -1) dados_nn.Saida(lucro);
+  if(io == 1) dados_nn.Dados_Entrada();
+};
+
+double OnTester()
+{
+  double resultado;
+  if(rna_on && rna_on_treino) machine_learning.Treino(machine_learning.rede_obj);
+  if(rna_on && rna_Salva_Arquivo_hist) machine_learning.ML_Save(rna_nome_arquivo_hist);
+
+  if(!Custom_resultado_treino_nn)
+  {
+  Totalizador *totalizator = new Totalizador();
+  resultado = totalizator.ganho_liquido();
+ // resultado = totalizator.negocios;
+  delete(totalizator);
+  }
+  else resultado = machine_learning.mse;
+
+  return resultado;
+}

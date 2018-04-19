@@ -42,8 +42,8 @@ void Bucareste::Avalia()
 
 
     if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() == 0)
-{
-    if(rna_filtros_on) machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
+    {
+      if(rna_filtros_on) machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
 
 
       double ml_p = resposta_y[1];
@@ -51,7 +51,7 @@ void Bucareste::Avalia()
       // Print("ml_p "+ml_p);
 
       if((mudanca == Buca_Compra_Venda || Buca_Compra_Venda == 0) && (ml_p*100 > rna_permite) ) opera.AbrePosicao(mudanca,"BucaresteV2: ");
-}
+    }
 
     if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() != 0 && Buca_Encerra_Indicador)   opera.FechaPosicao();
 

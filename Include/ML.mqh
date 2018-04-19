@@ -6,17 +6,20 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-double x_entrada[27];
+int entrada = 27;
+double x_entrada[];
 double resposta_y[2];
+int rna_entrada = entrada;
 
 class ML
 {
 
   public:
+  ML() {ArrayResize(x_entrada,entrada);};
   void  ML_Save(string NomeArquivo);
   string Lines[];
   void Append(string Linha);
-  double Matriz[][28];
+  double Matriz[][100];
   int numero_linhas;
   int entradas; //colunas ativas (sem NULL)
   bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
@@ -97,23 +100,24 @@ void ML::Append(string Linha)
   ArrayResize(Lines,ArraySize(Lines)+1);
   Lines[tamanho_linhas] += Linha;
 
-  string linha_temp[28];
+  string linha_temp[];
+  ArrayResize(linha_temp,entrada+1);
+
   ArrayResize(Matriz,ArrayRange(Matriz,0)+1);
   num_linhas = StringSplit(Linha,StringGetCharacter(",",0),linha_temp);
   entradas = num_linhas;
 
-  for(int i=0; i<28;i++)
+  for(int i=0; i<entrada+1;i++)
   {
     Matriz[tamanho_linhas][i] = StringToDouble(linha_temp[i]);
   }
   //Preenche o resto com NULL
-  for(int i = num_linhas;i<28;i++)
+  for(int i = num_linhas;i<entrada+1;i++)
   {
     Matriz[tamanho_linhas][i] = NULL;
   }
   numero_linhas = ArraySize(Lines);
 }
-
 
 bool ML::SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2)
 {bool redSalvada= false;
@@ -167,7 +171,6 @@ bool ML::SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int n
   return(redSalvada);
 }
 
-
 bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2)
 {
   bool exito= false;
@@ -181,7 +184,6 @@ bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNe
   {
     Print("Deu pau no arquivo do Levanta amigo!");
     Print("nombArch " + nombArch);
-
   }
   exito= puntFichRed!=INVALID_HANDLE;
   if(exito)
@@ -300,7 +302,7 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
     x[26] = dados_nn.Igor_N;
     CAlglib algebra_proc;
 
-  algebra_proc.MLPProcess(objRed,x,y);
-      }
+    algebra_proc.MLPProcess(objRed,x,y);
+  }
 
   ML machine_learning;

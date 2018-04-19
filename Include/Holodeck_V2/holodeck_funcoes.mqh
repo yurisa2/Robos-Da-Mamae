@@ -86,7 +86,7 @@ void Holodeck::Avalia()
   ultimo_rompimento_operado != ultimo_rompimento
   )
   {
-    if(Direcao() > 0
+    if(Direcao() > 0 && holo_compra
     && daotick_geral > (O_BB.BB_Base() + (rompimento_mediana * Tick_Size)) )
     {
       Opera_Mercado *opera = new Opera_Mercado;
@@ -95,7 +95,7 @@ void Holodeck::Avalia()
       ultimo_rompimento_operado = ultimo_rompimento;
     }
 
-    if(Direcao() < 0
+    if(Direcao() < 0 && holo_venda
     && daotick_geral < (O_BB.BB_Base() - (rompimento_mediana * Tick_Size)) )
     {
       Opera_Mercado *opera = new Opera_Mercado;

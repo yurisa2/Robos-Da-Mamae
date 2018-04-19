@@ -166,7 +166,6 @@ input bool rna_on = false;
 input bool rna_on_treino = false;
 input int rna_epochs = 1000;
 
-input int rna_entrada = 28;
 input int rna_segunda_camada = 10;
 input int rna_terceira_camada = 6;
 input int rna_quarta_camada = 2;

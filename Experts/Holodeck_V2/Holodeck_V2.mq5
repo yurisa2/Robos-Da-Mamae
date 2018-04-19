@@ -75,17 +75,6 @@ void OnTick()
 }
 
 
-double OnTester()
-{
-  double resultado;
-
-  Totalizador *totalizator = new Totalizador();
-  resultado = totalizator.ganho_liquido();
- // resultado = totalizator.negocios;
-  delete(totalizator);
-  return resultado;
-}
-
 void OnNewBar()
 {
 

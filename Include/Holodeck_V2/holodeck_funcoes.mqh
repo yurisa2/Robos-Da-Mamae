@@ -77,6 +77,13 @@ int Holodeck::Direcao()
 
 void Holodeck::Avalia()
 {
+  bool filtro_rna_permite = false;
+  double ml_p = resposta_y[1];
+
+  if(rna_filtros_on) machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
+  if(rna_filtros_on && ml_p*100 > rna_permite) filtro_rna_permite = true;
+  if(!rna_filtros_on) filtro_rna_permite = true;
+
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
 
   if(Toque_Mediana() &&
@@ -86,7 +93,7 @@ void Holodeck::Avalia()
   ultimo_rompimento_operado != ultimo_rompimento
   )
   {
-    if(Direcao() > 0 && holo_compra
+    if(Direcao() > 0 && holo_compra && filtro_rna_permite
     && daotick_geral > (O_BB.BB_Base() + (rompimento_mediana * Tick_Size)) )
     {
       Opera_Mercado *opera = new Opera_Mercado;
@@ -95,7 +102,7 @@ void Holodeck::Avalia()
       ultimo_rompimento_operado = ultimo_rompimento;
     }
 
-    if(Direcao() < 0 && holo_venda
+    if(Direcao() < 0 && holo_venda && filtro_rna_permite
     && daotick_geral < (O_BB.BB_Base() - (rompimento_mediana * Tick_Size)) )
     {
       Opera_Mercado *opera = new Opera_Mercado;

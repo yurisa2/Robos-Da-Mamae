@@ -116,8 +116,8 @@ double daotick(int tipo = 0)
 
   if(tipo == -1)
   {
-  retornoTick = last_tick.bid;
-  // MessageBox("Pegou o bid","bid",MB_OK); //DEBUG
+    retornoTick = last_tick.bid;
+    // MessageBox("Pegou o bid","bid",MB_OK); //DEBUG
   }
   if(tipo == 1)  retornoTick = last_tick.ask;
 
@@ -189,7 +189,7 @@ void Comentario ()
     " COMPRADO | SL: "+
     " | TP: "+
     " TS: "+" - "+
-     "Delta op Atual:"
+    "Delta op Atual:"
 
     ;
   }
@@ -226,11 +226,11 @@ void Comentario ()
   Comentario_Robo
   ;
 
-Comentario_Debug_funcao();
+  Comentario_Debug_funcao();
 
-if(Tipo_Comentario == 0 && !Otimizacao) Comment(Comentario_Simples);
-if(Tipo_Comentario == 1 && !Otimizacao) Comment(Comentario_Avancado);
-if(Tipo_Comentario == 2 && !Otimizacao) Comment(Comentario_Debug);
+  if(Tipo_Comentario == 0 && !Otimizacao) Comment(Comentario_Simples);
+  if(Tipo_Comentario == 1 && !Otimizacao) Comment(Comentario_Avancado);
+  if(Tipo_Comentario == 2 && !Otimizacao) Comment(Comentario_Debug);
 
 }
 
@@ -289,7 +289,6 @@ void Encerra_Ops_Dia()
   delete(Condicoes);
 
 }
-
 void Init_Padrao ()
 {
   ObjectsDeleteAll(0,0,-1);
@@ -312,6 +311,8 @@ void Init_Padrao ()
 
   File_Init();
   File_Filtro_Init();
+
+  if(rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta(machine_learning.rede_obj,rna_arquivo_trn,rna_entrada,rna_segunda_camada,rna_terceira_camada,rna_quarta_camada);
 
 }
 
@@ -345,21 +346,21 @@ void IniciaDia ()
 MqlRates Preco(int barra = 0)
 {
   // barra = barra + 1;
-    MqlRates rates_Preco[];
-    ArraySetAsSeries(rates_Preco,true);
-    int copied=CopyRates(Symbol(),0,0,200,rates_Preco);
+  MqlRates rates_Preco[];
+  ArraySetAsSeries(rates_Preco,true);
+  int copied=CopyRates(Symbol(),0,0,200,rates_Preco);
 
-    return rates_Preco[barra];
+  return rates_Preco[barra];
 }
 
 MqlRates PrecoAtual()
 {
   // Rates Structure for the data of the Last incomplete BAR
-     MqlRates BarData[1];
-     CopyRates(Symbol(), Period(), 0, 1, BarData); // Copy the data of last incomplete BAR
+  MqlRates BarData[1];
+  CopyRates(Symbol(), Period(), 0, 1, BarData); // Copy the data of last incomplete BAR
 
   // Copy latest close prijs.
-     return BarData[0];
+  return BarData[0];
 }
 
 double n_(double valor, double min, double max)
@@ -374,9 +375,9 @@ double n_(double valor, double min, double max)
 }
 
 class on_trade_robo {
-public:
-on_trade_robo(int es=0, double lucro = 0);
-double Profit;
+  public:
+  on_trade_robo(int es=0, double lucro = 0);
+  double Profit;
 
   int io;
 

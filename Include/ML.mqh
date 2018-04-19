@@ -6,6 +6,8 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
+double x_entrada[27];
+double resposta_y[2];
 
 class ML
 {
@@ -14,14 +16,16 @@ class ML
   void  ML_Save(string NomeArquivo);
   string Lines[];
   void Append(string Linha);
-  double Matriz[][30];
+  double Matriz[][28];
   int numero_linhas;
   int entradas; //colunas ativas (sem NULL)
   bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
   bool SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
   void ML_Load(string NomeArquivo);
-  void Treino();
-
+  void Treino(CMultilayerPerceptronShell &network_trn);
+  double resp_y[2];
+  CMultilayerPerceptronShell rede_obj;
+  void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed, double &x[]);
 
   private:
   int Handle_Arquivo;
@@ -85,26 +89,26 @@ void ML::ML_Load(string NomeArquivo)
 
 void ML::Append(string Linha)
 {
-  int comeco = ArraySize(Lines);
+  int tamanho_linhas = ArraySize(Lines);
   numero_linhas = 0;
   int num_linhas;
 
   ArrayResize(Lines,ArraySize(Lines)+1);
-  Lines[comeco] += Linha;
+  Lines[tamanho_linhas] += Linha;
 
-  string linha_temp[30];
-  ArrayResize(Matriz,ArraySize(Matriz)+1);
+  string linha_temp[28];
+  ArrayResize(Matriz,ArrayRange(Matriz,0)+1);
   num_linhas = StringSplit(Linha,StringGetCharacter(",",0),linha_temp);
   entradas = num_linhas;
 
-  for(int i=0; i<30;i++)
+  for(int i=0; i<28;i++)
   {
-    Matriz[comeco][i] = StringToDouble(linha_temp[i]);
+    Matriz[tamanho_linhas][i] = StringToDouble(linha_temp[i]);
   }
   //Preenche o resto com NULL
-  for(int i = num_linhas;i<30;i++)
+  for(int i = num_linhas;i<28;i++)
   {
-    Matriz[comeco][i] = NULL;
+    Matriz[tamanho_linhas][i] = NULL;
   }
   numero_linhas = ArraySize(Lines);
 }
@@ -226,10 +230,9 @@ bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNe
   return(exito);
 }
 
-void ML::Treino()
+void ML::Treino(CMultilayerPerceptronShell &network_trn)
 {
   CAlglib algebra_trn;
-  CMultilayerPerceptronShell network_trn;
   CMLPReportShell infotreino_trn;
 
   int amostras = this.numero_linhas; //Verificar a Matrix
@@ -263,5 +266,40 @@ void ML::Treino()
 
     Print("Erro? " + DoubleToString(algebra_trn.MLPRMSError(network_trn,xy,amostras)));
   }
+
+  void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
+  {
+    dados_nn.Dados_Entrada();
+    x[0] = dados_nn.BB_Cx_BB_Low;
+    x[1] = dados_nn.BB_Cx_BB_Base;
+    x[2] = dados_nn.BB_Cx_BB_High;
+    x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
+    x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
+    x[5] = dados_nn.BB_Normalizado_BB_Low;
+    x[6] = dados_nn.BB_Normalizado_BB_Base;
+    x[7] = dados_nn.BB_Normalizado_BB_High;
+    x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
+    x[9] = dados_nn.BB_Normalizado_BB_Posicao_Percent;
+    x[10] = dados_nn.RSI_Valor;
+    x[11] = dados_nn.RSI_Cx;
+    x[12] = dados_nn.RSI_Normalizado;
+    x[13] = dados_nn.Hora_n;
+    x[14] = dados_nn.MFI_Normalizado;
+    x[15] = dados_nn.MFI_Cx;
+    x[16] = dados_nn.Demarker_Normalizado;
+    x[17] = dados_nn.Demarker_Cx;
+    x[18] = dados_nn.Bulls_Normalizado;
+    x[19] = dados_nn.Bulls_Cx;
+    x[20] = dados_nn.Bears_Normalizado;
+    x[22] = dados_nn.Bears_Cx;
+    x[22] = dados_nn.AC_Normalizado;
+    x[23] = dados_nn.AC_Cx;
+    x[24] = dados_nn.ADX_Normalizado;
+    x[25] = dados_nn.ADX_Cx;
+    x[26] = dados_nn.Igor_N;
+    CAlglib algebra_proc;
+
+  algebra_proc.MLPProcess(objRed,x,y);
+      }
 
   ML machine_learning;

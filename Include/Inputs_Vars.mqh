@@ -160,10 +160,12 @@ double Filtro_Fuzzy_Histerese = 0.3;
 
 double filtro_fuzzy_arquivo = 0;
 /////////////////////////////////////////// TEMP OFF
-input string Label_Filtro_RNA = "---------- RNA ----------";
+input string Label_Aq_RNA = "---------- RNA Aquisição e Treino ----------";
 input bool rna_on = false;
 input bool rna_on_treino = false;
 input int rna_epochs = 1000;
+
+input int rna_entrada = 28;
 input int rna_segunda_camada = 10;
 input int rna_terceira_camada = 6;
 input int rna_quarta_camada = 2;
@@ -174,3 +176,9 @@ input bool rna_Salva_Arquivo_rede = false;
 input string rna_nome_arquivo_rede = "Zefero.rede";
 input bool rna_Salva_Arquivo_hist = false;
 input string rna_nome_arquivo_hist = "Zefero.hist";
+/////////////////////////////////////////// TEMP OFF
+input string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------";
+input bool rna_filtros_on = false;
+input double rna_permite = 50;
+input bool rna_levanta_arquivo_rede = false;
+input string rna_arquivo_trn = "Zefero.trn";

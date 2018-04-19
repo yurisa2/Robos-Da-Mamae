@@ -85,6 +85,7 @@ void Capta_Dados_Entrada::Dados_Entrada()
   Igor_N = Normaliza_NN(igor.Fuzzy_CEV()/100,1);
 
   delete banda_bolinger;
+  delete igor;
   delete rsi;
   delete hilo;
   delete mfi;

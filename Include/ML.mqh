@@ -26,6 +26,7 @@ class ML
   double resp_y[2];
   CMultilayerPerceptronShell rede_obj;
   void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed, double &x[]);
+  double mse;
 
   private:
   int Handle_Arquivo;
@@ -253,7 +254,7 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_quarta_camada,network_trn);
   // algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,restarts,resposta_trn,infotreino_trn);
   algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
-  double mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
+  this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
 
   string Nome_Arquivo = rna_nome_arquivo_rede+"."+IntegerToString(this.entradas-1)+"-"
   +IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada)+"-"

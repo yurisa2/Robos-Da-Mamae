@@ -21,6 +21,7 @@ input bool   ZerarFinalDoDia = true;                                       //Enc
 input string Descricao_Robo_Alpha = "";                                    //Descriçõo para logs e mensagens
 input bool Aleta_Operacao = false;                                          //Aparece um alerta quando entra
 //string Descricao_Robo = Descricao_Robo(); +"|"+Descricao_Robo_Alpha;
+input bool Custom_resultado_treino_nn = false;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
 input double Lotes = 1;                                                    //Volume negociado

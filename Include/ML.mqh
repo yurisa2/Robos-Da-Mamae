@@ -17,19 +17,20 @@ class ML
   public:
   ML() {ArrayResize(x_entrada,entrada);};
   void  ML_Save(string NomeArquivo);
-  string Lines[];
   void Append(string Linha);
-  double Matriz[][100];
-  int numero_linhas;
-  int entradas; //colunas ativas (sem NULL)
   bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
   bool SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
   void ML_Load(string NomeArquivo);
   void Treino(CMultilayerPerceptronShell &network_trn);
+  void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed, double &x[]);
+  void ML::Saida();
   double resp_y[2];
   CMultilayerPerceptronShell rede_obj;
-  void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed, double &x[]);
+  double Matriz[][100];
+  string Lines[];
   double mse;
+  int numero_linhas;
+  int entradas; //colunas ativas (sem NULL)
 
   private:
   int Handle_Arquivo;
@@ -270,39 +271,53 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
     Print("Erro? " + DoubleToString(algebra_trn.MLPRMSError(network_trn,xy,amostras)));
   }
 
-  void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
+void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
   {
-    dados_nn.Dados_Entrada();
-    x[0] = dados_nn.BB_Cx_BB_Low;
-    x[1] = dados_nn.BB_Cx_BB_Base;
-    x[2] = dados_nn.BB_Cx_BB_High;
-    x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
-    x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
-    x[5] = dados_nn.BB_Normalizado_BB_Low;
-    x[6] = dados_nn.BB_Normalizado_BB_Base;
-    x[7] = dados_nn.BB_Normalizado_BB_High;
-    x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
-    x[9] = dados_nn.BB_Normalizado_BB_Posicao_Percent;
-    x[10] = dados_nn.RSI_Valor;
-    x[11] = dados_nn.RSI_Cx;
-    x[12] = dados_nn.RSI_Normalizado;
-    x[13] = dados_nn.Hora_n;
-    x[14] = dados_nn.MFI_Normalizado;
-    x[15] = dados_nn.MFI_Cx;
-    x[16] = dados_nn.Demarker_Normalizado;
-    x[17] = dados_nn.Demarker_Cx;
-    x[18] = dados_nn.Bulls_Normalizado;
-    x[19] = dados_nn.Bulls_Cx;
-    x[20] = dados_nn.Bears_Normalizado;
-    x[22] = dados_nn.Bears_Cx;
-    x[22] = dados_nn.AC_Normalizado;
-    x[23] = dados_nn.AC_Cx;
-    x[24] = dados_nn.ADX_Normalizado;
-    x[25] = dados_nn.ADX_Cx;
-    x[26] = dados_nn.Igor_N;
-    CAlglib algebra_proc;
+    if(this.numero_linhas > rna_on_realtime_min_samples)
+    {
+      dados_nn.Dados_Entrada();
+      x[0] = dados_nn.BB_Cx_BB_Low;
+      x[1] = dados_nn.BB_Cx_BB_Base;
+      x[2] = dados_nn.BB_Cx_BB_High;
+      x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
+      x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
+      x[5] = dados_nn.BB_Normalizado_BB_Low;
+      x[6] = dados_nn.BB_Normalizado_BB_Base;
+      x[7] = dados_nn.BB_Normalizado_BB_High;
+      x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
+      x[9] = dados_nn.BB_Normalizado_BB_Posicao_Percent;
+      x[10] = dados_nn.RSI_Valor;
+      x[11] = dados_nn.RSI_Cx;
+      x[12] = dados_nn.RSI_Normalizado;
+      x[13] = dados_nn.Hora_n;
+      x[14] = dados_nn.MFI_Normalizado;
+      x[15] = dados_nn.MFI_Cx;
+      x[16] = dados_nn.Demarker_Normalizado;
+      x[17] = dados_nn.Demarker_Cx;
+      x[18] = dados_nn.Bulls_Normalizado;
+      x[19] = dados_nn.Bulls_Cx;
+      x[20] = dados_nn.Bears_Normalizado;
+      x[22] = dados_nn.Bears_Cx;
+      x[22] = dados_nn.AC_Normalizado;
+      x[23] = dados_nn.AC_Cx;
+      x[24] = dados_nn.ADX_Normalizado;
+      x[25] = dados_nn.ADX_Cx;
+      x[26] = dados_nn.Igor_N;
+      CAlglib algebra_proc;
 
-    algebra_proc.MLPProcess(objRed,x,y);
+      algebra_proc.MLPProcess(objRed,x,y);
+    }
+    else {
+      if(Tipo_Comentario != 2) PrintFormat("Processa sem dados Suficientes %i, autorizando tudo.",this.numero_linhas);
+      y[0]=1;
+      y[1]=1;
+    }
+    if(Tipo_Comentario != 2) PrintFormat("Processamento ML: y[0] = %i y[1] = %i",y[0],y[1]);
+  }
+
+void ML::Saida()
+  {
+    if(rna_on && rna_on_realtime && this.numero_linhas > rna_on_realtime_min_samples) Treino(this.rede_obj);
   }
 
   ML machine_learning;

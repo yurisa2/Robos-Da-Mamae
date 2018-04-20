@@ -164,6 +164,8 @@ double filtro_fuzzy_arquivo = 0;
 input string Label_Aq_RNA = "---------- RNA Aquisição e Treino ----------";
 input bool rna_on = false;
 input bool rna_on_treino = false;
+input bool rna_on_realtime = false;
+input int rna_on_realtime_min_samples = 100;
 input int rna_epochs = 1000;
 
 input int rna_segunda_camada = 10;

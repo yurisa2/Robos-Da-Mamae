@@ -386,7 +386,12 @@ class on_trade_robo {
 void on_trade_robo::on_trade_robo(int es=0, double lucro = 0) //in = 1 |  out = -1
 {
   io = es;
-  if(io == -1) dados_nn.Saida(lucro);
+  if(io == -1)
+  {
+    dados_nn.Saida(lucro);
+    machine_learning.Saida();
+  }
+
   if(io == 1) dados_nn.Dados_Entrada();
 };
 

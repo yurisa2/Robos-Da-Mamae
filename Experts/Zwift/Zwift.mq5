@@ -72,20 +72,6 @@ Operacoes_No_tick();
 
 }
 
-double OnTester()
-{
-  //return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais * custo_operacao * Lotes;
-
-  double resultado;
-
-  Totalizador *totalizator = new Totalizador();
-  resultado = totalizator.ganho_liquido();
-  delete(totalizator);
-
-  return resultado;
-
-}
-
 void OnNewBar()
 {
   Zwift *Zwift_oo = new Zwift;
@@ -108,7 +94,3 @@ if(O_Stops.Tipo_Posicao() != 0)        opera.FechaPosicao() ;
 
 
 }
-void on_trade_robo::on_trade_robo(int es=0)
-{
-  io = es;
-};

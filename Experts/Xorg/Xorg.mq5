@@ -61,20 +61,6 @@ Operacoes_No_tick();
 
 }
 
-double OnTester()
-{
-  //return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais * custo_operacao * Lotes;
-
-  double resultado;
-
-  Totalizador *totalizator = new Totalizador();
-  resultado = totalizator.ganho_liquido();
-  delete(totalizator);
-
-  return resultado;
-
-}
-
 void OnNewBar()
 {
   Xorg *Xorg_oo = new Xorg;
@@ -88,8 +74,3 @@ void OnNewBar()
 //   Print("Nova Barra Xorg");
 
 }
-
-void on_trade_robo::on_trade_robo(int es=0)
-{
-  io = es;
-};

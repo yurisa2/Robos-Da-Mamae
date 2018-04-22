@@ -7,15 +7,14 @@
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 int entrada = 27;
-double x_entrada[];
+double x_entrada[27];
 double resposta_y[2];
 int rna_entrada = entrada;
-
 class ML
 {
 
   public:
-  ML() {ArrayResize(x_entrada,entrada);};
+  // ML() {ArrayResize(x_entrada,entrada);};
   void  ML_Save(string NomeArquivo);
   void Append(string Linha);
   bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
@@ -102,18 +101,18 @@ void ML::Append(string Linha)
   Lines[tamanho_linhas] += Linha;
 
   string linha_temp[];
-  ArrayResize(linha_temp,entrada+1);
+  ArrayResize(linha_temp,entradas);
 
   ArrayResize(Matriz,ArrayRange(Matriz,0)+1);
   num_linhas = StringSplit(Linha,StringGetCharacter(",",0),linha_temp);
-  entradas = num_linhas;
+  entradas = num_linhas; //Essas linhas aqui são da segunda dimensao
 
-  for(int i=0; i<entrada+1;i++)
+  for(int i=0; i<entradas;i++)
   {
     Matriz[tamanho_linhas][i] = StringToDouble(linha_temp[i]);
   }
   //Preenche o resto com NULL
-  for(int i = num_linhas;i<entrada+1;i++)
+  for(int i = num_linhas;i<entradas;i++)
   {
     Matriz[tamanho_linhas][i] = NULL;
   }
@@ -243,7 +242,7 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
 
 
   CMatrixDouble xy(amostras+1,this.entradas);
-  for(int i = 0; i < amostras; i++) {
+  for(int i = amostras; i < amostras; i++) {
     for(int j = 0; j < this.entradas; j++)
     {
       xy[i].Set(j,this.Matriz[i][j]);
@@ -253,9 +252,12 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   int resposta_trn;
 
   PrintFormat("Iniciando Treino em %i Amostras",amostras);
+  // PrintFormat("Entradas %i ",entradas);
+  // PrintFormat("rna_entrada %i ",rna_entrada);
+  // PrintFormat("Matriz ",ArrayRange(Matriz,0));
 
   algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_quarta_camada,network_trn);
-  // algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,restarts,resposta_trn,infotreino_trn);
+  // algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
   algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
   this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
 
@@ -273,9 +275,10 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
 
 void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
   {
-    if(this.numero_linhas > rna_on_realtime_min_samples)
+    if((this.numero_linhas > rna_on_realtime_min_samples && rna_on_realtime && rna_filtros_on) || (rna_filtros_on && !rna_on_realtime))
     {
       dados_nn.Dados_Entrada();
+
       x[0] = dados_nn.BB_Cx_BB_Low;
       x[1] = dados_nn.BB_Cx_BB_Base;
       x[2] = dados_nn.BB_Cx_BB_High;
@@ -297,22 +300,37 @@ void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
       x[18] = dados_nn.Bulls_Normalizado;
       x[19] = dados_nn.Bulls_Cx;
       x[20] = dados_nn.Bears_Normalizado;
-      x[22] = dados_nn.Bears_Cx;
+      x[21] = dados_nn.Bears_Cx;
       x[22] = dados_nn.AC_Normalizado;
       x[23] = dados_nn.AC_Cx;
       x[24] = dados_nn.ADX_Normalizado;
       x[25] = dados_nn.ADX_Cx;
       x[26] = dados_nn.Igor_N;
+
+      // for(int i = 0; i < ArraySize(x); i++)
+      // {
+      // PrintFormat("i: %f valor: %f",i,x[i]);
+      // } //IMPRIME ENTRADA
+
       CAlglib algebra_proc;
 
+      ZeroMemory(y);
+      ZeroMemory(resposta_y);
+
       algebra_proc.MLPProcess(objRed,x,y);
+      if(Tipo_Comentario != 2)
+      {PrintFormat("Valor y[0]: %f e y[1]: %f.",y[0],y[1]);
+      PrintFormat("Valor y[0]: %f e y[1]: %f.",y[0],y[1]);}
     }
     else {
       if(Tipo_Comentario != 2) PrintFormat("Processa sem dados Suficientes %i, autorizando tudo.",this.numero_linhas);
+      // ArrayResize(y,2);
+
       y[0]=1;
       y[1]=1;
+      // resposta_y[0]=1;
+      // resposta_y[1]=1;
     }
-    if(Tipo_Comentario != 2) PrintFormat("Processamento ML: y[0] = %i y[1] = %i",y[0],y[1]);
   }
 
 void ML::Saida()

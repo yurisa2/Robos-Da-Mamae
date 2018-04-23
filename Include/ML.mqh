@@ -6,15 +6,15 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-int entrada = 27;
-double x_entrada[27];
+int entrada = 6;
+double x_entrada[];
 double resposta_y[2];
 int rna_entrada = entrada;
 class ML
 {
 
   public:
-  // ML() {ArrayResize(x_entrada,entrada);};
+  ML() {ArrayResize(x_entrada,entrada);};
   void  ML_Save(string NomeArquivo);
   void Append(string Linha);
   bool Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2);
@@ -256,7 +256,8 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   // PrintFormat("rna_entrada %i ",rna_entrada);
   // PrintFormat("Matriz ",ArrayRange(Matriz,0));
 
-  algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_quarta_camada,network_trn);
+  // algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_quarta_camada,network_trn);
+  algebra_trn.MLPCreateC1(this.entradas-1,rna_segunda_camada,rna_quarta_camada,network_trn);
   // algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
   algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
   this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
@@ -270,6 +271,7 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
     rna_segunda_camada,rna_terceira_camada,rna_quarta_camada);
 
 
+    Print("Entradas: " + DoubleToString(this.entradas-1));
     Print("Erro? " + DoubleToString(algebra_trn.MLPRMSError(network_trn,xy,amostras)));
   }
 
@@ -279,33 +281,33 @@ void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
     {
       dados_nn.Dados_Entrada();
 
-      x[0] = dados_nn.BB_Cx_BB_Low;
-      x[1] = dados_nn.BB_Cx_BB_Base;
-      x[2] = dados_nn.BB_Cx_BB_High;
-      x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
-      x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
-      x[5] = dados_nn.BB_Normalizado_BB_Low;
-      x[6] = dados_nn.BB_Normalizado_BB_Base;
-      x[7] = dados_nn.BB_Normalizado_BB_High;
-      x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
-      x[9] = dados_nn.BB_Normalizado_BB_Posicao_Percent;
-      x[10] = dados_nn.RSI_Valor;
-      x[11] = dados_nn.RSI_Cx;
-      x[12] = dados_nn.RSI_Normalizado;
-      x[13] = dados_nn.Hora_n;
-      x[14] = dados_nn.MFI_Normalizado;
-      x[15] = dados_nn.MFI_Cx;
-      x[16] = dados_nn.Demarker_Normalizado;
-      x[17] = dados_nn.Demarker_Cx;
-      x[18] = dados_nn.Bulls_Normalizado;
-      x[19] = dados_nn.Bulls_Cx;
-      x[20] = dados_nn.Bears_Normalizado;
-      x[21] = dados_nn.Bears_Cx;
-      x[22] = dados_nn.AC_Normalizado;
-      x[23] = dados_nn.AC_Cx;
-      x[24] = dados_nn.ADX_Normalizado;
-      x[25] = dados_nn.ADX_Cx;
-      x[26] = dados_nn.Igor_N;
+      // x[0] = dados_nn.BB_Cx_BB_Low;
+      // x[1] = dados_nn.BB_Cx_BB_Base;
+      // x[2] = dados_nn.BB_Cx_BB_High;
+      // x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
+      // x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
+      // x[5] = dados_nn.BB_Normalizado_BB_Low;
+      // x[6] = dados_nn.BB_Normalizado_BB_Base;
+      // x[7] = dados_nn.BB_Normalizado_BB_High;
+      // x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
+      x[0] = dados_nn.BB_Posicao_Percent;
+      // x[10] = dados_nn.RSI_Valor;
+      // x[11] = dados_nn.RSI_Cx;
+      // x[12] = dados_nn.RSI_Normalizado;
+      x[1] = dados_nn.Hora_n;
+      x[2] = dados_nn.MFI_Normalizado;
+      // x[15] = dados_nn.MFI_Cx;
+      // x[16] = dados_nn.Demarker_Normalizado;
+      // x[17] = dados_nn.Demarker_Cx;
+      // x[18] = dados_nn.Bulls_Normalizado;
+      // x[19] = dados_nn.Bulls_Cx;
+      // x[20] = dados_nn.Bears_Normalizado;
+      // x[21] = dados_nn.Bears_Cx;
+      x[3] = dados_nn.AC_Normalizado;
+      // x[23] = dados_nn.AC_Cx;
+      x[4] = dados_nn.ADX_Normalizado;
+      // x[25] = dados_nn.ADX_Cx;
+      x[5] = dados_nn.Igor_N;
 
       // for(int i = 0; i < ArraySize(x); i++)
       // {
@@ -320,7 +322,11 @@ void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
       algebra_proc.MLPProcess(objRed,x,y);
       if(Tipo_Comentario != 2)
       {PrintFormat("Valor y[0]: %f e y[1]: %f.",y[0],y[1]);
-      PrintFormat("Valor y[0]: %f e y[1]: %f.",y[0],y[1]);}
+        for(int i = 0; i < ArraySize(x); i++)
+        {
+          PrintFormat("x[%i] = %f",i,x[i]);
+        }
+      }
     }
     else {
       if(Tipo_Comentario != 2) PrintFormat("Processa sem dados Suficientes %i, autorizando tudo.",this.numero_linhas);

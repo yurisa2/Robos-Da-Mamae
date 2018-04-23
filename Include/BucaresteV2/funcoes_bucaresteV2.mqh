@@ -21,9 +21,16 @@ int Bucareste::Bucareste_Direcao()
 
 void Bucareste::Bucareste_Comentario()
 {
-  // machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
-  // Comentario_Robo = "\n ProcessaBuca: y[0] " + DoubleToString(resposta_y[0],4);
-  // Comentario_Robo += "\n ProcessaBuca: y[1] " + DoubleToString(resposta_y[1],4);
+  machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
+
+  Comentario_Robo = "Entradas:  ";
+  for(int i = 0; i < ArraySize(x_entrada); i++)
+  {
+    Comentario_Robo += "\n x["+i+"] " + DoubleToString(x_entrada[i],4);
+  }
+
+  Comentario_Robo += "\n ProcessaBuca: y[0] " + DoubleToString(resposta_y[0],4);
+  Comentario_Robo += "\n ProcessaBuca: y[1] " + DoubleToString(resposta_y[1],4);
 }
 
 void Bucareste::Avalia()

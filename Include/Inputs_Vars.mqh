@@ -169,7 +169,7 @@ input int rna_on_realtime_min_samples = 100;
 input int rna_epochs = 1000;
 
 input int rna_segunda_camada = 10;
-input int rna_terceira_camada = 6;
+int rna_terceira_camada = 0;
 input int rna_quarta_camada = 2;
 input int rna_restarts_ = 5 ;
 input double rna_wstep_ = 0.001 ;

@@ -256,19 +256,19 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   // PrintFormat("rna_entrada %i ",rna_entrada);
   // PrintFormat("Matriz ",ArrayRange(Matriz,0));
 
-  // algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_quarta_camada,network_trn);
-  algebra_trn.MLPCreateC1(this.entradas-1,rna_segunda_camada,rna_quarta_camada,network_trn);
+  // algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_camada_saida,network_trn);
+  algebra_trn.MLPCreateC1(this.entradas-1,rna_segunda_camada,rna_camada_saida,network_trn);
   // algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
   algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
   this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
 
   string Nome_Arquivo = rna_nome_arquivo_rede+"."+IntegerToString(this.entradas-1)+"-"
   +IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada)+"-"
-  +IntegerToString(rna_quarta_camada)+".e"+DoubleToString(mse)+".trn";
+  +IntegerToString(rna_camada_saida)+".e"+DoubleToString(mse)+".trn";
 
   if(rna_Salva_Arquivo_rede)
   this.SalvaRede(network_trn,Nome_Arquivo,this.entradas-1,
-    rna_segunda_camada,rna_terceira_camada,rna_quarta_camada);
+    rna_segunda_camada,rna_terceira_camada,rna_camada_saida);
 
 
     Print("Entradas: " + DoubleToString(this.entradas-1));

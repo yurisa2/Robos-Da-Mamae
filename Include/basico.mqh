@@ -298,7 +298,7 @@ void Init_Padrao ()
   data_inicio_execucao = TimeCurrent();
 
 
-  Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
+  Print("Descriï¿½ï¿½o: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
   Print("TimeMagic: ",IntegerToString(TimeMagic));
 
@@ -312,7 +312,7 @@ void Init_Padrao ()
   File_Init();
   File_Filtro_Init();
 
-  if(rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta(machine_learning.rede_obj,rna_arquivo_trn,rna_entrada,rna_segunda_camada,rna_terceira_camada,rna_quarta_camada);
+  if(rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta(machine_learning.rede_obj,rna_arquivo_trn,rna_entrada,rna_segunda_camada,rna_terceira_camada,rna_camada_saida);
 
 }
 

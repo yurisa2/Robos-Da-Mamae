@@ -170,7 +170,7 @@ input int rna_epochs = 1000;
 
 input int rna_segunda_camada = 10;
 int rna_terceira_camada = 0;
-input int rna_quarta_camada = 2;
+input int rna_camada_saida = 2;
 input int rna_restarts_ = 5 ;
 input double rna_wstep_ = 0.001 ;
 input double rna_decay_ = 0.01 ;

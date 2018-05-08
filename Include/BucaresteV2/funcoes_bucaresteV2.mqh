@@ -58,9 +58,9 @@ void Bucareste::Avalia()
 
       double ml_p = resposta_y[1];
       if(!rna_filtros_on) ml_p = 1;
-      // Print("ml_p "+ml_p);
+      Print("ml_p "+ DoubleToString(ml_p));
 
-      if((mudanca == Buca_Compra_Venda || Buca_Compra_Venda == 0) && (ml_p*100 > rna_permite) ) opera.AbrePosicao(mudanca,"BucaresteV2: ");
+      if((mudanca == Buca_Compra_Venda || Buca_Compra_Venda == 0) && (ml_p > rna_permite) ) opera.AbrePosicao(mudanca,"BucaresteV2: ");
     }
 
     if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() != 0 && Buca_Encerra_Indicador)   opera.FechaPosicao();

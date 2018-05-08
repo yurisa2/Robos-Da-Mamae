@@ -298,7 +298,7 @@ void Init_Padrao ()
   data_inicio_execucao = TimeCurrent();
 
 
-  Print("Descri��o: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
+  Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
   Print("TimeMagic: ",IntegerToString(TimeMagic));
 

@@ -4,9 +4,9 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, RobÃ´s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-int entrada = 6;
+int entrada = 27;
 double x_entrada[];
 double resposta_y[2];
 int rna_entrada = entrada;
@@ -105,7 +105,7 @@ void ML::Append(string Linha)
 
   ArrayResize(Matriz,ArrayRange(Matriz,0)+1);
   num_linhas = StringSplit(Linha,StringGetCharacter(",",0),linha_temp);
-  entradas = num_linhas; //Essas linhas aqui são da segunda dimensao
+  entradas = num_linhas; //Essas linhas aqui sï¿½o da segunda dimensao
 
   for(int i=0; i<entradas;i++)
   {
@@ -196,10 +196,10 @@ bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNe
     else if(numCapas==4) CAlglib::MLPCreateC2(nNeuronEntra, nNeuronCapa1, nNeuronCapa2, nNeuronSal, objRed);
 
     CAlglib::MLPProperties(objRed, nEntradas, nSalidas, nPesos);
-    Print("Nº neurons in the input layer ", nEntradas);
-    Print("Nº neurons in the hidden layer 1 ", nNeuronCapa1);
-    Print("Nº neurons in the hidden layer 2 ", nNeuronCapa2);
-    Print("Nº neurons in the output layer ", nSalidas);
+    Print("N. neurons in the input layer ", nEntradas);
+    Print("N. neurons in the hidden layer 1 ", nNeuronCapa1);
+    Print("N. neurons in the hidden layer 2 ", nNeuronCapa2);
+    Print("N. neurons in the output layer ", nSalidas);
     Print("Pesos", nPesos);
     for(k= 0; k<numCapas; k++)
     {
@@ -275,39 +275,39 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
     Print("Erro? " + DoubleToString(algebra_trn.MLPRMSError(network_trn,xy,amostras)));
   }
 
-void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
+  void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
   {
     if((this.numero_linhas > rna_on_realtime_min_samples && rna_on_realtime && rna_filtros_on) || (rna_filtros_on && !rna_on_realtime))
     {
       dados_nn.Dados_Entrada();
 
-      // x[0] = dados_nn.BB_Cx_BB_Low;
-      // x[1] = dados_nn.BB_Cx_BB_Base;
-      // x[2] = dados_nn.BB_Cx_BB_High;
-      // x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
-      // x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
-      // x[5] = dados_nn.BB_Normalizado_BB_Low;
-      // x[6] = dados_nn.BB_Normalizado_BB_Base;
-      // x[7] = dados_nn.BB_Normalizado_BB_High;
-      // x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
-      x[0] = dados_nn.BB_Posicao_Percent;
-      // x[10] = dados_nn.RSI_Valor;
-      // x[11] = dados_nn.RSI_Cx;
-      // x[12] = dados_nn.RSI_Normalizado;
-      x[1] = dados_nn.Hora_n;
-      x[2] = dados_nn.MFI_Normalizado;
-      // x[15] = dados_nn.MFI_Cx;
-      // x[16] = dados_nn.Demarker_Normalizado;
-      // x[17] = dados_nn.Demarker_Cx;
-      // x[18] = dados_nn.Bulls_Normalizado;
-      // x[19] = dados_nn.Bulls_Cx;
-      // x[20] = dados_nn.Bears_Normalizado;
-      // x[21] = dados_nn.Bears_Cx;
-      x[3] = dados_nn.AC_Normalizado;
-      // x[23] = dados_nn.AC_Cx;
-      x[4] = dados_nn.ADX_Normalizado;
-      // x[25] = dados_nn.ADX_Cx;
-      x[5] = dados_nn.Igor_N;
+      x[0] = dados_nn.BB_Cx_BB_Low;
+      x[1] = dados_nn.BB_Cx_BB_Base;
+      x[2] = dados_nn.BB_Cx_BB_High;
+      x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
+      x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
+      x[5] = dados_nn.BB_Normalizado_BB_Low;
+      x[6] = dados_nn.BB_Normalizado_BB_Base;
+      x[7] = dados_nn.BB_Normalizado_BB_High;
+      x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
+      x[9] = dados_nn.BB_Posicao_Percent;
+      x[10] = dados_nn.RSI_Valor;
+      x[11] = dados_nn.RSI_Cx;
+      x[12] = dados_nn.RSI_Normalizado;
+      x[13] = dados_nn.Hora_n;
+      x[14] = dados_nn.MFI_Normalizado;
+      x[15] = dados_nn.MFI_Cx;
+      x[16] = dados_nn.Demarker_Normalizado;
+      x[17] = dados_nn.Demarker_Cx;
+      x[18] = dados_nn.Bulls_Normalizado;
+      x[19] = dados_nn.Bulls_Cx;
+      x[20] = dados_nn.Bears_Normalizado;
+      x[21] = dados_nn.Bears_Cx;
+      x[22] = dados_nn.AC_Normalizado;
+      x[23] = dados_nn.AC_Cx;
+      x[24] = dados_nn.ADX_Normalizado;
+      x[25] = dados_nn.ADX_Cx;
+      x[26] = dados_nn.Igor_N;
 
       // for(int i = 0; i < ArraySize(x); i++)
       // {
@@ -322,26 +322,26 @@ void ML::Processa(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
       algebra_proc.MLPProcess(objRed,x,y);
       if(Tipo_Comentario != 2)
       {PrintFormat("Valor y[0]: %f e y[1]: %f.",y[0],y[1]);
-        for(int i = 0; i < ArraySize(x); i++)
-        {
-          PrintFormat("x[%i] = %f",i,x[i]);
-        }
-      }
-    }
-    else {
-      if(Tipo_Comentario != 2) PrintFormat("Processa sem dados Suficientes %i, autorizando tudo.",this.numero_linhas);
-      // ArrayResize(y,2);
-
-      y[0]=1;
-      y[1]=1;
-      // resposta_y[0]=1;
-      // resposta_y[1]=1;
+      // for(int i = 0; i < ArraySize(x); i++)
+      // {
+      //   PrintFormat("x[%i] = %f",i,x[i]);
+      // }
     }
   }
+  else {
+    if(Tipo_Comentario != 2) PrintFormat("Processa sem dados Suficientes %i, autorizando tudo.",this.numero_linhas);
+    // ArrayResize(y,2);
+
+    y[0]=1;
+    y[1]=1;
+    // resposta_y[0]=1;
+    // resposta_y[1]=1;
+  }
+}
 
 void ML::Saida()
-  {
-    if(rna_on && rna_on_realtime && this.numero_linhas > rna_on_realtime_min_samples) Treino(this.rede_obj);
-  }
+{
+  if(rna_on && rna_on_realtime && this.numero_linhas > rna_on_realtime_min_samples) Treino(this.rede_obj);
+}
 
-  ML machine_learning;
+ML machine_learning;

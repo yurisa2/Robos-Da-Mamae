@@ -117,6 +117,8 @@ void ML::Append(string Linha)
     Matriz[tamanho_linhas][i] = NULL;
   }
   numero_linhas = ArraySize(Lines);
+  // PrintFormat("Matriz Range: %f",ArrayRange(Matriz,0));  //DEBUG
+
 }
 
 bool ML::SalvaRede(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNeuronEntra = 14,int nNeuronCapa1 = 60,int nNeuronCapa2 = 60,int nNeuronSal = 2)
@@ -200,7 +202,7 @@ bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNe
     Print("N. neurons in the hidden layer 1 ", nNeuronCapa1);
     Print("N. neurons in the hidden layer 2 ", nNeuronCapa2);
     Print("N. neurons in the output layer ", nSalidas);
-    Print("Pesos", nPesos);
+    Print("Pesos: ", nPesos);
     for(k= 0; k<numCapas; k++)
     {
       for(i= 0; i<arNeurCapa[k]; i++)
@@ -239,22 +241,23 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   CMLPReportShell infotreino_trn;
 
   int amostras = this.numero_linhas; //Verificar a Matrix
-
+  PrintFormat("Amostras: %f | Entradas: %f: ",amostras,this.entradas);
 
   CMatrixDouble xy(amostras+1,this.entradas);
-  for(int i = amostras; i < amostras; i++) {
+  for(int i = 0; i < amostras; i++) { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
     for(int j = 0; j < this.entradas; j++)
     {
       xy[i].Set(j,this.Matriz[i][j]);
+      // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
     }
   }
 
   int resposta_trn;
 
   PrintFormat("Iniciando Treino em %i Amostras",amostras);
-  // PrintFormat("Entradas %i ",entradas);
+  PrintFormat("Entradas %i ",entradas);
   // PrintFormat("rna_entrada %i ",rna_entrada);
-  // PrintFormat("Matriz ",ArrayRange(Matriz,0));
+  PrintFormat("Matriz Range: %f ",ArrayRange(Matriz,0));
 
   // algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_camada_saida,network_trn);
   algebra_trn.MLPCreateC1(this.entradas-1,rna_segunda_camada,rna_camada_saida,network_trn);

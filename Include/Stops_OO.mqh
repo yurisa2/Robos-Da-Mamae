@@ -3,7 +3,7 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class Stops
@@ -119,8 +119,8 @@ void Stops::TakeProfit_Calcula()
   if(Tipo_Limite == 55) delta_bb = 1;
   //FIM DA DEFINICAO MULTIPLICADOR DA BANDA
 
-  //Aqui da pau no proporcional pq nao se acerta com o Tick Size, o certo é pegar o valor d
-  //do negócio, deixar o TPC em tick size e
+  //Aqui da pau no proporcional pq nao se acerta com o Tick Size, o certo ï¿½ pegar o valor d
+  //do negï¿½cio, deixar o TPC em tick size e
 
   //Print("delta_bb: " + delta_bb);  //DEBUG
 
@@ -238,10 +238,19 @@ void Stops::Setar_Ordens_Vars_Static()
   int Tipo_Posicao_ = Tipo_Posicao();
   int loopes = 0;
 
-  if(Tipo_Posicao_ == 0 && loopes <= 5) {
+do
+ {
+    Print("Posicao Zero, Tentando Novamente.");
     Sleep(400);
     Tipo_Posicao_ = Tipo_Posicao();
     loopes++;
+  }
+  while(Tipo_Posicao_ == 0 && loopes <= 20);
+
+
+  if(Tipo_Posicao_ == 0)
+  {
+    Alert("Tipo de posicao nao estÃ¡ vindo, vou morrer agora");
   }
 
   double sl = valor - (StopLoss * (Tipo_Posicao_ * Tick_Size));
@@ -288,19 +297,24 @@ void Stops::Setar_Ordens_Vars_Proporcional()
   delete(Banda_BB);
 
   //Print("delta_bb: " + delta_bb); //DEBUG
+  int Tipo_Posicao_ = Tipo_Posicao();
   int loopes = 0;
 
-  if( Tipo_Posicao() == 0 && loopes <= 5) {
+do
+ {
+    Print("Posicao Zero, Tentando Novamente.");
     Sleep(400);
+    Tipo_Posicao_ = Tipo_Posicao();
     loopes++;
   }
+  while(Tipo_Posicao_ == 0 && loopes <= 20);
 
   StopLoss_Proporcional = (StopLoss * delta_bb); //Aqui Ja Sai em Tick_Size
   //Print("StopLoss_Proporcional: " + StopLoss_Proporcional + " Ticks"); //DEBUG
   StopLoss_Proporcional = MathFloor(StopLoss_Proporcional) * Tick_Size;
   //Print("StopLoss_Proporcional MathFloor * Tick_Size: " + StopLoss_Proporcional); //DEBUG
 
-  double sl_max = Limite_Maximo_SL_Tick_Size * Tick_Size;   //Pontos máximo
+  double sl_max = Limite_Maximo_SL_Tick_Size * Tick_Size;   //Pontos mï¿½ximo
 
   StopLoss_Proporcional = MathMin(StopLoss_Proporcional, sl_max);
 
@@ -329,7 +343,7 @@ void Stops::TS_()
     double tp = valor + (TakeProfit * Tick_Size);
     double sl = valor - ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
 
-    if(TakeProfit == 0) tp = valor + (Tick_Size * 10); //Sério mano, apelando, APELANDO MONSTRO
+    if(TakeProfit == 0) tp = valor + (Tick_Size * 10); //Sï¿½rio mano, apelando, APELANDO MONSTRO
 
     Print("TRAILING STOP COMPRA");
 
@@ -342,7 +356,7 @@ void Stops::TS_()
     double tp = valor - (TakeProfit * Tick_Size);
     double sl = valor + ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
 
-    if(TakeProfit == 0) tp = valor - (Tick_Size * 50); //Sério mano, apelando, APELANDO MONSTRO
+    if(TakeProfit == 0) tp = valor - (Tick_Size * 50); //Sï¿½rio mano, apelando, APELANDO MONSTRO
 
     // Print("TRAILING STOP SL: " + sl + " TP: " + tp + " Tipo_Posicao(): " + Tipo_Posicao() + " Valor do Do Negocio: " + valor);
 

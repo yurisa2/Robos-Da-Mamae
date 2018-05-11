@@ -38,6 +38,12 @@ class ML
 
 void ML::ML_Save(string NomeArquivo)
 {
+  NomeArquivo = NomeArquivo
+  +".in"+IntegerToString(this.entradas-1)
+  +".tf"+EnumToString(TimeFrame)
+  +".ln"+IntegerToString(numero_linhas)
+  +".trn";
+
   Handle_Arquivo = FileOpen(NomeArquivo, FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_COMMON);
 
   for(int i = 0; i < ArraySize(Lines); i++)

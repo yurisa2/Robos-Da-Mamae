@@ -4,28 +4,28 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robos feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 /////////////////////////////////////// Inputs
 
 input string Parametros_Gerais = "-------------------------------------";  //Parametros Gerais
-// input bool  multi_op = false;                                              //Multi Operacao (define o método de operacao)
+// input bool  multi_op = false;                                              //Multi Operacao (define o mÃ©todo de operacao)
 input ENUM_TIMEFRAMES TimeFrame = PERIOD_CURRENT;                              //TimeFrame base
 
 input int HoraDeInicio = 9;                                                //Hora de Inicio
 input int MinutoDeInicio = 20;                                             //Minuto de Inicio
 input int HoraDeFim = 17;                                                  //Hora de Fim
 input int MinutoDeFim = 27;                                                //Minuto de Fim
-input bool   ZerarFinalDoDia = true;                                       //Encerra operações no final do dia (execução extendida)
-input string Descricao_Robo_Alpha = "";                                    //Descriçõo para logs e mensagens
+input bool   ZerarFinalDoDia = true;                                       //Encerra operacoes no final do dia (execucao extendida)
+input string Descricao_Robo_Alpha = "";                                    //Descricao para logs e mensagens
 input bool Aleta_Operacao = false;                                          //Aparece um alerta quando entra
 //string Descricao_Robo = Descricao_Robo(); +"|"+Descricao_Robo_Alpha;
 input bool Custom_resultado_treino_nn = false;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
 input double Lotes = 1;                                                    //Volume negociado
-//input int Limite_Operacoes = 9999;                                         //Limite de operações (entrada e Saida)
+//input int Limite_Operacoes = 9999;                                         //Limite de operacoes (entrada e Saida)
 input double custo_operacao = 1.36;                                        //$ Por negocio
 //input double lucro_dia = 1000000;                                          //Lucro MAX dario ($ - liq)
 //input double preju_dia = 1000000;                                          //Preju MAX dario ($ - liq)
@@ -45,15 +45,15 @@ enum Tipo_Limites
 input Tipo_Limites Tipo_Limite = 55;                                      //Tipo De limite
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
 input double Limite_Maximo_SL_Tick_Size = 50;                        //Limite StopLoss Maximo (*TickSize)
-//input double MoverSL = 0;                                              //Mover o StopLoss DELTA (distância da entrada, 0 desliga)
-//input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direção do Lucro, 0 = Preco da Operacão)
+//input double MoverSL = 0;                                              //Mover o StopLoss DELTA (distancia da entrada, 0 desliga)
+//input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direcao do Lucro, 0 = Preco da Operacao)
 input double TakeProfit = 0;                                               //Take Profit (0 desliga)
 input double TakeProfit_Volume = 0;                                               //Volume TakeProfit
 input double TakeProfit2 = 0;                                               //Take Profit2 (0 desliga)
 input double TakeProfit_Volume2 = 0;                                               //Volume TakeProfit2
 input double TakeProfit3 = 0;                                               //Take Profit3 (0 desliga)
 input double TakeProfit_Volume3 = 0;                                              //Volume TakeProfit3
-input bool   Zerar_SL_TP = 1;                                                 //Zerar SL na realização parcial
+input bool   Zerar_SL_TP = 1;                                                 //Zerar SL na realizacao parcial
 input double Trailing_stop = 0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 
@@ -161,26 +161,26 @@ double Filtro_Fuzzy_Histerese = 0.3;
 
 double filtro_fuzzy_arquivo = 0;
 /////////////////////////////////////////// TEMP OFF
-input string Label_Aq_RNA = "---------- RNA Aquisição e Treino ----------";
+input string Label_Aq_RNA = "---------- RNA Aquisicao e Treino ----------";
 input bool rna_on = false;
 input bool rna_on_treino = false;
-input bool rna_on_realtime = false;
-input int rna_on_realtime_min_samples = 100;
+bool rna_on_realtime = false; //DESLIGADO POR ENQUANTO
+int rna_on_realtime_min_samples = 100; //DESLIGADO POR ENQUANTO
 input int rna_epochs = 1000;
 
 input int rna_segunda_camada = 10;
-int rna_terceira_camada = 0;
+int rna_terceira_camada = 0; //DESLIGADO POR ENQUANTO
 input int rna_camada_saida = 2;
 input int rna_restarts_ = 5 ;
 input double rna_wstep_ = 0.001 ;
 input double rna_decay_ = 0.01 ;
-input bool rna_Salva_Arquivo_rede = false;
-input string rna_nome_arquivo_rede = "Zefero.rede";
-input bool rna_Salva_Arquivo_hist = false;
-input string rna_nome_arquivo_hist = "Zefero.hist";
+input bool rna_Salva_Arquivo_rede = false; //Salva Arquivo Treinado
+input string rna_nome_arquivo_rede = "rede"; //Nome do arquivo Treinado
+input bool rna_Salva_Arquivo_hist = false; //Salva Historico
+input string rna_nome_arquivo_hist = "historico";  //Nome do Arquivo Historico
 /////////////////////////////////////////// TEMP OFF
 input string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------";
 input bool rna_filtros_on = false;
 input double rna_permite = 50;
 input bool rna_levanta_arquivo_rede = false;
-input string rna_arquivo_trn = "Zefero.trn";
+input string rna_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.trn";

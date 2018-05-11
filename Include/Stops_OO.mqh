@@ -302,7 +302,7 @@ void Stops::Setar_Ordens_Vars_Proporcional()
 
 do
  {
-    Print("Posicao Zero, Tentando Novamente.");
+    Print("Posicao Zero, Tentando Novamente. Loop: " + IntegerToString(loopes));
     Sleep(400);
     Tipo_Posicao_ = Tipo_Posicao();
     loopes++;

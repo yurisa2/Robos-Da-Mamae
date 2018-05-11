@@ -5,14 +5,29 @@
 class Preco
 {
   public:
-  Preco(ENUM_TIMEFRAMES tf = PERIOD_CURRENT);
-  double Valor(int barra = 0);
+  Preco(ENUM_TIMEFRAMES Periodo_MA = PERIOD_CURRENT);
   double Cx(int barra = 0);
   double Normalizado(int barra = 0);
+  double Amplitude_N;
 
   private:
-  int HandleMA;
-  int HandleMA_high;
-  int HandleMA_low;
+  double HighMA;
+  double LowMA;
+  double DeltaMA;
+
+  ENUM_TIMEFRAMES Preco_Periodo_MA = Periodo_MA;
 
 };
+
+void Preco::Preco(ENUM_TIMEFRAMES Periodo_MA = PERIOD_CURRENT);
+{
+  MA *OO_HighMA = new MA(3,MODE_SMA,Periodo_MA,0,PRICE_HIGH);
+  MA *OO_LowMA = new MA(3,MODE_SMA,Periodo_MA,0,PRICE_LOW);
+
+  HighMA = (OO_HighMA.Valor(2) + OO_HighMA.Valor(1) + OO_HighMA.Valor(0)) /3;
+  LowMA = (OO_LowMA.Valor(2) + OO_LowMA.Valor(1) + OO_LowMA.Valor(0)) /3;
+  DeltaMA = HighMA - LowMA;
+
+  delete OO_LowMA;
+  delete OO_HighMA;
+}

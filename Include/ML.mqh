@@ -267,8 +267,14 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
 
   // algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_camada_saida,network_trn);
   algebra_trn.MLPCreateC1(this.entradas-1,rna_segunda_camada,rna_camada_saida,network_trn);
-  // algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
-  algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
+
+  int nPesos = 0;
+  int entradas_prop = this.entradas-1;
+  CAlglib::MLPProperties(network_trn, entradas_prop, rna_camada_saida, nPesos);
+
+
+  if(nPesos < 500) algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
+  if(nPesos > 500 || nPesos == 0) algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
   this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
 
   string Nome_Arquivo = rna_nome_arquivo_rede+"."+IntegerToString(this.entradas-1)+"-"
@@ -282,7 +288,8 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
     rna_segunda_camada,rna_terceira_camada,rna_camada_saida);
 
 
-    Print("Entradas: " + DoubleToString(this.entradas-1));
+    Print("Entradas: " + IntegerToString(this.entradas-1));
+    Print("Pesos: " + IntegerToString(nPesos));
     Print("Erro? " + DoubleToString(algebra_trn.MLPRMSError(network_trn,xy,amostras)));
   }
 

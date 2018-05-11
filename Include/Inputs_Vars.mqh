@@ -170,16 +170,17 @@ input int rna_epochs = 1000;
 
 input int rna_segunda_camada = 10;
 int rna_terceira_camada = 0; //DESLIGADO POR ENQUANTO
-input int rna_camada_saida = 2;
-input int rna_restarts_ = 5 ;
+int rna_camada_saida = 2; //DESLIGADO POR ENQUANTO E quando voltar, provavelmente será automática
+input int rna_restarts_ = 5 ; //Restarts (5 na doc)
 input double rna_wstep_ = 0.001 ;
 input double rna_decay_ = 0.01 ;
+
 input bool rna_Salva_Arquivo_rede = false; //Salva Arquivo Treinado
 input string rna_nome_arquivo_rede = "rede"; //Nome do arquivo Treinado
 input bool rna_Salva_Arquivo_hist = false; //Salva Historico
 input string rna_nome_arquivo_hist = "historico";  //Nome do Arquivo Historico
 /////////////////////////////////////////// TEMP OFF
-input string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------";
+input string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------"; //FILTROS RNA
 input bool rna_filtros_on = false;
 input double rna_permite = 50;
 input bool rna_levanta_arquivo_rede = false;

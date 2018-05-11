@@ -4,18 +4,30 @@
 //+------------------------------------------------------------------+
 #include <Math\Alglib\alglib.mqh>
 #include <ML.mqh>
+#include <dados_nn_stub.mqh>
+
 #property strict
 #property script_show_inputs
 //+------------------------------------------------------------------+
 input int rna_epochs = 1000;
 input int rna_segunda_camada = 10;
 input int rna_camada_saida = 2;
+int rna_terceira_camada = rna_camada_saida;
 input int rna_restarts_ = 5 ;
 input double rna_wstep_ = 0.001 ;
 input double rna_decay_ = 0.01 ;
 input bool rna_Salva_Arquivo_rede = false;
-input string nome_arquivo = "Zefero_Corte.hist";
+input string rna_nome_arquivo_rede = "treinado.trn";
 double mse = 0;
+
+bool rna_on = 1;
+bool rna_on_realtime = 0;
+int rna_on_realtime_min_samples = 0;
+bool rna_filtros_on = 0;
+
+int Tipo_Comentario = 0;
+
+
 //+------------------------------------------------------------------+
 void OnStart()
 {
@@ -27,7 +39,7 @@ void OnStart()
 
     int amostras;
 
-    machine_learning2.ML_Load(nome_arquivo);
+    machine_learning2.ML_Load(rna_nome_arquivo_rede);
 
     amostras = machine_learning2.numero_linhas;
 
@@ -52,9 +64,9 @@ void OnStart()
     // algebra.MLPTrainLM(network,xy,amostras,decay_,restarts,resposta,infotreino);
     algebra.MLPTrainLBFGS(network,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta,infotreino);
 
-    string rna_nome_arquivo_rede = nome_arquivo+"."+IntegerToString(machine_learning2.entradas-1)+"-"
+    string rna_rna_nome_arquivo_rede_rede = rna_nome_arquivo_rede+"."+IntegerToString(machine_learning2.entradas-1)+"-"
     +IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_camada_saida);
-    if(rna_Salva_Arquivo_rede) machine_learning2.SalvaRede(network,rna_nome_arquivo_rede,machine_learning2.entradas-1,rna_segunda_camada,rna_camada_saida);
+    if(rna_Salva_Arquivo_rede) machine_learning2.SalvaRede(network,rna_rna_nome_arquivo_rede_rede,machine_learning2.entradas-1,rna_segunda_camada,rna_camada_saida);
 
     mse = algebra.MLPRMSError(network,xy,amostras);
 

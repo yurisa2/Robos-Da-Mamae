@@ -198,10 +198,10 @@ bool ML::Levanta(CMultilayerPerceptronShell &objRed, string nombArch= "",int nNe
     else if(numCapas==4) CAlglib::MLPCreateC2(nNeuronEntra, nNeuronCapa1, nNeuronCapa2, nNeuronSal, objRed);
 
     CAlglib::MLPProperties(objRed, nEntradas, nSalidas, nPesos);
-    Print("N. neurons in the input layer ", nEntradas);
-    Print("N. neurons in the hidden layer 1 ", nNeuronCapa1);
-    Print("N. neurons in the hidden layer 2 ", nNeuronCapa2);
-    Print("N. neurons in the output layer ", nSalidas);
+    Print("N. neuronios in the input layer ", nEntradas);
+    Print("N. neuronios in the hidden layer 1 ", nNeuronCapa1);
+    Print("N. neuronios in the hidden layer 2 ", nNeuronCapa2);
+    Print("N. neuronios in the output layer ", nSalidas);
     Print("Pesos: ", nPesos);
     for(k= 0; k<numCapas; k++)
     {
@@ -266,7 +266,9 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
 
   string Nome_Arquivo = rna_nome_arquivo_rede+"."+IntegerToString(this.entradas-1)+"-"
-  +IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada)+"-"
+  +IntegerToString(rna_segunda_camada)
+  +".tf"+EnumToString(TimeFrame)
+  +".a"+IntegerToString(amostras)
   +IntegerToString(rna_camada_saida)+".e"+DoubleToString(mse)+".trn";
 
   if(rna_Salva_Arquivo_rede)
@@ -324,7 +326,8 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
 
       algebra_proc.MLPProcess(objRed,x,y);
       if(Tipo_Comentario != 2)
-      {PrintFormat("Valor y[0]: %f e y[1]: %f.",y[0],y[1]);
+      {
+        // PrintFormat("Valor y[0]: %f e y[1]: %f.",y[0],y[1]);
       // for(int i = 0; i < ArraySize(x); i++)
       // {
       //   PrintFormat("x[%i] = %f",i,x[i]);

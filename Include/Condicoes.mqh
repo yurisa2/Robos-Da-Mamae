@@ -50,7 +50,26 @@ bool Condicoes_Basicas_OO::Operacao_Em_Curso()
 
 bool Condicoes_Basicas_OO::Condicao()
 {
-  if(!Operacao_Em_Curso() && Horario() ) return true;
+  int Operacao_EC = 0;
+  int Horario_Permite = 0;
+  int NeuralNetwork_Permite = 0;
+
+  if(!Operacao_Em_Curso()) Operacao_EC = 1;
+  if(Horario()) Horario_Permite = 1;
+
+  if(rna_filtros_on)
+  {
+  machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
+  double ml_p = resposta_y[1];
+  if(ml_p >= rna_permite) NeuralNetwork_Permite = 1;
+  Print("ml_p "+ DoubleToString(ml_p));
+
+  }
+  else NeuralNetwork_Permite = 1;
+
+  int Soma_Permite = Operacao_EC + Horario_Permite + NeuralNetwork_Permite;
+
+  if(Soma_Permite == 3 ) return true;
   else return false;
 }
 

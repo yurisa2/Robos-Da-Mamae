@@ -182,6 +182,6 @@ input string rna_nome_arquivo_hist = "historico";  //Nome do Arquivo Historico
 /////////////////////////////////////////// TEMP OFF
 input string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------"; //FILTROS RNA
 input bool rna_filtros_on = false;
-input double rna_permite = 50;
+input double rna_permite = 0;
 input bool rna_levanta_arquivo_rede = false;
 input string rna_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.trn";

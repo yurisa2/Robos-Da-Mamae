@@ -6,7 +6,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-int entrada = 27;
+int entrada = 57;
 double x_entrada[];
 double resposta_y[2];
 int rna_entrada = entrada;
@@ -38,11 +38,13 @@ class ML
 
 void ML::ML_Save(string NomeArquivo)
 {
-  NomeArquivo = NomeArquivo
+  NomeArquivo =
+  Nome_Robo
+  +NomeArquivo
   +".in"+IntegerToString(this.entradas-1)
   +".tf"+EnumToString(TimeFrame)
   +".ln"+IntegerToString(numero_linhas)
-  +".trn";
+  +".hist";
 
   Handle_Arquivo = FileOpen(NomeArquivo, FILE_WRITE|FILE_TXT|FILE_ANSI|FILE_COMMON);
 
@@ -277,7 +279,10 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   if(nPesos > 500 || nPesos == 0) algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
   this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
 
-  string Nome_Arquivo = rna_nome_arquivo_rede+"."+IntegerToString(this.entradas-1)+"-"
+  string Nome_Arquivo =
+  Nome_Robo
+  +rna_nome_arquivo_rede
+  +"."+IntegerToString(this.entradas-1)+"-"
   +IntegerToString(rna_segunda_camada)
   +".tf"+EnumToString(TimeFrame)
   +".a"+IntegerToString(amostras)
@@ -312,20 +317,52 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
       x[10] = dados_nn.RSI_Valor;
       x[11] = dados_nn.RSI_Cx;
       x[12] = dados_nn.RSI_Normalizado;
-      x[13] = dados_nn.Hora_n;
-      x[14] = dados_nn.MFI_Normalizado;
-      x[15] = dados_nn.MFI_Cx;
-      x[16] = dados_nn.Demarker_Normalizado;
-      x[17] = dados_nn.Demarker_Cx;
-      x[18] = dados_nn.Bulls_Normalizado;
-      x[19] = dados_nn.Bulls_Cx;
-      x[20] = dados_nn.Bears_Normalizado;
-      x[21] = dados_nn.Bears_Cx;
-      x[22] = dados_nn.AC_Normalizado;
-      x[23] = dados_nn.AC_Cx;
-      x[24] = dados_nn.ADX_Normalizado;
-      x[25] = dados_nn.ADX_Cx;
-      x[26] = dados_nn.Igor_N;
+      x[13] = dados_nn.Hilo;
+
+      x[14] = dados_nn.Hora_n;
+      x[15] = dados_nn.MFI_Normalizado;
+      x[16] = dados_nn.MFI_Cx;
+      x[17] = dados_nn.Demarker_Normalizado;
+      x[18] = dados_nn.Demarker_Cx;
+      x[19] = dados_nn.Bulls_Normalizado;
+      x[20] = dados_nn.Bulls_Cx;
+      x[21] = dados_nn.Bears_Normalizado;
+      x[22] = dados_nn.Bears_Cx;
+      x[23] = dados_nn.AC_Normalizado;
+      x[24] = dados_nn.AC_Cx;
+      x[25] = dados_nn.ADX_Normalizado;
+      x[26] = dados_nn.ADX_Cx;
+      x[27] = dados_nn.Igor_N;
+
+      x[28] = dados_nn.ATR_Normalizado;
+      x[29] = dados_nn.ATR_Cx;
+      x[30] = dados_nn.CCI_Normalizado;
+      x[31] = dados_nn.CCI_Cx;
+      x[32] = dados_nn.DP_MM20;
+      x[33] = dados_nn.DP_PRMM20;
+      x[34] = dados_nn.DP_mm20AAmm50;
+      x[35] = dados_nn.DP_Direcao;
+      x[36] = dados_nn.MACD_normalizado0;
+      x[37] = dados_nn.MACD_normalizado1;
+      x[38] = dados_nn.MACD_normalizado2;
+      x[39] = dados_nn.MACD_Distancia_Linha_Zero;
+      x[40] = dados_nn.MACD_Distancia_Linha_Sinal;
+      x[41] = dados_nn.MACD_Diferenca_Angulo_Linha_Sinal;
+      x[42] = dados_nn.MACD_Cx0;
+      x[43] = dados_nn.MACD_Cx1;
+      x[44] = dados_nn.MACD_Cx2;
+      x[45] = dados_nn.Momentum_Normalizado;
+      x[46] = dados_nn.Momentum_Cx;
+      x[47] = dados_nn.Stoch_Normalizado0;
+      x[48] = dados_nn.Stoch_Normalizado1;
+      x[49] = dados_nn.Stoch_Cx0;
+      x[50] = dados_nn.Stoch_Cx1;
+      x[51] = dados_nn.Volumes_Normalizado;
+      x[52] = dados_nn.Volumes_Cx;
+      x[53] = dados_nn.WPR_Normalizado;
+      x[54] = dados_nn.WPR_Cx;
+      x[55] = dados_nn.OBV_Normalizado;
+      x[56] = dados_nn.OBV_Cx;
 
       // for(int i = 0; i < ArraySize(x); i++)
       // {

@@ -46,7 +46,8 @@ void Bucareste::Avalia()
     HiLo_OO *hilo = new HiLo_OO(BucaresteV2_HiLo_Periodos);
     Opera_Mercado *opera = new Opera_Mercado;
 
-    mudanca = hilo.Mudanca();
+    if(!Buca_Entra_Sem_Mudanca) mudanca = hilo.Mudanca();
+    if(Buca_Entra_Sem_Mudanca) mudanca = hilo.Direcao();
 
     //if(mudanca != 0 ) Print("Mudanca: " + mudanca); //DEBUG
 

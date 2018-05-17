@@ -4,10 +4,10 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-//////////////////////////// Req de Operaçao
+//////////////////////////// Req de Operaï¿½ao
 
 class Opera_Mercado
 {
@@ -56,6 +56,7 @@ void Opera_Mercado::ZeraOrdensP()
 /////////////////////////////////////////// Final da req.
 void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentario_req)
 {
+  comentario_req = Descricao_Robo_Alpha + "|" + Nome_Robo + "|" +  comentario_req;
   Sleep(200);
   if(Aleta_Operacao && !Otimizacao)
   {

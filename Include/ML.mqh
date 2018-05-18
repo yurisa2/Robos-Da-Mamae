@@ -268,25 +268,41 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   PrintFormat("Matriz Range: %f ",ArrayRange(Matriz,0));
 
   // algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_camada_saida,network_trn);
-  algebra_trn.MLPCreateC1(this.entradas-1,rna_segunda_camada,rna_camada_saida,network_trn);
+  if(rna_hidden_layers == 0) algebra_trn.MLPCreateC0(this.entradas-1,rna_camada_saida,network_trn);
+  if(rna_hidden_layers == 1) algebra_trn.MLPCreateC1(this.entradas-1,rna_segunda_camada,rna_camada_saida,network_trn);
+  if(rna_hidden_layers == 2) algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_camada_saida,network_trn);
 
   int nPesos = 0;
   int entradas_prop = this.entradas-1;
   CAlglib::MLPProperties(network_trn, entradas_prop, rna_camada_saida, nPesos);
 
 
-  if(nPesos < 500) algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
-  if(nPesos > 500 || nPesos == 0) algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
+  if(nPesos < 500)
+  {
+    Print("Numero de Pesos Menor que 500");
+    algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
+  }
+  if(nPesos > 500 || nPesos == 0)
+  {
+    Print("Numero de Pesos Maior que 500");
+    algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
+  }
   this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
+
+  string camadas = "";
+  if(rna_hidden_layers == 1) camadas = "-"+IntegerToString(rna_segunda_camada)+"-";
+  if(rna_hidden_layers == 2)camadas = "-"+IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada)+"-";
+
 
   string Nome_Arquivo =
   Nome_Robo
   +rna_nome_arquivo_rede
-  +"."+IntegerToString(this.entradas-1)+"-"
-  +IntegerToString(rna_segunda_camada)
+  +"."+IntegerToString(this.entradas-1)
+  +camadas+"-"
+  +IntegerToString(rna_camada_saida)
   +".tf"+EnumToString(TimeFrame)
   +".a"+IntegerToString(amostras)
-  +IntegerToString(rna_camada_saida)+".e"+DoubleToString(mse)+".trn";
+  +".e"+DoubleToString(mse)+".trn";
 
   if(rna_Salva_Arquivo_rede)
   this.SalvaRede(network_trn,Nome_Arquivo,this.entradas-1,

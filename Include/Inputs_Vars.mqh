@@ -168,8 +168,9 @@ bool rna_on_realtime = false; //DESLIGADO POR ENQUANTO
 int rna_on_realtime_min_samples = 100; //DESLIGADO POR ENQUANTO
 input int rna_epochs = 1000;
 
+input int rna_hidden_layers = 1;
 input int rna_segunda_camada = 10;
-int rna_terceira_camada = 0; //DESLIGADO POR ENQUANTO
+input int rna_terceira_camada = 0;
 int rna_camada_saida = 2; //DESLIGADO POR ENQUANTO E quando voltar, provavelmente será automática
 input int rna_restarts_ = 5 ; //Restarts (5 na doc)
 input double rna_wstep_ = 0.001 ;

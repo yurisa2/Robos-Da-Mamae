@@ -290,8 +290,9 @@ void ML::Treino(CMultilayerPerceptronShell &network_trn)
   this.mse = algebra_trn.MLPRMSError(network_trn,xy,amostras);
 
   string camadas = "";
-  if(rna_hidden_layers == 1) camadas = "-"+IntegerToString(rna_segunda_camada)+"-";
-  if(rna_hidden_layers == 2)camadas = "-"+IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada)+"-";
+  if(rna_hidden_layers == 0) camadas = "-(0)-";
+  if(rna_hidden_layers == 1) camadas = "-(1)"+IntegerToString(rna_segunda_camada)+"-";
+  if(rna_hidden_layers == 2) camadas = "-(2)"+IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada)+"-";
 
 
   string Nome_Arquivo =

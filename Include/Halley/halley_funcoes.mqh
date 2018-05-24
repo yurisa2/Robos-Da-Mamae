@@ -35,7 +35,7 @@ int  Halley::Formato(int barra = 0)
   ArraySetAsSeries(rates,true);
   int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
 
-//  Print("Hora: " +  rates[barra+1].time +" | OHLC:" + rates[barra+1].open + " | " + rates[barra+1].high +" | " + rates[barra+1].low +" | " + rates[barra+1].close);
+  //  Print("Hora: " +  rates[barra+1].time +" | OHLC:" + rates[barra+1].open + " | " + rates[barra+1].high +" | " + rates[barra+1].low +" | " + rates[barra+1].close);
 
   //ShootingStar
 
@@ -120,11 +120,11 @@ int Halley::Direcao(int barra = 0)
   valor_ma = MediaMovel20.Valor(barra_somar_1);
   if(MediaMovel20.Valor(barra_somar_2) < MediaMovel20.Valor(barra_somar_1)) direcao_ma = 1;
   if(MediaMovel20.Valor(barra_somar_2) > MediaMovel20.Valor(barra_somar_1)) direcao_ma = -1;
-//DUP
+  //DUP
   valor_ma = MediaMovel20.Valor(barra_somar_1);
   if(MediaMovel20.Valor(barra_somar_2) < MediaMovel20.Valor(barra_somar_1)) direcao_ma = 1;
   if(MediaMovel20.Valor(barra_somar_2) > MediaMovel20.Valor(barra_somar_1)) direcao_ma = -1;
-//DUP
+  //DUP
 
 
   // Print("direcao_ma: "+direcao_ma); //DEBUG
@@ -153,13 +153,13 @@ MqlRates Halley::Preco(int barra = 0)
   barra = barra + 1;
 
 
-    MqlRates rates[];
-    ArraySetAsSeries(rates,true);
-    int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
+  MqlRates rates[];
+  ArraySetAsSeries(rates,true);
+  int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
 
 
 
-    return rates[barra];
+  return rates[barra];
 
 
 }
@@ -175,32 +175,32 @@ void Halley::Avalia()
   {
     if(O_Stops.Tipo_Posicao() == 0)
     {
-    for(int i=0;i<n_ultimos;i++)
-    {
-      if(Formato(i) < 0 && (Direcao(i) > 0 || Opera_Somente_Formato) && daotick_geral <  Preco(i).low && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op <=0 )
+      for(int i=0;i<n_ultimos;i++)
       {
-      Opera_Mercado *opera = new Opera_Mercado;
-//      Print("Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).low + " | Hora: " + Preco(i).time) ;
-      opera.AbrePosicao(-1,"Halley: " + "Formato("+IntegerToString(i)+"): " + DoubleToString(Formato(i)) + " | Direcao: " + DoubleToString(Direcao(i)) + " | Preco("+IntegerToString(i)+"): " + DoubleToString(Preco(i).low) + " | Hora: " + DoubleToString(Preco(i).time));
-      UltimoFormato = Preco(i).time;
-      double sl = Preco(i).high;
-      if(Utiliza_SL_Setup) opera.SetaSL(sl);
-      delete(opera);
-    }
+        if(Formato(i) < 0 && (Direcao(i) > 0 || Opera_Somente_Formato) && daotick_geral <  Preco(i).low && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op <=0 )
+        {
+          Opera_Mercado *opera = new Opera_Mercado;
+          //      Print("Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).low + " | Hora: " + Preco(i).time) ;
+          opera.AbrePosicao(-1,"Formato("+IntegerToString(i)+"): " + DoubleToString(Formato(i)) + " | Direcao: " + DoubleToString(Direcao(i)) + " | Preco("+IntegerToString(i)+"): " + DoubleToString(Preco(i).low) + " | Hora: " + DoubleToString(Preco(i).time));
+          UltimoFormato = Preco(i).time;
+          double sl = Preco(i).high;
+          if(Utiliza_SL_Setup) opera.SetaSL(sl);
+          delete(opera);
+        }
 
-      if(Formato(i) > 0 && (Direcao(i) < 0 || Opera_Somente_Formato) && daotick_geral >  Preco(i).high && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op >=0 )
-      //if(Formato(i) > 0 && (Direcao(i) < 0 || Opera_Somente_Formato) < 0 && daotick_geral >  Preco(i).high && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op >=0 )
-      //Eu fiz cagada aqui, mas fez muito dinheiro,  (Direcao(i) < 0 || Opera_Somente_Formato) < 0 ,
-      {
-      Opera_Mercado *opera = new Opera_Mercado;
-  //    Print("Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).high  + " | Hora: " + Preco(i).time) ;
-      opera.AbrePosicao(1,"Halley: " + "Formato("+IntegerToString(i)+"): " + DoubleToString(Formato(i)) + " | Direcao: " + DoubleToString(Direcao(i)) + " | Preco("+IntegerToString(i)+"): " + DoubleToString(Preco(i).low) + " | Hora: " + DoubleToString(Preco(i).time));
-      UltimoFormato = Preco(i).time;
-      double sl = Preco(i).low;
-      if(Utiliza_SL_Setup) opera.SetaSL(sl);
-      delete(opera);
+        if(Formato(i) > 0 && (Direcao(i) < 0 || Opera_Somente_Formato) && daotick_geral >  Preco(i).high && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op >=0 )
+        //if(Formato(i) > 0 && (Direcao(i) < 0 || Opera_Somente_Formato) < 0 && daotick_geral >  Preco(i).high && Preco(i).time != UltimoFormato && Preco(i).time > DiaHojeStart && Halley_Tipo_op >=0 )
+        //Eu fiz cagada aqui, mas fez muito dinheiro,  (Direcao(i) < 0 || Opera_Somente_Formato) < 0 ,
+        {
+          Opera_Mercado *opera = new Opera_Mercado;
+          //    Print("Formato("+i+"): " + Formato(i) + " | Direcao: " + Direcao(i) + " | Preco("+i+"): " + Preco(i).high  + " | Hora: " + Preco(i).time) ;
+          opera.AbrePosicao(1,"Formato("+IntegerToString(i)+"): " + DoubleToString(Formato(i)) + " | Direcao: " + DoubleToString(Direcao(i)) + " | Preco("+IntegerToString(i)+"): " + DoubleToString(Preco(i).low) + " | Hora: " + DoubleToString(Preco(i).time));
+          UltimoFormato = Preco(i).time;
+          double sl = Preco(i).low;
+          if(Utiliza_SL_Setup) opera.SetaSL(sl);
+          delete(opera);
+        }
       }
-    }
     }
 
 
@@ -229,5 +229,5 @@ void Halley::Avalia()
 
 void Halley::Timer()
 {
-//AQUI FICAVA O CODEGO DE ZERAR PENDENTES
+  //AQUI FICAVA O CODEGO DE ZERAR PENDENTES
 }

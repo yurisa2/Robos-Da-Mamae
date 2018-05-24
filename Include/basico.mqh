@@ -257,7 +257,12 @@ void DetectaNovaBarra()
   //---
   int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
   datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
-  if(grafico_atual.isNewBar(new_time)) OnNewBar();
+  if(grafico_atual.isNewBar(new_time))
+  {
+    int Espera = MathRand()/30;
+    Sleep(Espera);
+    OnNewBar();
+  }
 }
 
 void Operacoes_No_Timer()

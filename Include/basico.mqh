@@ -313,6 +313,9 @@ void Init_Padrao ()
 
   ArrumaMinutos();
 
+  Print("TickSize: ",DoubleToString(Tick_Size));
+  if(Tick_Size == 0) Alert("Tick_Size ZERO!");
+
 
   File_Init();
   File_Filtro_Init();

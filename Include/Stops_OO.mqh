@@ -13,7 +13,7 @@ class Stops
   // ~Stops() {};
   int Tipo_Posicao();
   void No_Tick();
-  void Setar_Ordens_Vars_Static();
+  void Setar_Ordens_Vars_Static(int funcao = 0);
   void Setar_Ordens_Vars_Proporcional();
   double Valor_Negocio();
   void TS_();
@@ -158,7 +158,8 @@ void Stops::TakeProfit_Calcula()
       0,
       0,
       ORDER_TIME_DAY,
-      dtHoje
+      dtHoje,
+      IntegerToString(TimeMagic)
     );
 
   }
@@ -173,7 +174,8 @@ void Stops::TakeProfit_Calcula()
       0,
       0,
       ORDER_TIME_DAY,
-      dtHoje
+      dtHoje,
+      IntegerToString(TimeMagic)
     );
     tradionices.OrderOpen(
       Symbol(),
@@ -184,7 +186,8 @@ void Stops::TakeProfit_Calcula()
       0,
       0,
       ORDER_TIME_DAY,
-      dtHoje
+      dtHoje,
+      IntegerToString(TimeMagic)
     );
   }
   if(Distribuidor_Parcial(0) == 3)
@@ -198,7 +201,8 @@ void Stops::TakeProfit_Calcula()
       0,
       0,
       ORDER_TIME_DAY,
-      dtHoje
+      dtHoje,
+      IntegerToString(TimeMagic)
     );
 
     tradionices.OrderOpen(
@@ -210,7 +214,8 @@ void Stops::TakeProfit_Calcula()
       0,
       0,
       ORDER_TIME_DAY,
-      dtHoje
+      dtHoje,
+      IntegerToString(TimeMagic)
     );
 
     tradionices.OrderOpen(
@@ -222,7 +227,8 @@ void Stops::TakeProfit_Calcula()
       0,
       0,
       ORDER_TIME_DAY,
-      dtHoje
+      dtHoje,
+      IntegerToString(TimeMagic)
     );
     delete(tradionices);
   }
@@ -231,29 +237,32 @@ void Stops::TakeProfit_Calcula()
 
 }
 
-void Stops::Setar_Ordens_Vars_Static()
+void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
 {
   CTrade *tradionices = new CTrade;
   double valor = Valor_Negocio();
   int Tipo_Posicao_ = Tipo_Posicao();
   int loopes = 0;
 
-do
- {
-    Print("Posicao Zero, Tentando Novamente.");
-    Sleep(400);
-    Tipo_Posicao_ = Tipo_Posicao();
-    loopes++;
-  }
-  while(Tipo_Posicao_ == 0 && loopes <= 20);
-
-
-  if(Tipo_Posicao_ == 0)
+  if(funcao == 0)
   {
-    Alert("Tipo de posicao nao está vindo, vou morrer agora");
-  }
+  do
+   {
+      if(loopes != 0) Print("Posicao Zero, Tentativa #: " + IntegerToString(loopes));
+      Sleep(400);
+      Tipo_Posicao_ = Tipo_Posicao();
+      loopes++;
+    }
+    while(Tipo_Posicao_ == 0 && loopes <= 20);
 
+
+    if(Tipo_Posicao_ == 0)
+    {
+      Alert("Tipo de posicao nao está vindo, vou morrer agora");
+    }
+  }
   double sl = valor - (StopLoss * (Tipo_Posicao_ * Tick_Size));
+  if(funcao == 1) sl = this.Valor_Negocio();
   double tp1 = valor + (TakeProfit * (Tipo_Posicao_ * Tick_Size));
   double tp2 = valor + (TakeProfit2 * (Tipo_Posicao_ * Tick_Size));
   double tp3 = valor + (TakeProfit3 * (Tipo_Posicao_ * Tick_Size)); //Tem que arrumar depois
@@ -276,9 +285,10 @@ do
     Alert(alerta_op);
   }
 
+
   tradionices.PositionModify(Symbol(),sl,tp3);
 
-  TakeProfit_Calcula();
+  if(funcao == 0) TakeProfit_Calcula();
 
   delete(tradionices);
 }

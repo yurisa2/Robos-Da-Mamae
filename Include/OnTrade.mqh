@@ -4,7 +4,7 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 void OnTradeTransaction(const MqlTradeTransaction& trans,
@@ -16,27 +16,20 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 
     ulong posicao_ticket = request.position;
 
-    //if(posicao_ticket == Verifica_Posicao.Ticket)    Alert("Ticket: " + IntegerToString(Verifica_Posicao.Ticket)); // Acho que aqui são todos os eventso
+    //if(posicao_ticket == Verifica_Posicao.Ticket)    Alert("Ticket: " + IntegerToString(Verifica_Posicao.Ticket)); // Acho que aqui sï¿½o todos os eventso
 
     delete(Verifica_Posicao);
 
 
-    if(Zerar_SL_TP == 1)
+    if(Zerar_SL_TP == 1 && O_Stops.Tipo_Posicao() != 0)
     {
       PositionSelect(_Symbol);
-      if(Lotes != PositionGetDouble(POSITION_VOLUME))
+      if(NormalizeDouble(Lotes,8) != NormalizeDouble(PositionGetDouble(POSITION_VOLUME),8))
       {
-
-        // double tp = daotick_geral + (100 * Tick_Size * O_Stops.Tipo_Posicao());
-        double tp = 0;
-        double sl = O_Stops.Valor_Negocio() + Tick_Size;
-
-        CTrade *tradionices = new CTrade;
-        tradionices.PositionModify(Symbol(),sl,tp);
-        delete(tradionices);
-
+        Print("Volume da Posicao: " + DoubleToString(PositionGetDouble(POSITION_VOLUME)));
+        Print("Lotes: " + DoubleToString(Lotes));
+        O_Stops.Setar_Ordens_Vars_Static(1);
       }
-
     }
 
     /////// Inicio Apagar ordens pendentes
@@ -216,9 +209,9 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
       //--- 3) if it is a deletion of an order from the list of open ones
       case TRADE_TRANSACTION_ORDER_DELETE:
       {
-      //   if(InpIsLogging)
-      // //  PrintFormat("Deleted from the list of open orders: #%d, "+
-      //   EnumToString(trans.order_type),trans.order);
+        //   if(InpIsLogging)
+        // //  PrintFormat("Deleted from the list of open orders: #%d, "+
+        //   EnumToString(trans.order_type),trans.order);
         //---
         break;
       }
@@ -256,7 +249,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
             {
               is_to_reset_cnt=true;
               //---
-              PrintFormat("#### CANCELOU Order canceled: #%d",trans.order);
+              // PrintFormat("#### CANCELOU Order canceled: #%d",trans.order);
             }
           }
           //--- if it is the fourth pass
@@ -278,7 +271,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
         ENUM_DEAL_TYPE deal_type=trans.deal_type;
         //---
         if(InpIsLogging)
-      //  PrintFormat("Deal added to history: #%d, "+EnumToString(deal_type),deal_ticket);
+        //  PrintFormat("Deal added to history: #%d, "+EnumToString(deal_type),deal_ticket);
 
         if(deal_ticket>0)
         {
@@ -313,8 +306,8 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
               if(deal_entry==DEAL_ENTRY_IN)
               {
                 //--- 1) opening of a position
-            //    if(deal_vol==pos_vol)
-              //  PrintFormat("\n%s: new position opened",deal_symbol);
+                //    if(deal_vol==pos_vol)
+                //  PrintFormat("\n%s: new position opened",deal_symbol);
 
                 //--- 2) addition of lots to the open position
                 //else if(deal_vol<pos_vol)   PrintFormat("\n%s: addition to the current position",deal_symbol);
@@ -322,14 +315,14 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 //Print("Entrou myDealInfo.PositionId() " + myDealInfo.PositionId());
                 if(!Otimizacao)
                 {
-                File *arquivo = new File();
-                FiltroF *filtro_fuzzy = new FiltroF;
+                  File *arquivo = new File();
+                  FiltroF *filtro_fuzzy = new FiltroF;
 
-                arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()),0,DEAL_ENTRY_IN);
-                filtro_ind.Dados();
-                filtro_fuzzy_arquivo = filtro_fuzzy.Fuzzy();
-                delete(arquivo);
-                delete(filtro_fuzzy);
+                  arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()),0,DEAL_ENTRY_IN);
+                  filtro_ind.Dados();
+                  filtro_fuzzy_arquivo = filtro_fuzzy.Fuzzy();
+                  delete(arquivo);
+                  delete(filtro_fuzzy);
 
                 }
 
@@ -346,21 +339,21 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 //Print("Saiu myDealInfo.PositionId() " + myDealInfo.PositionId());
                 if(!Otimizacao)
                 {
-                FiltroF *filtro_teste = new FiltroF;
-                File *arquivo = new File();
-                File_Filtro *arquivo_filtro = new File_Filtro();
-                arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
-                arquivo_filtro.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
-                filtro_teste.Escreve_Medias_Filtro();
-                delete(filtro_teste);
-                delete(arquivo);
-                delete(arquivo_filtro);
-              }
+                  FiltroF *filtro_teste = new FiltroF;
+                  File *arquivo = new File();
+                  File_Filtro *arquivo_filtro = new File_Filtro();
+                  arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
+                  arquivo_filtro.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
+                  filtro_teste.Escreve_Medias_Filtro();
+                  delete(filtro_teste);
+                  delete(arquivo);
+                  delete(arquivo_filtro);
+                }
 
-              on_trade_robo *trade_especifico = new on_trade_robo(-1,myDealInfo.Profit());
-              // trade_especifico.Profit = myDealInfo.Profit();
-              // Print("Profit ONTRADE: " + myDealInfo.Profit());
-              delete trade_especifico;
+                on_trade_robo *trade_especifico = new on_trade_robo(-1,myDealInfo.Profit());
+                // trade_especifico.Profit = myDealInfo.Profit();
+                // Print("Profit ONTRADE: " + myDealInfo.Profit());
+                delete trade_especifico;
 
                 if(deal_vol>0.0)
                 {
@@ -374,7 +367,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   //--- 2) partial closure of the open position
                   //else if(pos_vol>0.0)
                   // PrintFormat("\n%s: partial closure of the current position",deal_symbol);
-                  //PrintFormat("\n%s: Redução da Posição (Realização Parcial)",deal_symbol);
+                  //PrintFormat("\n%s: Reduï¿½ï¿½o da Posiï¿½ï¿½o (Realizaï¿½ï¿½o Parcial)",deal_symbol);
                 }
               }
 
@@ -421,7 +414,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
         if(gTransCnt==0)
         {
           trade_obj=TRADE_OBJ_ORDER;
-          PrintFormat("CANCELOU 2 Cancel the order: #%d",trans.order);
+          // PrintFormat("CANCELOU 2 Cancel the order: #%d",trans.order);
         }
         //--- if it was the second pass
         if(gTransCnt==1)

@@ -44,10 +44,26 @@ void Opera_Mercado::ZeraOrdensP()
       ulong ticket=OrderGetTicket(i);
       if(OrderSelect(ticket) && OrderGetString(ORDER_SYMBOL)==Symbol())
       {
+        // Print("ticket da ordem: " + IntegerToString(ticket)); //DEBUG
+
+        //Inicio da gambiarra Italiana
+        COrderInfo *order_info = new COrderInfo();
+        order_info.Select(ticket);
+        long magic_order = -1;
+        magic_order = order_info.Magic();
+        // Print("Magic da ordem: " + IntegerToString(magic_order));  //DEBUG
+        // Print("Comment(Magic): " + order_info.Comment());  //DEBUG
+
+        //Fim da gambiarra Italiana
+        if(StringToInteger(order_info.Comment()) == TimeMagic)
+        {
         CTrade *trade=new CTrade();
         trade.OrderDelete(ticket);
         delete trade;
-        Print("Deletando Ordens Pendentes");
+        // Print("Deletando Ordens Pendentes"); //DEBUG
+        }
+
+        delete order_info;
       }
     }
   }

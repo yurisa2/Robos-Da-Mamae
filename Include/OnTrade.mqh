@@ -11,7 +11,6 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
   const MqlTradeRequest& request,
   const MqlTradeResult& result)
   {
-
     posicao *Verifica_Posicao  = new posicao;
 
     ulong posicao_ticket = request.position;
@@ -19,7 +18,6 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
     //if(posicao_ticket == Verifica_Posicao.Ticket)    Alert("Ticket: " + IntegerToString(Verifica_Posicao.Ticket)); // Acho que aqui s�o todos os eventso
 
     delete(Verifica_Posicao);
-
 
     if(Zerar_SL_TP == 1 && O_Stops.Tipo_Posicao() != 0)
     {
@@ -35,7 +33,6 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
     /////// Inicio Apagar ordens pendentes
     if(O_Stops.Tipo_Posicao() == 0)
     {
-
       Opera_Mercado *opera = new Opera_Mercado;
       opera.ZeraOrdensP();
       delete(opera);

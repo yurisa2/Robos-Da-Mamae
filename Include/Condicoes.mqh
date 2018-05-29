@@ -12,6 +12,9 @@ class Condicoes_Basicas_OO
   bool Condicao();
   bool Horario();
   bool Operacao_Em_Curso();
+  bool Condicoes_Basicas_OO::Lucro_Diario();
+  bool Condicoes_Basicas_OO::Preju_Diario();
+  bool Condicoes_Basicas_OO::Numero_Negocios();
 
   private:
 
@@ -54,6 +57,7 @@ bool Condicoes_Basicas_OO::Condicao()
   int Horario_Permite = 0;
   int NeuralNetwork_Permite = 0;
 
+
   if(!Operacao_Em_Curso()) Operacao_EC = 1;
   if(Horario()) Horario_Permite = 1;
 
@@ -67,11 +71,48 @@ bool Condicoes_Basicas_OO::Condicao()
   }
   else NeuralNetwork_Permite = 1;
 
-  int Soma_Permite = Operacao_EC + Horario_Permite + NeuralNetwork_Permite;
+  int Soma_Permite =  Operacao_EC +
+                      Horario_Permite +
+                      NeuralNetwork_Permite +
+                      Numero_Negocios() +
+                      Lucro_Diario() +
+                      Preju_Diario()
 
-  if(Soma_Permite == 3 ) return true;
+
+                      ;
+
+  if(Soma_Permite == 6 ) return true;
   else return false;
 }
 
+bool Condicoes_Basicas_OO::Numero_Negocios()
+{
+  bool retorno = false;
+  Totalizador *totalizator2 = new Totalizador(1);
+  if(totalizator2.negocios < Limite_Operacoes) retorno = true;
+
+  delete(totalizator2);
+  return retorno;
+}
+
+bool Condicoes_Basicas_OO::Lucro_Diario()
+{
+  bool retorno = false;
+  Totalizador *totalizator2 = new Totalizador(1);
+  if(totalizator2.ganho_liquido() <= lucro_dia || lucro_dia == 0) retorno = true;
+
+  delete(totalizator2);
+  return retorno;
+}
+
+bool Condicoes_Basicas_OO::Preju_Diario()
+{
+  bool retorno = false;
+  Totalizador *totalizator2 = new Totalizador(1);
+  if((totalizator2.ganho_liquido() *-1) <= preju_dia  || lucro_dia == 0) retorno = true;
+
+  delete(totalizator2);
+  return retorno;
+}
 
 Condicoes_Basicas_OO Condicoes_Basicas;

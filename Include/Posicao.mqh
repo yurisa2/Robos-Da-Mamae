@@ -4,7 +4,7 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class posicao : public CPositionInfo
@@ -20,22 +20,22 @@ class posicao : public CPositionInfo
 
 };
 
-  long posicao::TicketPosicao()
-  {
-    long return_pos_ticket;
-    Select(Symbol());
-    InfoInteger(POSITION_TICKET,return_pos_ticket);
+long posicao::TicketPosicao()
+{
+  long return_pos_ticket;
+  Select(Symbol());
+  InfoInteger(POSITION_TICKET,return_pos_ticket);
 
   return return_pos_ticket;
-  }
+}
 
-  bool posicao::PosicaoExiste()
-  {
+bool posicao::PosicaoExiste()
+{
 
-    return   Select(Symbol());
+  return   Select(Symbol());
 
-  }
+}
 
- void  posicao::posicao()
-  {
-  }
+void  posicao::posicao()
+{
+}

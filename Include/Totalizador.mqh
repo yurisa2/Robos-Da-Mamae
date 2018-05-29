@@ -7,7 +7,7 @@ class Totalizador
   private:
 
   public:
-  Totalizador();
+  Totalizador(int operacao = 0); //Ai ficou 0 para TOTAL e 1 para HOJE
   int negocios;
   double custo_total;
   double ganho_total;
@@ -16,17 +16,34 @@ class Totalizador
   double custo_ate_momento();
   double lucro_ate_momento();
   void calcula_financeiro();
+  int tipo_operacao;
 };
 
-void Totalizador::Totalizador()
+void Totalizador::Totalizador(int operacao = 0)
 {
+  tipo_operacao = operacao;
   negocios = 0;
   calcula_financeiro();
 }
 
-double Totalizador::lucro_ate_momento()
+void Totalizador::calcula_financeiro()
 {
-  HistorySelect(data_inicio_execucao,TimeCurrent());
+  lucro_ate_momento();
+  custo_ate_momento();
+  ganho_liquido();
+
+  // Print("custo_ate_momento: " + DoubleToString(custo_ate_momento()));
+}
+
+double Totalizador::lucro_ate_momento()  ///ai fica 0 para inicio execucao, 1 para o diÃ¡rio
+{
+  if(tipo_operacao == 0)  HistorySelect(data_inicio_execucao,TimeCurrent());
+
+  string DiaHoje_paraZero = TimeToString(TimeCurrent(),TIME_DATE);
+  datetime Hoje_Zero_Hora = StringToTime(DiaHoje_paraZero + " " + "00:01");
+
+  if(tipo_operacao == 1)  HistorySelect(Hoje_Zero_Hora,TimeCurrent());
+
   int num_negocios = 0;
   long deal_magic = 0;
 
@@ -37,34 +54,41 @@ double Totalizador::lucro_ate_momento()
   // Alert(HistoryDealsTotal());
 
   for(uint i = 0;i<total;i++)
+  {
+    //--- try to get deals ticket
+    if((ticket = HistoryDealGetTicket(i))>0) //Colocar aqui pesquisaï¿½ï¿½o de MAGIC
+    {
+      //--- get deals properties
+      ulong type  = HistoryDealGetInteger(ticket,DEAL_TYPE);
+      deal_magic  = HistoryDealGetInteger(ticket,DEAL_MAGIC);
+      double profit = HistoryDealGetDouble(ticket,DEAL_PROFIT);
+
+      // Alert("deal_magic: " + deal_magic);
+
+      CTrade *opera = new CTrade;
+
+      if(deal_magic == opera.RequestMagic())
       {
-       //--- try to get deals ticket
-       if((ticket = HistoryDealGetTicket(i))>0) //Colocar aqui pesquisação de MAGIC
-         {
-          //--- get deals properties
-          ulong type  = HistoryDealGetInteger(ticket,DEAL_TYPE);
-          deal_magic  = HistoryDealGetInteger(ticket,DEAL_MAGIC);
-          double profit = HistoryDealGetDouble(ticket,DEAL_PROFIT);
+        profit_somado = profit_somado + profit;
+        ganho_total = profit_somado;
+        num_negocios++;
+        negocios = num_negocios-1;
+      }
 
-          // Alert("deal_magic: " + deal_magic);
+      delete(opera);
+      // Alert("type: " + EnumToString(type)); //DEBUG
+    }
+  }
+  // Alert("profit_somado: " + DoubleToString(profit_somado,_Digits)); //DEBUG
 
-          CTrade *opera = new CTrade;
+  // Print("deal_magic: " + deal_magic); //DEBUG
 
-          if(deal_magic == opera.RequestMagic())
-          {
-          profit_somado = profit_somado + profit;
-          ganho_total = profit_somado;
-          num_negocios++;
-          negocios = num_negocios-1;
-          }
+  // Print("tipo_operacao: " + tipo_operacao);
+  // Print("Liquidez_inicio: " + Liquidez_inicio);
 
-          delete(opera);
-          // Alert("type: " + EnumToString(type)); //DEBUG
-          }
-        }
-        // Alert("profit_somado: " + DoubleToString(profit_somado,_Digits)); //DEBUG
+  // if(tipo_operacao != 0) profit_somado = profit_somado - Liquidez_inicio ; //AQUELE INTERCEPT TIOZAO
 
-        // Print("deal_magic: " + deal_magic); //DEBUG
+
   return profit_somado;
 }
 
@@ -78,19 +102,11 @@ double Totalizador::custo_ate_momento()
 
 double Totalizador::ganho_liquido()
 {
-  ganho_calculado = ganho_total-custo_total;
+  ganho_calculado = ganho_total - custo_total;
 
   return ganho_total-custo_total;
 }
 
-void Totalizador::calcula_financeiro()
-{
-lucro_ate_momento();
-custo_ate_momento();
-ganho_liquido();
 
-  // Print("custo_ate_momento: " + DoubleToString(custo_ate_momento()));
-
-}
 
 // Totalizador totalizator;

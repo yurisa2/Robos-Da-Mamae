@@ -147,22 +147,22 @@ void Stops::TakeProfit_Calcula()
 
   CTrade *tradionices = new CTrade;
   // Inicio das ordens efetivas
-  if(Distribuidor_Parcial(0) == 1)
-  {
-    tradionices.OrderOpen(
-      Symbol(),
-      Tipo_Ordem_TP,
-      Distribuidor_Parcial(1),
-      0,
-      tpc1,
-      0,
-      0,
-      ORDER_TIME_DAY,
-      dtHoje,
-      IntegerToString(TimeMagic)
-    );
+  // if(Distribuidor_Parcial(0) == 1)
+  // {
+  //   tradionices.OrderOpen(
+  //     Symbol(),
+  //     Tipo_Ordem_TP,
+  //     Distribuidor_Parcial(1),
+  //     0,
+  //     tpc1,
+  //     0,
+  //     0,
+  //     ORDER_TIME_DAY,
+  //     dtHoje,
+  //     IntegerToString(TimeMagic)
+  //   );
+  // }
 
-  }
   if(Distribuidor_Parcial(0) == 2)
   {
     tradionices.OrderOpen(
@@ -177,19 +177,20 @@ void Stops::TakeProfit_Calcula()
       dtHoje,
       IntegerToString(TimeMagic)
     );
-    tradionices.OrderOpen(
-      Symbol(),
-      Tipo_Ordem_TP,
-      Distribuidor_Parcial(2),
-      0,
-      tpc2,
-      0,
-      0,
-      ORDER_TIME_DAY,
-      dtHoje,
-      IntegerToString(TimeMagic)
-    );
+    // tradionices.OrderOpen(
+    //   Symbol(),
+    //   Tipo_Ordem_TP,
+    //   Distribuidor_Parcial(2),
+    //   0,
+    //   tpc2,
+    //   0,
+    //   0,
+    //   ORDER_TIME_DAY,
+    //   dtHoje,
+    //   IntegerToString(TimeMagic)
+    // );
   }
+
   if(Distribuidor_Parcial(0) == 3)
   {
     tradionices.OrderOpen(
@@ -218,18 +219,18 @@ void Stops::TakeProfit_Calcula()
       IntegerToString(TimeMagic)
     );
 
-    tradionices.OrderOpen(
-      Symbol(),
-      Tipo_Ordem_TP,
-      Distribuidor_Parcial(3),
-      0,
-      tpc3,
-      0,
-      0,
-      ORDER_TIME_DAY,
-      dtHoje,
-      IntegerToString(TimeMagic)
-    );
+    // tradionices.OrderOpen(
+    //   Symbol(),
+    //   Tipo_Ordem_TP,
+    //   Distribuidor_Parcial(3),
+    //   0,
+    //   tpc3,
+    //   0,
+    //   0,
+    //   ORDER_TIME_DAY,
+    //   dtHoje,
+    //   IntegerToString(TimeMagic)
+    // );
     delete(tradionices);
   }
   //Fim das ordens efetivas
@@ -267,11 +268,22 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
   double tp2 = valor + (TakeProfit2 * (Tipo_Posicao_ * Tick_Size));
   double tp3 = valor + (TakeProfit3 * (Tipo_Posicao_ * Tick_Size)); //Tem que arrumar depois
   // double tp3 = 0; //Tem que arrumar depois
+  double tpMax = tp3;
 
-  if(TakeProfit3 == 0 && TakeProfit2 == 0) tp3 = tp1 + (1000 * Tick_Size * Tipo_Posicao_);
-  if(TakeProfit3 == 0 && TakeProfit2 != 0) tp3 = tp2 + (1000 * Tick_Size * Tipo_Posicao_);
+  //Isso aqui é para colocar os TPs no alto, mas, obvio, tá dando errado.
+  if(TakeProfit3 == 0 && TakeProfit2 == 0)   // Nesse caso só tem TP1
+    {
+    tp3 = tp1 + (1000 * Tick_Size * Tipo_Posicao_);
+    tpMax = tp1;
+    }
 
-  Print("StopLoss Fixo: " + DoubleToString(sl)); //DEBUG
+  if(TakeProfit3 == 0 && TakeProfit2 != 0) //Nesse caso tem TP2, mas não TP3
+{
+  tp3 = tp2 + (1000 * Tick_Size * Tipo_Posicao_);
+  tpMax = tp2;
+}
+
+Print("StopLoss Fixo: " + DoubleToString(sl)); //DEBUG
 
   if(Aleta_Operacao && !Otimizacao)
   {
@@ -285,8 +297,7 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
     Alert(alerta_op);
   }
 
-
-  tradionices.PositionModify(Symbol(),sl,tp3);
+  tradionices.PositionModify(Symbol(),sl,tpMax);
 
   if(funcao == 0) TakeProfit_Calcula();
 
@@ -310,37 +321,37 @@ void Stops::Setar_Ordens_Vars_Proporcional()
   int Tipo_Posicao_ = Tipo_Posicao();
   int loopes = 0;
 
-do
- {
-    Print("Posicao Zero, Tentando Novamente. Loop: " + IntegerToString(loopes));
-    Sleep(400);
-    Tipo_Posicao_ = Tipo_Posicao();
-    loopes++;
-  }
-  while(Tipo_Posicao_ == 0 && loopes <= 20);
+  do
+   {
+      Print("Posicao Zero, Tentando Novamente. Loop: " + IntegerToString(loopes));
+      Sleep(400);
+      Tipo_Posicao_ = Tipo_Posicao();
+      loopes++;
+    }
+    while(Tipo_Posicao_ == 0 && loopes <= 20);
 
-  StopLoss_Proporcional = (StopLoss * delta_bb); //Aqui Ja Sai em Tick_Size
-  //Print("StopLoss_Proporcional: " + StopLoss_Proporcional + " Ticks"); //DEBUG
-  StopLoss_Proporcional = MathFloor(StopLoss_Proporcional) * Tick_Size;
-  //Print("StopLoss_Proporcional MathFloor * Tick_Size: " + StopLoss_Proporcional); //DEBUG
+    StopLoss_Proporcional = (StopLoss * delta_bb); //Aqui Ja Sai em Tick_Size
+    //Print("StopLoss_Proporcional: " + StopLoss_Proporcional + " Ticks"); //DEBUG
+    StopLoss_Proporcional = MathFloor(StopLoss_Proporcional) * Tick_Size;
+    //Print("StopLoss_Proporcional MathFloor * Tick_Size: " + StopLoss_Proporcional); //DEBUG
 
-  double sl_max = Limite_Maximo_SL_Tick_Size * Tick_Size;   //Pontos m�ximo
+    double sl_max = Limite_Maximo_SL_Tick_Size * Tick_Size;   //Pontos m�ximo
 
-  StopLoss_Proporcional = MathMin(StopLoss_Proporcional, sl_max);
+    StopLoss_Proporcional = MathMin(StopLoss_Proporcional, sl_max);
 
-  if(TakeProfit == 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
+    if(TakeProfit == 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
 
-  double sl = valor - (StopLoss_Proporcional * (Tipo_Posicao()));
+    double sl = valor - (StopLoss_Proporcional * (Tipo_Posicao()));
 
 
 
-  //Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
-  //Print("StopLoss Prop: " + DoubleToString(sl)); //DEBUG
+    //Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
+    //Print("StopLoss Prop: " + DoubleToString(sl)); //DEBUG
 
-  tradionices.PositionModify(Symbol(),sl,tp);
-  TakeProfit_Calcula();
+    tradionices.PositionModify(Symbol(),sl,tp);
+    TakeProfit_Calcula();
 
-  delete(tradionices);
+    delete(tradionices);
 }
 
 void Stops::TS_()

@@ -66,7 +66,7 @@ void OnTick()
 
 double OnTester()
 {
-  return Liquidez_Teste_fim - Liquidez_Teste_inicio -  OperacoesFeitasGlobais * custo_operacao * Lotes;
+  return Liquidez_Teste_fim - Liquidez_inicio -  OperacoesFeitasGlobais * custo_operacao * Lotes;
 }
 
 void OnNewBar()

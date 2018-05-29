@@ -25,11 +25,11 @@ input bool Custom_resultado_treino_nn = false;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
 input double Lotes = 1;                                                    //Volume negociado
-//input int Limite_Operacoes = 9999;                                         //Limite de operacoes (entrada e Saida)
+input int Limite_Operacoes = 9999;                                         //Limite de operacoes diário (entrada e Saida)
 input double custo_operacao = 1.36;                                        //$ Por negocio
-//input double lucro_dia = 1000000;                                          //Lucro MAX dario ($ - liq)
-//input double preju_dia = 1000000;                                          //Preju MAX dario ($ - liq)
-//input bool   interrompe_durante = 0;                                       //(NAO FUNCIONAL AINDA) Interrompe a operacao nos limites IMEDIATAMENTE
+input double lucro_dia = 1000000;                                          //Lucro MAX dario ($ - liq)
+input double preju_dia = 1000000;                                          //Preju MAX dario ($ - liq)
+input bool   interrompe_durante = 0;                                       // Interrompe a operacao nos limites (no candle)
 
 
 string Descricao_Robo = Descricao_Robo_Alpha;
@@ -115,7 +115,7 @@ double Liquidez_Teste = 0;
 
 double liquidez_inicio = 0;
 double Liquidez_Teste_fim = 0;
-double Liquidez_Teste_inicio = 0;
+double Liquidez_inicio = 0;
 
 ///////////////////////////////////////////
 

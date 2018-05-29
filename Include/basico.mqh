@@ -18,6 +18,8 @@ int Rand_Geral = MathRand();
 #include <Totalizador.mqh>
 #include <Normalizacao.mqh>
 #include <Graficos.mqh>
+#include <Interruptor.mqh>
+
 
 #include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
 
@@ -262,6 +264,7 @@ void DetectaNovaBarra()
     int Espera = MathRand()/30;
     Sleep(Espera);
     OnNewBar();
+    interruptor.Interrompe_Ganho();
   }
 }
 
@@ -300,14 +303,17 @@ void Init_Padrao ()
   EventSetMillisecondTimer(500);
   TimeMagic =MathRand();
 
-  data_inicio_execucao = TimeCurrent();
+  string data_inicio_execucao_string = TimeToString(TimeCurrent(),TIME_DATE) + " " + "00:01";
 
+  // data_inicio_execucao = TimeCurrent();
+  data_inicio_execucao = StringToTime(data_inicio_execucao_string);
 
   Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
   Print("TimeMagic: ",IntegerToString(TimeMagic));
 
-  Liquidez_Teste_inicio = conta.Equity();
+  Liquidez_inicio = conta.Equity();
+  Print("Liquidez_inicio: " + DoubleToString(Liquidez_inicio));
   Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
   Volume_Step = SymbolInfoDouble(_Symbol,SYMBOL_VOLUME_STEP);
 
@@ -315,7 +321,6 @@ void Init_Padrao ()
 
   Print("TickSize: ",DoubleToString(Tick_Size));
   if(Tick_Size == 0) Alert("Tick_Size ZERO!");
-
 
   File_Init();
   File_Filtro_Init();

@@ -328,7 +328,8 @@ void Init_Padrao ()
   File_Init();
   File_Filtro_Init();
 
-  if(rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta(machine_learning.rede_obj,rna_arquivo_trn);
+  if(rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta_RNA(machine_learning.rede_obj,rna_arquivo_trn);
+  if(rdf_levanta_arquivo_arvores && rdf_filtros_on) machine_learning.Levanta_RDF(machine_learning.tree_obj,rdf_arquivo_trn);
 
 }
 
@@ -405,7 +406,7 @@ void on_trade_robo::on_trade_robo(int es=0, double lucro = 0) //in = 1 |  out = 
   if(io == -1)
   {
     dados_nn.Saida(lucro);
-    machine_learning.Saida();
+    machine_learning.Saida_ML();
   }
 
   if(io == 1) dados_nn.Dados_Entrada();
@@ -414,8 +415,9 @@ void on_trade_robo::on_trade_robo(int es=0, double lucro = 0) //in = 1 |  out = 
 double OnTester()
 {
   double resultado;
-  if(rna_on && rna_on_treino) machine_learning.Treino(machine_learning.rede_obj);
-  if(rna_on && rna_Salva_Arquivo_hist) machine_learning.ML_Save(rna_nome_arquivo_hist);
+  if(ml_on && ml_Salva_Arquivo_hist) machine_learning.ML_Save(ml_nome_arquivo_hist);
+  if(ml_on && rna_on_treino) machine_learning.Treino_RNA(machine_learning.rede_obj);
+  if(ml_on && rdf_on_treino) machine_learning.Treino_RDF(machine_learning.tree_obj);
 
   if(!Custom_resultado_treino_nn)
   {

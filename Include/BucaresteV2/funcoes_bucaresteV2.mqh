@@ -28,7 +28,7 @@ void Bucareste::Bucareste_Comentario()
   {
     // if(rna_filtros_on)
     // {
-    machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
+    machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,x_entrada);
 
     Comentario_Robo = "Entradas:  \n";
     for(int i = 0; i < ArraySize(x_entrada); i++)
@@ -63,7 +63,7 @@ void Bucareste::Avalia()
 
     if(mudanca != 0 && O_Stops.Tipo_Posicao() != mudanca &&  O_Stops.Tipo_Posicao() == 0)
     {
-      // if(rna_filtros_on) machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
+      // if(rna_filtros_on) machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,x_entrada);
       //
       //
       // double ml_p = resposta_y[1];

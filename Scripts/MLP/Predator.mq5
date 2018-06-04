@@ -71,7 +71,7 @@ void OnStart()
   // algebra.MLPTrainLM(network,xy,amostras,decay,restarts,resposta,infotreino);
   algebra.MLPTrainLBFGS(network,xy,amostras,decay,restarts,wstep,epochs,resposta,infotreino);
 
-  machine_learning.SalvaRede(network,"Networken");
+  machine_learning.Salva_RNA(network,"Networken");
 
   int handleTeste= FileOpen("teste", FILE_WRITE|FILE_BIN|FILE_COMMON);
 

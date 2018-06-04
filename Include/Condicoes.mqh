@@ -56,6 +56,7 @@ bool Condicoes_Basicas_OO::Condicao()
   int Operacao_EC = 0;
   int Horario_Permite = 0;
   int NeuralNetwork_Permite = 0;
+  int RandomDecisionForest_Permite = 0;
 
 
   if(!Operacao_Em_Curso()) Operacao_EC = 1;
@@ -63,7 +64,7 @@ bool Condicoes_Basicas_OO::Condicao()
 
   if(rna_filtros_on)
   {
-  machine_learning.Processa(resposta_y,machine_learning.rede_obj,x_entrada);
+  machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,x_entrada);
   double ml_p = resposta_y[1];
   if(ml_p >= rna_permite) NeuralNetwork_Permite = 1;
   Print("ml_p "+ DoubleToString(ml_p));
@@ -71,9 +72,20 @@ bool Condicoes_Basicas_OO::Condicao()
   }
   else NeuralNetwork_Permite = 1;
 
+  if(rdf_filtros_on)
+  {
+  machine_learning.Processa_RDF(resposta_y,machine_learning.tree_obj,x_entrada);
+  double ml_t = resposta_y[1];
+  if(ml_t >= rdf_permite) RandomDecisionForest_Permite = 1;
+  Print("ml_t "+ DoubleToString(ml_t));
+
+  }
+  else RandomDecisionForest_Permite = 1;
+
   int Soma_Permite =  Operacao_EC +
                       Horario_Permite +
                       NeuralNetwork_Permite +
+                      RandomDecisionForest_Permite +
                       Numero_Negocios() +
                       Lucro_Diario() +
                       Preju_Diario()
@@ -81,7 +93,7 @@ bool Condicoes_Basicas_OO::Condicao()
 
                       ;
 
-  if(Soma_Permite == 6 ) return true;
+  if(Soma_Permite == 7 ) return true;
   else return false;
 }
 

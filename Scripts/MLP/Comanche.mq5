@@ -20,7 +20,7 @@ input bool rna_Salva_Arquivo_rede = false;
 input string rna_nome_arquivo_rede = "treinado.trn";
 double mse = 0;
 
-bool rna_on = 1;
+bool ml_on = 1;
 bool rna_on_realtime = 0;
 int rna_on_realtime_min_samples = 0;
 bool rna_filtros_on = 0;
@@ -66,7 +66,7 @@ void OnStart()
 
     string rna_rna_nome_arquivo_rede_rede = rna_nome_arquivo_rede+"."+IntegerToString(machine_learning2.entradas-1)+"-"
     +IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_camada_saida);
-    if(rna_Salva_Arquivo_rede) machine_learning2.SalvaRede(network,rna_rna_nome_arquivo_rede_rede,machine_learning2.entradas-1,rna_segunda_camada,rna_camada_saida);
+    if(rna_Salva_Arquivo_rede) machine_learning2.Salva_RNA(network,rna_rna_nome_arquivo_rede_rede,machine_learning2.entradas-1,rna_segunda_camada,rna_camada_saida);
 
     mse = algebra.MLPRMSError(network,xy,amostras);
 

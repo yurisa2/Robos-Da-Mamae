@@ -12,6 +12,9 @@ class Bucareste
 
 int Bucareste::Bucareste_Direcao()
 {
+
+   
+
   int direcao = 0;
   HiLo_OO *hilo = new HiLo_OO(BucaresteV2_HiLo_Periodos);
   direcao = hilo.Direcao();

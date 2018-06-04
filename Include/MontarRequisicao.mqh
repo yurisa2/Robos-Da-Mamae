@@ -57,10 +57,10 @@ void Opera_Mercado::ZeraOrdensP()
         //Fim da gambiarra Italiana
         if(StringToInteger(order_info.Comment()) == TimeMagic)
         {
-        CTrade *trade=new CTrade();
-        trade.OrderDelete(ticket);
-        delete trade;
-        // Print("Deletando Ordens Pendentes"); //DEBUG
+          CTrade *trade=new CTrade();
+          trade.OrderDelete(ticket);
+          delete trade;
+          // Print("Deletando Ordens Pendentes"); //DEBUG
         }
 
         delete order_info;
@@ -104,16 +104,22 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
   CTrade *requisicao_montar = new CTrade;
   if(Condicoes_Basicas.Condicao())
   {
-    do
-    ZeraOrdensP();
-    while(OrdersTotal() > 0);
 
-    requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
+      do
+      ZeraOrdensP();
+      while(OrdersTotal() > 0);
 
-    if(Tipo_Limite == 55) O_Stops.Setar_Ordens_Vars_Static();
-    if(Tipo_Limite == 471) O_Stops.Setar_Ordens_Vars_Proporcional();
+      requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
+      if(Tipo_Limite == 55) O_Stops.Setar_Ordens_Vars_Static();
+      if(Tipo_Limite == 471) O_Stops.Setar_Ordens_Vars_Proporcional();
+
+
 
   }
+
+
+
+
   delete(requisicao_montar);
 }
 /////////////////////////////////////////// Final da req.

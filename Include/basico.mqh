@@ -303,6 +303,9 @@ void Init_Padrao ()
   EventSetMillisecondTimer(500);
   TimeMagic =MathRand();
 
+  tipo_margem_conta = AccountInfoInteger(ACCOUNT_MARGIN_MODE); //0 NETT, 1 EXCHANGE, 2 HEDGING
+  Print("Tipo de Margem: " + IntegerToString(tipo_margem_conta));
+
   string data_inicio_execucao_string = TimeToString(TimeCurrent(),TIME_DATE) + " " + "00:01";
 
   // data_inicio_execucao = TimeCurrent();
@@ -325,7 +328,7 @@ void Init_Padrao ()
   File_Init();
   File_Filtro_Init();
 
-  if(rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta(machine_learning.rede_obj,rna_arquivo_trn,rna_entrada,rna_segunda_camada,rna_terceira_camada,rna_camada_saida);
+  if(rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta(machine_learning.rede_obj,rna_arquivo_trn);
 
 }
 

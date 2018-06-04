@@ -186,3 +186,6 @@ input bool rna_filtros_on = false;
 input double rna_permite = 0;
 input bool rna_levanta_arquivo_rede = false;
 input string rna_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.trn";
+
+
+long tipo_margem_conta = 0;

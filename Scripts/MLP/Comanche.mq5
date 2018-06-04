@@ -3,8 +3,8 @@
 //+------------------------------------------------------------------+
 //+------------------------------------------------------------------+
 #include <Math\Alglib\alglib.mqh>
-#include <ML.mqh>
 #include <dados_nn_stub.mqh>
+#include <ML.mqh>
 
 #property strict
 #property script_show_inputs

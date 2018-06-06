@@ -328,8 +328,8 @@ void Init_Padrao ()
   File_Init();
   File_Filtro_Init();
 
-  if(rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta_RNA(machine_learning.rede_obj,rna_arquivo_trn);
-  if(rdf_levanta_arquivo_arvores && rdf_filtros_on) machine_learning.Levanta_RDF(machine_learning.tree_obj,rdf_arquivo_trn);
+  if(ml_on && rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta_RNA(machine_learning.rede_obj,rna_arquivo_trn);
+  if(ml_on && rdf_levanta_arquivo_arvores && rdf_filtros_on) machine_learning.Levanta_RDF(machine_learning.tree_obj,rdf_arquivo_trn);
 
 }
 
@@ -403,13 +403,13 @@ class on_trade_robo {
 void on_trade_robo::on_trade_robo(int es=0, double lucro = 0) //in = 1 |  out = -1
 {
   io = es;
-  if(io == -1)
+  if(ml_on && io == -1)
   {
     dados_nn.Saida(lucro);
     machine_learning.Saida_ML();
   }
 
-  if(io == 1) dados_nn.Dados_Entrada();
+  if(ml_on && io == 1) dados_nn.Dados_Entrada();
 };
 
 double OnTester()

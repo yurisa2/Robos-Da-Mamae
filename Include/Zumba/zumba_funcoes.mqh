@@ -53,8 +53,8 @@ void Zumba::Avalia()
     bool filtro_rna_permite = false;
     double ml_p = resposta_y[1];
 
-    if(rna_filtros_on) machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,x_entrada);
-    if(rna_filtros_on && ml_p*100 > rna_permite) filtro_rna_permite = true;
+    if(ml_on && rna_filtros_on) machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,x_entrada);
+    if(ml_on && rna_filtros_on && ml_p*100 > rna_permite) filtro_rna_permite = true;
     if(!rna_filtros_on) filtro_rna_permite = true;
 
     Igor *Igor_oo = new Igor(Zumba_IGOR_TF);

@@ -62,7 +62,7 @@ bool Condicoes_Basicas_OO::Condicao()
   if(!Operacao_Em_Curso()) Operacao_EC = 1;
   if(Horario()) Horario_Permite = 1;
 
-  if(rna_filtros_on)
+  if(ml_on && rna_filtros_on)
   {
   machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,x_entrada);
   double ml_p = resposta_y[1];
@@ -72,7 +72,7 @@ bool Condicoes_Basicas_OO::Condicao()
   }
   else NeuralNetwork_Permite = 1;
 
-  if(rdf_filtros_on)
+  if(ml_on && rdf_filtros_on)
   {
   machine_learning.Processa_RDF(resposta_y,machine_learning.tree_obj,x_entrada);
   double ml_t = resposta_y[1];

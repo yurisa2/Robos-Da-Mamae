@@ -57,7 +57,7 @@ void Opera_Mercado::ZeraOrdensP()
         //Fim da gambiarra Italiana
         if(StringToInteger(order_info.Comment()) == TimeMagic)
         {
-          CTrade *trade=new CTrade();
+          CTrade *trade = new CTrade();
           trade.OrderDelete(ticket);
           delete trade;
           // Print("Deletando Ordens Pendentes"); //DEBUG

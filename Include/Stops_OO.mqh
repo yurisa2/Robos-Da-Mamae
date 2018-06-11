@@ -231,9 +231,9 @@ void Stops::TakeProfit_Calcula()
     //   dtHoje,
     //   IntegerToString(TimeMagic)
     // );
-    delete(tradionices);
   }
   //Fim das ordens efetivas
+  delete(tradionices);
 
 
 }

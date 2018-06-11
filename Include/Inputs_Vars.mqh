@@ -165,3 +165,4 @@ double filtro_fuzzy_arquivo = 0;
 
 
 long tipo_margem_conta = 0;
+string minuto_passado = "0";

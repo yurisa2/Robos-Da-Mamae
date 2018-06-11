@@ -279,9 +279,12 @@ void Operacoes_No_Timer()
 
 void Encerra_Ops_Dia()
 {
+  string hrmn[2];
+  StringSplit(TimeToString(TimeCurrent(),TIME_MINUTES),StringGetCharacter(":",0),hrmn);
 
+if(hrmn[1] != minuto_passado)
+{
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
-
   if(!Condicoes.Horario() && ZerarFinalDoDia)
   {
     if(O_Stops.Tipo_Posicao() != 0)
@@ -289,13 +292,11 @@ void Encerra_Ops_Dia()
       Opera_Mercado *opera = new Opera_Mercado;
       opera.FechaPosicao() ;
       delete(opera);
-
     }
-
   }
-
   delete(Condicoes);
-
+  minuto_passado = hrmn[1];
+  }
 }
 void Init_Padrao ()
 {

@@ -6,7 +6,7 @@
 //+------------------------------------------------------------------+
 #property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
-int entrada = 57;
+int entrada = 58;
 double x_entrada[];
 double resposta_y[2];
 int rna_entrada = entrada;

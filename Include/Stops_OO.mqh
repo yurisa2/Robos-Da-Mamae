@@ -296,7 +296,12 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
     Alert(alerta_op);
   }
 
-  tradionices.PositionModify(Symbol(),sl,tpMax);
+  bool Result_Modify = tradionices.PositionModify(Symbol(),sl,tpMax);
+  if(!Result_Modify)
+  {
+    Print("Erro modificando Stops, deixo esta memora para entrar para a Historia!");
+    tradionices.PositionClose(Symbol());
+  }
 
   if(funcao == 0) TakeProfit_Calcula();
 
@@ -347,7 +352,13 @@ void Stops::Setar_Ordens_Vars_Proporcional()
   //Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
   //Print("StopLoss Prop: " + DoubleToString(sl)); //DEBUG
 
-  tradionices.PositionModify(Symbol(),sl,tp);
+  bool Result_Modify = tradionices.PositionModify(Symbol(),sl,tp);
+  if(!Result_Modify)
+  {
+    Print("Erro modificando Stops, solenemente, deixo esta memora para entrar para a Historia!");
+    tradionices.PositionClose(Symbol());
+  }
+
   TakeProfit_Calcula();
 
   delete(tradionices);
@@ -367,7 +378,12 @@ void Stops::TS_()
 
     Print("TRAILING STOP COMPRA");
 
-    tradionices.PositionModify(Symbol(),sl,tp);
+    bool Result_Modify = tradionices.PositionModify(Symbol(),sl,tp);
+    if(!Result_Modify)
+    {
+      Print("Erro modificando Stops, solenemente, deixo esta memora para entrar para a Historia!");
+      tradionices.PositionClose(Symbol());
+    }
   }
   //VERIFICAR JEITO MAIS INTELIGENTE DE FAZER AS ORDENS (TIPO USANDO Tipo_Posicao
 
@@ -380,7 +396,13 @@ void Stops::TS_()
 
     // Print("TRAILING STOP SL: " + sl + " TP: " + tp + " Tipo_Posicao(): " + Tipo_Posicao() + " Valor do Do Negocio: " + valor);
 
-    tradionices.PositionModify(Symbol(),sl,tp);
+    bool Result_Modify = tradionices.PositionModify(Symbol(),sl,tp);
+    if(!Result_Modify)
+    {
+      Print("Erro modificando Stops, solenemente, deixo esta memora para entrar para a Historia!");
+      tradionices.PositionClose(Symbol());
+
+    }
   }
   delete(tradionices);
 }

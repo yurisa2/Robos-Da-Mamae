@@ -23,12 +23,8 @@ double Xandros::Distancia()
 {
     double retorno = 0;
 
-    MqlRates rates[];
-    CopyRates(Symbol(),TimeFrame,0,0,rates);
-    ArraySetAsSeries(rates,true);
-    double preco_atual = rates[0].close;
 
-    double diff = preco_atual - mm_X.Valor();
+    double diff = daotick() - mm_X.Valor();
 
     retorno = MathRound(diff / Tick_Size);
 

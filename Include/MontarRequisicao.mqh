@@ -81,8 +81,8 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
   //
   Totalizador *totalizator2 = new Totalizador(1);
   string resultado2 = DoubleToString(totalizator2.ganho_liquido());
-  Print("totalizator2.ganho_liquido() " + resultado2);
-  Print("totalizator2.negocios " + IntegerToString(totalizator2.negocios));
+  // Print("totalizator2.ganho_liquido() " + resultado2);
+  // Print("totalizator2.negocios " + IntegerToString(totalizator2.negocios));
   delete(totalizator2);
 
   comentario_req = Descricao_Robo_Alpha + "|" + Nome_Robo + "|" +  comentario_req;

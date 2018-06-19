@@ -163,13 +163,13 @@ bool ML::Levanta_RNA(CMultilayerPerceptronShell &objRed, string nombArch= "")
 
   CAlglib::MLPUnserialize(str,objRed);
 
-    int nEntradas= 0, nSalidas= 0, nPesos= 0, nNeuronCapa1 = 0, nNeuronCapa2 = 0;
-    CAlglib::MLPProperties(objRed, nEntradas, nSalidas, nPesos);
-    Print("N. neuron in the input layer ", nEntradas);
-    Print("N. neuron in the hidden layer 1 ", nNeuronCapa1);
-    Print("N. neuron in the hidden layer 2 ", nNeuronCapa2);
-    Print("N. neuron in the output layer ", nSalidas);
-    Print("Pesos: ", nPesos);
+  int nEntradas= 0, nSalidas= 0, nPesos= 0, nNeuronCapa1 = 0, nNeuronCapa2 = 0;
+  CAlglib::MLPProperties(objRed, nEntradas, nSalidas, nPesos);
+  Print("N. neuron in the input layer ", nEntradas);
+  Print("N. neuron in the hidden layer 1 ", nNeuronCapa1);
+  Print("N. neuron in the hidden layer 2 ", nNeuronCapa2);
+  Print("N. neuron in the output layer ", nSalidas);
+  Print("Pesos: ", nPesos);
 
   return(1);
 }
@@ -182,21 +182,28 @@ void ML::Treino_RNA(CMultilayerPerceptronShell &network_trn)
   int amostras = this.numero_linhas; //Verificar a Matrix
   PrintFormat("Amostras: %f | Entradas: %f: ",amostras,this.entradas);
 
-  CMatrixDouble xy(amostras+1,this.entradas);
-  for(int i = 0; i < amostras; i++) { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
-    for(int j = 0; j < this.entradas; j++)
-    {
-      xy[i].Set(j,this.Matriz[i][j]);
-      // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
-    }
-  }
-
   int resposta_trn;
 
-  PrintFormat("Iniciando Treino_RNA em %i Amostras",amostras);
+  double total_neuronios = ((amostras) / (rna_grau_liberdade_alpha *((this.entradas-1) + rna_camada_saida)));
+
+  if(total_neuronios > 200) rna_hidden_layers = 2;
+
+  double rna_neuronios_por_camadas = total_neuronios / rna_hidden_layers;
+
+  if(MathMod(total_neuronios,rna_hidden_layers) == 1)
+  {
+    rna_segunda_camada = int(MathFloor(rna_neuronios_por_camadas) + 1);
+    rna_terceira_camada = int(MathFloor(rna_neuronios_por_camadas));
+  }
+  else rna_segunda_camada = int(rna_neuronios_por_camadas);
+
+  PrintFormat("Treino_RNA em %i Amostras",amostras);
   PrintFormat("Entradas %i ",entradas);
-  // PrintFormat("rna_entrada %i ",rna_entrada);
-  PrintFormat("Matriz Range: %f ",ArrayRange(Matriz,0));
+  PrintFormat("total_neuronios: %f ",total_neuronios);
+  PrintFormat("rna_hidden_layers: %i ",rna_hidden_layers);
+  PrintFormat("rna_segunda_camada: %i ",rna_segunda_camada);
+  if(rna_hidden_layers == 2) PrintFormat("rna_terceira_camada: %i ",rna_terceira_camada);
+
 
   // algebra_trn.MLPCreateC2(this.entradas-1,rna_segunda_camada,rna_terceira_camada,rna_camada_saida,network_trn);
   if(rna_hidden_layers == 0) algebra_trn.MLPCreateC0(this.entradas-1,rna_camada_saida,network_trn);
@@ -207,23 +214,65 @@ void ML::Treino_RNA(CMultilayerPerceptronShell &network_trn)
   int entradas_prop = this.entradas-1;
   CAlglib::MLPProperties(network_trn, entradas_prop, rna_camada_saida, nPesos);
 
+    int rna_amostras_principal = 0;
+    int rna_amostras_validacao = 0;
 
-  if(nPesos < 500)
-  {
-    Print("Numero de Pesos Menor que 500");
-    algebra_trn.MLPTrainLM(network_trn,xy,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
+    rna_amostras_principal = int(MathFloor(amostras/1.25)); //Esse Virou Amostra (PARETO DISSE 80/20)
+    rna_amostras_validacao = int(amostras-rna_amostras_principal);
+
+    //AQUI EH O PRINCIPAL
+    CMatrixDouble xy_principal(rna_amostras_principal+1,this.entradas);
+    for(int i = 0; i < rna_amostras_principal; i++)
+    { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
+      for(int j = 0; j < this.entradas; j++)
+      {
+        xy_principal[i].Set(j,this.Matriz[i][j]);
+        // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
+      }
+    }
+
+    //AQUI EH O Validacao
+    CMatrixDouble xy_valida(rna_amostras_validacao+1,this.entradas);
+    for(int i = rna_amostras_principal; i < (rna_amostras_principal+rna_amostras_validacao); i++)
+    { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
+      int i_2 = i - rna_amostras_principal;
+      for(int j = 0; j < this.entradas; j++)
+      {
+        xy_valida[i_2].Set(j,this.Matriz[i][j]);
+        // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
+      }
+    }
+
+
+  CMatrixDouble xy_inteira(amostras+1,this.entradas);
+  for(int i = 0; i < amostras; i++)
+  { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
+    for(int j = 0; j < this.entradas; j++)
+    {
+      xy_inteira[i].Set(j,this.Matriz[i][j]);
+      // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
+    }
   }
-  if(nPesos > 500 || nPesos == 0)
+
+  if(nPesos < 1000)
   {
-    Print("Numero de Pesos Maior que 500");
-    algebra_trn.MLPTrainLBFGS(network_trn,xy,amostras,rna_decay_,rna_restarts_,rna_wstep_,rna_epochs,resposta_trn,infotreino_trn);
+    Print("Numero de Pesos Menor que 1000, LM. Pesos: " + IntegerToString(nPesos));
+    algebra_trn.MLPTrainLM(network_trn,xy_inteira,amostras,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
   }
-  this.mse = algebra_trn.MLPRelClsError(network_trn,xy,amostras);
+  if(nPesos > 1000 || nPesos == 0)
+  {
+    Print("Numero de Pesos Maior que 1000, Early Stopping. Pesos: " + IntegerToString(nPesos));
+    PrintFormat("rna_amostras_principal: %i ",rna_amostras_principal);
+    PrintFormat("rna_amostras_validacao: %i ",rna_amostras_validacao);
+
+    algebra_trn.MLPTrainES(network_trn,xy_principal,rna_amostras_principal,xy_valida,rna_amostras_validacao,rna_decay_,rna_restarts_,resposta_trn,infotreino_trn);
+  }
+  this.mse = algebra_trn.MLPRelClsError(network_trn,xy_inteira,amostras);
 
   string camadas = "";
-  if(rna_hidden_layers == 0) camadas = "-(0)-";
-  if(rna_hidden_layers == 1) camadas = "-(1)"+IntegerToString(rna_segunda_camada)+"-";
-  if(rna_hidden_layers == 2) camadas = "-(2)"+IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada)+"-";
+  if(rna_hidden_layers == 0) camadas = "-(0)";
+  if(rna_hidden_layers == 1) camadas = "-(1)"+IntegerToString(rna_segunda_camada);
+  if(rna_hidden_layers == 2) camadas = "-(2)"+IntegerToString(rna_segunda_camada)+"-"+IntegerToString(rna_terceira_camada);
 
 
   string Nome_Arquivo =
@@ -240,9 +289,9 @@ void ML::Treino_RNA(CMultilayerPerceptronShell &network_trn)
   this.Salva_RNA(network_trn,Nome_Arquivo);
 
 
-    Print("Entradas: " + IntegerToString(this.entradas-1));
-    Print("Pesos: " + IntegerToString(nPesos));
-    Print("Erro% " + DoubleToString(algebra_trn.MLPRMSError(network_trn,xy,amostras)));
+  Print("Entradas: " + IntegerToString(this.entradas-1));
+  Print("Pesos: " + IntegerToString(nPesos));
+  Print("Erro% " + DoubleToString(this.mse));
 }
 
 void ML::Processa_RNA(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
@@ -393,21 +442,21 @@ void ML::Treino_RDF(CDecisionForestShell &tree_trn)
   this.Salva_RDF(tree_trn,Nome_Arquivo);
 
 
-    Print("Entradas: " + IntegerToString(this.entradas-1));
-    Print("Erro% " + DoubleToString(algebra_trn.DFRelClsError(tree_trn,xy,amostras)));
-  }
+  Print("Entradas: " + IntegerToString(this.entradas-1));
+  Print("Erro% " + DoubleToString(algebra_trn.DFRelClsError(tree_trn,xy,amostras)));
+}
 
 bool ML::Salva_RDF(CDecisionForestShell &tree_trn, string nombArch= "")
 {
-    string      _local_str;
+  string      _local_str;
 
-    CAlglib::DFSerialize(tree_trn,_local_str);
+  CAlglib::DFSerialize(tree_trn,_local_str);
 
-    int handler_ann = FileOpen(nombArch, FILE_WRITE|FILE_TXT|FILE_COMMON);
-    FileWrite(handler_ann,_local_str);
-    FileFlush(handler_ann);
+  int handler_ann = FileOpen(nombArch, FILE_WRITE|FILE_TXT|FILE_COMMON);
+  FileWrite(handler_ann,_local_str);
+  FileFlush(handler_ann);
 
-    return(1);
+  return(1);
 }
 
 bool ML::Levanta_RDF(CDecisionForestShell &tree_trn, string nombArch= "")

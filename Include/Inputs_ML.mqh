@@ -22,12 +22,13 @@ int rna_on_realtime_min_samples = 100; //DESLIGADO POR ENQUANTO
 
 input string Label_Detalhes_RNA = "---------- Detalhes RNA ----------";
 int rna_epochs = 1000; //DESLIGADO POR ENQUANTO
-input int rna_hidden_layers = 1;
-input int rna_segunda_camada = 10;
-input int rna_terceira_camada = 0;
+int rna_hidden_layers = 1; //Desligando para tentar sistema auto9matico com liberdade
+int rna_segunda_camada = 10; //Desligando para tentar sistema auto9matico com liberdade
+int rna_terceira_camada = 0; //Desligando para tentar sistema auto9matico com liberdade
 int rna_camada_saida = 2; //DESLIGADO POR ENQUANTO E quando voltar, provavelmente será automática
+int rna_grau_liberdade_alpha = 2; //Grau de liberdade da rede (2-10, 2 eh mais neuronios)
 input int rna_restarts_ = 2 ; //Restarts (2 na doc)
-input double rna_wstep_ = 0.001 ;
+// input double rna_wstep_ = 0.001 ;
 input double rna_decay_ = 0.01 ;
 input bool rna_Salva_Arquivo_rede = false; //RNA Salva Arquivo Treinado
 input string rna_nome_arquivo_rede = "rede"; //RNA Nome do arquivo Treinado

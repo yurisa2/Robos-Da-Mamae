@@ -19,14 +19,20 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 
     delete(Verifica_Posicao);
 
-    if(Zerar_SL_TP == 1 && O_Stops.Tipo_Posicao() != 0)
+    if(Zerar_SL_TP > 0 && !ja_zerou_sl_temp && O_Stops.Tipo_Posicao() != 0)
     {
       PositionSelect(_Symbol);
-      if(NormalizeDouble(Lotes,8) != NormalizeDouble(PositionGetDouble(POSITION_VOLUME),8))
+      double Lotes_Original = NormalizeDouble(Lotes,8);
+      double Lotes_Alvo = 0;
+      if(Zerar_SL_TP == 1) Lotes_Alvo = Lotes_Original - TakeProfit_Volume;
+      if(Zerar_SL_TP == 2) Lotes_Alvo = Lotes_Original - TakeProfit_Volume - TakeProfit_Volume2;
+
+      if(Lotes_Alvo == NormalizeDouble(PositionGetDouble(POSITION_VOLUME),8))
       {
         Print("Volume da Posicao: " + DoubleToString(PositionGetDouble(POSITION_VOLUME)));
         Print("Lotes: " + DoubleToString(Lotes));
         O_Stops.Setar_Ordens_Vars_Static(1);
+        ja_zerou_sl_temp = true;
       }
     }
 

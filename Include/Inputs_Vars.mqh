@@ -53,7 +53,7 @@ input double TakeProfit2 = 0;                                               //Ta
 input double TakeProfit_Volume2 = 0;                                               //Volume TakeProfit2
 input double TakeProfit3 = 0;                                               //Take Profit3 (0 desliga)
 input double TakeProfit_Volume3 = 0;                                              //Volume TakeProfit3
-input bool   Zerar_SL_TP = 1;                                                 //Zerar SL na realizacao parcial
+input int   Zerar_SL_TP = 1;                                                 //Zerar SL 0 - desliga | 1 - na primeira | 2 - na segunda
 input double Trailing_stop = 0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 
@@ -168,3 +168,6 @@ long tipo_margem_conta = 0;
 string minuto_passado = "0";
 
 bool mocosa_indicadores = true; //esconde indicadores no teste, util para ver fluir.
+
+
+bool ja_zerou_sl_temp = false; //PQ NAO TO AGUENTANDO MAIS

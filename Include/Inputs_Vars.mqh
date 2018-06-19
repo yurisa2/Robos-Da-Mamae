@@ -166,3 +166,5 @@ double filtro_fuzzy_arquivo = 0;
 
 long tipo_margem_conta = 0;
 string minuto_passado = "0";
+
+bool mocosa_indicadores = true; //esconde indicadores no teste, util para ver fluir.

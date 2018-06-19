@@ -300,9 +300,12 @@ if(hrmn[1] != minuto_passado)
 }
 void Init_Padrao ()
 {
+  TesterHideIndicators(mocosa_indicadores);
+
   ObjectsDeleteAll(0,0,-1);
   EventSetMillisecondTimer(500);
   TimeMagic =MathRand();
+
 
   tipo_margem_conta = AccountInfoInteger(ACCOUNT_MARGIN_MODE); //0 NETT, 1 EXCHANGE, 2 HEDGING
   Print("Tipo de Margem: " + IntegerToString(tipo_margem_conta));

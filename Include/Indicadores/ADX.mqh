@@ -20,6 +20,8 @@ class ADX
 
 void ADX::ADX(int adx_period = 14, ENUM_TIMEFRAMES  period = PERIOD_CURRENT, string symbol = NULL)
 {
+  TesterHideIndicators(mocosa_indicadores);
+
   HandleADX = 0;
   HandleADX = iADX(symbol,period,adx_period);
   // ChartIndicatorAdd(0,1,HandleADX);
@@ -34,6 +36,9 @@ void ADX::ADX(int adx_period = 14, ENUM_TIMEFRAMES  period = PERIOD_CURRENT, str
 
 double ADX::Valor(int buffer = 0, int barra = 0)
 {
+
+
+
      double _ADX[];
      double retorno = NULL;
 

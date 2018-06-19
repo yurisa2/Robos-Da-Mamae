@@ -66,6 +66,9 @@ void Aquisicao::Dados()
 {
   double conv = 180 / 3.14159265359;
 
+  TesterHideIndicators(mocosa_indicadores);
+
+
   AC *AC_Ind = new AC();
   AD *AD_Ind = new AD();
   ADX *ADX_OO = new ADX(14,TimeFrame);
@@ -103,7 +106,7 @@ void Aquisicao::Dados()
   RSI_Var =  RSI_OO.Valor(0)  ;
   Stoch_FW = Stoch_OO.Valor(0) ;
 
-  //Angulares -90-90 (mas....né)
+  //Angulares -90-90 (mas....nï¿½)
   AC_cx  =  AC_Ind.Cx(0)*conv  ;
   AD_cx   =  AD_Ind.Cx(0)*conv  ;
   ADX_FW  = ADX_OO.Valor(0) ;
@@ -127,7 +130,7 @@ void Aquisicao::Dados()
   BB_Delta_Bruto_Cx = Banda_BB.Cx_BB_Delta_Bruto(0)*conv ;
   BB_Posicao_Percent_Cx = Banda_BB.Cx_BB_Posicao_Percent(0)*conv ;
 
-  //Brutos e Livres (as vezes até binários e relativos)
+  //Brutos e Livres (as vezes atï¿½ binï¿½rios e relativos)
   BB_Delta_Bruto = Banda_BB.BB_Delta_Bruto(0) ;
   Banda_Delta_Valor = Banda_BB.Banda_Delta_Valor() ;
   BWMFI_Var =   BWMFI_Ind.Valor(1) ;

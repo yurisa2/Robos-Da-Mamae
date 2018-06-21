@@ -106,22 +106,15 @@ bool TaDentroDoHorario(string HoraInicio, string HoraFim)
 double daotick(int tipo = 0)
 {
   double retornoTick = 0;
-  MqlTick last_tick;
-  if(SymbolInfoTick(_Symbol,last_tick))
-  {
-    // Print(last_tick.time,": Bid = ",last_tick.bid,
-    //  " Ask = ",last_tick.ask,"  Volume = ",last_tick.volume); //total e completo
-  }
-  else Print("SymbolInfoTick() failed, error = ",GetLastError());
 
-  retornoTick = last_tick.ask; // ASK eh bom pra compra, pra venda � bid
+  retornoTick = SymbolInfoDouble(Symbol(),SYMBOL_ASK); // ASK eh bom pra compra, pra venda � bid
 
   if(tipo == -1)
   {
-    retornoTick = last_tick.bid;
-    // MessageBox("Pegou o bid","bid",MB_OK); //DEBUG
+  retornoTick = SymbolInfoDouble(Symbol(),SYMBOL_BID);
+  // MessageBox("Pegou o bid","bid",MB_OK); //DEBUG
   }
-  if(tipo == 1)  retornoTick = last_tick.ask;
+  if(tipo == 1)  retornoTick = SymbolInfoDouble(Symbol(),SYMBOL_ASK);
 
   return(retornoTick);
 }
@@ -300,11 +293,13 @@ if(hrmn[1] != minuto_passado)
 }
 void Init_Padrao ()
 {
+  Print("Init_Padrao");
+
   TesterHideIndicators(mocosa_indicadores);
 
   ObjectsDeleteAll(0,0,-1);
   EventSetMillisecondTimer(500);
-  TimeMagic =MathRand();
+  TimeMagic = MathRand();
 
 
   tipo_margem_conta = AccountInfoInteger(ACCOUNT_MARGIN_MODE); //0 NETT, 1 EXCHANGE, 2 HEDGING

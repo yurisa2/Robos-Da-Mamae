@@ -111,8 +111,7 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
 
       requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
       ja_zerou_sl_temp = false;// TEMP, MAS NAO AGUENTO MAIS
-      if(Tipo_Limite == 55) O_Stops.Setar_Ordens_Vars_Static();
-      if(Tipo_Limite == 471) O_Stops.Setar_Ordens_Vars_Proporcional();
+      O_Stops.Setar_Ordens_Vars_Static();
 
 
 

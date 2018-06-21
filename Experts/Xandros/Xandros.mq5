@@ -55,16 +55,19 @@ void OnTimer()
 
 void OnTick()
 {
-
+    Operacoes_No_tick();
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
 
-  if(Condicoes.Horario())
+
+
+  if(xandros_tempo_real && Condicoes.Horario())
   {
 
- Operacoes_No_tick();
+
 
   Xandros *xandros = new Xandros;
   xandros.Avalia();
+  xandros.Comentario();
   delete(xandros);
 
 
@@ -75,6 +78,18 @@ void OnTick()
 
 void OnNewBar()
 {
+  Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+  if(!xandros_tempo_real && Condicoes.Horario())
+  {
+
+ Operacoes_No_tick();
+
+  Xandros *xandros = new Xandros;
+  xandros.Avalia();
+  xandros.Comentario();
+  delete(xandros);
 
 
+  }
+    delete(Condicoes);
 }

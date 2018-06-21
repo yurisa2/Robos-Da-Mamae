@@ -40,11 +40,11 @@ input string Limite = "----------USANDO TICK SIZE-----------";
 enum Tipo_Limites
 {
   Limite_Fixo = 55,
-  Limite_Proporcional  = 471
+  Limite_Proporcional_StopsLevel  = 471
 };
 input Tipo_Limites Tipo_Limite = 55;                                      //Tipo De limite
 input double StopLoss = 0;                                                 //Stop Loss (0 desliga)
-input double Limite_Maximo_SL_Tick_Size = 50;                        //Limite StopLoss Maximo (*TickSize)
+double Limite_Maximo_SL_Tick_Size = 50000;                        //Limite StopLoss Maximo (*TickSize)
 //input double MoverSL = 0;                                              //Mover o StopLoss DELTA (distancia da entrada, 0 desliga)
 //input double PontoDeMudancaSL = 0;                                         //Distancia da entrada DELTA (Direcao do Lucro, 0 = Preco da Operacao)
 input double TakeProfit = 0;                                               //Take Profit (0 desliga)

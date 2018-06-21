@@ -9,21 +9,42 @@
 class Stops
 {
   public:
-  // Stops();
+  Stops();
   // ~Stops() {};
   int Tipo_Posicao();
   void No_Tick();
   void Setar_Ordens_Vars_Static(int funcao = 0);
-  void Setar_Ordens_Vars_Proporcional();
   double Valor_Negocio();
   void TS_();
   double Distribuidor_Parcial(int Seletor_Volume);
   void TakeProfit_Calcula();
   double Valor_SL();
+  double TakeProfit_op;
+  double TakeProfit2_op;
+  double TakeProfit3_op;
+  double StopLoss_Op;
 
 
   protected:
 };
+
+void Stops::Stops()
+{
+  if(Tipo_Limite == 471)
+  {
+    TakeProfit_op = MathRound(TakeProfit  * SymbolInfoInteger(Symbol(),SYMBOL_TRADE_STOPS_LEVEL));
+    TakeProfit2_op = MathRound(TakeProfit2 * SymbolInfoInteger(Symbol(),SYMBOL_TRADE_STOPS_LEVEL));
+    TakeProfit3_op = MathRound(TakeProfit3 * SymbolInfoInteger(Symbol(),SYMBOL_TRADE_STOPS_LEVEL));
+    StopLoss_Op = MathRound(StopLoss * SymbolInfoInteger(Symbol(),SYMBOL_TRADE_STOPS_LEVEL));
+  }
+  else
+  {
+  TakeProfit_op = TakeProfit;
+  TakeProfit2_op = TakeProfit2;
+  TakeProfit3_op = TakeProfit3;
+  StopLoss_Op = StopLoss;
+  }
+}
 
 int Stops::Tipo_Posicao()
 {
@@ -63,9 +84,9 @@ double Stops::Distribuidor_Parcial(int Seletor_Volume)
   double retorno = 1;
   double TPLs = 0;
 
-  if(TakeProfit > 0 && TakeProfit_Volume > 0 ) TPLs++;
-  if(TakeProfit2 > 0 && TakeProfit_Volume2 > 0 ) TPLs++;
-  if(TakeProfit3 > 0 && TakeProfit_Volume3 > 0 ) TPLs++;
+  if(TakeProfit_op > 0 && TakeProfit_Volume > 0 ) TPLs++;
+  if(TakeProfit2_op > 0 && TakeProfit_Volume2 > 0 ) TPLs++;
+  if(TakeProfit3_op > 0 && TakeProfit_Volume3 > 0 ) TPLs++;
 
   if(Seletor_Volume == 0 )
   {
@@ -110,15 +131,16 @@ void Stops::TakeProfit_Calcula()
   //  Print("Data: " + dtHoje); //DEBUG
 
   //DEFINE O MULTIPLICADOR DA BANDA
-  if(Tipo_Limite == 471)
-  {
-    BB *Banda_BB = new BB();
-    //delta_bb = Banda_BB.BB_High(0) - Banda_BB.BB_Low(0);  //Antigo
-    delta_bb = Banda_BB.BB_Delta_Bruto(0);
-    delete(Banda_BB);
-  }
-
-  if(Tipo_Limite == 55) delta_bb = 1;
+  // if(Tipo_Limite == 471)
+  // {
+  //   BB *Banda_BB = new BB();
+  //   //delta_bb = Banda_BB.BB_High(0) - Banda_BB.BB_Low(0);  //Antigo
+  //   delta_bb = Banda_BB.BB_Delta_Bruto(0);
+  //   delete(Banda_BB);
+  // }
+  //
+  // if(Tipo_Limite == 55) delta_bb = 1;
+  delta_bb = 1;
   //FIM DA DEFINICAO MULTIPLICADOR DA BANDA
 
   //Aqui da pau no proporcional pq nao se acerta com o Tick Size, o certo � pegar o valor d
@@ -126,7 +148,7 @@ void Stops::TakeProfit_Calcula()
 
   //Print("delta_bb: " + delta_bb);  //DEBUG
 
-  tpc1 = (TakeProfit * delta_bb);
+  tpc1 = (TakeProfit_op * delta_bb);
   tpc1 = MathFloor(tpc1) * Tick_Size;
   //Print("MathFloor(tpc1) * Tick_Size: " + tpc1); //DEBUG
   tpc1 = valor + (tpc1 * (Tipo_Posicao()));
@@ -134,12 +156,12 @@ void Stops::TakeProfit_Calcula()
   //Print("TickSize: " + Tick_Size); //DEBUG
 
 
-  tpc2 = (TakeProfit2 * delta_bb);
+  tpc2 = (TakeProfit2_op * delta_bb);
   tpc2 = MathFloor(tpc2) * Tick_Size;
   tpc2 = valor + (tpc2 * (Tipo_Posicao()));
   //Print("TPC2: " + tpc2); //DEBUG
 
-  tpc3 = (TakeProfit3 * delta_bb);
+  tpc3 = (TakeProfit3_op * delta_bb);
   tpc3 = MathFloor(tpc3) * Tick_Size;
   tpc3 = valor + (tpc3 * (Tipo_Posicao()));
   //Print("TPC3: " + tpc3); //DEBUG
@@ -263,22 +285,22 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
       Alert("Tipo de posicao nao está vindo, vou morrer agora");
     }
   }
-  double sl = valor - (StopLoss * (Tipo_Posicao_ * Tick_Size));
+  double sl = valor - (StopLoss_Op * (Tipo_Posicao_ * Tick_Size));
   if(funcao == 1) sl = this.Valor_Negocio();
-  double tp1 = valor + (TakeProfit * (Tipo_Posicao_ * Tick_Size));
-  double tp2 = valor + (TakeProfit2 * (Tipo_Posicao_ * Tick_Size));
-  double tp3 = valor + (TakeProfit3 * (Tipo_Posicao_ * Tick_Size)); //Tem que arrumar depois
+  double tp1 = valor + (TakeProfit_op * (Tipo_Posicao_ * Tick_Size));
+  double tp2 = valor + (TakeProfit2_op * (Tipo_Posicao_ * Tick_Size));
+  double tp3 = valor + (TakeProfit3_op * (Tipo_Posicao_ * Tick_Size)); //Tem que arrumar depois
   // double tp3 = 0; //Tem que arrumar depois
   double tpMax = tp3;
 
   //Isso aqui é para colocar os TPs no alto, mas, obvio, tá dando errado.
-  if(TakeProfit3 == 0 && TakeProfit2 == 0)   // Nesse caso só tem TP1
+  if(TakeProfit3_op == 0 && TakeProfit2 == 0)   // Nesse caso só tem TP1
   {
     tp3 = tp1 + (1000 * Tick_Size * Tipo_Posicao_);
     tpMax = tp1;
   }
 
-  if(TakeProfit3 == 0 && TakeProfit2 != 0) //Nesse caso tem TP2, mas não TP3
+  if(TakeProfit3_op == 0 && TakeProfit2 != 0) //Nesse caso tem TP2, mas não TP3
   {
     tp3 = tp2 + (1000 * Tick_Size * Tipo_Posicao_);
     tpMax = tp2;
@@ -326,62 +348,6 @@ if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Ba
   delete(tradionices);
 }
 
-void Stops::Setar_Ordens_Vars_Proporcional()
-{
-  CTrade *tradionices = new CTrade;
-  double valor = Valor_Negocio();
-  double delta_bb = 0;
-  double StopLoss_Proporcional = 0;
-  double tp = 0;
-
-  BB *Banda_BB = new BB();
-  //delta_bb = Banda_BB.BB_High(0) - Banda_BB.BB_Low(0);  //Antigo
-  delta_bb = Banda_BB.BB_Delta_Bruto(0);
-  delete(Banda_BB);
-
-  //Print("delta_bb: " + delta_bb); //DEBUG
-  int Tipo_Posicao_ = Tipo_Posicao();
-  int loopes = 0;
-
-  do
-  {
-    Print("Posicao Zero, Tentando Novamente. Loop: " + IntegerToString(loopes));
-    Sleep(400);
-    Tipo_Posicao_ = Tipo_Posicao();
-    loopes++;
-  }
-  while(Tipo_Posicao_ == 0 && loopes <= 20);
-
-  StopLoss_Proporcional = (StopLoss * delta_bb); //Aqui Ja Sai em Tick_Size
-  //Print("StopLoss_Proporcional: " + StopLoss_Proporcional + " Ticks"); //DEBUG
-  StopLoss_Proporcional = MathFloor(StopLoss_Proporcional) * Tick_Size;
-  //Print("StopLoss_Proporcional MathFloor * Tick_Size: " + StopLoss_Proporcional); //DEBUG
-
-  double sl_max = Limite_Maximo_SL_Tick_Size * Tick_Size;   //Pontos m�ximo
-
-  StopLoss_Proporcional = MathMin(StopLoss_Proporcional, sl_max);
-
-  if(TakeProfit == 0) tp = valor + Tipo_Posicao() * Tick_Size * 100;
-
-  double sl = valor - (StopLoss_Proporcional * (Tipo_Posicao()));
-
-
-
-  //Print("Delta BB: " + DoubleToString(delta_bb)); //DEBUG
-  //Print("StopLoss Prop: " + DoubleToString(sl)); //DEBUG
-
-  bool Result_Modify = tradionices.PositionModify(Symbol(),sl,tp);
-  if(!Result_Modify)
-  {
-    Print("Erro modificando Stops, solenemente, deixo esta memora para entrar para a Historia! ln 358");
-    tradionices.PositionClose(Symbol());
-  }
-
-  TakeProfit_Calcula();
-
-  delete(tradionices);
-}
-
 void Stops::TS_()
 {
   CTrade *tradionices = new CTrade;
@@ -389,10 +355,10 @@ void Stops::TS_()
 
   if(Tipo_Posicao() > 0 && daotick_geral > (valor + (Tick_Size * (Trailing_stop + Trailing_stop_start))))
   {
-    double tp = valor + (TakeProfit * Tick_Size);
+    double tp = valor + (TakeProfit_op * Tick_Size);
     double sl = valor - ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
 
-    if(TakeProfit == 0) tp = valor + (Tick_Size * 10); //S�rio mano, apelando, APELANDO MONSTRO
+    if(TakeProfit_op == 0) tp = valor + (Tick_Size * 10); //S�rio mano, apelando, APELANDO MONSTRO
 
     Print("TRAILING STOP COMPRA");
 
@@ -407,10 +373,10 @@ void Stops::TS_()
 
   if(Tipo_Posicao() < 0 && daotick_geral < (valor - (Tick_Size * (Trailing_stop + Trailing_stop_start))))
   {
-    double tp = valor - (TakeProfit * Tick_Size);
+    double tp = valor - (TakeProfit_op * Tick_Size);
     double sl = valor + ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
 
-    if(TakeProfit == 0) tp = valor - (Tick_Size * 50); //S�rio mano, apelando, APELANDO MONSTRO
+    if(TakeProfit_op == 0) tp = valor - (Tick_Size * 50); //S�rio mano, apelando, APELANDO MONSTRO
 
     // Print("TRAILING STOP SL: " + sl + " TP: " + tp + " Tipo_Posicao(): " + Tipo_Posicao() + " Valor do Do Negocio: " + valor);
 

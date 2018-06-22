@@ -9,7 +9,7 @@
 #property link      "http://www.sa2.com.br"
 
 #property version   "1.0" //Low Profit Scalping
-string Nome_Robo = "Xorg"; 
+string Nome_Robo = "Xorg";
 
 #include <Inputs_Vars.mqh>
 #include <basico.mqh>
@@ -45,7 +45,7 @@ int OnInit()
 
 void OnTimer()
 {
-  IniciaDia();
+  // IniciaDia();
 
   Comentario();
 

@@ -9,6 +9,7 @@
 
 int Rand_Geral = MathRand();
 #include <Math\Alglib\alglib.mqh>
+// #include <Math\Alglib\dataanalysis.mqh>
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
 //#include <Charts\Chart.mqh>
@@ -17,7 +18,7 @@ int Rand_Geral = MathRand();
 #include <OnTrade.mqh>
 #include <Totalizador.mqh>
 #include <Normalizacao.mqh>
-#include <Graficos.mqh>
+// #include <Graficos.mqh>
 #include <Interruptor.mqh>
 
 
@@ -53,14 +54,16 @@ int Rand_Geral = MathRand();
 #include <Indicadores\Volumes.mqh>
 #include <Indicadores\WPR.mqh>
 #include <aquisicao.mqh>
-#include <Filtro_Fuzzy.mqh>
+//#include <Filtro_Fuzzy.mqh> //Programa de Emagrecimento do Yurão
 
-#include <File_Writer.mqh>
+//#include <File_Writer.mqh> //Programa de Emagrecimento do Yurão
 #include <File_Writer_Gen.mqh>
-#include <File_Writer_Filtro.mqh>
+// #include <File_Writer_Filtro.mqh> //Programa de Emagrecimento do Yurão
 #include <File_Reader.mqh>
 #include <ML.mqh>
+// #include <ML_stub.mqh>
 #include <dados_nn.mqh>
+// #include <dados_nn_stub.mqh>
 
 //#include <Expert\Expert.mqh>
 
@@ -127,6 +130,15 @@ string Segundos_Fim_Barra()
   datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
   //if(grafico_atual.isNewBar(new_time)) Segundos_Contados=0;
   return DoubleToString(PeriodSeconds(TimeFrame)-(TimeCurrent()-new_time),0)+"s";
+}
+
+
+double Segundos_Fim_Barra_num()
+{
+  int period_seconds=PeriodSeconds(TimeFrame);                     // Number of seconds in current chart period
+  datetime new_time=TimeCurrent()/period_seconds*period_seconds; // Time of bar opening on current chart
+  //if(grafico_atual.isNewBar(new_time)) Segundos_Contados=0;
+  return NormalizeDouble(PeriodSeconds(TimeFrame)-(TimeCurrent()-new_time),0);
 }
 
 ////////////////// Zerar o dia
@@ -292,7 +304,7 @@ if(hrmn[1] != minuto_passado)
   minuto_passado = hrmn[1];
   }
 }
-void Init_Padrao ()
+void Init_Padrao()
 {
   Print("Init_Padrao");
 
@@ -320,45 +332,23 @@ void Init_Padrao ()
   Tick_Size = SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
   Volume_Step = SymbolInfoDouble(_Symbol,SYMBOL_VOLUME_STEP);
 
+  string _primeiras = StringSubstr(Symbol(),0,3);
+
+  if(_primeiras == "win" || _primeiras == "WIN") Tick_Size = 5;
+  if(_primeiras == "wdo" || _primeiras == "WDO") Tick_Size = 0.5;
+
   ArrumaMinutos();
 
   Print("TickSize: ",DoubleToString(Tick_Size));
   if(Tick_Size == 0) Alert("Tick_Size ZERO!");
 
-  File_Init();
-  File_Filtro_Init();
+  // if(!Otimizacao) File_Init();
+  // if(!Otimizacao) File_Filtro_Init();
 
   if(ml_on && rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta_RNA(machine_learning.rede_obj,rna_arquivo_trn);
   if(ml_on && rdf_levanta_arquivo_arvores && rdf_filtros_on) machine_learning.Levanta_RDF(machine_learning.tree_obj,rdf_arquivo_trn);
 
 }
-
-void IniciaDia ()
-{
-  if(JaZerou==false)
-  {
-    if(TaDentroDoHorario_RT==true && JaZerou==false)
-    {
-      OperacoesFeitas = 0;
-
-      JaZerou = true;
-      JaDeuFinal = false;
-      Operacoes = 0;
-      Ordem = false;      //Bucareste
-      PrimeiraOp = false;
-      DeuTakeProfit = true;
-      DeuStopLoss = true;
-
-      // Print("Bom dia! Robo as ordens, segura o cora�ao pq o role � monstro!!!");
-      // SendMail(Descricao_Robo + "Inicio das opera�oes Bucareste","Bom dia! Bucareste: "+Descricao_Robo+" �s ordens, segura o cora�ao pq o role � monstro!!!");
-      // SendNotification("Bom dia! Bucareste: "+Descricao_Robo+" �s ordens, segura o cora�ao pq o role � monstro!!!");
-
-      liquidez_inicio = conta.Equity();
-      Sleep(1000);
-    } //If do Horario
-  } //If do Ja zerou
-}
-
 
 MqlRates Preco(int barra = 0)
 {

@@ -43,9 +43,6 @@ int OnInit()
 
 void OnTimer()
 {
-  IniciaDia();
-
-
   if(!Otimizacao) Comentario();
 
   Operacoes_No_Timer();

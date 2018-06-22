@@ -2,8 +2,8 @@
 
 class Capta_Dados_Entrada_stub {
   public:
-  void Dados_Entrada();
-  void Saida(double Profit);
+  void Dados_Entrada() {};
+  void Saida(double Profit) {};
   double Capta_Dados_Entrada_stub::Normaliza_NN(double valor, int tipo);
   double Capta_Dados_Entrada_stub::Hora();
   double BB_Cx_BB_Low;

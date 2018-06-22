@@ -4,7 +4,7 @@
 //|                        Copyright 2017, Sa2 INVESTMENT            |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-string Nome_Robo = "Zwift"; 
+string Nome_Robo = "Zwift";
 #property copyright "Operador de igor."
 #property link      "http://www.sa2.com.br"
 
@@ -31,8 +31,8 @@ string Nome_Robo = "Zwift";
 int OnInit()
 {
 
-      
-        
+
+
   Init_Padrao();
 
 
@@ -44,13 +44,13 @@ int OnInit()
   {
     return INIT_SUCCEEDED;
   }
-   
+
 
 }
 
 void OnTimer()
 {
-  IniciaDia();
+  // IniciaDia();
 
   Comentario();
 
@@ -88,7 +88,7 @@ void OnNewBar()
   {
 if(O_Stops.Tipo_Posicao() != 0)        opera.FechaPosicao() ;
   }
-  
+
       delete opera;
   delete(Condicoes);
 

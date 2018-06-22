@@ -318,14 +318,14 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 //Print("Entrou myDealInfo.PositionId() " + myDealInfo.PositionId());
                 if(!Otimizacao)
                 {
-                  File *arquivo = new File();
-                  FiltroF *filtro_fuzzy = new FiltroF;
+          //        File *arquivo = new File();
+          //        FiltroF *filtro_fuzzy = new FiltroF;
 
-                  arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()),0,DEAL_ENTRY_IN);
-                  filtro_ind.Dados();
-                  filtro_fuzzy_arquivo = filtro_fuzzy.Fuzzy();
-                  delete(arquivo);
-                  delete(filtro_fuzzy);
+          //        arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()),0,DEAL_ENTRY_IN);
+             //     filtro_ind.Dados();
+         //         filtro_fuzzy_arquivo = filtro_fuzzy.Fuzzy();
+         //         delete(arquivo);
+         //         delete(filtro_fuzzy);
 
                 }
 
@@ -342,15 +342,15 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 //Print("Saiu myDealInfo.PositionId() " + myDealInfo.PositionId());
                 if(!Otimizacao)
                 {
-                  FiltroF *filtro_teste = new FiltroF;
-                  File *arquivo = new File();
-                  File_Filtro *arquivo_filtro = new File_Filtro();
-                  arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
-                  arquivo_filtro.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
-                  filtro_teste.Escreve_Medias_Filtro();
-                  delete(filtro_teste);
-                  delete(arquivo);
-                  delete(arquivo_filtro);
+                  //FiltroF *filtro_teste = new FiltroF;
+                  //File *arquivo = new File();
+                  //File_Filtro *arquivo_filtro = new File_Filtro();
+                  //arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
+                  //arquivo_filtro.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()), myDealInfo.Profit(),DEAL_ENTRY_OUT);
+                  //filtro_teste.Escreve_Medias_Filtro();
+                  //delete(filtro_teste);
+                  //delete(arquivo);
+                //  delete(arquivo_filtro);
                 }
 
                 on_trade_robo *trade_especifico = new on_trade_robo(-1,myDealInfo.Profit());

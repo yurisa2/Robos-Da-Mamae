@@ -59,9 +59,9 @@ input int HoraDeFim = 17;                                                  //Hor
 input int MinutoDeFim = 27;                                                //Minuto de Fim
 input bool   ZerarFinalDoDia = true;                                       //Encerra operacoes no final do dia (execucao extendida)
 input string Descricao_Robo_Alpha = "";                                    //Descricao para logs e mensagens
-input bool Aleta_Operacao = false;                                          //Aparece um alerta quando entra
+sinput bool Aleta_Operacao = false;                                          //Aparece um alerta quando entra
 //string Descricao_Robo = Descricao_Robo(); +"|"+Descricao_Robo_Alpha;
-input bool Custom_resultado_treino_nn = false;
+sinput bool Custom_resultado_treino_nn = false;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
 input double Lotes = 1;                                                    //Volume negociado
@@ -73,7 +73,7 @@ input bool   interrompe_durante = 0;                                       // In
 
 
 string Descricao_Robo = Descricao_Robo_Alpha;
-input int Tipo_Comentario = 2;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
+sinput int Tipo_Comentario = 2;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
 input bool Otimizacao = false;                                          //Parametro para otimizacao
 
 input string Limite = "----------USANDO TICK SIZE-----------";
@@ -206,13 +206,13 @@ input string Label_Filtro_Filtros = "//////////////////////////////////// FILTRO
 input string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------"; //FILTROS RNA
 input bool rna_filtros_on = false;
 input double rna_permite = 0;
-input bool rna_levanta_arquivo_rede = false;
+sinput bool rna_levanta_arquivo_rede = false;
 input string rna_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.trn";
 
 input string Label_Filtro_RDF_Filtro = "---------- RDF Filtros ----------"; //FILTROS RNA
 input bool rdf_filtros_on = false;
 input double rdf_permite = 0;
-input bool rdf_levanta_arquivo_arvores = false;
+sinput bool rdf_levanta_arquivo_arvores = false;
 input string rdf_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.rdf.trn";
 
 

@@ -9,7 +9,7 @@ class Capta_Dados_Entrada {
   double Capta_Dados_Entrada::Hora();
 
   //Primeiro tier  7 Features
-  double BB_Normalizado_BB_Delta_Bruto;
+  double Cx_Preco;
   double BB_Posicao_Percent;
   double RSI_Valor;
   double RSI_Cx;
@@ -23,8 +23,9 @@ void Capta_Dados_Entrada::Dados_Entrada()
   BB *banda_bolinger = new BB(TimeFrame);
   RSI *rsi = new RSI(14,TimeFrame);
   HiLo_OO *hilo = new HiLo_OO(4);
+  Preco_O *preco = new Preco_O(TimeFrame);
 
-  BB_Normalizado_BB_Delta_Bruto = Normaliza_NN(banda_bolinger.Normalizado_BB_Delta_Bruto(0),1);
+  Cx_Preco = Normaliza_NN(preco.Cx(),0);
   BB_Posicao_Percent = Normaliza_NN((banda_bolinger.BB_Posicao_Percent(0)+50)/200,1);
   RSI_Valor = Normaliza_NN(rsi.Valor(0)/100,1);
   RSI_Cx = Normaliza_NN(rsi.Cx(0),0);
@@ -34,6 +35,7 @@ void Capta_Dados_Entrada::Dados_Entrada()
   delete banda_bolinger;
   delete rsi;
   delete hilo;
+  delete preco;
 }
 
 double Capta_Dados_Entrada::Normaliza_NN(double valor, int tipo) //tipo 0 = angular |  1 = normalizado
@@ -51,7 +53,7 @@ void Capta_Dados_Entrada::Saida(double Profit)
 {
   // Print("PRofit "+DoubleToString(Profit));
   string Linha_Montada;
-  Linha_Montada += DoubleToString(BB_Normalizado_BB_Delta_Bruto,6);
+  Linha_Montada += DoubleToString(Cx_Preco,6);
   Linha_Montada += ",";
   Linha_Montada += DoubleToString(BB_Posicao_Percent,6);
   Linha_Montada += ",";

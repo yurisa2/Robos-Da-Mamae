@@ -47,6 +47,7 @@ int Rand_Geral = MathRand();
 #include <Indicadores\MFI.mqh>
 #include <Indicadores\Momentum.mqh>
 #include <Indicadores\OBV.mqh>
+#include <Indicadores\Preco.mqh>
 #include <Indicadores\RSI_OO.mqh>
 #include <Indicadores\Stoch.mqh>
 #include <Indicadores\Volumes.mqh>
@@ -425,7 +426,7 @@ double OnTester()
  // resultado = totalizator.negocios;
   delete(totalizator);
   }
-  else resultado = machine_learning.mse;
+  else resultado = NormalizeDouble((TesterStatistics(STAT_PROFIT_TRADES)/TesterStatistics(STAT_TRADES))*100,2);
 
   return resultado;
 }

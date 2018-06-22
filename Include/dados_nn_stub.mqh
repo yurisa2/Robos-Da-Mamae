@@ -68,6 +68,8 @@ class Capta_Dados_Entrada_stub {
   double WPR_Cx;
   double OBV_Normalizado;
   double OBV_Cx;
+
+  double Cx_Preco;
 };
 
 

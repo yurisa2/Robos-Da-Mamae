@@ -11,7 +11,8 @@ string Nome_Robo = "McBrain";
 
 ENUM_TIMEFRAMES TimeFrame = PERIOD_CURRENT;                              //TimeFrame base
 int Tipo_Comentario = 0;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
-
+bool rna_filtros_on = false;
+bool rdf_filtros_on = false;
 
 #property strict
 #property script_show_inputs

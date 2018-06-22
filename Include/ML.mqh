@@ -166,8 +166,6 @@ bool ML::Levanta_RNA(CMultilayerPerceptronShell &objRed, string nombArch= "")
   int nEntradas= 0, nSalidas= 0, nPesos= 0, nNeuronCapa1 = 0, nNeuronCapa2 = 0;
   CAlglib::MLPProperties(objRed, nEntradas, nSalidas, nPesos);
   Print("N. neuron in the input layer ", nEntradas);
-  Print("N. neuron in the hidden layer 1 ", nNeuronCapa1);
-  Print("N. neuron in the hidden layer 2 ", nNeuronCapa2);
   Print("N. neuron in the output layer ", nSalidas);
   Print("Pesos: ", nPesos);
 
@@ -300,7 +298,7 @@ void ML::Processa_RNA(double &y[], CMultilayerPerceptronShell &objRed,double &x[
   {
     dados_nn.Dados_Entrada();
 
-    x[0] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
+    x[0] = dados_nn.Cx_Preco;
     x[1] = dados_nn.BB_Posicao_Percent;
     x[2] = dados_nn.RSI_Valor;
     x[3] = dados_nn.RSI_Cx;
@@ -548,7 +546,7 @@ void ML::Processa_RDF(double &y[], CDecisionForestShell &tree_trn,double &x[])
     // x[55] = dados_nn.OBV_Normalizado;
     // x[56] = dados_nn.OBV_Cx;
 
-    x[0] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
+    x[0] = dados_nn.Cx_Preco;
     x[1] = dados_nn.BB_Posicao_Percent;
     x[2] = dados_nn.RSI_Valor;
     x[3] = dados_nn.RSI_Cx;

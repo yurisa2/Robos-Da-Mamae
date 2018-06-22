@@ -2,7 +2,11 @@
 
 
 input string Zumba_Label = "Configs do Zumba";  // -----------Zumba--------------
-input ENUM_TIMEFRAMES Zumba_BBPP_TF = PERIOD_M1;
+input TFs Zumba_BBPP_TF_ = _M1;
+
+
+ENUM_TIMEFRAMES Zumba_BBPP_TF = defMarcoTiempo(Zumba_BBPP_TF_);
+
 ENUM_TIMEFRAMES Zumba_IGOR_TF = TimeFrame;
 input double Zumba_limite_superior = 83;
 input double Zumba_limite_inferior = 17;

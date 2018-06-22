@@ -12,6 +12,7 @@ enum TFs
 {
    _M1= PERIOD_M1,
    _M5= PERIOD_M5,
+   _M10= PERIOD_M10,
    _M15=PERIOD_M15,
 //   _M20=PERIOD_M20,
    _M30=PERIOD_M30,
@@ -37,6 +38,7 @@ ENUM_TIMEFRAMES defMarcoTiempo(TFs marco)
    {
       case _M1: resp= PERIOD_M1; break;
       case _M5: resp= PERIOD_M5; break;
+      case _M10: resp= PERIOD_M10; break;
       case _M15: resp= PERIOD_M15; break;
       //case _M20: resp= PERIOD_M20; break;
       case _M30: resp= PERIOD_M30; break;

@@ -13,7 +13,7 @@ class Capta_Dados_Entrada {
   double BB_Posicao_Percent;
   double RSI_Valor;
   double RSI_Cx;
-  double Hilo;
+  double igor_v;
   double Hora_n;
 
 };
@@ -22,19 +22,19 @@ void Capta_Dados_Entrada::Dados_Entrada()
 {
   BB *banda_bolinger = new BB(TimeFrame);
   RSI *rsi = new RSI(14,TimeFrame);
-  HiLo_OO *hilo = new HiLo_OO(4);
+  Igor *igor = new Igor(TimeFrame);
   Preco_O *preco = new Preco_O(TimeFrame);
 
   Cx_Preco = Normaliza_NN(preco.Cx(),0);
   BB_Posicao_Percent = Normaliza_NN((banda_bolinger.BB_Posicao_Percent(0)+50)/200,1);
   RSI_Valor = Normaliza_NN(rsi.Valor(0)/100,1);
   RSI_Cx = Normaliza_NN(rsi.Cx(0),0);
-  Hilo = Normaliza_NN((hilo.Direcao()+1)/2,1);
+  igor_v = Normaliza_NN(igor.Fuzzy_CEV()/100,1);
   Hora_n = Normaliza_NN(Hora(),1);
 
   delete banda_bolinger;
   delete rsi;
-  delete hilo;
+  delete igor;
   delete preco;
 }
 
@@ -61,7 +61,7 @@ void Capta_Dados_Entrada::Saida(double Profit)
   Linha_Montada += ",";
   Linha_Montada += DoubleToString(RSI_Cx,6);
   Linha_Montada += ",";
-  Linha_Montada += DoubleToString(Hilo,6);
+  Linha_Montada += DoubleToString(igor_v,6);
   Linha_Montada += ",";
 
   Linha_Montada += DoubleToString(Hora_n,6);

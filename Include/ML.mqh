@@ -302,7 +302,7 @@ void ML::Processa_RNA(double &y[], CMultilayerPerceptronShell &objRed,double &x[
     x[1] = dados_nn.BB_Posicao_Percent;
     x[2] = dados_nn.RSI_Valor;
     x[3] = dados_nn.RSI_Cx;
-    x[4] = dados_nn.Hilo;
+    x[4] = dados_nn.igor_v;
 
     x[5] = dados_nn.Hora_n;
 
@@ -550,7 +550,7 @@ void ML::Processa_RDF(double &y[], CDecisionForestShell &tree_trn,double &x[])
     x[1] = dados_nn.BB_Posicao_Percent;
     x[2] = dados_nn.RSI_Valor;
     x[3] = dados_nn.RSI_Cx;
-    x[4] = dados_nn.Hilo;
+    x[4] = dados_nn.igor_v;
 
     x[5] = dados_nn.Hora_n;
 

@@ -17,6 +17,8 @@ class Capta_Dados_Entrada_stub {
   double BB_Normalizado_BB_Delta_Bruto;
   double BB_Posicao_Percent;
   double RSI_Valor;
+  double igor_v;
+
   double RSI_Cx;
   double RSI_Normalizado;
   double Hilo;

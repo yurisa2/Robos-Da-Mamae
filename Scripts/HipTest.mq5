@@ -41,11 +41,11 @@ void OnStart()
   for(int i = 0; i < machine_learning.entradas; i++)
   {
 
-    // PrintFormat("Coluna: %i JB Perde: %f10 JB Ganha: %f10 Soma: %f10",i,frere[i][0],frere[i][1],frere[i][0]+frere[i][1]);
-    PrintFormat("Coluna: %i signTest Perde: %f10 signTest Ganha: %f10 Soma: %f10",i,signTest[i][0],signTest[i][1],signTest[i][0]+signTest[i][1]);
-    // PrintFormat("Coluna: %i studentsttest Perde: %f10 studentsttest Ganha: %f10 Soma: %f10",i,studentsttest[i][0],studentsttest[i][1],studentsttest[i][0]+studentsttest[i][1]);
-    // PrintFormat("Coluna: %i chi Perde: %f10 chi Ganha: %f10 Soma: %f10",i,chi[i][0],chi[i][1],chi[i][0]+chi[i][1]);
-    // PrintFormat("Coluna: %i wilcox Perde: %f10 wilcox Ganha: %f10 Soma: %f10",i,wilcox[i][0],wilcox[i][1],wilcox[i][0]+wilcox[i][1]);
+    // PrintFormat("Coluna: %i JB Perde: %f10 JB Ganha: %f10",i,frere[i][0],frere[i][1]);
+    // PrintFormat("Coluna: %i signTest Perde: %f10 signTest Ganha: %f10",i,signTest[i][0],signTest[i][1]);
+    // PrintFormat("Coluna: %i studentsttest Perde: %f10 studentsttest Ganha: %f10",i,studentsttest[i][0],studentsttest[i][1]);
+    PrintFormat("Coluna: %i chi Perde: %f10 chi Ganha: %f10",i,chi[i][0],chi[i][1]);
+    // PrintFormat("Coluna: %i wilcox Perde: %f10 wilcox Ganha: %f10",i,wilcox[i][0],wilcox[i][1]);
 
   }
 

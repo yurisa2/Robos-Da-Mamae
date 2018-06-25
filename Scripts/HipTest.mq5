@@ -41,11 +41,11 @@ void OnStart()
   for(int i = 0; i < machine_learning.entradas; i++)
   {
 
-    PrintFormat("Coluna: %i JB Perde: %f10 JB Ganha: %f10 Soma: %f10",i,frere[i][0],frere[i][1],frere[i][0]+frere[i][0]+frere[i][1]);
-    PrintFormat("Coluna: %i signTest Perde: %f10 signTest Ganha: %f10 Soma: %f10",i,signTest[i][0],signTest[i][1],signTest[i][0]+signTest[i][0]+signTest[i][1]);
-    PrintFormat("Coluna: %i studentsttest Perde: %f10 studentsttest Ganha: %f10 Soma: %f10",i,studentsttest[i][0],studentsttest[i][1],studentsttest[i][0]+studentsttest[i][0]+studentsttest[i][1]);
-    PrintFormat("Coluna: %i chi Perde: %f10 chi Ganha: %f10 Soma: %f10",i,chi[i][0],chi[i][1],chi[i][0]+chi[i][0]+chi[i][1]);
-    PrintFormat("Coluna: %i wilcox Perde: %f10 wilcox Ganha: %f10 Soma: %f10",i,wilcox[i][0],wilcox[i][1],wilcox[i][0]+wilcox[i][0]+wilcox[i][1]);
+    // PrintFormat("Coluna: %i JB Perde: %f10 JB Ganha: %f10 Soma: %f10",i,frere[i][0],frere[i][1],frere[i][0]+frere[i][1]);
+    PrintFormat("Coluna: %i signTest Perde: %f10 signTest Ganha: %f10 Soma: %f10",i,signTest[i][0],signTest[i][1],signTest[i][0]+signTest[i][1]);
+    // PrintFormat("Coluna: %i studentsttest Perde: %f10 studentsttest Ganha: %f10 Soma: %f10",i,studentsttest[i][0],studentsttest[i][1],studentsttest[i][0]+studentsttest[i][1]);
+    // PrintFormat("Coluna: %i chi Perde: %f10 chi Ganha: %f10 Soma: %f10",i,chi[i][0],chi[i][1],chi[i][0]+chi[i][1]);
+    // PrintFormat("Coluna: %i wilcox Perde: %f10 wilcox Ganha: %f10 Soma: %f10",i,wilcox[i][0],wilcox[i][1],wilcox[i][0]+wilcox[i][1]);
 
   }
 
@@ -66,6 +66,9 @@ void ML_JarqueBeraTest(double &Matriz_entrada[][100], double &frere[][2], double
 
   ArrayResize(x,ArrayRange(Matriz_entrada,0));
   ArrayResize(frere,machine_learning.entradas);
+
+
+
 
   for(int j = 0; j < machine_learning.entradas; j++)
   {
@@ -91,12 +94,14 @@ void ML_JarqueBeraTest(double &Matriz_entrada[][100], double &frere[][2], double
     }
 
 
+
+
     // PrintFormat("Coluna %i",j); //DEBUG
-    ArrayResize(frere,ArraySize(frere)+1);
-    ArrayResize(signTest,ArraySize(signTest)+1);
-    ArrayResize(studentsttest,ArraySize(studentsttest)+1);
-    ArrayResize(chi,ArraySize(chi)+1);
-    ArrayResize(wilcox,ArraySize(wilcox)+1);
+    ArrayResize(frere,ArrayRange(frere,0)+1);
+    ArrayResize(signTest,ArrayRange(signTest,0)+1);
+    ArrayResize(studentsttest,ArrayRange(studentsttest,0)+1);
+    ArrayResize(chi,ArrayRange(chi,0)+1);
+    ArrayResize(wilcox,ArrayRange(wilcox,0)+1);
 
     CAlglib *algebra = new CAlglib;
 
@@ -138,9 +143,6 @@ void ML_JarqueBeraTest(double &Matriz_entrada[][100], double &frere[][2], double
 
     ArrayFree(Linhas_Ganha);
     ArrayFree(Linhas_Perde);
-
-    if(j == machine_learning.entradas) break;
-
   }
 // Print("FrereTamanho: " + ArrayRange(frere,0)); //Ta grande
 //Retorna o seguinte Array[][2] (primeira dimensao coluna seguna 0 perde 1 ganha)

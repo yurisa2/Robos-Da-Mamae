@@ -23,11 +23,11 @@ class ML
   bool Levanta_RNA(CMultilayerPerceptronShell &objRed, string nombArch= "");
   bool Salva_RNA(CMultilayerPerceptronShell &objRed, string nombArch= "");
   void Processa_RNA(double &y[], CMultilayerPerceptronShell &objRed, double &x[]);
-  void ML::Treino_RDF(CDecisionForestShell &tree_trn);
-  bool ML::Salva_RDF(CDecisionForestShell &tree_trn, string nombArch= "");
-  bool ML::Levanta_RDF(CDecisionForestShell &tree_trn, string nombArch= "");
-  void ML::Processa_RDF(double &y[], CDecisionForestShell &tree_trn,double &x[]);
-  void ML::Saida_ML();
+  void Treino_RDF(CDecisionForestShell &tree_trn);
+  bool Salva_RDF(CDecisionForestShell &tree_trn, string nombArch= "");
+  bool Levanta_RDF(CDecisionForestShell &tree_trn, string nombArch= "");
+  void Processa_RDF(double &y[], CDecisionForestShell &tree_trn,double &x[]);
+  void Saida_ML();
   double resp_y[2];
   CMultilayerPerceptronShell rede_obj;
   CDecisionForestShell      tree_obj;
@@ -213,34 +213,34 @@ void ML::Treino_RNA(CMultilayerPerceptronShell &network_trn)
   int entradas_prop = this.entradas-1;
   CAlglib::MLPProperties(network_trn, entradas_prop, rna_camada_saida, nPesos);
 
-    int rna_amostras_principal = 0;
-    int rna_amostras_validacao = 0;
+  int rna_amostras_principal = 0;
+  int rna_amostras_validacao = 0;
 
-    rna_amostras_principal = int(MathFloor(amostras/1.25)); //Esse Virou Amostra (PARETO DISSE 80/20)
-    rna_amostras_validacao = int(amostras-rna_amostras_principal);
+  rna_amostras_principal = int(MathFloor(amostras/1.25)); //Esse Virou Amostra (PARETO DISSE 80/20)
+  rna_amostras_validacao = int(amostras-rna_amostras_principal);
 
-    //AQUI EH O PRINCIPAL
-    CMatrixDouble xy_principal(rna_amostras_principal+1,this.entradas);
-    for(int i = 0; i < rna_amostras_principal; i++)
-    { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
-      for(int j = 0; j < this.entradas; j++)
-      {
-        xy_principal[i].Set(j,this.Matriz[i][j]);
-        // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
-      }
+  //AQUI EH O PRINCIPAL
+  CMatrixDouble xy_principal(rna_amostras_principal+1,this.entradas);
+  for(int i = 0; i < rna_amostras_principal; i++)
+  { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
+    for(int j = 0; j < this.entradas; j++)
+    {
+      xy_principal[i].Set(j,this.Matriz[i][j]);
+      // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
     }
+  }
 
-    //AQUI EH O Validacao
-    CMatrixDouble xy_valida(rna_amostras_validacao+1,this.entradas);
-    for(int i = rna_amostras_principal; i < (rna_amostras_principal+rna_amostras_validacao); i++)
-    { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
-      int i_2 = i - rna_amostras_principal;
-      for(int j = 0; j < this.entradas; j++)
-      {
-        xy_valida[i_2].Set(j,this.Matriz[i][j]);
-        // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
-      }
+  //AQUI EH O Validacao
+  CMatrixDouble xy_valida(rna_amostras_validacao+1,this.entradas);
+  for(int i = rna_amostras_principal; i < (rna_amostras_principal+rna_amostras_validacao); i++)
+  { //Mano AQUI FAVA i = amostras?!?!?!?! WAHHHHHH?
+    int i_2 = i - rna_amostras_principal;
+    for(int j = 0; j < this.entradas; j++)
+    {
+      xy_valida[i_2].Set(j,this.Matriz[i][j]);
+      // PrintFormat("xy[%f].Set(%f,%f)",i,j,this.Matriz[i][j]); //DEBUG Verifica a Matriz XY
     }
+  }
 
 
   CMatrixDouble xy_inteira(amostras+1,this.entradas);
@@ -298,80 +298,6 @@ void ML::Processa_RNA(double &y[], CMultilayerPerceptronShell &objRed,double &x[
   if((this.numero_linhas > rna_on_realtime_min_samples && rna_on_realtime && rna_filtros_on) || (rna_filtros_on && !rna_on_realtime))
   {
     dados_nn.Dados_Entrada();
-
-    x[0] = dados_nn.Cx_Preco;
-    x[1] = dados_nn.BB_Posicao_Percent;
-    x[2] = dados_nn.RSI_Valor;
-    x[3] = dados_nn.RSI_Cx;
-    x[4] = dados_nn.igor_v;
-
-    x[5] = dados_nn.Hora_n;
-
-    //
-    // x[0] = dados_nn.BB_Cx_BB_Low;
-    // x[1] = dados_nn.BB_Cx_BB_Base;
-    // x[2] = dados_nn.BB_Cx_BB_High;
-    // x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
-    // x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
-    // x[5] = dados_nn.BB_Normalizado_BB_Low;
-    // x[6] = dados_nn.BB_Normalizado_BB_Base;
-    // x[7] = dados_nn.BB_Normalizado_BB_High;
-    // x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
-    // x[9] = dados_nn.BB_Posicao_Percent;
-    // x[10] = dados_nn.RSI_Valor;
-    // x[11] = dados_nn.RSI_Cx;
-    // x[12] = dados_nn.RSI_Normalizado;
-    // x[13] = dados_nn.Hilo;
-    //
-    // x[14] = dados_nn.Hora_n;
-    // x[15] = dados_nn.MFI_Normalizado;
-    // x[16] = dados_nn.MFI_Cx;
-    // x[17] = dados_nn.Demarker_Normalizado;
-    // x[18] = dados_nn.Demarker_Cx;
-    // x[19] = dados_nn.Bulls_Normalizado;
-    // x[20] = dados_nn.Bulls_Cx;
-    // x[21] = dados_nn.Bears_Normalizado;
-    // x[22] = dados_nn.Bears_Cx;
-    // x[23] = dados_nn.AC_Normalizado;
-    // x[24] = dados_nn.AC_Cx;
-    // x[25] = dados_nn.ADX_Normalizado;
-    // x[26] = dados_nn.ADX_Cx;
-    // x[27] = dados_nn.Igor_N;
-    //
-    // x[28] = dados_nn.ATR_Normalizado;
-    // x[29] = dados_nn.ATR_Cx;
-    // x[30] = dados_nn.CCI_Normalizado;
-    // x[31] = dados_nn.CCI_Cx;
-    // x[32] = dados_nn.DP_MM20;
-    // x[33] = dados_nn.DP_PRMM20;
-    // x[34] = dados_nn.DP_mm20AAmm50;
-    // x[35] = dados_nn.DP_Direcao;
-    // x[36] = dados_nn.MACD_normalizado0;
-    // x[37] = dados_nn.MACD_normalizado1;
-    // x[38] = dados_nn.MACD_normalizado2;
-    // x[39] = dados_nn.MACD_Distancia_Linha_Zero;
-    // x[40] = dados_nn.MACD_Distancia_Linha_Sinal;
-    // x[41] = dados_nn.MACD_Diferenca_Angulo_Linha_Sinal;
-    // x[42] = dados_nn.MACD_Cx0;
-    // x[43] = dados_nn.MACD_Cx1;
-    // x[44] = dados_nn.MACD_Cx2;
-    // x[45] = dados_nn.Momentum_Normalizado;
-    // x[46] = dados_nn.Momentum_Cx;
-    // x[47] = dados_nn.Stoch_Normalizado0;
-    // x[48] = dados_nn.Stoch_Normalizado1;
-    // x[49] = dados_nn.Stoch_Cx0;
-    // x[50] = dados_nn.Stoch_Cx1;
-    // x[51] = dados_nn.Volumes_Normalizado;
-    // x[52] = dados_nn.Volumes_Cx;
-    // x[53] = dados_nn.WPR_Normalizado;
-    // x[54] = dados_nn.WPR_Cx;
-    // x[55] = dados_nn.OBV_Normalizado;
-    // x[56] = dados_nn.OBV_Cx;
-
-    // for(int i = 0; i < ArraySize(x); i++)
-    // {
-    // PrintFormat("i: %f valor: %f",i,x[i]);
-    // } //IMPRIME ENTRADA
 
     CAlglib algebra_proc;
 
@@ -475,7 +401,6 @@ bool ML::Levanta_RDF(CDecisionForestShell &tree_trn, string nombArch= "")
   return(1);
 }
 
-
 void ML::Saida_ML()
 {
   if(ml_on && rna_on_realtime && this.numero_linhas > rna_on_realtime_min_samples) Treino_RNA(this.rede_obj);
@@ -487,80 +412,6 @@ void ML::Processa_RDF(double &y[], CDecisionForestShell &tree_trn,double &x[])
   {
     dados_nn.Dados_Entrada();
 
-    // x[0] = dados_nn.BB_Cx_BB_Low;
-    // x[1] = dados_nn.BB_Cx_BB_Base;
-    // x[2] = dados_nn.BB_Cx_BB_High;
-    // x[3] = dados_nn.BB_Cx_BB_Delta_Bruto;
-    // x[4] = dados_nn.BB_Cx_BB_Posicao_Percent;
-    // x[5] = dados_nn.BB_Normalizado_BB_Low;
-    // x[6] = dados_nn.BB_Normalizado_BB_Base;
-    // x[7] = dados_nn.BB_Normalizado_BB_High;
-    // x[8] = dados_nn.BB_Normalizado_BB_Delta_Bruto;
-    // x[9] = dados_nn.BB_Posicao_Percent;
-    // x[10] = dados_nn.RSI_Valor;
-    // x[11] = dados_nn.RSI_Cx;
-    // x[12] = dados_nn.RSI_Normalizado;
-    // x[13] = dados_nn.Hilo;
-    //
-    // x[14] = dados_nn.Hora_n;
-    // x[15] = dados_nn.MFI_Normalizado;
-    // x[16] = dados_nn.MFI_Cx;
-    // x[17] = dados_nn.Demarker_Normalizado;
-    // x[18] = dados_nn.Demarker_Cx;
-    // x[19] = dados_nn.Bulls_Normalizado;
-    // x[20] = dados_nn.Bulls_Cx;
-    // x[21] = dados_nn.Bears_Normalizado;
-    // x[22] = dados_nn.Bears_Cx;
-    // x[23] = dados_nn.AC_Normalizado;
-    // x[24] = dados_nn.AC_Cx;
-    // x[25] = dados_nn.ADX_Normalizado;
-    // x[26] = dados_nn.ADX_Cx;
-    // x[27] = dados_nn.Igor_N;
-    //
-    // x[28] = dados_nn.ATR_Normalizado;
-    // x[29] = dados_nn.ATR_Cx;
-    // x[30] = dados_nn.CCI_Normalizado;
-    // x[31] = dados_nn.CCI_Cx;
-    // x[32] = dados_nn.DP_MM20;
-    // x[33] = dados_nn.DP_PRMM20;
-    // x[34] = dados_nn.DP_mm20AAmm50;
-    // x[35] = dados_nn.DP_Direcao;
-    // x[36] = dados_nn.MACD_normalizado0;
-    // x[37] = dados_nn.MACD_normalizado1;
-    // x[38] = dados_nn.MACD_normalizado2;
-    // x[39] = dados_nn.MACD_Distancia_Linha_Zero;
-    // x[40] = dados_nn.MACD_Distancia_Linha_Sinal;
-    // x[41] = dados_nn.MACD_Diferenca_Angulo_Linha_Sinal;
-    // x[42] = dados_nn.MACD_Cx0;
-    // x[43] = dados_nn.MACD_Cx1;
-    // x[44] = dados_nn.MACD_Cx2;
-    // x[45] = dados_nn.Momentum_Normalizado;
-    // x[46] = dados_nn.Momentum_Cx;
-    // x[47] = dados_nn.Stoch_Normalizado0;
-    // x[48] = dados_nn.Stoch_Normalizado1;
-    // x[49] = dados_nn.Stoch_Cx0;
-    // x[50] = dados_nn.Stoch_Cx1;
-    // x[51] = dados_nn.Volumes_Normalizado;
-    // x[52] = dados_nn.Volumes_Cx;
-    // x[53] = dados_nn.WPR_Normalizado;
-    // x[54] = dados_nn.WPR_Cx;
-    // x[55] = dados_nn.OBV_Normalizado;
-    // x[56] = dados_nn.OBV_Cx;
-
-    x[0] = dados_nn.Cx_Preco;
-    x[1] = dados_nn.BB_Posicao_Percent;
-    x[2] = dados_nn.RSI_Valor;
-    x[3] = dados_nn.RSI_Cx;
-    x[4] = dados_nn.igor_v;
-
-    x[5] = dados_nn.Hora_n;
-
-
-
-    // for(int i = 0; i < ArraySize(x); i++)
-    // {
-    // PrintFormat("i: %f valor: %f",i,x[i]);
-    // } //IMPRIME ENTRADA
 
     CAlglib algebra_proc;
 
@@ -579,7 +430,5 @@ void ML::Processa_RDF(double &y[], CDecisionForestShell &tree_trn,double &x[])
     // resposta_y[1]=1;
   }
 }
-
-
 
 ML machine_learning;

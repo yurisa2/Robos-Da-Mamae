@@ -21,6 +21,7 @@ void OnStart()
 {
 
     double w[];
+    CMatrixDouble w2;
     int info;
 
     //Carrega Historico
@@ -38,16 +39,39 @@ void OnStart()
       }
 
       CLDA::FisherLDA(xy_inteira,machine_learning.numero_linhas,machine_learning.entradas-1,2,info,w);
-
+      Print("info w: " + info);
+//       CLDA::FisherLDAN(xy_inteira,machine_learning.numero_linhas,machine_learning.entradas-1,2,info,w2);
+// Print("info w: " + info);
+      Print("FisherLDA");
       for(int i = 0; i < ArraySize(w); i++)
     {
       Print("w i:" + i + " value: " + w[i]);
     }
+  //
+  //   Print("FisherLDAN");
+  //   for(int i = 0; i < ArraySize(w); i++)
+  // {
+  //   Print("w20 i:" + i + " value: " + w2[i][0]);
+  //   Print("w21 i:" + i + " value: " + w2[i][1]);
+  //   Print("w22 i:" + i + " value: " + w2[i][2]);
+  // }
+CMatrixDouble v;
+double s2[];
 
-      // static void CLDA::FisherLDA(CMatrixDouble &xy,const int npoints,
-      //                             const int nvars,const int nclasses,
-      //                             int &info,double &w[])
+CAlglib::PCABuildBasis(xy_inteira,machine_learning.numero_linhas,machine_learning.entradas-1,info,s2,v);
 
+Print("PCA s2");
+for(int i = 0; i < ArraySize(w); i++)
+{
+Print("s2 i:" + i + " value: " + s2[i]);
+}
+Print("PCA v");
+for(int i = 0; i < ArrayRange(s2); i++)
+{
+Print("v0 i:" + i + " value: " + v[i][0]);
+Print("v1 i:" + i + " value: " + v[i][1]);
+Print("v2 i:" + i + " value: " + v[i][2]);
+}
 
     ExpertRemove();
 }

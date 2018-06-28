@@ -3,6 +3,7 @@
 class Capta_Dados_Entrada_stub {
   public:
   void Dados_Entrada() {};
+  double x_entrada[];
   void Saida(double Profit) {};
   double Capta_Dados_Entrada_stub::Normaliza_NN(double valor, int tipo);
   double Capta_Dados_Entrada_stub::Hora();

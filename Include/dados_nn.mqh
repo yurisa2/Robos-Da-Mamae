@@ -5,8 +5,9 @@ class Capta_Dados_Entrada {
   public:
   void Dados_Entrada();
   void Saida(double Profit);
-  double Capta_Dados_Entrada::Normaliza_NN(double valor, int tipo);
-  double Capta_Dados_Entrada::Hora();
+  double Normaliza_NN(double valor, int tipo);
+  double Hora();
+  double x_entrada[];
 
   //Primeiro tier  15 Features
   double BB_Cx_BB_Low;
@@ -157,6 +158,63 @@ void Capta_Dados_Entrada::Dados_Entrada()
   OBV_Normalizado = Normaliza_NN(obv.Normalizado(0),1);
   OBV_Cx = Normaliza_NN(obv.Cx(0),0);
 
+  this.x_entrada[0] = BB_Cx_BB_Low;
+  this.x_entrada[1] = BB_Cx_BB_Base;
+  this.x_entrada[2] = BB_Cx_BB_High;
+  this.x_entrada[3] = BB_Cx_BB_Delta_Bruto;
+  this.x_entrada[4] = BB_Cx_BB_Posicao_Percent;
+  this.x_entrada[5] = BB_Normalizado_BB_Low;
+  this.x_entrada[6] = BB_Normalizado_BB_Base;
+  this.x_entrada[7] = BB_Normalizado_BB_High;
+  this.x_entrada[8] = BB_Normalizado_BB_Delta_Bruto;
+  this.x_entrada[9] = BB_Posicao_Percent;
+  this.x_entrada[10] = RSI_Valor;
+  this.x_entrada[11] = RSI_Cx;
+  this.x_entrada[12] = RSI_Normalizado;
+  this.x_entrada[13] = Hilo;
+  this.x_entrada[14] = Hora_n;
+  this.x_entrada[15] = MFI_Normalizado;
+  this.x_entrada[16] = MFI_Cx;
+  this.x_entrada[17] = Demarker_Normalizado;
+  this.x_entrada[18] = Demarker_Cx;
+  this.x_entrada[19] = Bulls_Normalizado;
+  this.x_entrada[20] = Bulls_Cx;
+  this.x_entrada[21] = Bears_Normalizado;
+  this.x_entrada[22] = Bears_Cx;
+  this.x_entrada[23] = AC_Normalizado;
+  this.x_entrada[24] = AC_Cx;
+  this.x_entrada[25] = ADX_Normalizado;
+  this.x_entrada[26] = ADX_Cx;
+  this.x_entrada[27] = Igor_N;
+  this.x_entrada[28] = ATR_Normalizado;
+  this.x_entrada[29] = ATR_Cx;
+  this.x_entrada[30] = CCI_Normalizado;
+  this.x_entrada[31] = CCI_Cx;
+  this.x_entrada[32] = DP_MM20;
+  this.x_entrada[33] = DP_PRMM20;
+  this.x_entrada[34] = DP_mm20AAmm50;
+  this.x_entrada[35] = DP_Direcao;
+  this.x_entrada[36] = MACD_normalizado0;
+  this.x_entrada[37] = MACD_normalizado1;
+  this.x_entrada[38] = MACD_normalizado2;
+  this.x_entrada[39] = MACD_Distancia_Linha_Zero;
+  this.x_entrada[40] = MACD_Distancia_Linha_Sinal;
+  this.x_entrada[41] = MACD_Diferenca_Angulo_Linha_Sinal;
+  this.x_entrada[42] = MACD_Cx0;
+  this.x_entrada[43] = MACD_Cx1;
+  this.x_entrada[44] = MACD_Cx2;
+  this.x_entrada[45] = Momentum_Normalizado;
+  this.x_entrada[46] = Momentum_Cx;
+  this.x_entrada[47] = Stoch_Normalizado0;
+  this.x_entrada[48] = Stoch_Normalizado1;
+  this.x_entrada[49] = Stoch_Cx0;
+  this.x_entrada[50] = Stoch_Cx1;
+  this.x_entrada[51] = Volumes_Normalizado;
+  this.x_entrada[52] = Volumes_Cx;
+  this.x_entrada[53] = WPR_Normalizado;
+  this.x_entrada[54] = WPR_Cx;
+  this.x_entrada[55] = OBV_Normalizado;
+  this.x_entrada[56] = OBV_Cx;
 
   delete banda_bolinger;
   delete igor;

@@ -4,16 +4,17 @@
 //|                        Copyright 2017, Sa2 INVESTMENT            |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-
-#include <ML_stub.mqh>
-#include <dados_nn_stub.mqh>
-#include <Inputs_ML_stub.mqh>
-
 #property copyright "Just. ME FAZ CHUTAS OS CLIENTES, PORRA!"
 #property link      "http://www.sa2.com.br"
 
 #property version   "1.0" //Usando posicoes
-string Nome_Robo = "Just";
+string Nome_Robo = "Just_ML";
+
+#include <Math\Alglib\alglib.mqh>
+#include <ML.mqh>
+#include <dados_nn.mqh>
+#include <Inputs_ML.mqh>
+
 #include <Inputs_Vars.mqh>
 #include <basico.mqh>
 
@@ -29,7 +30,9 @@ string Nome_Robo = "Just";
 #include <Just\just_inputs.mqh>
 #include <Just\just_funcoes.mqh>
 
-#include <File_Writer.mqh>
+//#include <File_Writer.mqh>
+
+
 
 int OnInit()
 {

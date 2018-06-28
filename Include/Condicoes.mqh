@@ -64,7 +64,7 @@ bool Condicoes_Basicas_OO::Condicao()
 
   if(ml_on && rna_filtros_on)
   {
-  machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,x_entrada);
+  machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,dados_nn.x_entrada);
   double ml_p = resposta_y[1];
   if(ml_p >= rna_permite) NeuralNetwork_Permite = 1;
   Print("ml_p "+ DoubleToString(ml_p));
@@ -74,7 +74,7 @@ bool Condicoes_Basicas_OO::Condicao()
 
   if(ml_on && rdf_filtros_on)
   {
-  machine_learning.Processa_RDF(resposta_y,machine_learning.tree_obj,x_entrada);
+  machine_learning.Processa_RDF(resposta_y,machine_learning.tree_obj,dados_nn.x_entrada);
   double ml_t = resposta_y[1];
   if(ml_t >= rdf_permite) RandomDecisionForest_Permite = 1;
   Print("ml_t "+ DoubleToString(ml_t));

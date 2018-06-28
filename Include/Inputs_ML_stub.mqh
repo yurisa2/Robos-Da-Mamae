@@ -7,6 +7,19 @@
 #property copyright "PetroSa, Robos feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
+string Label_Filtro_Filtros = "//////////////////////////////////// FILTROS ////////////////////////////////////"; //FILTROS
+string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------"; //FILTROS RNA
+bool rna_filtros_on = false;
+double rna_permite = 0;
+bool rna_levanta_arquivo_rede = false;
+string rna_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.trn";
+
+string Label_Filtro_RDF_Filtro = "---------- RDF Filtros ----------"; //FILTROS RNA
+bool rdf_filtros_on = false;
+double rdf_permite = 0;
+bool rdf_levanta_arquivo_arvores = false;
+string rdf_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.rdf.trn";
+
 /////////////////////////////////////// Inputs M-FUCKING-L
 
  string Label_Aq_ML = "---------- ML Aquisicao e Treino_RNA (RNA e RDF) ----------";

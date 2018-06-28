@@ -57,13 +57,13 @@ void Just::Avalia()
     if(distancia > just_distancia_compra && distancia < (just_distancia_compra + 5 * Tick_Size) && just_compra)
     {
       Opera_Mercado *opera = new Opera_Mercado;
-      opera.AbrePosicao(1,"Distancia: " + DoubleToString(distancia));
+      opera.AbrePosicao(1,"Distancia: " + DoubleToString(distancia,Digits()));
       delete(opera);
     }
     if(distancia > just_distancia_venda && distancia < (just_distancia_venda + 5 * Tick_Size) && just_venda)
     {
       Opera_Mercado *opera = new Opera_Mercado;
-      opera.AbrePosicao(-1,"Distancia: " + DoubleToString(distancia));
+      opera.AbrePosicao(-1,"Distancia: " + DoubleToString(distancia,Digits()));
       delete(opera);
     }
   }

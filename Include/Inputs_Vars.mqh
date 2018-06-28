@@ -203,19 +203,19 @@ double Filtro_Fuzzy_Histerese = 0.3;
 
 double filtro_fuzzy_arquivo = 0;
 /////////////////////////////////////////// TEMP OFF
-#include <Inputs_ML.mqh>
-input string Label_Filtro_Filtros = "//////////////////////////////////// FILTROS ////////////////////////////////////"; //FILTROS
-input string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------"; //FILTROS RNA
-input bool rna_filtros_on = false;
-input double rna_permite = 0;
-sinput bool rna_levanta_arquivo_rede = false;
-input string rna_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.trn";
+#include <Inputs_ML_stub.mqh>
+ string Label_Filtro_Filtros = "//////////////////////////////////// FILTROS ////////////////////////////////////"; //FILTROS
+ string Label_Filtro_RNA_Filtro = "---------- RNA Filtros ----------"; //FILTROS RNA
+ bool rna_filtros_on = false;
+ double rna_permite = 0;
+ bool rna_levanta_arquivo_rede = false;
+ string rna_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.trn";
 
-input string Label_Filtro_RDF_Filtro = "---------- RDF Filtros ----------"; //FILTROS RNA
-input bool rdf_filtros_on = false;
-input double rdf_permite = 0;
-sinput bool rdf_levanta_arquivo_arvores = false;
-input string rdf_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.rdf.trn";
+ string Label_Filtro_RDF_Filtro = "---------- RDF Filtros ----------"; //FILTROS RNA
+ bool rdf_filtros_on = false;
+ double rdf_permite = 0;
+ bool rdf_levanta_arquivo_arvores = false;
+ string rdf_arquivo_trn = "Arquivo_Ja_Salvo_Em_COMMON.rdf.trn";
 
 
 long tipo_margem_conta = 0;

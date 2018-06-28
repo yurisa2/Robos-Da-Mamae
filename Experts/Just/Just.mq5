@@ -4,11 +4,11 @@
 //|                        Copyright 2017, Sa2 INVESTMENT            |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "Xandros. ME FAZ GANHAR DINHEIRO PORRA"
+#property copyright "Just. ME FAZ CHUTAS OS CLIENTES, PORRA!"
 #property link      "http://www.sa2.com.br"
 
 #property version   "1.0" //Usando posicoes
-string Nome_Robo = "Xandros";
+string Nome_Robo = "Just";
 #include <Inputs_Vars.mqh>
 #include <basico.mqh>
 
@@ -21,8 +21,8 @@ string Nome_Robo = "Xandros";
 //#include <Bucareste\InitBucareste.mqh>
 #include <VerificaInit.mqh>
 
-#include <Xandros\xandros_inputs.mqh>
-#include <Xandros\xandros_funcoes.mqh>
+#include <Just\just_inputs.mqh>
+#include <Just\just_funcoes.mqh>
 
 #include <File_Writer.mqh>
 
@@ -57,15 +57,15 @@ void OnTick()
 
 
 
-  if(xandros_tempo_real && Condicoes.Horario())
+  if(just_tempo_real && Condicoes.Horario())
   {
 
 
 
-  Xandros *xandros = new Xandros;
-  xandros.Avalia();
-  xandros.Comentario();
-  delete(xandros);
+  Just *just = new Just;
+  just.Avalia();
+  just.Comentario();
+  delete(just);
 
 
   }
@@ -76,15 +76,15 @@ void OnTick()
 void OnNewBar()
 {
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
-  if(!xandros_tempo_real && Condicoes.Horario())
+  if(!just_tempo_real && Condicoes.Horario())
   {
 
  Operacoes_No_tick();
 
-  Xandros *xandros = new Xandros;
-  xandros.Avalia();
-  xandros.Comentario();
-  delete(xandros);
+  Just *just = new Just;
+  just.Avalia();
+  just.Comentario();
+  delete(just);
 
 
   }

@@ -8,7 +8,7 @@
 #property link      "http://www.sa2.com.br"
 
 int Rand_Geral = MathRand();
-#include <Math\Alglib\alglib.mqh>
+// #include <Math\Alglib\alglib.mqh>
 // #include <Math\Alglib\dataanalysis.mqh>
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
@@ -60,10 +60,10 @@ int Rand_Geral = MathRand();
 #include <File_Writer_Gen.mqh>
 // #include <File_Writer_Filtro.mqh> //Programa de Emagrecimento do Yurão
 #include <File_Reader.mqh>
-#include <ML.mqh>
-// #include <ML_stub.mqh>
-#include <dados_nn.mqh>
-// #include <dados_nn_stub.mqh>
+// #include <ML.mqh>
+#include <ML_stub.mqh>
+// #include <dados_nn.mqh>
+#include <dados_nn_stub.mqh>
 
 //#include <Expert\Expert.mqh>
 

@@ -51,6 +51,7 @@ int Rand_Geral = MathRand();
 #include <Indicadores\Stoch.mqh>
 #include <Indicadores\Volumes.mqh>
 #include <Indicadores\WPR.mqh>
+#include <Indicadores\XING.mqh>
 #include <aquisicao.mqh>
 //#include <Filtro_Fuzzy.mqh> //Programa de Emagrecimento do Yurão
 

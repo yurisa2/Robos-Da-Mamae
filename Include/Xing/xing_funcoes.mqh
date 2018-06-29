@@ -6,7 +6,6 @@ class Xing
   public:
   void Comentario();
   void Avalia();
-  double Distancia();
   Xing();
 
   private:
@@ -19,32 +18,14 @@ void Xing::Xing()
 
 }
 
-double Xing::Distancia()
-{
-  double retorno = 0;
-
-
-  double diff = SymbolInfoDouble(Symbol(),SYMBOL_BID) - mm_X.Valor();
-
-  retorno = MathRound(diff / Tick_Size);
-
-  return retorno;
-}
-
-
 void Xing::Comentario()
 {
   if(Tipo_Comentario > 0)
   {
-    double distancia = this.Distancia();
-
     Comentario_Robo = "";
-    if(xing_compra) Comentario_Robo += "\n Distancia da MM20 (Compra): " + DoubleToString(distancia,2) + " | " + DoubleToString(distancia - xing_distancia_compra,2) + " do ponto de entrada";
-    if(xing_venda) Comentario_Robo += "\n Distancia da MM20 (Venda): " + DoubleToString(distancia,2) + " | " + DoubleToString(distancia - xing_distancia_venda,2) + " do ponto de entrada";
 
   }
 }
-
 
 void Xing::Avalia()
 {
@@ -52,22 +33,37 @@ void Xing::Avalia()
 
   if(O_Stops.Tipo_Posicao() == 0 && Condicoes.Horario())
   {
-    double distancia = this.Distancia();
+    RSI *rsi_o = new RSI(14,TimeFrame);
+    BB *bb_o = new BB(TimeFrame);
 
-    if(distancia > xing_distancia_compra && distancia < (xing_distancia_compra + 5 * Tick_Size) && xing_compra)
+    Xing_Ind *xing_indicador = new Xing_Ind(TimeFrame);
+
+    double xing_valor = xing_indicador.Valor(rsi_o.Valor(xing_desloc), bb_o.BB_Posicao_Percent(xing_desloc),rsi_o.Cx());
+    delete xing_indicador;
+
+    PrintFormat("RSI: %f BBPP %f RSI CX %f Valor: %f",rsi_o.Valor(),bb_o.BB_Posicao_Percent(),rsi_o.Cx(), xing_valor);
+
+    int multip = 1;
+
+    if(xing_invert) multip = -1;
+
+    if(xing_valor < xing_limite_inferior)
     {
       Opera_Mercado *opera = new Opera_Mercado;
-      opera.AbrePosicao(1,"Distancia: " + DoubleToString(distancia,Digits()));
+      opera.AbrePosicao(1 * multip,"Xing: " + DoubleToString(xing_valor,Digits()));
       delete(opera);
     }
-    if(distancia > xing_distancia_venda && distancia < (xing_distancia_venda + 5 * Tick_Size) && xing_venda)
+
+    if(xing_valor > xing_limite_superior)
     {
       Opera_Mercado *opera = new Opera_Mercado;
-      opera.AbrePosicao(-1,"Distancia: " + DoubleToString(distancia,Digits()));
+      opera.AbrePosicao(-1  * multip,"Xing: " + DoubleToString(xing_valor,Digits()));
       delete(opera);
     }
+
+    delete rsi_o;
+    delete bb_o;
+
   }
   delete(Condicoes);
 }
-
-MA mm_X(20,MODE_SMA,TimeFrame);

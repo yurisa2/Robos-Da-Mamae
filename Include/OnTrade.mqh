@@ -11,13 +11,8 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
   const MqlTradeRequest& request,
   const MqlTradeResult& result)
   {
-    posicao *Verifica_Posicao  = new posicao;
-
     ulong posicao_ticket = request.position;
 
-    //if(posicao_ticket == Verifica_Posicao.Ticket)    Alert("Ticket: " + IntegerToString(Verifica_Posicao.Ticket)); // Acho que aqui s�o todos os eventso
-
-    delete(Verifica_Posicao);
 
     if(Zerar_SL_TP > 0 && !ja_zerou_sl_temp && O_Stops.Tipo_Posicao() != 0)
     {

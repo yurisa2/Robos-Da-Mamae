@@ -59,8 +59,7 @@ ENUM_INIT_RETCODE VerificaInit ()
     MessageBox("Erro nos parametros de grana ou tcnicos","Erro de Inicializao",MB_OK);
     Print("Erro nos parametros de grana ou tcnicos","Erro de Inicializao");
     return(INIT_PARAMETERS_INCORRECT);
-  }
-
+}
   // if(PontoDeMudancaSL > MoverSL || (MoverSL==0 && PontoDeMudancaSL <0))
   // {
   //   MessageBox("PontoDeMudancaSL > MoverSL ou Mover Desligado e PMSL menor que zero","Erro de Inicializao",MB_OK);
@@ -70,10 +69,10 @@ ENUM_INIT_RETCODE VerificaInit ()
 
 // Inicio da verificao de TakeProfit2
 
-if((TakeProfit_Volume + TakeProfit_Volume2 + TakeProfit_Volume3) != 0 && Lotes != (TakeProfit_Volume + TakeProfit_Volume2 + TakeProfit_Volume3))
+if(((TakeProfit_Volume == TakeProfit_Volume2 && TakeProfit_Volume2 == TakeProfit_Volume3) && TakeProfit_Volume > 1) &&   MQLInfoInteger(MQL_TESTER))
 {
-  MessageBox("Volume de Take Profit no bate com o Volume de entrada ","Erro de Inicializao",MB_OK);
-  Print("Volume de Take Profit no bate com o Volume de entrada  "," - Erro de Inicializao");
+  MessageBox("Entrada com ponto de saída iguais, que burrice! ","Erro de Inicializao",MB_OK);
+  Print("Entrada com ponto de saída iguais, que burrice!  "," - Erro de Inicializao");
   return(INIT_PARAMETERS_INCORRECT);
 }
 

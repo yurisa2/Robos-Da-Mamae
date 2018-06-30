@@ -66,7 +66,6 @@ sinput bool Aleta_Operacao = false;                                          //A
 sinput bool Custom_resultado_treino_nn = false;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
-input double Lotes = 1;                                                    //Volume negociado
 input int Limite_Operacoes = 9999;                                         //Limite de operacoes diário (entrada e Saida)
 input double custo_operacao = 1.36;                                        //$ Por negocio
 input double lucro_dia = 1000000;                                          //Lucro MAX dario ($ - liq)
@@ -99,6 +98,7 @@ input int   Zerar_SL_TP = 1;                                                 //Z
 input double Trailing_stop = 0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 
+double Lotes = TakeProfit_Volume + TakeProfit_Volume2 + TakeProfit_Volume3;                                                    //Volume negociado
 //
 // input string _Escalpelador_Maluco  =  "USANDO TICK SIZE E PROP - CUIDADO----";
 // input bool Usa_EM = false;                                                       //Usa Escalpelador Maluco

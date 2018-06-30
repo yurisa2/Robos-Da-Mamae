@@ -110,7 +110,7 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
       while(OrdersTotal() > 0);
 
       requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
-      requisicao_montar.SetExpertMagicNumber(TimeMagic);
+      // requisicao_montar.SetExpertMagicNumber(TimeMagic);  // Olhar esse aqui para identificar posicao magic (para Account mode 0-1)
       ja_zerou_sl_temp = false;// TEMP, MAS NAO AGUENTO MAIS
       O_Stops.Setar_Ordens_Vars_Static();
 

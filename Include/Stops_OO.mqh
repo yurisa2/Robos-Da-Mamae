@@ -50,7 +50,7 @@ int Stops::Tipo_Posicao()
 {
   CPositionInfo *posiciones = new CPositionInfo;
 
-  if(!posiciones.Select(Symbol()))
+  if(!posiciones.SelectByMagic(Symbol(),TimeMagic))
   {
     Operacoes = 0;
     delete(posiciones);
@@ -77,6 +77,16 @@ int Stops::Tipo_Posicao()
 void Stops::No_Tick()
 {
   if(Tipo_Posicao() != 0 && Trailing_stop > 0) TS_();
+
+  if(StopLoss_cash_posicao > 0 || TakeProfit_cash_posicao > 0)
+  {
+    InTradeControl *in_trade = new InTradeControl;
+    in_trade.StopLoss_cash();
+    in_trade.TakeProfit_cash();
+    delete in_trade;
+  }
+
+
 }
 
 double Stops::Distribuidor_Parcial(int Seletor_Volume)
@@ -320,7 +330,7 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
     Alert(alerta_op);
   }
 
-  bool Result_Modify = tradionices.PositionModify(Symbol(),sl,tpMax);
+  bool Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tpMax);
   int cont_i = 0;
 
 if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Batman!
@@ -330,7 +340,7 @@ if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Ba
     sl = sl - Tick_Size;
     tpMax = tpMax + Tick_Size;
     Print("Erro modificando Stops, vamos mudar um poquinho os stops (um Tick_Size a mais para cada)! ln 304");
-    Result_Modify = tradionices.PositionModify(Symbol(),sl,tpMax);
+    Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tpMax);
     cont_i++;
     Sleep(1000);
   }
@@ -340,7 +350,7 @@ if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Ba
   if(!Result_Modify)
   {
     Print("Erro modificando Stops, solenemente, deixo esta memoria para entrar para a Historia! ln 313");
-    tradionices.PositionClose(Symbol());
+    tradionices.PositionClose(posicao_stops.TicketPosicao());
   }
 
   if(funcao == 0) TakeProfit_Calcula();
@@ -362,11 +372,11 @@ void Stops::TS_()
 
     Print("TRAILING STOP COMPRA");
 
-    bool Result_Modify = tradionices.PositionModify(Symbol(),sl,tp);
+    bool Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tp);
     if(!Result_Modify)
     {
       Print("Erro modificando Stops, solenemente, deixo esta memora para entrar para a Historia! ln 384");
-      tradionices.PositionClose(Symbol());
+      tradionices.PositionClose(posicao_stops.TicketPosicao());
     }
   }
   //VERIFICAR JEITO MAIS INTELIGENTE DE FAZER AS ORDENS (TIPO USANDO Tipo_Posicao
@@ -380,11 +390,11 @@ void Stops::TS_()
 
     // Print("TRAILING STOP SL: " + sl + " TP: " + tp + " Tipo_Posicao(): " + Tipo_Posicao() + " Valor do Do Negocio: " + valor);
 
-    bool Result_Modify = tradionices.PositionModify(Symbol(),sl,tp);
+    bool Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tp);
     if(!Result_Modify)
     {
       Print("Erro modificando Stops, solenemente, deixo esta memora para entrar para a Historia! ln402");
-      tradionices.PositionClose(Symbol());
+      tradionices.PositionClose(posicao_stops.TicketPosicao());
 
     }
   }
@@ -395,7 +405,7 @@ double Stops::Valor_Negocio()
 {
   CPositionInfo *posiciones = new CPositionInfo;
 
-  posiciones.Select(Symbol());
+  posiciones.SelectByMagic(Symbol(),TimeMagic);
   double valor = posiciones.PriceOpen();
   // Print("Valor da Valor_Negocio() antes do IF: " + DoubleToString(valor));
 
@@ -412,7 +422,7 @@ double Stops::Valor_SL()
   double retorno = 0;
   CPositionInfo *posiciones = new CPositionInfo;
 
-  posiciones.Select(Symbol());
+  posiciones.SelectByMagic(Symbol(),TimeMagic);
   retorno = MathAbs(this.Valor_Negocio() - posiciones.StopLoss()) / Tick_Size;
 
 
@@ -421,3 +431,4 @@ double Stops::Valor_SL()
 }
 
 Stops O_Stops;
+posicao posicao_stops;

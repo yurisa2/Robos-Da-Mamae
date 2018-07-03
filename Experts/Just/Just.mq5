@@ -60,19 +60,12 @@ void OnTick()
     Operacoes_No_tick();
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
 
-
-
   if(just_tempo_real && Condicoes.Horario())
   {
-
-
-
   Just *just = new Just;
   just.Avalia();
   just.Comentario();
   delete(just);
-
-
   }
     delete(Condicoes);
 }

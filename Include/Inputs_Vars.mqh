@@ -98,6 +98,10 @@ input int   Zerar_SL_TP = 1;                                                 //Z
 input double Trailing_stop = 0;                                             //Trailing Stop (0 desliga)
 input double Trailing_stop_start = 0;                                      //Inicio do Trailing Stop (0 desliga)
 
+input double TakeProfit_cash_posicao = 0.01;  //TESTE CASH_TP | 0 Desliga
+input double StopLoss_cash_posicao = 1;  //TESTE CASH_SL  | 0 Desliga
+
+
 double Lotes = TakeProfit_Volume + TakeProfit_Volume2 + TakeProfit_Volume3;                                                    //Volume negociado
 //
 // input string _Escalpelador_Maluco  =  "USANDO TICK SIZE E PROP - CUIDADO----";

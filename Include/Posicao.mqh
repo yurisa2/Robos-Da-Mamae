@@ -15,6 +15,9 @@ class posicao : public CPositionInfo
   bool PosicaoExiste();
   long Ticket; //Meh
   long TicketPosicao();
+  int  Tipo_Posicao();
+  double LucroAtual();
+
 
   private:
 
@@ -23,7 +26,7 @@ class posicao : public CPositionInfo
 long posicao::TicketPosicao()
 {
   long return_pos_ticket;
-  Select(Symbol());
+  SelectByMagic(Symbol(),TimeMagic);
   InfoInteger(POSITION_TICKET,return_pos_ticket);
 
   return return_pos_ticket;
@@ -31,11 +34,49 @@ long posicao::TicketPosicao()
 
 bool posicao::PosicaoExiste()
 {
-
-  return   Select(Symbol());
-
+  return 0;
 }
 
 void  posicao::posicao()
 {
+}
+
+
+int  posicao::Tipo_Posicao()
+{
+    if(!this.SelectByMagic(Symbol(),TimeMagic))
+    {
+      Operacoes = 0;
+      return 0;
+    }
+    else
+    {
+      if(this.PositionType() == POSITION_TYPE_BUY)
+      {
+        Operacoes = 1;
+          return 1;
+      }
+      if(this.PositionType() == POSITION_TYPE_SELL)
+      {
+        Operacoes = -1;
+          return -1;
+      }
+    }
+    return Operacoes; //Remover quando tirar Vars Flutuantes
+}
+
+
+
+double posicao::LucroAtual()
+{
+  double retorno = 0;
+
+  if(this.Tipo_Posicao() != 0)
+  {
+    this.SelectByMagic(Symbol(),TimeMagic);
+    retorno = this.Profit();
+  }
+
+
+  return retorno;
 }

@@ -6,7 +6,9 @@ class Xing
   public:
   void Comentario();
   void Avalia();
+  double Valor();
   Xing();
+  void PosInfo();
 
   private:
 
@@ -22,7 +24,8 @@ void Xing::Comentario()
 {
   if(Tipo_Comentario > 0)
   {
-    Comentario_Robo = "";
+    Comentario_Robo = "Xing: ";
+    Comentario_Robo += DoubleToString(this.Valor(),2);
 
   }
 }
@@ -33,15 +36,8 @@ void Xing::Avalia()
 
   if(O_Stops.Tipo_Posicao() == 0 && Condicoes.Horario())
   {
-    RSI *rsi_o = new RSI(14,TimeFrame);
-    BB *bb_o = new BB(TimeFrame);
 
-    Xing_Ind *xing_indicador = new Xing_Ind(TimeFrame);
-
-    double xing_valor = xing_indicador.Valor(rsi_o.Valor(xing_desloc), bb_o.BB_Posicao_Percent(xing_desloc),rsi_o.Cx());
-    delete xing_indicador;
-
-    PrintFormat("RSI: %f BBPP %f RSI CX %f Valor: %f",rsi_o.Valor(),bb_o.BB_Posicao_Percent(),rsi_o.Cx(), xing_valor);
+    double xing_valor = this.Valor();
 
     int multip = 1;
 
@@ -50,20 +46,53 @@ void Xing::Avalia()
     if(xing_valor < xing_limite_inferior)
     {
       Opera_Mercado *opera = new Opera_Mercado;
-      opera.AbrePosicao(1 * multip,"Xing: " + DoubleToString(xing_valor,Digits()));
+      opera.AbrePosicao(1 * multip,DoubleToString(xing_valor,1));
       delete(opera);
     }
 
     if(xing_valor > xing_limite_superior)
     {
       Opera_Mercado *opera = new Opera_Mercado;
-      opera.AbrePosicao(-1  * multip,"Xing: " + DoubleToString(xing_valor,Digits()));
+      opera.AbrePosicao(-1  * multip,DoubleToString(xing_valor,1));
       delete(opera);
     }
 
-    delete rsi_o;
-    delete bb_o;
 
   }
   delete(Condicoes);
+}
+
+double Xing::Valor()
+{
+  double retorno = 50;
+
+  RSI *rsi_o = new RSI(14,TimeFrame);
+  BB *bb_o = new BB(TimeFrame);
+
+  Xing_Ind *xing_indicador = new Xing_Ind(TimeFrame);
+
+  retorno = xing_indicador.Valor(rsi_o.Valor(xing_desloc), bb_o.BB_Posicao_Percent(xing_desloc),rsi_o.Cx());
+  delete xing_indicador;
+
+
+      delete rsi_o;
+      delete bb_o;
+
+  return retorno;
+}
+
+
+void Xing::PosInfo()
+{
+  long posMagic = 0;
+
+  posicao *posicao_oo = new posicao();
+  posicao_oo.SelectByMagic(Symbol(),TimeMagic);
+
+  posMagic = posicao_oo.Magic();
+
+  delete posicao_oo;
+
+
+  Print("posMagic: " + posMagic);
 }

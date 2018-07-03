@@ -72,19 +72,6 @@ void Opera_Mercado::ZeraOrdensP()
 /////////////////////////////////////////// Final da req.
 void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentario_req)
 {
-
-  // Totalizador *totalizator = new Totalizador();
-  // string resultado = DoubleToString(totalizator.ganho_liquido());
-  // Print("totalizator.ganho_liquido() " + resultado);
-  // Print("totalizator.negocios " + IntegerToString(totalizator.negocios));
-  // delete(totalizator);
-  //
-  Totalizador *totalizator2 = new Totalizador(1);
-  string resultado2 = DoubleToString(totalizator2.ganho_liquido());
-  // Print("totalizator2.ganho_liquido() " + resultado2);
-  // Print("totalizator2.negocios " + IntegerToString(totalizator2.negocios));
-  delete(totalizator2);
-
   comentario_req = Descricao_Robo_Alpha + "|" + Nome_Robo + "|" +  comentario_req;
   Sleep(200);
   if(Aleta_Operacao && !Otimizacao)
@@ -104,23 +91,15 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
   CTrade *requisicao_montar = new CTrade;
   if(Condicoes_Basicas.Condicao())
   {
-
       do
       ZeraOrdensP();
       while(OrdersTotal() > 0);
 
+      requisicao_montar.SetExpertMagicNumber(TimeMagic);  // Olhar esse aqui para identificar posicao magic (para Account mode 0-1)
       requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
-      // requisicao_montar.SetExpertMagicNumber(TimeMagic);  // Olhar esse aqui para identificar posicao magic (para Account mode 0-1)
       ja_zerou_sl_temp = false;// TEMP, MAS NAO AGUENTO MAIS
       O_Stops.Setar_Ordens_Vars_Static();
-
-
-
   }
-
-
-
-
   delete(requisicao_montar);
 }
 /////////////////////////////////////////// Final da req.
@@ -129,7 +108,7 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
 void Opera_Mercado::FechaPosicao()
 {
   CTrade *requisicao_montar = new CTrade;
-  requisicao_montar.PositionClose(Symbol());
+  requisicao_montar.PositionClose(posicao_stops.TicketPosicao());
 
   delete(requisicao_montar);
 }

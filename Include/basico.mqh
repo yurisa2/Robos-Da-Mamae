@@ -18,6 +18,7 @@ int Rand_Geral = MathRand();
 #include <Normalizacao.mqh>
 // #include <Graficos.mqh>
 #include <Interruptor.mqh>
+#include <InTradeControl.mqh>
 
 
 #include <Math\Fuzzy\MamdaniFuzzySystem.mqh>

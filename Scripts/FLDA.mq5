@@ -14,6 +14,8 @@ int Tipo_Comentario = 0;                                          //Tipo de Come
 bool rna_filtros_on = false;
 bool rdf_filtros_on = false;
 
+input string ml_nome_arquivo_hist = "historico";
+
 #property strict
 #property script_show_inputs
 

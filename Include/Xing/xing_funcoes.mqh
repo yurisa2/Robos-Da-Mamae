@@ -26,6 +26,8 @@ void Xing::Comentario()
   {
     Comentario_Robo = "Xing: ";
     Comentario_Robo += DoubleToString(this.Valor(),2);
+    Comentario_Robo += "\n Spread: ";
+    Comentario_Robo += IntegerToString(iSpread(Symbol(),TimeFrame,0));
 
   }
 }
@@ -33,6 +35,7 @@ void Xing::Comentario()
 void Xing::Avalia()
 {
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+
 
   if(O_Stops.Tipo_Posicao() == 0 && Condicoes.Horario())
   {
@@ -45,6 +48,8 @@ void Xing::Avalia()
 
     if(xing_valor < xing_limite_inferior)
     {
+      PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
+
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(1 * multip,DoubleToString(xing_valor,1));
       delete(opera);
@@ -52,6 +57,8 @@ void Xing::Avalia()
 
     if(xing_valor > xing_limite_superior)
     {
+      PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
+
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(-1  * multip,DoubleToString(xing_valor,1));
       delete(opera);

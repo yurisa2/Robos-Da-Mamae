@@ -26,8 +26,8 @@ void InTradeControl::StopLoss_cash()
 
   if(NormalizeDouble(lucro_Atual,2) <= NormalizeDouble((StopLoss_cash_posicao * -1),2) && NormalizeDouble(lucro_Atual,2) != 0)
   {
-    Print("ITC LucroAtual SL" + DoubleToString(lucro_Atual,2));
-    Print("StopLoss_cash_posicao * -1:  " + DoubleToString(StopLoss_cash_posicao * -1),2);
+    // Print("ITC LucroAtual SL" + DoubleToString(lucro_Atual,2));
+    // Print("StopLoss_cash_posicao * -1:  " + DoubleToString(StopLoss_cash_posicao * -1),2);
 
 
     opera.FechaPosicao();
@@ -46,8 +46,8 @@ void InTradeControl::TakeProfit_cash()
   {
     opera.FechaPosicao();
 
-    Print("ITC LucroAtual TP" + DoubleToString(lucro_Atual,2));
-    Print("TakeProfit_cash_posicao: " + DoubleToString(TakeProfit_cash_posicao,2));
+    // Print("ITC LucroAtual TP" + DoubleToString(lucro_Atual,2));
+    // Print("TakeProfit_cash_posicao: " + DoubleToString(TakeProfit_cash_posicao,2));
 
   }
 

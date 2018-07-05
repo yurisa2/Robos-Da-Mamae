@@ -24,12 +24,14 @@ ENUM_INIT_RETCODE VerificaInit ()
     return(INIT_PARAMETERS_INCORRECT);
   }
 
-  if(Trailing_stop + Trailing_stop_start > TakeProfit && TakeProfit>0)
-  {
-    MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicializao",MB_OK);
-    Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicializao");
-    return(INIT_PARAMETERS_INCORRECT);
-  }
+
+  //Colocar Milcondicoes aqui
+  // if(Trailing_stop + Trailing_stop_start > TakeProfit && TakeProfit>0)
+  // {
+  //   MessageBox("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicializao",MB_OK);
+  //   Print("Trailing Stop Maior que o TP... Pense nisso.","Erro de Inicializao");
+  //   return(INIT_PARAMETERS_INCORRECT);
+  // }
 
   if(HoraDeInicio>HoraDeFim)
   {

@@ -10,6 +10,7 @@
 int Rand_Geral = MathRand();
 #include <Trade\Trade.mqh>
 #include <Trade\AccountInfo.mqh>
+#include <Trade\SymbolInfo.mqh>
 //#include <Charts\Chart.mqh>
 
 #include <Posicao.mqh>
@@ -61,13 +62,17 @@ int Rand_Geral = MathRand();
 // #include <File_Writer_Filtro.mqh> //Programa de Emagrecimento do Yurão
 #include <File_Reader.mqh>
 
-//#include <Expert\Expert.mqh>
-
+   #include <Expert\ExpertBase.mqh>
+   #include <Expert\ExpertTrailing.mqh>
+    #include <Expert\Trailing\TrailingFixedPips.mqh>
+    #include <Expert\Trailing\TrailingNone.mqh>
 //--- object for performing trade operations
-//CExpert expert;
+// CExpertBase expert;
 // CTrade  trade;
 //CTrade  CObject;
-//CSymbolInfo simbolo;
+// CSymbolInfo simbolo;
+// CTrailingFixedPips trailing;
+
 // CPositionInfo posicao;
 // CDealInfo negocio;
 //CChart grafico;
@@ -309,6 +314,12 @@ void Init_Padrao()
   ObjectsDeleteAll(0,0,-1);
   EventSetMillisecondTimer(500);
   TimeMagic = MathRand();
+
+ // CSymbolInfo *simbolo2 = new CSymbolInfo;
+ //  simbolo2.Name("WINQ18");
+ //
+ //  expert.Init(simbolo2,TimeFrame,4);
+  // expert.Magic(TimeMagic);
 
 
   tipo_margem_conta = AccountInfoInteger(ACCOUNT_MARGIN_MODE); //0 NETT, 1 EXCHANGE, 2 HEDGING

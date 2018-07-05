@@ -360,45 +360,38 @@ if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Ba
 
 void Stops::TS_()
 {
-  CTrade *tradionices = new CTrade;
-  double valor = Valor_Negocio();
 
-  if(Tipo_Posicao() > 0 && daotick_geral > (valor + (Tick_Size * (Trailing_stop + Trailing_stop_start))))
-  {
-    double tp = valor + (TakeProfit_op * Tick_Size);
-    double sl = valor - ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
+  CSymbolInfo *simbalo = new CSymbolInfo;
 
-    if(TakeProfit_op == 0) tp = valor + (Tick_Size * 10); //S�rio mano, apelando, APELANDO MONSTRO
+  simbalo.Name(Symbol());
 
-    Print("TRAILING STOP COMPRA");
 
-    bool Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tp);
-    if(!Result_Modify)
-    {
-      Print("Erro modificando Stops, solenemente, deixo esta memora para entrar para a Historia! ln 384");
-      tradionices.PositionClose(posicao_stops.TicketPosicao());
-    }
-  }
-  //VERIFICAR JEITO MAIS INTELIGENTE DE FAZER AS ORDENS (TIPO USANDO Tipo_Posicao
+  double sl1 = 100;
+  double tp1 = 100;
 
-  if(Tipo_Posicao() < 0 && daotick_geral < (valor - (Tick_Size * (Trailing_stop + Trailing_stop_start))))
-  {
-    double tp = valor - (TakeProfit_op * Tick_Size);
-    double sl = valor + ((Tick_Size * (Trailing_stop + Trailing_stop_start)));
+    CTrailingFixedPips *trailing = new CTrailingFixedPips;
+    CPositionInfo *posiciones = new CPositionInfo;
+    posiciones.SelectByMagic(Symbol(),TimeMagic);
 
-    if(TakeProfit_op == 0) tp = valor - (Tick_Size * 50); //S�rio mano, apelando, APELANDO MONSTRO
+    trailing.Init(simbalo,TimeFrame,0.000);
 
-    // Print("TRAILING STOP SL: " + sl + " TP: " + tp + " Tipo_Posicao(): " + Tipo_Posicao() + " Valor do Do Negocio: " + valor);
+// 1 - PEGAR O PRECO MAX OU MIN DESDE A ABERTURA DA POSICAO
+// 2 - FAZER A CONTA
+// 3 - VERIFICAR STOPS
+// 4 - MODIFICAR
+// 5 - PAU NO CU da METAQUOTES
+// 6 - Ficar Esperto no FX pq tem StopLevels e bid, spread e o caralho
 
-    bool Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tp);
-    if(!Result_Modify)
-    {
-      Print("Erro modificando Stops, solenemente, deixo esta memora para entrar para a Historia! ln402");
-      tradionices.PositionClose(posicao_stops.TicketPosicao());
 
-    }
-  }
-  delete(tradionices);
+    trailing.ProfitLevel(10.00);
+    trailing.StopLevel(10.00);
+
+    if(!trailing.ValidationSettings()) ExpertRemove();
+    if(trailing.CheckTrailingStopLong(posiciones,sl1,tp1)) ExpertRemove();
+
+      delete posiciones;
+      delete trailing;
+      delete simbalo;
 }
 
 double Stops::Valor_Negocio()

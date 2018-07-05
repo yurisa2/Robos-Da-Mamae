@@ -2,7 +2,6 @@
 
 class Xing_Ind
 {
-
   public:
   Xing_Ind(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT);
   ENUM_TIMEFRAMES Xing_Ind_TF; //TimeFrames especifico do indicador
@@ -14,7 +13,6 @@ class Xing_Ind
 
 void Xing_Ind::Xing_Ind(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT)
 {
-
   Xing_Ind_TF = periodo;
 }
 

@@ -46,7 +46,7 @@ void Xing::Avalia()
 
     if(xing_invert) multip = -1;
 
-    if(xing_valor < xing_limite_inferior)
+    if(xing_valor < xing_limite_inferior && iSpread(Symbol(),TimeFrame,0) < xing_limite_spread_max)
     {
       PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
 
@@ -55,7 +55,7 @@ void Xing::Avalia()
       delete(opera);
     }
 
-    if(xing_valor > xing_limite_superior)
+    if(xing_valor > xing_limite_superior && iSpread(Symbol(),TimeFrame,0) < xing_limite_spread_max)
     {
       PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
 

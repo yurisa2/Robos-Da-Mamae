@@ -12,7 +12,7 @@ string Nome_Robo = "Just_ML";
 
 #include <Math\Alglib\alglib.mqh>
 #include <ML.mqh>
-#include <dados_nn.mqh>
+#include <dados_nn_raiz.mqh>
 #include <Inputs_ML.mqh>
 
 #include <Inputs_Vars.mqh>

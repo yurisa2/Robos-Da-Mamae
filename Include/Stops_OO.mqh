@@ -360,38 +360,46 @@ if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Ba
 
 void Stops::TS_()
 {
-
-  CSymbolInfo *simbalo = new CSymbolInfo;
-
-  simbalo.Name(Symbol());
-
-
-  double sl1 = 100;
-  double tp1 = 100;
-
-    CTrailingFixedPips *trailing = new CTrailingFixedPips;
-    CPositionInfo *posiciones = new CPositionInfo;
-    posiciones.SelectByMagic(Symbol(),TimeMagic);
-
-    trailing.Init(simbalo,TimeFrame,0.000);
-
-// 1 - PEGAR O PRECO MAX OU MIN DESDE A ABERTURA DA POSICAO
-// 2 - FAZER A CONTA
-// 3 - VERIFICAR STOPS
-// 4 - MODIFICAR
-// 5 - PAU NO CU da METAQUOTES
-// 6 - Ficar Esperto no FX pq tem StopLevels e bid, spread e o caralho
-
-
-    trailing.ProfitLevel(10.00);
-    trailing.StopLevel(10.00);
-
-    if(!trailing.ValidationSettings()) ExpertRemove();
-    if(trailing.CheckTrailingStopLong(posiciones,sl1,tp1)) ExpertRemove();
-
-      delete posiciones;
-      delete trailing;
-      delete simbalo;
+//
+//   CSymbolInfo *simbalo = new CSymbolInfo;
+//
+//   simbalo.Name(Symbol());
+//
+//
+//   double sl1 = 100;
+//   double tp1 = 100;
+//
+//     CTrailingFixedPips *trailing = new CTrailingFixedPips;
+//     CPositionInfo *posiciones = new CPositionInfo;
+//     posiciones.SelectByMagic(Symbol(),TimeMagic);
+//
+//     trailing.Init(simbalo,TimeFrame,0.000);
+//
+// // 1 - PEGAR O PRECO MAX OU MIN DESDE A ABERTURA DA POSICAO
+// // 2 - FAZER A CONTA
+// // 3 - VERIFICAR STOPS
+// // 4 - MODIFICAR
+// // 5 - PAU NO CU da METAQUOTES
+// // 6 - Ficar Esperto no FX pq tem StopLevels e bid, spread e o caralho
+// MqlRates rates_high[];
+// MqlRates rates_low[];
+// CopyRates(Symbol(),TimeFrame,posiciones.Time(),TimeCurrent(),rates_high);
+// CopyRates(Symbol(),TimeFrame,posiciones.Time(),TimeCurrent(),rates_low);
+//
+//
+// double preco_min = rates[barra].low;
+// double preco_max = rates[barra].high;
+//
+//
+//     trailing.ProfitLevel(10.00);
+//     trailing.StopLevel(10.00);
+//
+//     if(!trailing.ValidationSettings()) ExpertRemove();
+//     if(trailing.CheckTrailingStopLong(posiciones,sl1,tp1)) ExpertRemove();
+//
+//       delete posiciones;
+//       delete trailing;
+//       delete simbalo;
 }
 
 double Stops::Valor_Negocio()

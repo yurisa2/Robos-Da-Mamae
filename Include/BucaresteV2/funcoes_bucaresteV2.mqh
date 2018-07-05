@@ -13,7 +13,7 @@ class Bucareste
 int Bucareste::Bucareste_Direcao()
 {
 
-   
+
 
   int direcao = 0;
   HiLo_OO *hilo = new HiLo_OO(BucaresteV2_HiLo_Periodos);
@@ -26,21 +26,6 @@ void Bucareste::Bucareste_Comentario()
 {
   if(!Otimizacao && Tipo_Comentario != 0)
   {
-    // if(rna_filtros_on)
-    // {
-    machine_learning.Processa_RNA(resposta_y,machine_learning.rede_obj,x_entrada);
-
-    Comentario_Robo = "Entradas:  \n";
-    for(int i = 0; i < ArraySize(x_entrada); i++)
-    {
-      if(MathMod(i,2) != 0 ) Comentario_Robo += "\n";
-      Comentario_Robo += "x["+IntegerToString(i)+"] " + DoubleToString(x_entrada[i],4);
-      if(MathMod(i,2) != 0 ) Comentario_Robo += "   |   ";
-
-    }
-
-    Comentario_Robo += "\n ProcessaBuca: y[0] " + DoubleToString(resposta_y[0],4);
-    Comentario_Robo += "\n ProcessaBuca: y[1] " + DoubleToString(resposta_y[1],4);
   }
 // }
 }

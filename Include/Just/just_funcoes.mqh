@@ -46,8 +46,8 @@ void Just::Comentario()
 
 
     Comentario_Robo = "";
-    if(just_compra) Comentario_Robo += "\n Distancia da MM20 (Compra): " + DoubleToString(distancia,2) + " | " + DoubleToString(distancia - just_distancia_compra,2) + " do ponto de entrada Condicao " + Condicao;
-    if(just_venda) Comentario_Robo += "\n Distancia da MM20 (Venda): " + DoubleToString(distancia,2) + " | " + DoubleToString(distancia - just_distancia_venda,2) + " do ponto de entrada Condicao " + Condicao;
+    if(just_compra) Comentario_Robo += "\n Distancia da MM20 (Compra): " + DoubleToString(distancia,2) + " | " + DoubleToString(distancia - just_distancia_compra,2);
+    if(just_venda) Comentario_Robo += "\n Distancia da MM20 (Venda): " + DoubleToString(distancia,2) + " | " + DoubleToString(distancia - just_distancia_venda,2);
 
   }
 }

@@ -39,10 +39,10 @@ void Stops::Stops()
   }
   else
   {
-  TakeProfit_op = TakeProfit;
-  TakeProfit2_op = TakeProfit2;
-  TakeProfit3_op = TakeProfit3;
-  StopLoss_Op = StopLoss;
+    TakeProfit_op = TakeProfit;
+    TakeProfit2_op = TakeProfit2;
+    TakeProfit3_op = TakeProfit3;
+    StopLoss_Op = StopLoss;
   }
 }
 
@@ -333,19 +333,19 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
   bool Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tpMax);
   int cont_i = 0;
 
-if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Batman!
-{
-  do
+  if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Batman!
   {
-    sl = sl - Tick_Size;
-    tpMax = tpMax + Tick_Size;
-    Print("Erro modificando Stops, vamos mudar um poquinho os stops (um Tick_Size a mais para cada)! ln 304");
-    Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tpMax);
-    cont_i++;
-    Sleep(1000);
+    do
+    {
+      sl = sl - Tick_Size;
+      tpMax = tpMax + Tick_Size;
+      Print("Erro modificando Stops, vamos mudar um poquinho os stops (um Tick_Size a mais para cada)! ln 304");
+      Result_Modify = tradionices.PositionModify(posicao_stops.TicketPosicao(),sl,tpMax);
+      cont_i++;
+      Sleep(1000);
+    }
+    while(!Result_Modify && cont_i < 2);
   }
-  while(!Result_Modify && cont_i < 2);
-}
 
   if(!Result_Modify)
   {
@@ -360,46 +360,66 @@ if(!Result_Modify  && tradionices.ResultRetcode() == 10016) //Santa Gambiarra Ba
 
 void Stops::TS_()
 {
-//
-//   CSymbolInfo *simbalo = new CSymbolInfo;
-//
-//   simbalo.Name(Symbol());
-//
-//
-//   double sl1 = 100;
-//   double tp1 = 100;
-//
-//     CTrailingFixedPips *trailing = new CTrailingFixedPips;
-//     CPositionInfo *posiciones = new CPositionInfo;
-//     posiciones.SelectByMagic(Symbol(),TimeMagic);
-//
-//     trailing.Init(simbalo,TimeFrame,0.000);
-//
-// // 1 - PEGAR O PRECO MAX OU MIN DESDE A ABERTURA DA POSICAO
-// // 2 - FAZER A CONTA
-// // 3 - VERIFICAR STOPS
-// // 4 - MODIFICAR
-// // 5 - PAU NO CU da METAQUOTES
-// // 6 - Ficar Esperto no FX pq tem StopLevels e bid, spread e o caralho
-// MqlRates rates_high[];
-// MqlRates rates_low[];
-// CopyRates(Symbol(),TimeFrame,posiciones.Time(),TimeCurrent(),rates_high);
-// CopyRates(Symbol(),TimeFrame,posiciones.Time(),TimeCurrent(),rates_low);
-//
-//
-// double preco_min = rates[barra].low;
-// double preco_max = rates[barra].high;
-//
-//
-//     trailing.ProfitLevel(10.00);
-//     trailing.StopLevel(10.00);
-//
-//     if(!trailing.ValidationSettings()) ExpertRemove();
-//     if(trailing.CheckTrailingStopLong(posiciones,sl1,tp1)) ExpertRemove();
-//
-//       delete posiciones;
-//       delete trailing;
-//       delete simbalo;
+  CPositionInfo *posiciones = new CPositionInfo;
+  posiciones.SelectByMagic(Symbol(),TimeMagic);
+
+  MqlRates rates[];
+  int copiou = CopyRates(Symbol(),TimeFrame,posiciones.Time(),TimeCurrent(),rates);
+  ArraySetAsSeries(rates,true);
+
+  double rates_maior[];
+  double rates_menor[];
+
+  ArrayResize(rates_maior,ArraySize(rates));
+  ArrayResize(rates_menor,ArraySize(rates));
+
+  for(int i = 0; i < ArraySize(rates); i++) rates_maior[i] = rates[i].high;
+  for(int i = 0; i < ArraySize(rates); i++) rates_menor[i] = rates[i].low;
+
+if(ArraySize(rates) > 0)  //As vezes tava dando out of range
+{
+  double maior_valor = rates_maior[ArrayMaximum(rates_maior)];
+  double menor_valor = rates_menor[ArrayMinimum(rates_menor)];
+
+  double numerico_Trailing_Stop = Trailing_stop * Tick_Size;
+  double numerico_inicio_TS = Trailing_stop_start * Tick_Size;
+  double pos_sl = posiciones.StopLoss();
+  double pos_tp = posiciones.TakeProfit();
+  double pos_vlr = this.Valor_Negocio();
+  double valor_TS_compra = maior_valor - numerico_Trailing_Stop;
+  double valor_TS_venda = menor_valor + numerico_Trailing_Stop;
+
+  if(Trailing_stop != 0 &&
+    this.Tipo_Posicao() > 0 &&
+    maior_valor > (pos_vlr + numerico_Trailing_Stop + numerico_inicio_TS) &&
+    pos_sl != valor_TS_compra)
+  {
+    CTrade *tradionices = new CTrade;
+    tradionices.PositionModify(posicao_stops.TicketPosicao(),valor_TS_compra,pos_tp);
+
+    delete tradionices;
+  }
+
+  if(Trailing_stop != 0 &&
+    this.Tipo_Posicao() < 0 &&
+    menor_valor < (pos_vlr - numerico_Trailing_Stop - numerico_inicio_TS) &&
+    pos_sl != valor_TS_venda)
+  {
+    CTrade *tradionices = new CTrade;
+    tradionices.PositionModify(posicao_stops.TicketPosicao(),valor_TS_venda,pos_tp);
+
+    delete tradionices;
+  }
+
+
+  // Print("maior_valor " + maior_valor); //DEBUG
+  // Print("pos_vlr " + (pos_vlr)); //DEBUG
+  // Print("pos_vlr + numerico_Trailing_Stop + numerico_inicio_TS " + (pos_vlr + numerico_Trailing_Stop + numerico_inicio_TS)); //DEBUG
+  // Print("rates_maior " + rates_menor[ArrayMinimum(rates_menor)]); //DEBUG
+  // Print(posiciones.Time());
+
+  delete posiciones;
+}
 }
 
 double Stops::Valor_Negocio()

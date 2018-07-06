@@ -5,7 +5,7 @@ class Xing_Ind
   public:
   Xing_Ind(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT);
   ENUM_TIMEFRAMES Xing_Ind_TF; //TimeFrames especifico do indicador
-  double Valor(double XING_RSI = 0, double XING_BBPP = 0, double XING_CX_RSI = 0);
+  double Valor(double XING_RSI = 0, double XING_BBPP = 0, double XING_CX_PRECO = 0);
 
   private:
 
@@ -18,11 +18,11 @@ void Xing_Ind::Xing_Ind(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT)
 
 //Tabela2 - MACD Crisp XING
 
-double Xing_Ind::Valor(double XING_RSI = 0, double XING_BBPP = 0, double XING_CX_RSI = 0) //Tabela 2 pag 101   |  -2 a 2 (Muito baixo a muito alto)
+double Xing_Ind::Valor(double XING_RSI = 0, double XING_BBPP = 0, double XING_CX_PRECO = 0) //Tabela 2 pag 101   |  -2 a 2 (Muito baixo a muito alto)
 {
   double retorno = 0;
 
-  // PrintFormat("COMECO de VALOR() %f %f %f",XING_RSI,XING_BBPP,XING_CX_RSI); //DEBUG
+  // PrintFormat("COMECO de VALOR() %f %f %f",XING_RSI,XING_BBPP,XING_CX_PRECO); //DEBUG
 
   //--- Mamdani Fuzzy System
   CMamdaniFuzzySystem *fsXING=new CMamdaniFuzzySystem();
@@ -115,15 +115,15 @@ double Xing_Ind::Valor(double XING_RSI = 0, double XING_BBPP = 0, double XING_CX
   CDictionary_Obj_Double *p_od_CXRSI = new CDictionary_Obj_Double;
   CDictionary_Obj_Double *p_od_BBPP = new CDictionary_Obj_Double;
 
-  double n_XING_CX_RSI = n_(XING_CX_RSI,-1.57,1.57);
+  double n_XING_CX_PRECO = n_(XING_CX_PRECO,-1.57,1.57);
   double n_XING_BBPP = n_(XING_BBPP,-50,150);
   double n_XING_RSI = n_(XING_RSI,0,100);
 
-  // PrintFormat("Fim de VALOR() %f %f %f",n_XING_RSI,n_XING_BBPP,n_XING_CX_RSI); //DEBUG
+  // PrintFormat("Fim de VALOR() %f %f %f",n_XING_RSI,n_XING_BBPP,n_XING_CX_PRECO); //DEBUG
 
 
   p_od_RSI.SetAll(fvRSI, n_XING_RSI);
-  p_od_CXRSI.SetAll(fvCXRSI, n_XING_CX_RSI);
+  p_od_CXRSI.SetAll(fvCXRSI, n_XING_CX_PRECO);
   p_od_BBPP.SetAll(fv_BBPP, n_XING_BBPP);
   in.Add(p_od_RSI);
   in.Add(p_od_CXRSI);

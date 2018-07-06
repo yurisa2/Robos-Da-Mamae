@@ -75,10 +75,11 @@ double Xing::Valor()
 
   RSI *rsi_o = new RSI(14,TimeFrame);
   BB *bb_o = new BB(TimeFrame);
+  Preco_O *preco = new Preco_O(TimeFrame);
 
   Xing_Ind *xing_indicador = new Xing_Ind(TimeFrame);
 
-  retorno = xing_indicador.Valor(rsi_o.Valor(xing_desloc), bb_o.BB_Posicao_Percent(xing_desloc),rsi_o.Cx());
+  retorno = xing_indicador.Valor(rsi_o.Valor(xing_desloc), bb_o.BB_Posicao_Percent(xing_desloc),preco.Cx());
   delete xing_indicador;
 
 

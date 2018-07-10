@@ -10,4 +10,4 @@ input int xing_limite_inferior = 20; //Distancia para compra (TickSize)
 input int xing_limite_superior = 80; //Distancia para venda (TickSize)
 input int xing_limite_spread_max = 80; //Spread Max
 
-input bool xing_invert = 1; //Inverte a direcao da trade (Depende muito do TimeFrame)
+input bool xing_invert = 1; //Invert (mas precisa meditar)

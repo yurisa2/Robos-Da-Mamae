@@ -4,6 +4,7 @@ VAR_INPUT
 RSI: REAL;
 BBPP: REAL;
 CX_PRECO: REAL;
+CX_OBV: REAL;
 END_VAR
 
 VAR_OUTPUT
@@ -37,6 +38,15 @@ TERM Alto := Triangle (0.098, 0.196, 0.392);
 TERM MuitoAlto := Trapezoid (0.196, 0.392, 1.570, 1.570);
 END_FUZZIFY
 
+FUZZIFY CX_OBV
+RANGE := (-1.570 .. 1.570);
+TERM MuitoBaixo := Trapezoid (-1.570, -1.570, -0.392, -0.196);
+TERM Baixo := Triangle (-0.392, -0.196, -0.098);
+TERM Neutro := Triangle (-0.196, 0.000, 0.196);
+TERM Alto := Triangle (0.098, 0.196, 0.392);
+TERM MuitoAlto := Trapezoid (0.196, 0.392, 1.570, 1.570);
+END_FUZZIFY
+
 DEFUZZIFY XING
 RANGE := (0.000 .. 100.000);
 TERM MuitoBaixo := Trapezoid (0.000, 0.000, 10.000, 20.000);
@@ -50,7 +60,7 @@ ACCU : MAX;
 DEFAULT := nan;
 END_DEFUZZIFY
 
-RULEBLOCK 
+RULEBLOCK
 AND : MIN;
 OR : MAX;
 ACT : MIN;
@@ -60,11 +70,16 @@ RULE 2 : if RSI is Baixo then XING is Baixo
 RULE 3 : if RSI is Neutro then XING is Neutro
 RULE 4 : if RSI is Alto then XING is Alto
 RULE 5 : if RSI is MuitoAlto then XING is MuitoAlto
-RULE 6 : if CX_PRECO is MuitoBaixo then XING is MuitoBaixo
-RULE 7 : if CX_PRECO is Baixo then XING is Baixo
+RULE 6 : if CX_PRECO is MuitoBaixo then XING is MuitoAlto
+RULE 7 : if CX_PRECO is Baixo then XING is Alto
 RULE 8 : if CX_PRECO is Neutro then XING is Neutro
-RULE 9 : if CX_PRECO is Alto then XING is Alto
-RULE 10 : if CX_PRECO is MuitoAlto then XING is MuitoAlto
+RULE 9 : if CX_PRECO is Alto then XING is Baixo
+RULE 10 : if CX_PRECO is MuitoAlto then XING is MuitoBaixo
+RULE 6 : if CX_OBV is MuitoBaixo then XING is MuitoAlto
+RULE 7 : if CX_OBV is Baixo then XING is Alto
+RULE 8 : if CX_OBV is Neutro then XING is Neutro
+RULE 9 : if CX_OBV is Alto then XING is Baixo
+RULE 10 : if CX_OBV is MuitoAlto then XING is MuitoBaixo
 RULE 11 : if BBPP is MuitoBaixo then XING is MuitoBaixo
 RULE 12 : if BBPP is Baixo then XING is Baixo
 RULE 13 : if BBPP is Neutro then XING is Neutro

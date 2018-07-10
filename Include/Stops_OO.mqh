@@ -383,11 +383,11 @@ if(ArraySize(rates) > 0)  //As vezes tava dando out of range
 
   double numerico_Trailing_Stop = Trailing_stop * Tick_Size;
   double numerico_inicio_TS = Trailing_stop_start * Tick_Size;
-  double pos_sl = posiciones.StopLoss();
+  double pos_sl = NormalizeDouble(posiciones.StopLoss(),Digits());
   double pos_tp = posiciones.TakeProfit();
   double pos_vlr = this.Valor_Negocio();
-  double valor_TS_compra = maior_valor - numerico_Trailing_Stop;
-  double valor_TS_venda = menor_valor + numerico_Trailing_Stop;
+  double valor_TS_compra = NormalizeDouble(maior_valor - numerico_Trailing_Stop,Digits());
+  double valor_TS_venda =NormalizeDouble(menor_valor + numerico_Trailing_Stop,Digits());
 
   if(Trailing_stop != 0 &&
     this.Tipo_Posicao() > 0 &&

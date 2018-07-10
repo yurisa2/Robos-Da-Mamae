@@ -48,16 +48,16 @@ void Xing::Avalia()
 
     if(xing_valor < xing_limite_inferior && iSpread(Symbol(),TimeFrame,0) < xing_limite_spread_max)
     {
-      PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
 
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(1 * multip,DoubleToString(xing_valor,1));
       delete(opera);
+
     }
 
     if(xing_valor > xing_limite_superior && iSpread(Symbol(),TimeFrame,0) < xing_limite_spread_max)
     {
-      PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
+     // PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
 
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(-1  * multip,DoubleToString(xing_valor,1));
@@ -76,15 +76,18 @@ double Xing::Valor()
   RSI *rsi_o = new RSI(14,TimeFrame);
   BB *bb_o = new BB(TimeFrame);
   Preco_O *preco = new Preco_O(TimeFrame);
+  OBV *obv = new OBV(TimeFrame);
 
   Xing_Ind *xing_indicador = new Xing_Ind(TimeFrame);
 
-  retorno = xing_indicador.Valor(rsi_o.Valor(xing_desloc), bb_o.BB_Posicao_Percent(xing_desloc),preco.Cx());
+  retorno = xing_indicador.Valor(rsi_o.Valor(xing_desloc), bb_o.BB_Posicao_Percent(xing_desloc),preco.Cx(),obv.Cx());
   delete xing_indicador;
 
 
       delete rsi_o;
       delete bb_o;
+      delete preco;
+      delete obv;
 
   return retorno;
 }
@@ -102,5 +105,5 @@ void Xing::PosInfo()
   delete posicao_oo;
 
 
-  Print("posMagic: " + posMagic);
+ // Print("posMagic: " + posMagic);
 }

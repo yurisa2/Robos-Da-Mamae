@@ -6,13 +6,13 @@
 
 #include <Normalizacao.mqh>
 #include <Indicadores\MA.mqh>
-#include <Indicadores\Preco.mqh>
+#include <Indicadores\OBV.mqh>
 
 #property indicator_separate_window
 #property indicator_buffers 1
 #property indicator_plots   1
 
-#property indicator_label1  "Cx Preco"
+#property indicator_label1  "Cx RSI"
 #property indicator_type1   DRAW_HISTOGRAM
 #property indicator_color1  Yellow
 #property indicator_style1  STYLE_SOLID
@@ -28,7 +28,7 @@ int OnInit()
   {
 //--- indicator buffers mapping
    SetIndexBuffer(0,AnguloPrecoBuffer,INDICATOR_DATA);
-PlotIndexSetInteger(0, PLOT_SHIFT, -1);
+PlotIndexSetInteger(0, PLOT_SHIFT, shift);
 //---
    return(INIT_SUCCEEDED);
   }
@@ -41,18 +41,18 @@ int OnCalculate(const int rates_total,
                 const double &price[])
   {
 //---
-Preco_O *preco = new Preco_O;
+OBV *obv = new OBV;
 
 // Print(rates_total-prev_calculated);
 
 for(int i=rates_total-1000;i<rates_total;i++)
   {
     // Print(rates_total-prev_calculated);
-  AnguloPrecoBuffer[i] = preco.Cx(rates_total-i);
+  AnguloPrecoBuffer[i] = obv.Cx(rates_total-i);
   }
 
 
-delete preco;
+delete obv;
 //--- return value of prev_calculated for next call
    return(rates_total);
   }

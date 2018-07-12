@@ -35,14 +35,16 @@ void Xing::Comentario()
 void Xing::Avalia()
 {
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+  int multip = 1;
+  Preco_O *preco = new Preco_O;
 
+  Print("preco.Cx(0) " + preco.Normalizado(0));
 
-  if(O_Stops.Tipo_Posicao() == 0 && Condicoes.Horario())
+  if(O_Stops.Tipo_Posicao() == 0 && Condicoes.Horario() &&   preco.Normalizado(0) == 1)
   {
 
     double xing_valor = this.Valor();
 
-    int multip = 1;
 
     if(xing_invert) multip = -1;
 
@@ -66,6 +68,9 @@ void Xing::Avalia()
 
 
   }
+
+
+  delete preco;
   delete(Condicoes);
 }
 

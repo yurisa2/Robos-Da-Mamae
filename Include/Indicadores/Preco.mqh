@@ -39,7 +39,7 @@ void Preco_O::Preco_O(ENUM_TIMEFRAMES Periodo_MA_PA = PERIOD_CURRENT)
 
 double Preco_O::Normalizado(int barra = 0)
 {
-  MA *OO_CloseMA = new MA(3,MODE_SMA,Periodo_MA,0,PRICE_CLOSE);
+  MA *OO_CloseMA = new MA(1,MODE_SMA,Periodo_MA,0,PRICE_CLOSE);
 
   double retorno = NULL;
 

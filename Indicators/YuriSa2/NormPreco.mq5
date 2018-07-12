@@ -18,6 +18,8 @@
 #property indicator_style1  STYLE_SOLID
 #property indicator_width1  3
 
+input int shift = -1;
+
 double         Normalizado_Buffer[];
 //+------------------------------------------------------------------+
 //| Custom indicator initialization function                         |

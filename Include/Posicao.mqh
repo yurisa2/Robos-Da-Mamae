@@ -26,7 +26,7 @@ class posicao : public CPositionInfo
 long posicao::TicketPosicao()
 {
   long return_pos_ticket;
-  SelectByMagic(Symbol(),TimeMagic);
+  Select(Symbol());
   InfoInteger(POSITION_TICKET,return_pos_ticket);
 
   return return_pos_ticket;
@@ -44,7 +44,7 @@ void  posicao::posicao()
 
 int  posicao::Tipo_Posicao()
 {
-    if(!this.SelectByMagic(Symbol(),TimeMagic))
+    if(!this.Select(Symbol()))
     {
       Operacoes = 0;
       return 0;
@@ -73,7 +73,7 @@ double posicao::LucroAtual()
 
   if(this.Tipo_Posicao() != 0)
   {
-    this.SelectByMagic(Symbol(),TimeMagic);
+    this.Select(Symbol());
     retorno = this.Profit();
   }
 

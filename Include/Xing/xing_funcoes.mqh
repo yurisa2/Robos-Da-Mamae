@@ -103,7 +103,7 @@ void Xing::PosInfo()
   long posMagic = 0;
 
   posicao *posicao_oo = new posicao();
-  posicao_oo.SelectByMagic(Symbol(),TimeMagic);
+  posicao_oo.Select(Symbol());
 
   posMagic = posicao_oo.Magic();
 

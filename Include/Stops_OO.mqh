@@ -50,7 +50,7 @@ int Stops::Tipo_Posicao()
 {
   CPositionInfo *posiciones = new CPositionInfo;
 
-  if(!posiciones.SelectByMagic(Symbol(),TimeMagic))
+  if(!posiciones.Select(Symbol()))
   {
     Operacoes = 0;
     delete(posiciones);
@@ -85,7 +85,14 @@ void Stops::No_Tick()
     in_trade.TakeProfit_cash();
     delete in_trade;
   }
+  Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
 
+  if(O_Stops.Tipo_Posicao() != 0 && !Condicoes.Horario())
+  {
+    Opera_Mercado *opera = new Opera_Mercado;
+    opera.FechaPosicao() ;
+    delete(opera);
+  }
 
 }
 
@@ -361,7 +368,7 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
 void Stops::TS_()
 {
   CPositionInfo *posiciones = new CPositionInfo;
-  posiciones.SelectByMagic(Symbol(),TimeMagic);
+  posiciones.Select(Symbol());
 
   MqlRates rates[];
   int copiou = CopyRates(Symbol(),TimeFrame,posiciones.Time(),TimeCurrent(),rates);
@@ -426,7 +433,7 @@ double Stops::Valor_Negocio()
 {
   CPositionInfo *posiciones = new CPositionInfo;
 
-  posiciones.SelectByMagic(Symbol(),TimeMagic);
+  posiciones.Select(Symbol());
   double valor = posiciones.PriceOpen();
   // Print("Valor da Valor_Negocio() antes do IF: " + DoubleToString(valor));
 
@@ -443,7 +450,7 @@ double Stops::Valor_SL()
   double retorno = 0;
   CPositionInfo *posiciones = new CPositionInfo;
 
-  posiciones.SelectByMagic(Symbol(),TimeMagic);
+  posiciones.Select(Symbol());
   retorno = MathAbs(this.Valor_Negocio() - posiciones.StopLoss()) / Tick_Size;
 
 

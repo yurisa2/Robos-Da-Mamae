@@ -42,22 +42,23 @@ void Bender::Max_Min(double &min_dia,double &max_dia)
   datetime Data_Inicio_hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+bender_horario_inicio_hora_+":"+bender_horario_inicio_minuto_);
   datetime Data_Fim_hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+bender_horario_fim_hora_+":"+bender_horario_fim_minuto_);
   Print("Data_Inicio_hoje " + Data_Inicio_hoje);
-  // Print("Data_Fim_hoje " + Data_Fim_hoje);
+  Print("Data_Fim_hoje " + Data_Fim_hoje);
+  Print(Symbol());
 
   MqlRates rates[];
-  ArraySetAsSeries(rates,false);
+  // ArraySetAsSeries(rates,false);
   // int copied=CopyRates(Symbol(),PERIOD_M1,Data_Fim_hoje,bender_minutos_a_tras,rates);
-  int copied=CopyRates(Symbol(),PERIOD_M1,Data_Fim_hoje,bender_minutos_a_tras,rates);
-  // int copied=CopyRates(Symbol(),PERIOD_M1,Data_Inicio_hoje,Data_Fim_hoje,rates);
+  // int copied=CopyRates(Symbol(),PERIOD_M1,Data_Fim_hoje,bender_minutos_a_tras,rates);
+  int copied=CopyRates(Symbol(),PERIOD_H1,Data_Inicio_hoje,1,rates);
 
-  int metade = int(MathRound(bender_minutos_a_tras/2));
+  // int metade = int(MathRound(bender_minutos_a_tras/2));
 
   double minimos[];
   double maximos[];
   ArrayResize(maximos,copied);
   ArrayResize(minimos,copied);
-  ArrayInitialize(maximos,rates[metade].close);
-  ArrayInitialize(minimos,rates[metade].close);
+  // ArrayInitialize(maximos,rates[metade].close);
+  // ArrayInitialize(minimos,rates[metade].close);
 
 
   for(int i=0;i<copied;i++)

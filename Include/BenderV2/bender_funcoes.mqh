@@ -41,9 +41,9 @@ void Bender::Max_Min(double &min_dia,double &max_dia)
 
   datetime Data_Inicio_hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+bender_horario_inicio_hora_+":"+bender_horario_inicio_minuto_);
   datetime Data_Fim_hoje = StringToTime(TimeToString(TimeCurrent(),TIME_DATE)+" "+bender_horario_fim_hora_+":"+bender_horario_fim_minuto_);
-  Print("Data_Inicio_hoje " + Data_Inicio_hoje);
-  Print("Data_Fim_hoje " + Data_Fim_hoje);
-  Print(Symbol());
+  // Print("Data_Inicio_hoje " + Data_Inicio_hoje);
+  // Print("Data_Fim_hoje " + Data_Fim_hoje);
+  // Print(Symbol());
 
   MqlRates rates[];
   // ArraySetAsSeries(rates,false);
@@ -87,17 +87,26 @@ void Bender::Max_Min_diario(double &min_dia,double &max_dia)
 
   double minimos[];
   double maximos[];
-  ArrayResize(maximos,copied);
-  ArrayResize(minimos,copied);
-  ArrayInitialize(maximos,rates[0].close);
-  ArrayInitialize(minimos,rates[0].close);
+  // ArrayResize(maximos,copied);
+  // ArrayResize(minimos,copied);
+  // ArrayInitialize(maximos,rates[0].close);
+  // ArrayInitialize(minimos,rates[0].close);
 
 
   for(int i=0;i<copied;i++)
   {
-    if(TimeToString(TimeCurrent(),TIME_DATE) == TimeToString(rates[i].time,TIME_DATE)) maximos[i] = rates[i].high;
-    if(TimeToString(TimeCurrent(),TIME_DATE) == TimeToString(rates[i].time,TIME_DATE)) minimos[i] = rates[i].low;
+    if(TimeToString(TimeCurrent(),TIME_DATE) == TimeToString(rates[i].time,TIME_DATE))
+    {
+      ArrayResize(maximos,ArraySize(maximos)+1);
+      maximos[ArraySize(maximos)-1] = rates[i].high;
+    }
+    if(TimeToString(TimeCurrent(),TIME_DATE) == TimeToString(rates[i].time,TIME_DATE))
+    {
+      ArrayResize(minimos,ArraySize(minimos)+1);
+      minimos[ArraySize(minimos)-1] = rates[i].low;
+    }
   }
+
 
 
   int Max = ArrayMaximum(maximos);
@@ -105,8 +114,8 @@ void Bender::Max_Min_diario(double &min_dia,double &max_dia)
 
   min_dia = minimos[Min];
   max_dia = maximos[Max];
-  Print("min_dia " + min_dia);
-  Print("max_dia " + max_dia);
+  // Print("min_dia " + min_dia);
+  // Print("max_dia " + max_dia);
 }
 
 
@@ -123,28 +132,32 @@ void Bender::Avalia()
   Max_Min(avalia_min,avalia_max);
   Max_Min_diario(min_dia,max_dia);
 
+  // Print("avalia_max " + avalia_max + " avalia_min " + avalia_min);
+  // Print("min_dia " + min_dia + " max_dia " + max_dia);
+
+
   if(O_Stops.Tipo_Posicao() == 0 && Condicoes.Horario())
   {
     if(max_dia > avalia_max)
     {
-        if(Micro_tendencia() == -1)
-        {
-          Opera_Mercado *opera = new Opera_Mercado;
-          opera.AbrePosicao(-1,"BenderV2");
-          delete(opera);
-        }
+      if(Micro_tendencia() == -1)
+      {
+        Opera_Mercado *opera = new Opera_Mercado;
+        opera.AbrePosicao(-1,"BenderV2");
+        delete(opera);
+      }
     }
 
     if(min_dia < avalia_min)
     {
-        if(Micro_tendencia() == 1)
-        {
-          Opera_Mercado *opera = new Opera_Mercado;
-          opera.AbrePosicao(1,"BenderV2");
-          delete(opera);
-        }
+      if(Micro_tendencia() == 1)
+      {
+        Opera_Mercado *opera = new Opera_Mercado;
+        opera.AbrePosicao(1,"BenderV2");
+        delete(opera);
       }
     }
+  }
 
 
   delete Condicoes;
@@ -157,8 +170,8 @@ int Bender::Micro_tendencia()
   ArraySetAsSeries(rates,true);
 
   int copied=CopyRates(Symbol(),TimeFrame,0,200,rates);
-  if(rates[0].close > rates[1].close) retorno = 1;
-  if(rates[0].close < rates[1].close) retorno = -1;
+  if(rates[1].close > rates[2].close) retorno = 1;
+  if(rates[1].close < rates[2].close) retorno = -1;
 
   return retorno;
 }

@@ -9,7 +9,7 @@
 #include <dados_nn_stub.mqh>
 #include <Inputs_ML_stub.mqh>
 
-#property copyright "Just. ME FAZ CHUTAS OS CLIENTES, PORRA!"
+#property copyright "BenderV2, Another Time, Another Place!"
 #property link      "http://www.sa2.com.br"
 
 #property version   "1.0" //Usando posicoes
@@ -77,8 +77,8 @@ void OnNewBar()
 
   Bender *bender_o = new Bender;
   bender_o.Max_Min(min_di,max_di);
-  Print(bender_o.Micro_tendencia());
-  Print("Min "+min_di+" Max "+max_di);
+  // Print(bender_o.Micro_tendencia());
+  // Print("Min "+min_di+" Max "+max_di);
   bender_o.Avalia();
   delete bender_o;
 }

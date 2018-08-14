@@ -93,7 +93,7 @@ void Stops::No_Tick()
     opera.FechaPosicao() ;
     delete(opera);
   }
-
+delete Condicoes;
 }
 
 double Stops::Distribuidor_Parcial(int Seletor_Volume)

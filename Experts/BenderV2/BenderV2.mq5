@@ -62,7 +62,7 @@ void OnTimer()
 
 void OnTick()
 {
-    Operacoes_No_tick();
+  Operacoes_No_tick();
 }
 
 void OnNewBar()
@@ -75,13 +75,13 @@ void OnNewBar()
     double min_di;
     double max_di;
 
-  Bender *bender_o = new Bender;
-  bender_o.Max_Min(min_di,max_di);
-  // Print(bender_o.Micro_tendencia());
-  // Print("Min "+min_di+" Max "+max_di);
-  bender_o.Avalia();
-  delete bender_o;
-}
+    Bender *bender_o = new Bender;
+    bender_o.Max_Min(min_di,max_di);
+    // Print(bender_o.Micro_tendencia());
+    // Print("Min "+min_di+" Max "+max_di);
+    bender_o.Avalia();
+    delete bender_o;
+  }
   delete Condicoes;
- Operacoes_No_tick();
+  Operacoes_No_tick();
 }

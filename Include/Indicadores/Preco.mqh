@@ -7,7 +7,7 @@ class Preco_O
   public:
   Preco_O(ENUM_TIMEFRAMES Periodo_MA_PA = PERIOD_CURRENT);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
   double Amplitude_N;
 
   private:
@@ -37,7 +37,7 @@ void Preco_O::Preco_O(ENUM_TIMEFRAMES Periodo_MA_PA = PERIOD_CURRENT)
 }
 
 
-double Preco_O::Normalizado(int barra = 0)
+double Preco_O::Normalizado(int barra = 0,int periods = 7)
 {
   MA *OO_CloseMA = new MA(1,MODE_SMA,Periodo_MA,0,PRICE_CLOSE);
 

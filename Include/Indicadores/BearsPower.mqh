@@ -8,7 +8,7 @@ class BearsPower
   void BearsPower();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleBearsPower;
@@ -68,7 +68,7 @@ double BearsPower::Cx(int barra = 0)
 }
 
 
-double BearsPower::Normalizado(int barra = 0)
+double BearsPower::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

@@ -89,19 +89,19 @@ void Aquisicao::Dados()
   Volumes *Volumes_OO = new Volumes(NULL,TimeFrame);
   WPR *WPR_Ind = new WPR();
 
-  //Normalizados 0-100
-  AC_Var  =  AC_Ind.Normalizado(0)*100  ;
-  AD_Var   =  AD_Ind.Normalizado(0)*100  ;
-  ATR_Var =   ATR_Ind.Normalizado(0)*100 ;
-  BullsP_Var =   BullsPower_Ind.Normalizado(1)*100 ;
-  BearsP_Var =   BearsPower_Ind.Normalizado(1)*100 ;
-  MACD_Distancia_Linha_Sinal = macd.Distancia_Linha_Sinal()*100;
-  MACD_Distancia_Linha_Zero = macd.Distancia_Linha_Zero()*100;
-  MACD_Normalizacao = macd.Normalizacao_Valores_MACD(0,0,0)*100;
-  MACD_Normalizacao_Zero = macd.Normalizacao_Valores_MACD(0,0,-1)*100;
+  //Valors 0-100
+  AC_Var  =  AC_Ind.Valor(0)  ;
+  AD_Var   =  AD_Ind.Valor(0)  ;
+  ATR_Var =   ATR_Ind.Valor(0) ;
+  BullsP_Var =   BullsPower_Ind.Valor(1) ;
+  BearsP_Var =   BearsPower_Ind.Valor(1) ;
+  MACD_Distancia_Linha_Sinal = macd.Distancia_Linha_Sinal();
+  MACD_Distancia_Linha_Zero = macd.Distancia_Linha_Zero();
+  MACD_Normalizacao = macd.Normalizacao_Valores_MACD(0,0,0);
+  MACD_Normalizacao_Zero = macd.Normalizacao_Valores_MACD(0,0,-1);
   MFI_FW = MFI_OO.Valor(0) ;
-  Volume_FW = Volumes_OO.Normalizado(1)*100 ;
-  DeMarker_Var =  DeMarker_Ind.Valor(0)*100  ;
+  Volume_FW = Volumes_OO.Valor(1) ;
+  DeMarker_Var =  DeMarker_Ind.Valor(0)  ;
   BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(0);
   RSI_Var =  RSI_OO.Valor(0)  ;
   Stoch_FW = Stoch_OO.Valor(0) ;

@@ -8,7 +8,7 @@ class DeMarker
   void DeMarker();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleDeMarker;
@@ -67,7 +67,7 @@ double DeMarker::Cx(int barra = 0)
   return(retorno);
 }
 
-double DeMarker::Normalizado(int barra = 0)
+double DeMarker::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

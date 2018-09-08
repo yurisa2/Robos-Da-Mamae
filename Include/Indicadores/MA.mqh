@@ -8,7 +8,7 @@ class MA
   void MA(int ma_period = 3,ENUM_MA_METHOD ma_method = MODE_SMA, ENUM_TIMEFRAMES Periodos_MA = PERIOD_CURRENT,int ma_shift = 0,ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE);
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleMA;
@@ -67,7 +67,7 @@ double MA::Cx(int barra = 0)
   return(retorno);
 }
 
-double MA::Normalizado(int barra = 0)
+double MA::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

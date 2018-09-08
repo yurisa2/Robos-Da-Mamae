@@ -3,13 +3,13 @@
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class Normalizacao
 {
   public:
-  Normalizacao(double y1, double y2, double y3,  double y4, double y5,  double y6,  double y7);
+  Normalizacao(double &Valor[]);
   double Coeficiente_Angular;
   double Valor_Normalizado;
 
@@ -53,29 +53,19 @@ double Normalizacao::Coeficiente_Angular_3()
   return retorno;
 }
 
-Normalizacao::Normalizacao(double y1, double y2, double y3,  double y4, double y5,  double y6,  double y7)
+Normalizacao::Normalizacao(double &Valor[])
 {
-
-  double Valor[7];
-  Valor[0] = y1;
-  Valor[1] = y2;
-  Valor[2] = y3;
-  Valor[3] = y4;
-  Valor[4] = y5;
-  Valor[5] = y6;
-  Valor[6] = y7;
-
   double Z_min = Valor[ArrayMinimum(Valor)];
   double Z_max = Valor[ArrayMaximum(Valor)];
 
   double Z_max_Zmin = Z_max - Z_min;
   if(Z_max_Zmin == 0 ) Z_max_Zmin = 0.000000000000000000001;
 
-  Valor_Normalizado = (y7 - Z_min) / (Z_max_Zmin);
+  Valor_Normalizado = (Valor[0] - Z_min) / (Z_max_Zmin);
 
-  normalizado_1 = (y5 - Z_min) / (Z_max_Zmin);
-  normalizado_2 = (y6 - Z_min) / (Z_max_Zmin);
-  normalizado_3 = (y7 - Z_min) / (Z_max_Zmin);
+  normalizado_1 = (Valor[2] - Z_min) / (Z_max_Zmin);
+  normalizado_2 = (Valor[1] - Z_min) / (Z_max_Zmin);
+  normalizado_3 = (Valor[0] - Z_min) / (Z_max_Zmin);
 
 
   Coeficiente_Angular = Coeficiente_Angular_3();

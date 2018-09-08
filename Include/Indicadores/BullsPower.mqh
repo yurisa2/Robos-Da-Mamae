@@ -8,7 +8,7 @@ class BullsPower
   void BullsPower();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleBullsPower;
@@ -68,7 +68,7 @@ double BullsPower::Cx(int barra = 0)
 }
 
 
-double BullsPower::Normalizado(int barra = 0)
+double BullsPower::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

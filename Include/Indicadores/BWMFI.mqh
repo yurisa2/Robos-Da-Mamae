@@ -8,7 +8,7 @@ class BWMFI
   void BWMFI();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleBWMFI;
@@ -68,7 +68,7 @@ double BWMFI::Cx(int barra = 0)
 }
 
 
-double BWMFI::Normalizado(int barra = 0)
+double BWMFI::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

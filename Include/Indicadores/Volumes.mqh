@@ -8,7 +8,7 @@ class Volumes
   void Volumes(string symbol = NULL, ENUM_TIMEFRAMES period = PERIOD_CURRENT, ENUM_APPLIED_VOLUME  applied_volume = VOLUME_TICK);
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleVolumes;
@@ -63,7 +63,7 @@ double Volumes::Cx(int barra = 0)
   return(retorno);
 }
 
-double Volumes::Normalizado(int barra = 0)
+double Volumes::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

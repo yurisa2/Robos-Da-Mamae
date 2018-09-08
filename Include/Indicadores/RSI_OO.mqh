@@ -8,7 +8,7 @@ class RSI
   void RSI(int ma_period = 14, ENUM_TIMEFRAMES periodos_r = PERIOD_CURRENT, string Simbolo = NULL, ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE);
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleRSI;
@@ -63,7 +63,7 @@ double RSI::Cx(int barra = 0)
   return(retorno);
 }
 
-double RSI::Normalizado(int barra = 0)
+double RSI::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

@@ -8,7 +8,7 @@ class CCI
   void CCI();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleCCI;
@@ -67,7 +67,7 @@ double CCI::Cx(int barra = 0)
   return(retorno);
 }
 
-double CCI::Normalizado(int barra = 0)
+double CCI::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

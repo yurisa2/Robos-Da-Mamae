@@ -8,7 +8,7 @@ class WPR
   void WPR();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleWPR;
@@ -67,7 +67,7 @@ double WPR::Cx(int barra = 0)
   return(retorno);
 }
 
-double WPR::Normalizado(int barra = 0)
+double WPR::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

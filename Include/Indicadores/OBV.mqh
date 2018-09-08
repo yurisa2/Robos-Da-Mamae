@@ -8,7 +8,7 @@ class OBV
   void OBV(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT);
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleOBV;
@@ -67,7 +67,7 @@ double OBV::Cx(int barra = 0)
   return(retorno);
 }
 
-double OBV::Normalizado(int barra = 0)
+double OBV::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

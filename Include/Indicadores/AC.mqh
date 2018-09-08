@@ -8,7 +8,7 @@ class AC
   void AC();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleAC;
@@ -67,7 +67,7 @@ double AC::Cx(int barra = 0)
   return(retorno);
 }
 
-double AC::Normalizado(int barra = 0)
+double AC::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

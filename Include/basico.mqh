@@ -349,7 +349,7 @@ void Init_Padrao()
   Print("TickSize: ",DoubleToString(Tick_Size));
   if(Tick_Size == 0) Alert("Tick_Size ZERO!");
 
-  // if(!Otimizacao) File_Init();
+  if(!Otimizacao) File_Init();
   // if(!Otimizacao) File_Filtro_Init();
 
   if(ml_on && rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta_RNA(machine_learning.rede_obj,rna_arquivo_trn);

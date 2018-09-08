@@ -8,7 +8,7 @@ class Momentum
   void Momentum();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleMomentum;
@@ -67,7 +67,7 @@ double Momentum::Cx(int barra = 0)
   return(retorno);
 }
 
-double Momentum::Normalizado(int barra = 0)
+double Momentum::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

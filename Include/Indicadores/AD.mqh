@@ -8,7 +8,7 @@ class AD
   void AD();
   double Valor(int barra = 0);
   double Cx(int barra = 0);
-  double Normalizado(int barra = 0);
+  double Normalizado(int barra = 0,int periods = 7);
 
   private:
   int HandleAD;
@@ -68,7 +68,7 @@ double AD::Cx(int barra = 0)
 }
 
 
-double AD::Normalizado(int barra = 0)
+double AD::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

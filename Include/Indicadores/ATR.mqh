@@ -7,7 +7,7 @@ class ATR
   public:
   void ATR();
   double Valor(int barra = 0);
-  double Cx(int barra = 0);
+  double Cx(int barra = 0,int periods = 7);
   double Normalizado(int barra = 0,int periods = 7);
 
   private:
@@ -47,7 +47,7 @@ double ATR::Valor(int barra = 0)
 }
 
 
-double ATR::Cx(int barra = 0)
+double ATR::Cx(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 

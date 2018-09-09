@@ -7,8 +7,8 @@ class Stoch
   public:
   void Stoch(int STOCH_k_period = 10,int STOCH_d_period = 3,int STOCH_slowing = 3,ENUM_TIMEFRAMES STOCH_periods = PERIOD_CURRENT,string symbol = NULL, ENUM_MA_METHOD STOCH_method = MODE_SMA,ENUM_STO_PRICE STOCH_price = STO_LOWHIGH);
   double Valor(int buffer = 0, int barra = 0);
-  double Cx(int buffer = 0, int barra = 0);
-  double Normalizado(int buffer = 0, int barra = 0);
+  double Cx(int buffer = 0, int barra = 0,int periods = 7);
+  double Normalizado(int buffer = 0, int barra = 0,int periods = 7);
 
 
   private:
@@ -44,38 +44,36 @@ double Stoch::Valor(int buffer = 0, int barra = 0)
 }
 
 
-double Stoch::Cx(int buffer = 0, int barra = 0)
+double Stoch::Cx(int buffer = 0, int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 
-  double y1 = Valor(buffer,barra+6);
-  double y2 = Valor(buffer,barra+5);
-  double y3 = Valor(buffer,barra+4);
-  double y4 = Valor(buffer,barra+3);
-  double y5 = Valor(buffer,barra+2);
-  double y6 = Valor(buffer,barra+1);
-  double y7 = Valor(buffer,barra);
+  double vetor_norm[];
+  ArrayResize(vetor_norm,periods);
 
-  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  for(int i = 0; i < periods; i++) {
+    vetor_norm[i] = Valor(buffer,barra+i);
+  }
+
+  Normalizacao *mat = new Normalizacao(vetor_norm);
   retorno = mat.Coeficiente_Angular;
   delete(mat);
 
-
   return(retorno);
 }
-double Stoch::Normalizado(int buffer = 0, int barra = 0)
+
+double Stoch::Normalizado(int buffer = 0, int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 
-  double y1 = Valor(buffer,barra+6);
-  double y2 = Valor(buffer,barra+5);
-  double y3 = Valor(buffer,barra+4);
-  double y4 = Valor(buffer,barra+3);
-  double y5 = Valor(buffer,barra+2);
-  double y6 = Valor(buffer,barra+1);
-  double y7 = Valor(buffer,barra);
+  double vetor_norm[];
+  ArrayResize(vetor_norm,periods);
 
-  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  for(int i = 0; i < periods; i++) {
+    vetor_norm[i] = Valor(buffer,barra+i);
+  }
+
+  Normalizacao *mat = new Normalizacao(vetor_norm);
   retorno = mat.Valor_Normalizado;
   delete(mat);
 

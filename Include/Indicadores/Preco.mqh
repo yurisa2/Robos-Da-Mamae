@@ -6,7 +6,7 @@ class Preco_O
 {
   public:
   Preco_O(ENUM_TIMEFRAMES Periodo_MA_PA = PERIOD_CURRENT);
-  double Cx(int barra = 0);
+  double Cx(int barra = 0,int periods = 7);
   double Normalizado(int barra = 0,int periods = 7);
   double Amplitude_N;
 
@@ -41,43 +41,41 @@ double Preco_O::Normalizado(int barra = 0,int periods = 7)
 {
   MA *OO_CloseMA = new MA(1,MODE_SMA,Periodo_MA,0,PRICE_CLOSE);
 
-  double retorno = NULL;
+    double retorno = NULL;
 
-  double y1 = OO_CloseMA.Valor(barra+6);
-  double y2 = OO_CloseMA.Valor(barra+5);
-  double y3 = OO_CloseMA.Valor(barra+4);
-  double y4 = OO_CloseMA.Valor(barra+3);
-  double y5 = OO_CloseMA.Valor(barra+2);
-  double y6 = OO_CloseMA.Valor(barra+1);
-  double y7 = OO_CloseMA.Valor(barra);
+    double vetor_norm[];
+    ArrayResize(vetor_norm,periods);
 
-  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
-  retorno = mat.Valor_Normalizado;
-  delete(mat);
+    for(int i = 0; i < periods; i++) {
+      vetor_norm[i] = OO_CloseMA.Valor(barra+i);
+    }
 
-  delete OO_CloseMA;
+    Normalizacao *mat = new Normalizacao(vetor_norm);
+    retorno = mat.Valor_Normalizado;
+    delete(mat);
 
-  return(retorno);
+    delete OO_CloseMA;
+
+    return(retorno);
 }
 
 
-double Preco_O::Cx(int barra = 0)
+double Preco_O::Cx(int barra = 0,int periods = 7)
 {
   MA *OO_CloseMA = new MA(1,MODE_SMA,Periodo_MA,0,PRICE_CLOSE);
 
-  double retorno = NULL;
+    double retorno = NULL;
 
-  double y1 = OO_CloseMA.Valor(barra+6);
-  double y2 = OO_CloseMA.Valor(barra+5);
-  double y3 = OO_CloseMA.Valor(barra+4);
-  double y4 = OO_CloseMA.Valor(barra+3);
-  double y5 = OO_CloseMA.Valor(barra+2);
-  double y6 = OO_CloseMA.Valor(barra+1);
-  double y7 = OO_CloseMA.Valor(barra);
+    double vetor_norm[];
+    ArrayResize(vetor_norm,periods);
 
-  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
-  retorno = mat.Coeficiente_Angular;
-  delete(mat);
+    for(int i = 0; i < periods; i++) {
+      vetor_norm[i] = OO_CloseMA.Valor(barra+i);
+    }
+
+    Normalizacao *mat = new Normalizacao(vetor_norm);
+    retorno = mat.Coeficiente_Angular;
+    delete(mat);
 
   delete OO_CloseMA;
 

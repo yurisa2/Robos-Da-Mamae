@@ -7,7 +7,7 @@ class RSI
   public:
   void RSI(int ma_period = 14, ENUM_TIMEFRAMES periodos_r = PERIOD_CURRENT, string Simbolo = NULL, ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE);
   double Valor(int barra = 0);
-  double Cx(int barra = 0);
+  double Cx(int barra = 0,int periods = 7);
   double Normalizado(int barra = 0,int periods = 7);
 
   private:
@@ -43,22 +43,20 @@ double RSI::Valor(int barra = 0)
 }
 
 
-double RSI::Cx(int barra = 0)
+double RSI::Cx(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 
-  double y1 = Valor(barra+6);
-  double y2 = Valor(barra+5);
-  double y3 = Valor(barra+4);
-  double y4 = Valor(barra+3);
-  double y5 = Valor(barra+2);
-  double y6 = Valor(barra+1);
-  double y7 = Valor(barra);
+  double vetor_norm[];
+  ArrayResize(vetor_norm,periods);
 
-  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  for(int i = 0; i < periods; i++) {
+    vetor_norm[i] = Valor(barra+i);
+  }
+
+  Normalizacao *mat = new Normalizacao(vetor_norm);
   retorno = mat.Coeficiente_Angular;
   delete(mat);
-
 
   return(retorno);
 }
@@ -67,15 +65,14 @@ double RSI::Normalizado(int barra = 0,int periods = 7)
 {
   double retorno = NULL;
 
-  double y1 = Valor(barra+6);
-  double y2 = Valor(barra+5);
-  double y3 = Valor(barra+4);
-  double y4 = Valor(barra+3);
-  double y5 = Valor(barra+2);
-  double y6 = Valor(barra+1);
-  double y7 = Valor(barra);
+  double vetor_norm[];
+  ArrayResize(vetor_norm,periods);
 
-  Normalizacao *mat = new Normalizacao(y1,y2,y3,y4,y5,y6,y7);
+  for(int i = 0; i < periods; i++) {
+    vetor_norm[i] = Valor(barra+i);
+  }
+
+  Normalizacao *mat = new Normalizacao(vetor_norm);
   retorno = mat.Valor_Normalizado;
   delete(mat);
 

@@ -92,6 +92,7 @@ void Aquisicao::Dados()
   //Valors 0-100
   AC_Var  =  AC_Ind.Valor(0)  ;
   AD_Var   =  AD_Ind.Valor(0)  ;
+  ADX_FW  = ADX_OO.Valor(0) ;
   ATR_Var =   ATR_Ind.Valor(0) ;
   BullsP_Var =   BullsPower_Ind.Valor(1) ;
   BearsP_Var =   BearsPower_Ind.Valor(1) ;
@@ -109,7 +110,6 @@ void Aquisicao::Dados()
   //Angulares -90-90 (mas....n�)
   AC_cx  =  AC_Ind.Cx(0)*conv  ;
   AD_cx   =  AD_Ind.Cx(0)*conv  ;
-  ADX_FW  = ADX_OO.Valor(0) ;
   adx_cx  = ADX_OO.Cx(0)*conv  ;
   ATR_cx =   ATR_Ind.Cx(0)*conv;
   BullsP_Var_Cx =   BullsPower_Ind.Cx(0)*conv;

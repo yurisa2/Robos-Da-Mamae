@@ -19,10 +19,10 @@ void Xaptur::Avalia()
   int copied=CopyRates(Symbol(),PERIOD_CURRENT,Data_Inicio_hoje,10,rates);
   ArraySetAsSeries(rates,true);
 
-  double lucro = rates[0].high - rates[1].high;
+  double lucro = rates[0].close - rates[1].close;
 
   File *arquivo = new File();
-  arquivo.Escreve("POS",IntegerToString(direcao),0,DEAL_ENTRY_IN);
+  arquivo.Escreve("POS",IntegerToString(direcao),lucro,DEAL_ENTRY_IN);
   delete(arquivo);
   delete(hilo);
 

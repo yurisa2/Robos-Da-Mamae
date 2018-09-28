@@ -16,10 +16,14 @@ void Xaptur::Avalia()
   HiLo_OO *hilo = new HiLo_OO(4);
   int direcao = hilo.Direcao();
   MqlRates rates[];
-  int copied=CopyRates(Symbol(),PERIOD_CURRENT,Data_Inicio_hoje,10,rates);
-  ArraySetAsSeries(rates,true);
+  int copied=CopyRates(Symbol(),TimeFrame,0,100,rates);
+    ArraySetAsSeries(rates,true);
 
-  double lucro = rates[0].close - rates[1].close;
+  double lucro = rates[0].open - rates[1].open;
+
+  // Print("Rates 0 " +  rates[0].open);
+  // Print("Rates 1 " +  rates[1].open);
+
 
   File *arquivo = new File();
   arquivo.Escreve("POS",IntegerToString(direcao),lucro,DEAL_ENTRY_IN);

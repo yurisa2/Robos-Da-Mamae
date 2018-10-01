@@ -1,32 +1,43 @@
 class Aquisicao {
 
   public:
-  Aquisicao();
+  Aquisicao(int norm_period = 7);
   void Aquisicao::Dados();
   double Busca_Var(string Var);
   double AC_Var;
   double AC_cx;
+  double AC_norm;
   double AD_Var;
   double AD_cx;
+  double AD_norm;
   double ADX_FW;
   double adx_cx;
+  double adx_norm;
   double ATR_Var;
   double ATR_cx;
+  double ATR_norm;
   double BB_Delta_Bruto;
   double BB_Delta_Bruto_Cx;
+  double BB_Delta_Bruto_norm;
   double Banda_Delta_Valor;
   double BB_Posicao_Percent;
   double BB_Posicao_Percent_Cx;
+  double BB_Posicao_Percent_norm;
   double BullsP_Var;
   double BullsP_Var_Cx;
+  double BullsP_norm;
   double BearsP_Var;
   double BearsP_Var_Cx;
+  double BearsP_norm;
   double BWMFI_Var;
   double BWMFI_Var_Cx;
+  double BWMFI_norm;
   double CCI_Var;
   double CCI_Var_Cx;
+  double CCI_norm;
   double DeMarker_Var;
   double DeMarker_Var_Cx;
+  double DeMarker_norm;
   int DP_DMM20;
   int DP_PAAMM20;
   int DP_MM20MM50;
@@ -42,32 +53,42 @@ class Aquisicao {
   double MACD_Normalizacao_Zero;
   double MFI_FW;
   double MFI_Cx;
+  double MFI_norm;
   double Momentum_Var;
   double Momentum_Var_Cx;
+  double Momentum_norm;
   double RSI_Var;
   double RSI_Var_Cx;
+  double RSI_norm;
   double Stoch_FW;
   double Stoch_Cx_0;
   double Stoch_Cx_1;
+  double Stoch_norm_1;
+  double Stoch_norm_2;
   double Volume_FW;
   double Volume_Cx;
+  double Volume_norm;
   double WPR_Var;
   double WPR_Var_Cx;
+  double WPR_norm;
 
   private:
+  int norm_period_;
 
 };
 
-void Aquisicao::Aquisicao()
+void Aquisicao::Aquisicao(int norm_period = 7)
 {
-Dados();
+  this.norm_period_ = norm_period;
+  Dados();
 }
+
 void Aquisicao::Dados()
 {
   double conv = 180 / 3.14159265359;
 
   TesterHideIndicators(mocosa_indicadores);
-
+  // Print("norm_period_ " + this.norm_period_);
 
   AC *AC_Ind = new AC();
   AD *AD_Ind = new AD();
@@ -89,7 +110,7 @@ void Aquisicao::Dados()
   Volumes *Volumes_OO = new Volumes(NULL,TimeFrame);
   WPR *WPR_Ind = new WPR();
 
-  //Valors 0-100
+  //Valores 0-100
   AC_Var  =  AC_Ind.Valor(0)  ;
   AD_Var   =  AD_Ind.Valor(0)  ;
   ADX_FW  = ADX_OO.Valor(0) ;
@@ -143,6 +164,28 @@ void Aquisicao::Dados()
   MACD_FW = macd.Valor(0) ;
   Momentum_Var =  Momentum_OO.Valor(0)  ;
   WPR_Var = WPR_Ind.Valor(0)   ;
+
+  // Normalizados 0..1
+  AC_norm = AC_Ind.Normalizado(0,this.norm_period_);
+  AD_norm = AD_Ind.Normalizado(0,this.norm_period_);
+  adx_norm = ADX_OO.Normalizado(0,this.norm_period_);
+  ATR_norm = ATR_Ind.Normalizado(0,this.norm_period_);
+  BB_Delta_Bruto_norm = Banda_BB.Normalizado_BB_Delta_Bruto(0,this.norm_period_);
+  BB_Posicao_Percent_norm = Banda_BB.Normalizado_BB_Posicao_Percent(0,this.norm_period_);
+  BullsP_norm = BullsPower_Ind.Normalizado(0,this.norm_period_);
+  BearsP_norm = BullsPower_Ind.Normalizado(0,this.norm_period_);
+  BWMFI_norm = BWMFI_Ind.Normalizado(0,this.norm_period_);
+  CCI_norm = CCI_Ind.Normalizado(0,this.norm_period_);
+  DeMarker_norm = DeMarker_Ind.Normalizado(0,this.norm_period_);
+  MFI_norm = MFI_OO.Normalizado(0,this.norm_period_);
+  Momentum_norm = Volumes_OO.Normalizado(0,this.norm_period_);
+  RSI_norm = RSI_OO.Normalizado(0,this.norm_period_);
+  Stoch_norm_1 = Stoch_OO.Normalizado(0,0,this.norm_period_);
+  Stoch_norm_2 = Stoch_OO.Normalizado(1,0,this.norm_period_);
+  Volume_norm = Volumes_OO.Normalizado(0,this.norm_period_);
+  WPR_norm = WPR_Ind.Normalizado(0,this.norm_period_);
+
+
 
   delete(AC_Ind);
   delete(AD_Ind);

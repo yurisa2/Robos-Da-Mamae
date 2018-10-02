@@ -26,7 +26,7 @@ void Xaptur::Avalia()
 
 
   File *arquivo = new File();
-  arquivo.Escreve("POS",IntegerToString(direcao),lucro,DEAL_ENTRY_IN,xaptur_normalizacao);
+  arquivo.Escreve("POS",IntegerToString(direcao),lucro,DEAL_ENTRY_IN,file_normalizacao);
   delete(arquivo);
   delete(hilo);
 

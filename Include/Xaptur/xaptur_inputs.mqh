@@ -1,3 +1,3 @@
 /* -*- C++ -*- */
 
-input int xaptur_normalizacao = 20;
+// input int xaptur_normalizacao = 20;

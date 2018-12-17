@@ -2,7 +2,7 @@ class Aquisicao {
 
   public:
   Aquisicao(int norm_period = 7);
-  void Aquisicao::Dados();
+  void Aquisicao::Dados(int barra = 0);
   double Busca_Var(string Var);
   double AC_Var;
   double AC_cx;
@@ -83,7 +83,7 @@ void Aquisicao::Aquisicao(int norm_period = 7)
   Dados();
 }
 
-void Aquisicao::Dados()
+void Aquisicao::Dados(int barra = 0)
 {
   double conv = 180 / 3.14159265359;
 
@@ -111,79 +111,79 @@ void Aquisicao::Dados()
   WPR *WPR_Ind = new WPR();
 
   //Valores 0-100
-  AC_Var  =  AC_Ind.Valor(0)  ;
-  AD_Var   =  AD_Ind.Valor(0)  ;
-  ADX_FW  = ADX_OO.Valor(0) ;
-  ATR_Var =   ATR_Ind.Valor(0) ;
-  BullsP_Var =   BullsPower_Ind.Valor(1) ;
-  BearsP_Var =   BearsPower_Ind.Valor(1) ;
+  AC_Var  =  AC_Ind.Valor(barra)  ;
+  AD_Var   =  AD_Ind.Valor(barra)  ;
+  ADX_FW  = ADX_OO.Valor(barra) ;
+  ATR_Var =   ATR_Ind.Valor(barra) ;
+  BullsP_Var =   BullsPower_Ind.Valor(barra+1) ;
+  BearsP_Var =   BearsPower_Ind.Valor(barra+1) ;
   MACD_Distancia_Linha_Sinal = macd.Distancia_Linha_Sinal();
   MACD_Distancia_Linha_Zero = macd.Distancia_Linha_Zero();
   MACD_Normalizacao = macd.Normalizacao_Valores_MACD(0,0,0);
   MACD_Normalizacao_Zero = macd.Normalizacao_Valores_MACD(0,0,-1);
-  MFI_FW = MFI_OO.Valor(0) ;
-  Volume_FW = Volumes_OO.Valor(1) ;
-  DeMarker_Var =  DeMarker_Ind.Valor(0)  ;
-  BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(0);
-  RSI_Var =  RSI_OO.Valor(0)  ;
-  Stoch_FW = Stoch_OO.Valor(0) ;
+  MFI_FW = MFI_OO.Valor(barra) ;
+  Volume_FW = Volumes_OO.Valor(barra+1) ;
+  DeMarker_Var =  DeMarker_Ind.Valor(barra)  ;
+  BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(barra);
+  RSI_Var =  RSI_OO.Valor(barra)  ;
+  Stoch_FW = Stoch_OO.Valor(barra) ;
 
   //Angulares -90-90 (mas....n�)
-  AC_cx  =  AC_Ind.Cx(0)*conv  ;
-  AD_cx   =  AD_Ind.Cx(0)*conv  ;
-  adx_cx  = ADX_OO.Cx(0)*conv  ;
-  ATR_cx =   ATR_Ind.Cx(0)*conv;
-  BullsP_Var_Cx =   BullsPower_Ind.Cx(0)*conv;
-  BearsP_Var_Cx =   BearsPower_Ind.Cx(0)*conv;
-  BWMFI_Var_Cx =   BWMFI_Ind.Cx(0)*conv;
-  CCI_Var_Cx =  CCI_Ind.Cx(0)*conv;
-  DeMarker_Var_Cx =  DeMarker_Ind.Cx(0)*conv;
-  MACD_Cx_0 = macd.Cx(0)*conv ;
-  MACD_Cx_1 = macd.Cx(1)*conv ;
+  AC_cx  =  AC_Ind.Cx(barra)*conv  ;
+  AD_cx   =  AD_Ind.Cx(barra)*conv  ;
+  adx_cx  = ADX_OO.Cx(barra)*conv  ;
+  ATR_cx =   ATR_Ind.Cx(barra)*conv;
+  BullsP_Var_Cx =   BullsPower_Ind.Cx(barra)*conv;
+  BearsP_Var_Cx =   BearsPower_Ind.Cx(barra)*conv;
+  BWMFI_Var_Cx =   BWMFI_Ind.Cx(barra)*conv;
+  CCI_Var_Cx =  CCI_Ind.Cx(barra)*conv;
+  DeMarker_Var_Cx =  DeMarker_Ind.Cx(barra)*conv;
+  MACD_Cx_0 = macd.Cx(barra)*conv ;
+  MACD_Cx_1 = macd.Cx(barra+1)*conv ;
   MACD_Diff_Angulo_LS = macd.Diferenca_Angulo_Linha_Sinal()*conv;
-  MFI_Cx = MFI_OO.Cx(0)*conv;
-  Momentum_Var_Cx =  Momentum_OO.Cx(0)*conv;
-  RSI_Var_Cx =  RSI_OO.Cx(0)*conv  ;
-  Stoch_Cx_0 = Stoch_OO.Cx(0,0)*conv ;
-  Stoch_Cx_1 = Stoch_OO.Cx(1,0)*conv ;
-  Volume_Cx = Volumes_OO.Cx(1)*conv ;
-  WPR_Var_Cx = WPR_Ind.Cx(0)*conv   ;
-  BB_Delta_Bruto_Cx = Banda_BB.Cx_BB_Delta_Bruto(0)*conv ;
-  BB_Posicao_Percent_Cx = Banda_BB.Cx_BB_Posicao_Percent(0)*conv ;
+  MFI_Cx = MFI_OO.Cx(barra)*conv;
+  Momentum_Var_Cx =  Momentum_OO.Cx(barra)*conv;
+  RSI_Var_Cx =  RSI_OO.Cx(barra)*conv  ;
+  Stoch_Cx_0 = Stoch_OO.Cx(0,barra)*conv ;
+  Stoch_Cx_1 = Stoch_OO.Cx(1,barra)*conv ;
+  Volume_Cx = Volumes_OO.Cx(barra+1)*conv ;
+  WPR_Var_Cx = WPR_Ind.Cx(barra)*conv   ;
+  BB_Delta_Bruto_Cx = Banda_BB.Cx_BB_Delta_Bruto(barra)*conv ;
+  BB_Posicao_Percent_Cx = Banda_BB.Cx_BB_Posicao_Percent(barra)*conv ;
 
   //Brutos e Livres (as vezes at� bin�rios e relativos)
-  BB_Delta_Bruto = Banda_BB.BB_Delta_Bruto(0) ;
+  BB_Delta_Bruto = Banda_BB.BB_Delta_Bruto(barra) ;
   Banda_Delta_Valor = Banda_BB.Banda_Delta_Valor() ;
-  BWMFI_Var =   BWMFI_Ind.Valor(1) ;
-  CCI_Var =  CCI_Ind.Valor(0)  ;
-  DP_DMM20 = DP_Ind.DirecaoMM20(0);
-  DP_PAAMM20 = DP_Ind.PrecoRMM20(0);
-  DP_MM20MM50 = DP_Ind.MM20AcimaAbaixoMM50(0);
-  DP_D = DP_Ind.Direcao(0);
+  BWMFI_Var =   BWMFI_Ind.Valor(barra+1) ;
+  CCI_Var =  CCI_Ind.Valor(barra)  ;
+  DP_DMM20 = DP_Ind.DirecaoMM20(barra);
+  DP_PAAMM20 = DP_Ind.PrecoRMM20(barra);
+  DP_MM20MM50 = DP_Ind.MM20AcimaAbaixoMM50(barra);
+  DP_D = DP_Ind.Direcao(barra);
   Hilo_Direcao = hilo.Direcao() ;
-  MACD_FW = macd.Valor(0) ;
-  Momentum_Var =  Momentum_OO.Valor(0)  ;
-  WPR_Var = WPR_Ind.Valor(0)   ;
+  MACD_FW = macd.Valor(barra) ;
+  Momentum_Var =  Momentum_OO.Valor(barra)  ;
+  WPR_Var = WPR_Ind.Valor(barra)   ;
 
   // Normalizados 0..1
-  AC_norm = AC_Ind.Normalizado(0,this.norm_period_);
-  AD_norm = AD_Ind.Normalizado(0,this.norm_period_);
-  adx_norm = ADX_OO.Normalizado(0,this.norm_period_);
-  ATR_norm = ATR_Ind.Normalizado(0,this.norm_period_);
-  BB_Delta_Bruto_norm = Banda_BB.Normalizado_BB_Delta_Bruto(0,this.norm_period_);
-  BB_Posicao_Percent_norm = Banda_BB.Normalizado_BB_Posicao_Percent(0,this.norm_period_);
-  BullsP_norm = BullsPower_Ind.Normalizado(0,this.norm_period_);
-  BearsP_norm = BullsPower_Ind.Normalizado(0,this.norm_period_);
-  BWMFI_norm = BWMFI_Ind.Normalizado(0,this.norm_period_);
-  CCI_norm = CCI_Ind.Normalizado(0,this.norm_period_);
-  DeMarker_norm = DeMarker_Ind.Normalizado(0,this.norm_period_);
-  MFI_norm = MFI_OO.Normalizado(0,this.norm_period_);
-  Momentum_norm = Volumes_OO.Normalizado(0,this.norm_period_);
-  RSI_norm = RSI_OO.Normalizado(0,this.norm_period_);
-  Stoch_norm_1 = Stoch_OO.Normalizado(0,0,this.norm_period_);
-  Stoch_norm_2 = Stoch_OO.Normalizado(1,0,this.norm_period_);
-  Volume_norm = Volumes_OO.Normalizado(0,this.norm_period_);
-  WPR_norm = WPR_Ind.Normalizado(0,this.norm_period_);
+  AC_norm = AC_Ind.Normalizado(barra,this.norm_period_);
+  AD_norm = AD_Ind.Normalizado(barra,this.norm_period_);
+  adx_norm = ADX_OO.Normalizado(barra,this.norm_period_);
+  ATR_norm = ATR_Ind.Normalizado(barra,this.norm_period_);
+  BB_Delta_Bruto_norm = Banda_BB.Normalizado_BB_Delta_Bruto(barra,this.norm_period_);
+  BB_Posicao_Percent_norm = Banda_BB.Normalizado_BB_Posicao_Percent(barra,this.norm_period_);
+  BullsP_norm = BullsPower_Ind.Normalizado(barra,this.norm_period_);
+  BearsP_norm = BullsPower_Ind.Normalizado(barra,this.norm_period_);
+  BWMFI_norm = BWMFI_Ind.Normalizado(barra,this.norm_period_);
+  CCI_norm = CCI_Ind.Normalizado(barra,this.norm_period_);
+  DeMarker_norm = DeMarker_Ind.Normalizado(barra,this.norm_period_);
+  MFI_norm = MFI_OO.Normalizado(barra,this.norm_period_);
+  Momentum_norm = Volumes_OO.Normalizado(barra,this.norm_period_);
+  RSI_norm = RSI_OO.Normalizado(barra,this.norm_period_);
+  Stoch_norm_1 = Stoch_OO.Normalizado(barra,0,this.norm_period_);
+  Stoch_norm_2 = Stoch_OO.Normalizado(barra+1,0,this.norm_period_);
+  Volume_norm = Volumes_OO.Normalizado(barra,this.norm_period_);
+  WPR_norm = WPR_Ind.Normalizado(barra,this.norm_period_);
 
 
 

@@ -1,0 +1,16 @@
+/errhandlingapi.mqh
+/fileapi.mqh
+/handleapi.mqh
+/libloaderapi.mqh
+/memoryapi.mqh
+/processenv.mqh
+/processthreadsapi.mqh
+/securitybaseapi.mqh
+/sysinfoapi.mqh
+/winapi.mqh
+/winbase.mqh
+/windef.mqh
+/wingdi.mqh
+/winnt.mqh
+/winreg.mqh
+/winuser.mqh

@@ -9,6 +9,8 @@ class Xus
   int xus_diff();
   double xus_close_yest();
   double xus_open_tod();
+  static   double fire_event();
+
 
 };
 
@@ -22,10 +24,44 @@ void Xus::Avalia()
 {
   int dir = 0;
 
-  if(this.xus_diff() > 0) dir = 1;
-  if(this.xus_diff() < 0) dir = -1;
+  double Ativacao_superior = this.xus_close_yest() + (xus_delta_ativacao * Tick_Size);
+  double Ativacao_inferior = this.xus_open_tod() - (xus_delta_ativacao * Tick_Size);
 
-  // double
+  if(this.xus_diff() > 0 &&
+     this.xus_open_tod() > Ativacao_superior &&
+     PrecoAtual().close <= Ativacao_superior &&
+      Condicoes_Basicas.Condicao()) {
+        Opera_Mercado *opera = new Opera_Mercado;
+        opera.AbrePosicao(1,"Ativacao_superior: " + DoubleToString(Ativacao_superior,Digits()));
+        delete(opera);
+      }
+
+  if(this.xus_diff() > 0 &&
+     this.xus_open_tod() < Ativacao_superior &&
+     PrecoAtual().close >= Ativacao_superior &&
+      Condicoes_Basicas.Condicao()) {
+        Opera_Mercado *opera = new Opera_Mercado;
+        opera.AbrePosicao(1,"Ativacao_superior: " + DoubleToString(Ativacao_superior,Digits()));
+        delete(opera);
+      }
+
+
+  if(this.xus_diff() < 0 &&
+     this.xus_open_tod() < Ativacao_inferior &&
+     PrecoAtual().close >= Ativacao_inferior &&
+     Condicoes_Basicas.Condicao()) {
+       Opera_Mercado *opera = new Opera_Mercado;
+       opera.AbrePosicao(-1,"Ativacao_inferior: " + DoubleToString(Ativacao_inferior,Digits()));
+       delete(opera);
+     }
+  if(this.xus_diff() < 0 &&
+     this.xus_open_tod() > Ativacao_inferior &&
+     PrecoAtual().close <= Ativacao_inferior &&
+      Condicoes_Basicas.Condicao()) {
+        Opera_Mercado *opera = new Opera_Mercado;
+        opera.AbrePosicao(-1,"Ativacao_inferior: " + DoubleToString(Ativacao_inferior,Digits()));
+        delete(opera);
+      }
 }
 
 int Xus::xus_diff()
@@ -60,4 +96,30 @@ double Xus::xus_open_tod()
   int copiado = CopyRates(Symbol(), PERIOD_D1, 0, 3, BarData); // Copy the data of last incomplete BAR
 
   return BarData[0].open;
+}
+
+static double Xus::fire_event()
+{
+  string time_now_full = TimeToString(TimeCurrent(),TIME_DATE|TIME_SECONDS);
+  string time_now_date = TimeToString(TimeCurrent(),TIME_DATE); // YYYY.MM.DD
+  string time_now_secs = TimeToString(TimeCurrent(),TIME_SECONDS); // 00:00:00
+
+  string hora_isolada = StringSubstr(time_now_secs,0,2);
+  string minuto_isolado = StringSubstr(time_now_secs,3,2);
+  string dia_isolado = StringSubstr(time_now_date,9,2);
+
+  if(StringToInteger(hora_isolada) == HoraDeInicio &&
+     StringToInteger(minuto_isolado) == MinutoDeInicio  &&
+     StringToInteger(dia_isolado) != last_day_integer
+    )  {
+
+
+        Print(time_now_full);
+        last_day_integer = dia_isolado;
+
+      }
+
+
+
+return StringToDouble(time_now_full);
 }

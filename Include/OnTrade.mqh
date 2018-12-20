@@ -332,8 +332,9 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
               //--- if the market was exited
               else if(deal_entry==DEAL_ENTRY_OUT)
               {
-                //Print("Saiu deal_ticket" + deal_ticket);
-                //Print("Saiu myDealInfo.Profit() " + myDealInfo.Profit());
+                // Print("Saiu deal_ticket" + deal_ticket);
+                // Print("Saiu myDealInfo.Profit() " + myDealInfo.Profit());
+                Print("myPos.Profit() " + myPos.Profit());
                 //Print("Saiu myDealInfo.PositionId() " + myDealInfo.PositionId());
                 if(!Otimizacao)
                 {
@@ -346,9 +347,13 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   //delete(filtro_teste);
                   delete(arquivo);
                 //  delete(arquivo_filtro);
+                // Print(myDealInfo.Profit());
                 }
+                // Print(myDealInfo.Profit());
 
                 on_trade_robo *trade_especifico = new on_trade_robo(-1,myDealInfo.Profit());
+                Print("NUMERO " + DoubleToString(myDealInfo.PositionId()));
+
                 // trade_especifico.Profit = myDealInfo.Profit();
                 // Print("Profit ONTRADE: " + myDealInfo.Profit());
                 delete trade_especifico;
@@ -358,9 +363,10 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   //--- 1) closure of a position
                   //if(pos_vol==WRONG_VALUE)
                   //PrintFormat("\n%s: position closed",deal_symbol);
-                  //PrintFormat("\n%s: Posicao Encerrada",deal_symbol);
+                  // PrintFormat("\n%s: Posicao Encerrada",deal_symbol);
+                  // Print(myDealInfo.Profit());
 
-                  //PrintFormat("Deal Profit: %s", myDealInfo.Profit());
+                  // Print("Deal Profit:" + myDealInfo.Profit());
 
                   //--- 2) partial closure of the open position
                   //else if(pos_vol>0.0)

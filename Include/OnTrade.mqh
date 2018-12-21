@@ -354,7 +354,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 // Print(myDealInfo.Profit());
 
                 on_trade_robo *trade_especifico = new on_trade_robo(-1,myDealInfo.Profit());
-                Print("NUMERO " + DoubleToString(myDealInfo.PositionId()));
+                // Print("NUMERO " + DoubleToString(myDealInfo.PositionId()));
 
                 // trade_especifico.Profit = myDealInfo.Profit();
                 // Print("Profit ONTRADE: " + myDealInfo.Profit());

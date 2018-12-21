@@ -332,9 +332,11 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
               //--- if the market was exited
               else if(deal_entry==DEAL_ENTRY_OUT)
               {
+                OnTradeOut(myDealInfo);
+
                 // Print("Saiu deal_ticket" + deal_ticket);
                 // Print("Saiu myDealInfo.Profit() " + myDealInfo.Profit());
-                Print("myPos.Profit() " + myPos.Profit());
+                // Print("myPos.Profit() " + myPos.Profit());
                 //Print("Saiu myDealInfo.PositionId() " + myDealInfo.PositionId());
                 if(!Otimizacao)
                 {

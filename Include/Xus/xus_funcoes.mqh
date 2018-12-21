@@ -9,7 +9,8 @@ class Xus
   int xus_diff();
   double xus_close_yest();
   double xus_open_tod();
-  static   double fire_event();
+  static double fire_event();
+  double vendetta_mode();
 
 
 };
@@ -112,14 +113,15 @@ static double Xus::fire_event()
      StringToInteger(minuto_isolado) == MinutoDeInicio  &&
      StringToInteger(dia_isolado) != last_day_integer
     )  {
-
-
         Print(time_now_full);
         last_day_integer = dia_isolado;
-
       }
-
-
-
 return StringToDouble(time_now_full);
+}
+
+ double Xus::vendetta_mode()
+{
+
+return 0;
+
 }

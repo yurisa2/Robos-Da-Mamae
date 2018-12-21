@@ -17,6 +17,8 @@ class Opera_Mercado
   void FechaPosicao();
   void ZeraOrdensP();
   void SetaSL(double sl);
+  double novo_volume;
+
 
   private:
   void Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentario_req);
@@ -72,6 +74,11 @@ void Opera_Mercado::ZeraOrdensP()
 /////////////////////////////////////////// Final da req.
 void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentario_req)
 {
+  double volume_utilizado = Lotes;
+
+  if(this.novo_volume > 0) volume_utilizado = this.novo_volume;
+
+
   comentario_req = Descricao_Robo_Alpha + "|" + Nome_Robo + "|" +  comentario_req;
   Sleep(200);
   if(Aleta_Operacao && !Otimizacao)
@@ -80,7 +87,7 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
     alerta_op += ": ";
     alerta_op += EnumToString(order_type);
     alerta_op += " - Volume: ";
-    alerta_op += DoubleToString(Lotes);
+    alerta_op += DoubleToString(volume_utilizado);
     alerta_op += " - ";
     alerta_op += comentario_req;
 
@@ -95,7 +102,7 @@ void Opera_Mercado::Posicao_Mercado(ENUM_ORDER_TYPE order_type, string comentari
       ZeraOrdensP();
       while(OrdersTotal() > 0);
       // requisicao_montar.SetExpertMagicNumber(TimeMagic);  // Olhar esse aqui para identificar posicao magic (para Account mode 0-1)
-      requisicao_montar.PositionOpen(Symbol(),order_type,Lotes,0,0,0,comentario_req);
+      requisicao_montar.PositionOpen(Symbol(),order_type,volume_utilizado,0,0,0,comentario_req);
       ja_zerou_sl_temp = false;// TEMP, MAS NAO AGUENTO MAIS
       O_Stops.Setar_Ordens_Vars_Static();
 

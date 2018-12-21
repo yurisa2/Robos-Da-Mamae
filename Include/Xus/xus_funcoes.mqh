@@ -10,8 +10,7 @@ class Xus
   double xus_close_yest();
   double xus_open_tod();
   static double fire_event();
-  double vendetta_mode();
-
+  double vendetta_mode(CDealInfo &myDealInfo);
 
 };
 
@@ -119,9 +118,21 @@ static double Xus::fire_event()
 return StringToDouble(time_now_full);
 }
 
- double Xus::vendetta_mode()
+double Xus::vendetta_mode(CDealInfo &myDealInfo)
 {
+  Print(myDealInfo.Profit());
+
+   int nova_direcao = 0;
+   if(myDealInfo.DealType() == DEAL_TYPE_BUY) nova_direcao = 1;
+   if(myDealInfo.DealType() == DEAL_TYPE_SELL) nova_direcao = -1;
+
+   if(myDealInfo.Profit() < 0 && Condicoes_Basicas.Condicao())  {
+     Opera_Mercado *opera = new Opera_Mercado;
+     opera.novo_volume = xus_valor_vendetta;
+     opera.AbrePosicao(nova_direcao,"VENDETTA MODE ON: ");
+     delete(opera);
+   }
+
 
 return 0;
-
 }

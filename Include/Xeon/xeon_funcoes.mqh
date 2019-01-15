@@ -105,13 +105,13 @@ void Xeon::Avalia()
 
       string index_s = IntegerToString(actual_i);
 
-      jv_main.Add(index_s);
-      jv_main[index_s].Add(jv);
+      // jv_main.Add(index_s); // ANTES DE COMENTAR ESTAVA FUNCIONANDO;
+      // jv_main[index_s].Add(jv); // FUNCIONANDO TBM
+      jv_main.Add(jv);
 
       delete(jv);
       //this.SendData(base_url,payloapost_request);
       actual_i++;
-
 
       if(actual_i == xeon_count_periods) {
         break;
@@ -122,11 +122,7 @@ void Xeon::Avalia()
 
   Print(jv_main.Serialize());
 
-  File_Gen *arquivo = new File_Gen("json_serialize.txt");
-  arquivo.Linha(jv_main.Serialize());
-  delete(arquivo);
-
-  // this.SendJson(base_url,jv_main);
+  this.SendJson(base_url,jv_main);
   delete(ind);
 }
 
@@ -208,8 +204,8 @@ void Xeon::SendJson(string url, CJAVal &json_type){
      ResetLastError();
   //--- download da página html do Yahoo Finance
   // string headers2 = "Content-Type: application/json";
-  string headers2 = "Content-Type: text/plain\r\n";
-  // string headers2 = "Content-Type: application/json\r\n";
+  // string headers2 = "Content-Type: text/plain\r\n";
+  string headers2 = "Content-Type: application/json\r\n";
 
   // string headers2 = headers;
 //

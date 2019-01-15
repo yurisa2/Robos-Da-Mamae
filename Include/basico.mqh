@@ -362,7 +362,7 @@ MqlRates Preco(int barra = 0)
   // barra = barra + 1;
   MqlRates rates_Preco[];
   ArraySetAsSeries(rates_Preco,true);
-  int copied=CopyRates(Symbol(),0,0,200,rates_Preco);
+  int copied=CopyRates(Symbol(),0,0,barra+1,rates_Preco);
 
   return rates_Preco[barra];
 }

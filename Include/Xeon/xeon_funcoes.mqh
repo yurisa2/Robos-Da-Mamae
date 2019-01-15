@@ -23,193 +23,206 @@ void Xeon::Avalia()
 {
   Aquisicao *ind = new Aquisicao;
 
-  string base_url = "http://localhost:8000/writecsv";
+  HiLo_OO *hilo = new HiLo_OO(4);
+  int direcao_now = hilo.Direcao();
+  delete(hilo);
+
+  string base_url = xeon_url;
+
+  int actual_i = 0;
 
   for(int i = 0; i < 300 ; i++) {
     ind.Dados(i);
-    string payloapost_request;
+    if(direcao_now == ind.Hilo_Direcao) {
+      actual_i++;
+      string payloapost_request;
 
-    payloapost_request += "barra=";
-    payloapost_request += IntegerToString(i);
+      payloapost_request += "barra=";
+      payloapost_request += IntegerToString(i);
 
-    payloapost_request += "&direcao=";
-    payloapost_request += DoubleToString(ind.Hilo_Direcao);
+      payloapost_request += "&lucro=";
+      payloapost_request += DoubleToString(Preco(i+1).close - Preco(i+2).close);
 
-    payloapost_request += "&AC_Var=";
-    payloapost_request += DoubleToString(ind.AC_Var);
+      payloapost_request += "&direcao=";
+      payloapost_request += DoubleToString(ind.Hilo_Direcao);
 
-    payloapost_request += "&AC_cx=";
-    payloapost_request += DoubleToString(ind.AC_cx);
+      payloapost_request += "&AC_Var=";
+      payloapost_request += DoubleToString(ind.AC_Var);
 
-    payloapost_request += "&AC_norm=";
-    payloapost_request += DoubleToString(ind.AC_norm);
+      payloapost_request += "&AC_cx=";
+      payloapost_request += DoubleToString(ind.AC_cx);
 
-    payloapost_request += "&AD_Var=";
-    payloapost_request += DoubleToString(ind.AD_Var);
+      payloapost_request += "&AC_norm=";
+      payloapost_request += DoubleToString(ind.AC_norm);
 
-    payloapost_request += "&AD_cx=";
-    payloapost_request += DoubleToString(ind.AD_cx);
+      payloapost_request += "&AD_Var=";
+      payloapost_request += DoubleToString(ind.AD_Var);
 
-    payloapost_request += "&AD_norm=";
-    payloapost_request += DoubleToString(ind.AD_norm);
+      payloapost_request += "&AD_cx=";
+      payloapost_request += DoubleToString(ind.AD_cx);
 
-    payloapost_request += "&ADX_FW=";
-    payloapost_request += DoubleToString(ind.ADX_FW);
+      payloapost_request += "&AD_norm=";
+      payloapost_request += DoubleToString(ind.AD_norm);
 
-    payloapost_request += "&adx_cx=";
-    payloapost_request += DoubleToString(ind.adx_cx);
+      payloapost_request += "&ADX_FW=";
+      payloapost_request += DoubleToString(ind.ADX_FW);
 
-    payloapost_request += "&adx_norm=";
-    payloapost_request += DoubleToString(ind.adx_norm);
+      payloapost_request += "&adx_cx=";
+      payloapost_request += DoubleToString(ind.adx_cx);
 
-    payloapost_request += "&ATR_Var=";
-    payloapost_request += DoubleToString(ind.ATR_Var);
+      payloapost_request += "&adx_norm=";
+      payloapost_request += DoubleToString(ind.adx_norm);
 
-    payloapost_request += "&ATR_cx=";
-    payloapost_request += DoubleToString(ind.ATR_cx);
+      payloapost_request += "&ATR_Var=";
+      payloapost_request += DoubleToString(ind.ATR_Var);
 
-    payloapost_request += "&ATR_norm=";
-    payloapost_request += DoubleToString(ind.ATR_norm);
+      payloapost_request += "&ATR_cx=";
+      payloapost_request += DoubleToString(ind.ATR_cx);
 
-    payloapost_request += "&BB_Delta_Bruto=";
-    payloapost_request += DoubleToString(ind.BB_Delta_Bruto);
+      payloapost_request += "&ATR_norm=";
+      payloapost_request += DoubleToString(ind.ATR_norm);
 
-    payloapost_request += "&BB_Delta_Bruto_Cx=";
-    payloapost_request += DoubleToString(ind.BB_Delta_Bruto_Cx);
+      payloapost_request += "&BB_Delta_Bruto=";
+      payloapost_request += DoubleToString(ind.BB_Delta_Bruto);
 
-    payloapost_request += "&BB_Delta_Bruto_norm=";
-    payloapost_request += DoubleToString(ind.BB_Delta_Bruto_norm);
+      payloapost_request += "&BB_Delta_Bruto_Cx=";
+      payloapost_request += DoubleToString(ind.BB_Delta_Bruto_Cx);
 
-    payloapost_request += "&Banda_Delta_Valor=";
-    payloapost_request += DoubleToString(ind.Banda_Delta_Valor);
+      payloapost_request += "&BB_Delta_Bruto_norm=";
+      payloapost_request += DoubleToString(ind.BB_Delta_Bruto_norm);
 
-    payloapost_request += "&BB_Posicao_Percent=";
-    payloapost_request += DoubleToString(ind.BB_Posicao_Percent);
+      payloapost_request += "&Banda_Delta_Valor=";
+      payloapost_request += DoubleToString(ind.Banda_Delta_Valor);
 
-    payloapost_request += "&BB_Posicao_Percent_Cx=";
-    payloapost_request += DoubleToString(ind.BB_Posicao_Percent_Cx);
+      payloapost_request += "&BB_Posicao_Percent=";
+      payloapost_request += DoubleToString(ind.BB_Posicao_Percent);
 
-    payloapost_request += "&BB_Posicao_Percent_norm=";
-    payloapost_request += DoubleToString(ind.BB_Posicao_Percent_norm);
+      payloapost_request += "&BB_Posicao_Percent_Cx=";
+      payloapost_request += DoubleToString(ind.BB_Posicao_Percent_Cx);
 
-    payloapost_request += "&BullsP_Var=";
-    payloapost_request += DoubleToString(ind.BullsP_Var);
+      payloapost_request += "&BB_Posicao_Percent_norm=";
+      payloapost_request += DoubleToString(ind.BB_Posicao_Percent_norm);
 
-    payloapost_request += "&BullsP_Var_Cx=";
-    payloapost_request += DoubleToString(ind.BullsP_Var_Cx);
+      payloapost_request += "&BullsP_Var=";
+      payloapost_request += DoubleToString(ind.BullsP_Var);
 
-    payloapost_request += "&BullsP_norm=";
-    payloapost_request += DoubleToString(ind.BullsP_norm);
+      payloapost_request += "&BullsP_Var_Cx=";
+      payloapost_request += DoubleToString(ind.BullsP_Var_Cx);
 
-    payloapost_request += "&BearsP_Var=";
-    payloapost_request += DoubleToString(ind.BearsP_Var);
+      payloapost_request += "&BullsP_norm=";
+      payloapost_request += DoubleToString(ind.BullsP_norm);
 
-    payloapost_request += "&BearsP_Var_Cx=";
-    payloapost_request += DoubleToString(ind.BearsP_Var_Cx);
+      payloapost_request += "&BearsP_Var=";
+      payloapost_request += DoubleToString(ind.BearsP_Var);
 
-    payloapost_request += "&BearsP_norm=";
-    payloapost_request += DoubleToString(ind.BearsP_norm);
+      payloapost_request += "&BearsP_Var_Cx=";
+      payloapost_request += DoubleToString(ind.BearsP_Var_Cx);
 
-    payloapost_request += "&BWMFI_Var=";
-    payloapost_request += DoubleToString(ind.BWMFI_Var);
+      payloapost_request += "&BearsP_norm=";
+      payloapost_request += DoubleToString(ind.BearsP_norm);
 
-    payloapost_request += "&BWMFI_Var_Cx=";
-    payloapost_request += DoubleToString(ind.BWMFI_Var_Cx);
+      payloapost_request += "&BWMFI_Var=";
+      payloapost_request += DoubleToString(ind.BWMFI_Var);
 
-    payloapost_request += "&BWMFI_norm=";
-    payloapost_request += DoubleToString(ind.BWMFI_norm);
+      payloapost_request += "&BWMFI_Var_Cx=";
+      payloapost_request += DoubleToString(ind.BWMFI_Var_Cx);
 
-    payloapost_request += "&CCI_Var=";
-    payloapost_request += DoubleToString(ind.CCI_Var);
+      payloapost_request += "&BWMFI_norm=";
+      payloapost_request += DoubleToString(ind.BWMFI_norm);
 
-    payloapost_request += "&CCI_Var_Cx=";
-    payloapost_request += DoubleToString(ind.CCI_Var_Cx);
+      payloapost_request += "&CCI_Var=";
+      payloapost_request += DoubleToString(ind.CCI_Var);
 
-    payloapost_request += "&CCI_norm=";
-    payloapost_request += DoubleToString(ind.CCI_norm);
+      payloapost_request += "&CCI_Var_Cx=";
+      payloapost_request += DoubleToString(ind.CCI_Var_Cx);
 
-    payloapost_request += "&DeMarker_Var=";
-    payloapost_request += DoubleToString(ind.DeMarker_Var);
+      payloapost_request += "&CCI_norm=";
+      payloapost_request += DoubleToString(ind.CCI_norm);
 
-    payloapost_request += "&DeMarker_Var_Cx=";
-    payloapost_request += DoubleToString(ind.DeMarker_Var_Cx);
+      payloapost_request += "&DeMarker_Var=";
+      payloapost_request += DoubleToString(ind.DeMarker_Var);
 
-    payloapost_request += "&DeMarker_norm=";
-    payloapost_request += DoubleToString(ind.DeMarker_norm);
+      payloapost_request += "&DeMarker_Var_Cx=";
+      payloapost_request += DoubleToString(ind.DeMarker_Var_Cx);
 
-    payloapost_request += "&DP_DMM20=";
-    payloapost_request += DoubleToString(ind.DP_DMM20);
+      payloapost_request += "&DeMarker_norm=";
+      payloapost_request += DoubleToString(ind.DeMarker_norm);
 
-    payloapost_request += "&DP_PAAMM20=";
-    payloapost_request += DoubleToString(ind.DP_PAAMM20);
+      payloapost_request += "&DP_DMM20=";
+      payloapost_request += DoubleToString(ind.DP_DMM20);
 
-    payloapost_request += "&DP_MM20MM50=";
-    payloapost_request += DoubleToString(ind.DP_MM20MM50);
+      payloapost_request += "&DP_PAAMM20=";
+      payloapost_request += DoubleToString(ind.DP_PAAMM20);
 
-    payloapost_request += "&DP_D=";
-    payloapost_request += DoubleToString(ind.DP_D);
+      payloapost_request += "&DP_MM20MM50=";
+      payloapost_request += DoubleToString(ind.DP_MM20MM50);
 
-    payloapost_request += "&MFI_FW=";
-    payloapost_request += DoubleToString(ind.MFI_FW);
+      payloapost_request += "&DP_D=";
+      payloapost_request += DoubleToString(ind.DP_D);
 
-    payloapost_request += "&MFI_Cx=";
-    payloapost_request += DoubleToString(ind.MFI_Cx);
+      payloapost_request += "&MFI_FW=";
+      payloapost_request += DoubleToString(ind.MFI_FW);
 
-    payloapost_request += "&MFI_norm=";
-    payloapost_request += DoubleToString(ind.MFI_norm);
+      payloapost_request += "&MFI_Cx=";
+      payloapost_request += DoubleToString(ind.MFI_Cx);
 
-    payloapost_request += "&Momentum_Var=";
-    payloapost_request += DoubleToString(ind.Momentum_Var);
+      payloapost_request += "&MFI_norm=";
+      payloapost_request += DoubleToString(ind.MFI_norm);
 
-    payloapost_request += "&Momentum_Var_Cx=";
-    payloapost_request += DoubleToString(ind.Momentum_Var_Cx);
+      payloapost_request += "&Momentum_Var=";
+      payloapost_request += DoubleToString(ind.Momentum_Var);
 
-    payloapost_request += "&Momentum_norm=";
-    payloapost_request += DoubleToString(ind.Momentum_norm);
+      payloapost_request += "&Momentum_Var_Cx=";
+      payloapost_request += DoubleToString(ind.Momentum_Var_Cx);
 
-    payloapost_request += "&RSI_Var=";
-    payloapost_request += DoubleToString(ind.RSI_Var);
+      payloapost_request += "&Momentum_norm=";
+      payloapost_request += DoubleToString(ind.Momentum_norm);
 
-    payloapost_request += "&RSI_Var_Cx=";
-    payloapost_request += DoubleToString(ind.RSI_Var_Cx);
+      payloapost_request += "&RSI_Var=";
+      payloapost_request += DoubleToString(ind.RSI_Var);
 
-    payloapost_request += "&RSI_norm=";
-    payloapost_request += DoubleToString(ind.RSI_norm);
+      payloapost_request += "&RSI_Var_Cx=";
+      payloapost_request += DoubleToString(ind.RSI_Var_Cx);
 
-    payloapost_request += "&Stoch_FW=";
-    payloapost_request += DoubleToString(ind.Stoch_FW);
+      payloapost_request += "&RSI_norm=";
+      payloapost_request += DoubleToString(ind.RSI_norm);
 
-    payloapost_request += "&Stoch_Cx_0=";
-    payloapost_request += DoubleToString(ind.Stoch_Cx_0);
+      payloapost_request += "&Stoch_FW=";
+      payloapost_request += DoubleToString(ind.Stoch_FW);
 
-    payloapost_request += "&Stoch_Cx_1=";
-    payloapost_request += DoubleToString(ind.Stoch_Cx_1);
+      payloapost_request += "&Stoch_Cx_0=";
+      payloapost_request += DoubleToString(ind.Stoch_Cx_0);
 
-    payloapost_request += "&Stoch_norm_1=";
-    payloapost_request += DoubleToString(ind.Stoch_norm_1);
+      payloapost_request += "&Stoch_Cx_1=";
+      payloapost_request += DoubleToString(ind.Stoch_Cx_1);
 
-    payloapost_request += "&Stoch_norm_2=";
-    payloapost_request += DoubleToString(ind.Stoch_norm_2);
+      payloapost_request += "&Stoch_norm_1=";
+      payloapost_request += DoubleToString(ind.Stoch_norm_1);
 
-    payloapost_request += "&Volume_FW=";
-    payloapost_request += DoubleToString(ind.Volume_FW);
+      payloapost_request += "&Stoch_norm_2=";
+      payloapost_request += DoubleToString(ind.Stoch_norm_2);
 
-    payloapost_request += "&Volume_Cx=";
-    payloapost_request += DoubleToString(ind.Volume_Cx);
+      payloapost_request += "&Volume_FW=";
+      payloapost_request += DoubleToString(ind.Volume_FW);
 
-    payloapost_request += "&Volume_norm=";
-    payloapost_request += DoubleToString(ind.Volume_norm);
+      payloapost_request += "&Volume_Cx=";
+      payloapost_request += DoubleToString(ind.Volume_Cx);
 
-    payloapost_request += "&WPR_Var=";
-    payloapost_request += DoubleToString(ind.WPR_Var);
+      payloapost_request += "&Volume_norm=";
+      payloapost_request += DoubleToString(ind.Volume_norm);
 
-    payloapost_request += "&WPR_Var_Cx=";
-    payloapost_request += DoubleToString(ind.WPR_Var_Cx);
+      payloapost_request += "&WPR_Var=";
+      payloapost_request += DoubleToString(ind.WPR_Var);
 
-    payloapost_request += "&WPR_norm=";
-    payloapost_request += DoubleToString(ind.WPR_norm);
+      payloapost_request += "&WPR_Var_Cx=";
+      payloapost_request += DoubleToString(ind.WPR_Var_Cx);
 
-    this.SendData(base_url,payloapost_request);
+      payloapost_request += "&WPR_norm=";
+      payloapost_request += DoubleToString(ind.WPR_norm);
+
+      this.SendData(base_url,payloapost_request);
+      if(actual_i == xeon_count_periods) break;
+    }
   }
   delete(ind);
 }
@@ -218,9 +231,13 @@ void Xeon::Comentario()
 {
   if(Tipo_Comentario > 0)
   {
+    HiLo_OO *hilo = new HiLo_OO(4);
+
     Comentario_Robo = "Xeon: ";
-    // Comentario_Robo += "\n Spread: ";
+    // Comentario_Robo += "\n";
+    Comentario_Robo += IntegerToString(hilo.Direcao());
 //
+delete(hilo);
   }
 }
 

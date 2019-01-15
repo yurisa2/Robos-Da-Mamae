@@ -14,6 +14,7 @@ int Rand_Geral = MathRand();
 //#include <Charts\Chart.mqh>
 
 #include <Posicao.mqh>
+#include <JAson.mqh>
 #include <OnTrade.mqh>
 #include <Totalizador.mqh>
 #include <Normalizacao.mqh>

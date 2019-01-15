@@ -33,12 +33,13 @@ void Xeon::Avalia()
 
   int actual_i = 0;
 
-  CJAVal jv_main;
-  CJAVal jv;
+  CJAVal jv_main(NULL, jtUNDEF);
 
   for(int i = 0; i < 300 ; i++) {
     ind.Dados(i);
     if(direcao_now == ind.Hilo_Direcao) {
+
+      CJAVal *jv = new CJAVal;
 
       jv["i"] = (IntegerToString(i));
       jv["lucro"] = (DoubleToString(Preco(i+1).close - Preco(i+2).close));
@@ -102,11 +103,15 @@ void Xeon::Avalia()
       jv["WPR_Var_Cx"] = (DoubleToString(ind.WPR_Var_Cx));
       jv["WPR_norm"] = (DoubleToString(ind.WPR_norm));
 
-      jv_main.Add(actual_i);
-      jv_main[actual_i].Add(jv);
+      string index_s = IntegerToString(actual_i);
 
+      jv_main.Add(index_s);
+      jv_main[index_s].Add(jv);
+
+      delete(jv);
       //this.SendData(base_url,payloapost_request);
       actual_i++;
+
 
       if(actual_i == xeon_count_periods) {
         break;
@@ -115,10 +120,13 @@ void Xeon::Avalia()
     }
   }
 
-  Print(jv.Serialize());
   Print(jv_main.Serialize());
 
-  // this.SendJson(base_url,jv);
+  File_Gen *arquivo = new File_Gen("json_serialize.txt");
+  arquivo.Linha(jv_main.Serialize());
+  delete(arquivo);
+
+  // this.SendJson(base_url,jv_main);
   delete(ind);
 }
 

@@ -1,5 +1,5 @@
 /* -*- C++ -*- */
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class DP
@@ -41,7 +41,7 @@ int DP::PrecoRMM20(int barra = 0)
 
      MqlRates rates[];
      ArraySetAsSeries(rates,true);
-     int copied=CopyRates(Symbol(),0,0,200,rates);
+     int copied=CopyRates(Symbol(),0,0,barra+2,rates);
 
      MA *mm20 = new MA(20,MODE_SMA,TimeFrame);
 

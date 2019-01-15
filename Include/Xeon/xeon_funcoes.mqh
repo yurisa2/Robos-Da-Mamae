@@ -25,12 +25,15 @@ void Xeon::Avalia()
 
   string base_url = "http://localhost:8000/writecsv";
 
-  for(int i = 0; i < 1; i++) {
+  for(int i = 0; i < 300 ; i++) {
     ind.Dados(i);
     string payloapost_request;
 
     payloapost_request += "barra=";
     payloapost_request += IntegerToString(i);
+
+    payloapost_request += "&direcao=";
+    payloapost_request += DoubleToString(ind.Hilo_Direcao);
 
     payloapost_request += "&AC_Var=";
     payloapost_request += DoubleToString(ind.AC_Var);

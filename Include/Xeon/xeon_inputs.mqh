@@ -1,0 +1,13 @@
+/* -*- C++ -*- */
+
+
+
+
+input string Xeon_Label = "Configs do Xeon";  // -------------------XING-----------------
+input int xeon_desloc = 2;
+bool xeon_tempo_real = false; //Tempo Real (onTick - true) vs Candle (false)
+input int xeon_limite_inferior = 20; //Distancia para compra (TickSize)
+input int xeon_limite_superior = 80; //Distancia para venda (TickSize)
+input int xeon_limite_spread_max = 80; //Spread Max
+
+input bool xeon_invert = 1; //Invert (mas precisa meditar)

@@ -25,23 +25,24 @@ void Xeon::Avalia()
 {
   int status_exchange = this.Exchange();
 
+  Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+
   if(xeon_encerra_zero && status_exchange == 0)  {
   Opera_Mercado *opera = new Opera_Mercado;
   opera.FechaPosicao() ;
   delete(opera);
   }
 
-
-  if(status_exchange == 1) {
+  if(status_exchange == 1 && Condicoes.Horario()) {
     HiLo_OO *hilo = new HiLo_OO(4);
     int direcao_now = hilo.Direcao();
     delete(hilo);
 
     Opera_Mercado *opera = new Opera_Mercado;
-    opera.AbrePosicao(direcao_now, "Plumber API");
+    opera.AbrePosicao(direcao_now, "Entrada Xeon");
     delete(opera);
   }
-
+  delete(Condicoes);
 }
 
 int Xeon::Exchange()
@@ -101,10 +102,10 @@ int Xeon::Exchange()
       jv["DeMarker_Var"] = (DoubleToString(ind.DeMarker_Var));
       jv["DeMarker_Var_Cx"] = (DoubleToString(ind.DeMarker_Var_Cx));
       jv["DeMarker_norm"] = (DoubleToString(ind.DeMarker_norm));
-      jv["DP_DMM20"] = (DoubleToString(ind.DP_DMM20));
-      jv["DP_PAAMM20"] = (DoubleToString(ind.DP_PAAMM20));
-      jv["DP_MM20MM50"] = (DoubleToString(ind.DP_MM20MM50));
-      jv["DP_D"] = (DoubleToString(ind.DP_D));
+      // jv["DP_DMM20"] = (DoubleToString(ind.DP_DMM20));
+      // jv["DP_PAAMM20"] = (DoubleToString(ind.DP_PAAMM20));
+      // jv["DP_MM20MM50"] = (DoubleToString(ind.DP_MM20MM50));
+      // jv["DP_D"] = (DoubleToString(ind.DP_D));
       jv["MFI_FW"] = (DoubleToString(ind.MFI_FW));
       jv["MFI_Cx"] = (DoubleToString(ind.MFI_Cx));
       jv["MFI_norm"] = (DoubleToString(ind.MFI_norm));
@@ -128,12 +129,9 @@ int Xeon::Exchange()
 
       string index_s = IntegerToString(actual_i);
 
-      // jv_main.Add(index_s); // ANTES DE COMENTAR ESTAVA FUNCIONANDO;
-      // jv_main[index_s].Add(jv); // FUNCIONANDO TBM
       jv_main.Add(jv);
 
       delete(jv);
-      //this.SendData(base_url,payloapost_request);
       actual_i++;
 
       if(actual_i == xeon_count_periods) {
@@ -142,7 +140,7 @@ int Xeon::Exchange()
     }
   }
 
-  Print(jv_main.Serialize());
+  // Print(jv_main.Serialize());
 
   int retorno = this.SendJson(base_url,jv_main);
   delete(ind);
@@ -155,17 +153,16 @@ void Xeon::Comentario()
   {
     HiLo_OO *hilo = new HiLo_OO(4);
 
-    Comentario_Robo = "Xeon: ";
+    Comentario_Robo = "Direcao Xeon: ";
     // Comentario_Robo += "\n";
     Comentario_Robo += IntegerToString(hilo.Direcao());
-//
 delete(hilo);
   }
 }
 
 int Xeon::SendJson(string url, CJAVal &json_type){
 
-  Print("Sending Json");
+  Print("Sending Json" + Symbol());
 
   string cookie=NULL,result_headers;
   char   data[];
@@ -173,21 +170,26 @@ int Xeon::SendJson(string url, CJAVal &json_type){
   ResetLastError();
   string headers2 = "Content-Type: application/json\r\n";
 
-  ArrayResize(data, StringToCharArray(json_type.Serialize(), data, 0, WHOLE_ARRAY)-1);
+  ArrayResize(data,
+              StringToCharArray(json_type.Serialize(),
+              data, 0, WHOLE_ARRAY)-1);
 
   int res=WebRequest("POST",url,headers2,500,data,result,result_headers);
   if(res==-1)   {
     Print("Erro no WebRequest. Código de erro =",GetLastError());
-    MessageBox("É necessário adicionar um endereço '"+url+"' à lista de URL permitidas na guia 'Experts'","Erro",MB_ICONINFORMATION);
+    Print("É necessário adicionar um endereço '"+url+
+          "' à lista de URL permitidas na guia 'Experts'");
   }  else  {
     if(res==200)  {
 
-      Print(CharArrayToString(result));
-      int resultado_api = StringToInteger(StringSubstr(CharArrayToString(result),1,1));
-      Print(IntegerToString(resultado_api));
+      Print("Resultado Xeon: " + CharArrayToString(result) +
+            "Ativo: " + Symbol());
+      int resultado_api = (int)StringToInteger(StringSubstr(CharArrayToString(result),1,1));
+      Print("Processado Xeon: " + IntegerToString(resultado_api) +
+            "Simbolo" + Symbol());
       return resultado_api;
     } else {
-      PrintFormat("Erro de download '%s', código %d",url,res);
+      PrintFormat("Xeon - Erro de download '%s', código %d",url,res);
       return 0;
     }
     return 0;

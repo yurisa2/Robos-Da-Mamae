@@ -5,10 +5,10 @@ class Xeon
 
   public:
   void Comentario();
-  void SendData(string url, string headers);
-  void SendJson(string url, CJAVal &json_type);
+  int SendJson(string url, CJAVal &json_type);
 
   void Avalia();
+  int Exchange();
   Xeon();
 
   private:
@@ -22,6 +22,29 @@ void Xeon::Xeon()
 }
 
 void Xeon::Avalia()
+{
+  int status_exchange = this.Exchange();
+
+  if(xeon_encerra_zero && status_exchange == 0)  {
+  Opera_Mercado *opera = new Opera_Mercado;
+  opera.FechaPosicao() ;
+  delete(opera);
+  }
+
+
+  if(status_exchange == 1) {
+    HiLo_OO *hilo = new HiLo_OO(4);
+    int direcao_now = hilo.Direcao();
+    delete(hilo);
+
+    Opera_Mercado *opera = new Opera_Mercado;
+    opera.AbrePosicao(direcao_now, "Plumber API");
+    delete(opera);
+  }
+
+}
+
+int Xeon::Exchange()
 {
   Aquisicao *ind = new Aquisicao;
 
@@ -116,14 +139,14 @@ void Xeon::Avalia()
       if(actual_i == xeon_count_periods) {
         break;
       }
-
     }
   }
 
   Print(jv_main.Serialize());
 
-  this.SendJson(base_url,jv_main);
+  int retorno = this.SendJson(base_url,jv_main);
   delete(ind);
+  return retorno;
 }
 
 void Xeon::Comentario()
@@ -140,106 +163,34 @@ delete(hilo);
   }
 }
 
-void Xeon::SendData(string url, string content){
+int Xeon::SendJson(string url, CJAVal &json_type){
 
-  Print("SendingData");
-
-  string cookie=NULL,result_headers;
-     char   data[];
-     char result[];
-  //--- para trabalhar com o servidor é necessário adicionar a URL "https://finance.yahoo.com"
-  //--- na lista de URLs permitidas (menu Principal->Ferramentas->Opções, guia "Experts"):
-  //--- redefinimos o código do último erro
-     ResetLastError();
-  //--- download da página html do Yahoo Finance
-  // string headers2 = "Content-Type: application/x-www-form-urlencoded";
-  string headers2 = "";
-  // string headers2 = headers;
-//
-// first_name=John&last_name=Doe&action=Submit";
-
-  ArrayResize(data, StringToCharArray(content, data, 0, WHOLE_ARRAY)-1);
-
-     int res=WebRequest("POST",url,headers2,500,data,result,result_headers);
-     if(res==-1)
-       {
-        Print("Erro no WebRequest. Código de erro =",GetLastError());
-        //--- é possível que a URL não esteja na lista, exibimos uma mensagem sobre a necessidade de adicioná-la
-        MessageBox("É necessário adicionar um endereço '"+url+"' à lista de URL permitidas na guia 'Experts'","Erro",MB_ICONINFORMATION);
-       }
-     else
-       {
-        if(res==200)
-          {
-           //--- download bem-sucedido
-           PrintFormat("O arquivo foi baixado com sucesso, tamanho %d bytes.",ArraySize(result));
-           //PrintFormat("Cabeçalhos do servidor: %s",headers);
-           //--- salvamos os dados em um arquivo
-           int filehandle=FileOpen("url.htm",FILE_WRITE|FILE_BIN);
-           if(filehandle!=INVALID_HANDLE)
-             {
-              //--- armazenamos o conteúdo do array result[] no arquivo
-              FileWriteArray(filehandle,result,0,ArraySize(result));
-              //--- fechamos o arquivo
-              FileClose(filehandle);
-             }
-           else
-              Print("Erro em FileOpen. Código de erro =",GetLastError());
-          }
-        else
-           PrintFormat("Erro de download '%s', código %d",url,res);
-       }
-}
-
-void Xeon::SendJson(string url, CJAVal &json_type){
-
-  Print("SendingData");
+  Print("Sending Json");
 
   string cookie=NULL,result_headers;
-     char   data[];
-     char result[];
-  //--- para trabalhar com o servidor é necessário adicionar a URL "https://finance.yahoo.com"
-  //--- na lista de URLs permitidas (menu Principal->Ferramentas->Opções, guia "Experts"):
-  //--- redefinimos o código do último erro
-     ResetLastError();
-  //--- download da página html do Yahoo Finance
-  // string headers2 = "Content-Type: application/json";
-  // string headers2 = "Content-Type: text/plain\r\n";
+  char   data[];
+  char result[];
+  ResetLastError();
   string headers2 = "Content-Type: application/json\r\n";
-
-  // string headers2 = headers;
-//
-// first_name=John&last_name=Doe&action=Submit";
 
   ArrayResize(data, StringToCharArray(json_type.Serialize(), data, 0, WHOLE_ARRAY)-1);
 
-     int res=WebRequest("POST",url,headers2,500,data,result,result_headers);
-     if(res==-1)
-       {
-        Print("Erro no WebRequest. Código de erro =",GetLastError());
-        //--- é possível que a URL não esteja na lista, exibimos uma mensagem sobre a necessidade de adicioná-la
-        MessageBox("É necessário adicionar um endereço '"+url+"' à lista de URL permitidas na guia 'Experts'","Erro",MB_ICONINFORMATION);
-       }
-     else
-       {
-        if(res==200)
-          {
-           //--- download bem-sucedido
-           PrintFormat("O arquivo foi baixado com sucesso, tamanho %d bytes.",ArraySize(result));
-           //PrintFormat("Cabeçalhos do servidor: %s",headers);
-           //--- salvamos os dados em um arquivo
-           int filehandle=FileOpen("url.htm",FILE_WRITE|FILE_BIN);
-           if(filehandle!=INVALID_HANDLE)
-             {
-              //--- armazenamos o conteúdo do array result[] no arquivo
-              FileWriteArray(filehandle,result,0,ArraySize(result));
-              //--- fechamos o arquivo
-              FileClose(filehandle);
-             }
-           else
-              Print("Erro em FileOpen. Código de erro =",GetLastError());
-          }
-        else
-           PrintFormat("Erro de download '%s', código %d",url,res);
-       }
+  int res=WebRequest("POST",url,headers2,500,data,result,result_headers);
+  if(res==-1)   {
+    Print("Erro no WebRequest. Código de erro =",GetLastError());
+    MessageBox("É necessário adicionar um endereço '"+url+"' à lista de URL permitidas na guia 'Experts'","Erro",MB_ICONINFORMATION);
+  }  else  {
+    if(res==200)  {
+
+      Print(CharArrayToString(result));
+      int resultado_api = StringToInteger(StringSubstr(CharArrayToString(result),1,1));
+      Print(IntegerToString(resultado_api));
+      return resultado_api;
+    } else {
+      PrintFormat("Erro de download '%s', código %d",url,res);
+      return 0;
+    }
+    return 0;
+  }
+  return 0;
 }

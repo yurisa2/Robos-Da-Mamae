@@ -12,4 +12,4 @@ input int xeon_limite_spread_max = 80; //Spread Max
 input int xeon_count_periods = 100;
 input string xeon_url = "http://localhost:8000/writecsv";
 
-input bool xeon_invert = 1; //Invert (mas precisa meditar)
+input bool xeon_encerra_zero = 1; //Encerra em Zero no candle

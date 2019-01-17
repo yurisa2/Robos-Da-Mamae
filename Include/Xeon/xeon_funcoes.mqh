@@ -47,7 +47,7 @@ void Xeon::Avalia()
 
 int Xeon::Exchange()
 {
-  Aquisicao *ind = new Aquisicao;
+  Aquisicao *ind = new Aquisicao(xeon_norm);
 
   HiLo_OO *hilo = new HiLo_OO(4);
   int direcao_now = hilo.Direcao();

@@ -71,9 +71,9 @@ class Aquisicao {
   double WPR_Var;
   double WPR_Var_Cx;
   double WPR_norm;
+  int norm_period_;
 
   private:
-  int norm_period_;
 
 };
 
@@ -113,7 +113,7 @@ void Aquisicao::Dados(int barra = 0)
   //Valores 0-100
   AC_Var  =  AC_Ind.Valor(barra)  ;
   AD_Var   =  AD_Ind.Valor(barra)  ;
-  ADX_FW  = ADX_OO.Valor(barra) ;
+  ADX_FW  = ADX_OO.Valor(0,barra) ;
   ATR_Var =   ATR_Ind.Valor(barra) ;
   BullsP_Var =   BullsPower_Ind.Valor(barra+1) ;
   BearsP_Var =   BearsPower_Ind.Valor(barra+1) ;
@@ -131,7 +131,7 @@ void Aquisicao::Dados(int barra = 0)
   //Angulares -90-90 (mas....n�)
   AC_cx  =  AC_Ind.Cx(barra)*conv  ;
   AD_cx   =  AD_Ind.Cx(barra)*conv  ;
-  adx_cx  = ADX_OO.Cx(barra)*conv  ;
+  adx_cx  = ADX_OO.Cx(0,barra)*conv  ;
   ATR_cx =   ATR_Ind.Cx(barra)*conv;
   BullsP_Var_Cx =   BullsPower_Ind.Cx(barra)*conv;
   BearsP_Var_Cx =   BearsPower_Ind.Cx(barra)*conv;

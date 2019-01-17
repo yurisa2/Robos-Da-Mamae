@@ -428,3 +428,14 @@ double OnTester()
 
   return resultado;
 }
+
+double Normaliza_Hora(datetime TimeInput)
+{
+  string hrmn[2];
+  StringSplit(TimeToString(TimeInput,TIME_MINUTES),StringGetCharacter(":",0),hrmn);
+
+  double horas = StringToInteger(hrmn[0]) * 0.04166666666;
+  double minutos = StringToInteger(hrmn[1]) * 0.00069444444;
+
+  return horas+minutos;
+}

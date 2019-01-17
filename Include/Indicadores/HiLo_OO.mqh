@@ -32,13 +32,13 @@ int HiLo_OO::Direcao(int barra = 0)
   double ValorMA_Alta = MediaMovelAlta.Valor(barra);
   double ValorMA_Baixa = MediaMovelBaixa.Valor(barra);
 
-  if(daotick_geral > ValorMA_Alta) direcao = 1;
-  if(daotick_geral < ValorMA_Baixa) direcao = -1;
+  if(Preco(barra).close > ValorMA_Alta) direcao = 1;
+  if(Preco(barra).close < ValorMA_Baixa) direcao = -1;
 
   do
   {
-    if(daotick_geral > MediaMovelAlta.Valor(barra+i)) direcao = 1;
-    if(daotick_geral < MediaMovelBaixa.Valor(barra+i)) direcao = -1;
+    if(Preco(barra).close > MediaMovelAlta.Valor(barra+i)) direcao = 1;
+    if(Preco(barra).close < MediaMovelBaixa.Valor(barra+i)) direcao = -1;
     i++;
   }
   while(direcao == 0);

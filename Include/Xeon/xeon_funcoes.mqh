@@ -59,15 +59,15 @@ int Xeon::Exchange()
 
   CJAVal jv_main(NULL, jtUNDEF);
 
-  for(int i = 0; i < 300 ; i++) {
+  for(int i = 0; i < 3000 ; i++) {
     ind.Dados(i);
     if(direcao_now == ind.Hilo_Direcao) {
-
       CJAVal *jv = new CJAVal;
 
       jv["i"] = (IntegerToString(i));
       jv["lucro"] = (DoubleToString(Preco(i+1).close - Preco(i+2).close));
       jv["Hilo_Direcao"] = (DoubleToString(ind.Hilo_Direcao));
+      jv["time"] = (DoubleToString(Normaliza_Hora(Preco(i).time)));
       jv["AC_Var"] = (DoubleToString(ind.AC_Var));
       jv["AC_cx"] = (DoubleToString(ind.AC_cx));
       jv["AC_norm"] = (DoubleToString(ind.AC_norm));

@@ -23,26 +23,28 @@ void Xeon::Xeon()
 
 void Xeon::Avalia()
 {
+  HiLo_OO *hilo = new HiLo_OO(4);
   int status_exchange = this.Exchange();
 
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
 
-  if(xeon_encerra_zero && status_exchange == 0)  {
-  Opera_Mercado *opera = new Opera_Mercado;
-  opera.FechaPosicao() ;
-  delete(opera);
+  if((xeon_encerra_zero && status_exchange == 0) ||
+     (O_Stops.Tipo_Posicao() != 0 &&
+      O_Stops.Tipo_Posicao() != hilo.Direcao()) )  {
+    Opera_Mercado *opera = new Opera_Mercado;
+    opera.FechaPosicao() ;
+    delete(opera);
   }
 
   if(status_exchange == 1 && Condicoes.Horario()) {
-    HiLo_OO *hilo = new HiLo_OO(4);
     int direcao_now = hilo.Direcao();
-    delete(hilo);
 
     Opera_Mercado *opera = new Opera_Mercado;
     opera.AbrePosicao(direcao_now, "Entrada Xeon");
     delete(opera);
   }
   delete(Condicoes);
+  delete(hilo);
 }
 
 int Xeon::Exchange()

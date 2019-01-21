@@ -82,7 +82,7 @@ int Xeon::Exchange()
       jv["ATR_Var"] = (DoubleToString(ind.ATR_Var));
       jv["ATR_cx"] = (DoubleToString(ind.ATR_cx));
       jv["ATR_norm"] = (DoubleToString(ind.ATR_norm));
-      jv["BB_Delta_Bruto"] = (DoubleToString(ind.BB_Delta_Bruto));
+      jv["BB_Delta_Bruto"] = DoubleToString(ind.BB_Delta_Bruto);
       jv["BB_Delta_Bruto_Cx"] = (DoubleToString(ind.BB_Delta_Bruto_Cx));
       jv["BB_Delta_Bruto_norm"] = (DoubleToString(ind.BB_Delta_Bruto_norm));
       jv["Banda_Delta_Valor"] = (DoubleToString(ind.Banda_Delta_Valor));
@@ -153,12 +153,39 @@ void Xeon::Comentario()
 {
   if(Tipo_Comentario > 0)
   {
+
+    Aquisicao *ind = new Aquisicao(xeon_norm);
+    // DoubleToString(ind.BB_Delta_Bruto);
+    // DoubleToString(ind.BB_Delta_Bruto_Cx);
+    // DoubleToString(ind.BB_Delta_Bruto_norm);
+    // DoubleToString(ind.Banda_Delta_Valor);
+    // DoubleToString(ind.BB_Posicao_Percent);
+    // DoubleToString(ind.BB_Posicao_Percent_Cx);
+    // DoubleToString(ind.BB_Posicao_Percent_norm);
+
     HiLo_OO *hilo = new HiLo_OO(4);
 
     Comentario_Robo = "Direcao Xeon: ";
     // Comentario_Robo += "\n";
     Comentario_Robo += IntegerToString(hilo.Direcao());
+    Comentario_Robo += "\n";
+    ind.Dados(0);
+    Comentario_Robo += "\n";
+    Comentario_Robo += DoubleToString(ind.BB_Delta_Bruto);
+    ind.Dados(1);
+    Comentario_Robo += "\n";
+    Comentario_Robo += DoubleToString(ind.BB_Delta_Bruto);
+    ind.Dados(2);
+    Comentario_Robo += "\n";
+    Comentario_Robo += DoubleToString(ind.BB_Delta_Bruto);
+    ind.Dados(3);
+    Comentario_Robo += "\n";
+    Comentario_Robo += DoubleToString(ind.BB_Delta_Bruto);
+    ind.Dados(4);
+    Comentario_Robo += "\n";
+    Comentario_Robo += DoubleToString(ind.BB_Delta_Bruto);
 delete(hilo);
+delete(ind);
   }
 }
 

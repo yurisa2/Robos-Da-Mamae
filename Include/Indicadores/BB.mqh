@@ -104,9 +104,15 @@ double BB::BB_Delta_Bruto(int barra = 0)
   double delta_BB = 0;
   double TS_Div = 0.00000000001;
 
+
   if(Tick_Size > 0)  TS_Div = Tick_Size;
   delta_BB = BB_High(barra) - BB_Low(barra);
-  retorno = delta_BB / TS_Div;
+  retorno = delta_BB / SymbolInfoDouble(_Symbol,SYMBOL_TRADE_TICK_SIZE);
+  //retorno = delta_BB / TS_Div;
+  // Print("BB::BB_Delta_Bruto() Tick_Size" + DoubleToString(Tick_Size)); // DEBUG;
+  // Print("BB::BB_High() Tick_Size" + DoubleToString(BB_High(barra))); // DEBUG
+  // Print("BB::BB_Low() Tick_Size" + DoubleToString(BB_Low(barra))); // DEBUG
+  // Print(retorno);
 
   return retorno;
 }

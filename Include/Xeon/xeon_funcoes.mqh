@@ -164,7 +164,7 @@ delete(hilo);
 
 int Xeon::SendJson(string url, CJAVal &json_type){
 
-  Print("Sending Json" + Symbol());
+  Print("Sending Json: " + Symbol());
 
   string cookie=NULL,result_headers;
   char   data[];
@@ -188,7 +188,7 @@ int Xeon::SendJson(string url, CJAVal &json_type){
             "Ativo: " + Symbol());
       int resultado_api = (int)StringToInteger(StringSubstr(CharArrayToString(result),1,1));
       Print("Processado Xeon: " + IntegerToString(resultado_api) +
-            "Simbolo" + Symbol());
+            "| Simbolo: " + Symbol());
       return resultado_api;
     } else {
       PrintFormat("Xeon - Erro de download '%s', código %d",url,res);

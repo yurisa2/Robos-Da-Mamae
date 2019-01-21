@@ -10,6 +10,7 @@ class DP
   int MM20AcimaAbaixoMM50(int barra = 0);
   int PrecoRMM20(int barra = 0);
   int Direcao(int barra = 0);
+  int Permanencia(int barra = 0);
 
   private:
 
@@ -77,4 +78,16 @@ int DP::Direcao(int barra = 0)
      if(MM20AcimaAbaixoMM50(barra) < 0 && PrecoRMM20(barra) < 0 && DirecaoMM20(barra)  < 0) retorno = -1;
 
      return(retorno);
+}
+
+int DP::Permanencia(int barra = 0) {
+  int direcao_atual = this.Direcao(barra);
+  int counter = 0;
+
+  for (int i = 0; i < 1000; i++) {
+    if(direcao_atual == this.Direcao(barra+i)) counter++;
+    else break;
+  }
+
+  return counter;
 }

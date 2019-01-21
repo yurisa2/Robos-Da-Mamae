@@ -10,6 +10,8 @@ class HiLo_OO
   public:
   void HiLo_OO(int Periodo_Hilo = 4);
   int Direcao(int barra = 0);
+  int Permanencia(int barra = 0);
+
   int Mudanca();
 
   private:
@@ -83,11 +85,25 @@ int HiLo_OO::Mudanca()
 
   // Print("Hilo Mudanca... 0:" + historico_direcao[0] + " 1:" + historico_direcao[1] + " 2:" + historico_direcao[2]); //DEBUG
 
-if(historico_direcao[1] != historico_direcao[2]) retorno = historico_direcao[1]; //testar em tempo real
+  if(historico_direcao[1] != historico_direcao[2]) retorno = historico_direcao[1]; //testar em tempo real
 
   delete(MediaMovelAlta);
   delete(MediaMovelBaixa);
 
 
   return retorno;
+}
+
+int HiLo_OO::Permanencia(int barra = 0) {
+  int direcao_atual = this.Direcao(barra);
+  int counter = 0;
+
+  for (int i = 0; i < 1000; i++) {
+
+    if(direcao_atual == this.Direcao(barra+i)) counter++;
+    else break;
+
+  }
+
+  return counter;
 }

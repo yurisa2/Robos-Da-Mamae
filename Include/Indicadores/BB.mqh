@@ -19,7 +19,7 @@ class BB
   double BB_High(int barra = 0);
   double BB_Delta_Bruto(int barra = 0);
   double BB_Posicao_Percent(int barra = 0);
-  double Banda_Delta_Valor();
+  double Banda_Delta_Valor(int barra = 0);
 
   double Cx_BB_Low(int barra = 0, int periods = 7);
   double Cx_BB_Base(int barra = 0, int periods = 7);
@@ -143,7 +143,7 @@ double BB::BB_Posicao_Percent(int barra = 0)
   return retorno;
 }
 
-double BB::Banda_Delta_Valor()
+double BB::Banda_Delta_Valor(int barra = 0)
 {
   double delta = 0;
   double delta_media_candle = 0;
@@ -152,13 +152,13 @@ double BB::Banda_Delta_Valor()
   //Pega O historico
   MqlRates rates[];
   ArraySetAsSeries(rates,true);
-  int copied=CopyRates(Symbol(),0,0,200,rates);
+  int copied=CopyRates(Symbol(),0,0,barra+10,rates);
   // delta_media_candle = (((rates[1].high + rates[2].high + rates[3].high) / 3 ) - ((rates[1].low + rates[2].low + rates[3].low) / 3 )/Tick_Size);
-  delta_media_candle = (rates[1].high - rates[1].low);
+  delta_media_candle = (rates[barra+1].high - rates[barra+1].low);
 
   if(delta_media_candle == 0) delta_media_candle = 1;
 
-  delta = (BB_Delta_Bruto()/delta_media_candle) * 100 ;
+  delta = (BB_Delta_Bruto(barra)/delta_media_candle) * 100 ;
 
   // Print("delta: " + delta);
 

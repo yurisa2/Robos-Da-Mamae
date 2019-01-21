@@ -69,6 +69,8 @@ int Xeon::Exchange()
       jv["i"] = (IntegerToString(i));
       jv["lucro"] = (DoubleToString(Preco(i+1).close - Preco(i+2).close));
       jv["Hilo_Direcao"] = (DoubleToString(ind.Hilo_Direcao));
+      jv["Hilo_Perm"] = (DoubleToString(ind.Hilo_Perm));
+      jv["delta"] = (DoubleToString(Preco(i+1).close - Preco(i+2).close));
       jv["time"] = (DoubleToString(Normaliza_Hora(Preco(i).time)));
       jv["AC_Var"] = (DoubleToString(ind.AC_Var));
       jv["AC_cx"] = (DoubleToString(ind.AC_cx));
@@ -108,6 +110,7 @@ int Xeon::Exchange()
       // jv["DP_PAAMM20"] = (DoubleToString(ind.DP_PAAMM20));
       // jv["DP_MM20MM50"] = (DoubleToString(ind.DP_MM20MM50));
       // jv["DP_D"] = (DoubleToString(ind.DP_D));
+      jv["DP_D_Perm"] = (DoubleToString(ind.DP_D_Perm));
       jv["MFI_FW"] = (DoubleToString(ind.MFI_FW));
       jv["MFI_Cx"] = (DoubleToString(ind.MFI_Cx));
       jv["MFI_norm"] = (DoubleToString(ind.MFI_norm));

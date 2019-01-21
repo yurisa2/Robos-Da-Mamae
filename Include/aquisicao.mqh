@@ -42,7 +42,9 @@ class Aquisicao {
   int DP_PAAMM20;
   int DP_MM20MM50;
   int DP_D;
+  int DP_D_Perm;
   int Hilo_Direcao;
+  int Hilo_Perm;
   double MACD_FW;
   double MACD_Cx_0;
   double MACD_Cx_1;
@@ -124,7 +126,7 @@ void Aquisicao::Dados(int barra = 0)
   MFI_FW = MFI_OO.Valor(barra) ;
   Volume_FW = Volumes_OO.Valor(barra+1) ;
   DeMarker_Var =  DeMarker_Ind.Valor(barra)  ;
-  BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(barra);
+  BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(barra+1);
   RSI_Var =  RSI_OO.Valor(barra)  ;
   Stoch_FW = Stoch_OO.Valor(barra) ;
 
@@ -153,14 +155,16 @@ void Aquisicao::Dados(int barra = 0)
 
   //Brutos e Livres (as vezes at� bin�rios e relativos)
   BB_Delta_Bruto = Banda_BB.BB_Delta_Bruto(barra) ;
-  Banda_Delta_Valor = Banda_BB.Banda_Delta_Valor() ;
+  Banda_Delta_Valor = Banda_BB.Banda_Delta_Valor(barra) ;
   BWMFI_Var =   BWMFI_Ind.Valor(barra+1) ;
   CCI_Var =  CCI_Ind.Valor(barra)  ;
   DP_DMM20 = DP_Ind.DirecaoMM20(barra);
   DP_PAAMM20 = DP_Ind.PrecoRMM20(barra);
   DP_MM20MM50 = DP_Ind.MM20AcimaAbaixoMM50(barra);
   DP_D = DP_Ind.Direcao(barra);
-  Hilo_Direcao = hilo.Direcao(barra+1) ;
+  DP_D_Perm = DP_Ind.Permanencia(barra);
+  Hilo_Direcao = hilo.Direcao(barra+1);
+  Hilo_Perm = hilo.Permanencia(barra+1);
   MACD_FW = macd.Valor(barra) ;
   Momentum_Var =  Momentum_OO.Valor(barra)  ;
   WPR_Var = WPR_Ind.Valor(barra)   ;
@@ -168,7 +172,7 @@ void Aquisicao::Dados(int barra = 0)
   // Normalizados 0..1
   AC_norm = AC_Ind.Normalizado(barra,this.norm_period_);
   AD_norm = AD_Ind.Normalizado(barra,this.norm_period_);
-  adx_norm = ADX_OO.Normalizado(barra,this.norm_period_);
+  adx_norm = ADX_OO.Normalizado(0,barra,this.norm_period_);
   ATR_norm = ATR_Ind.Normalizado(barra,this.norm_period_);
   BB_Delta_Bruto_norm = Banda_BB.Normalizado_BB_Delta_Bruto(barra,this.norm_period_);
   BB_Posicao_Percent_norm = Banda_BB.Normalizado_BB_Posicao_Percent(barra,this.norm_period_);
@@ -180,8 +184,8 @@ void Aquisicao::Dados(int barra = 0)
   MFI_norm = MFI_OO.Normalizado(barra,this.norm_period_);
   Momentum_norm = Volumes_OO.Normalizado(barra,this.norm_period_);
   RSI_norm = RSI_OO.Normalizado(barra,this.norm_period_);
-  Stoch_norm_1 = Stoch_OO.Normalizado(barra,0,this.norm_period_);
-  Stoch_norm_2 = Stoch_OO.Normalizado(barra+1,0,this.norm_period_);
+  Stoch_norm_1 = Stoch_OO.Normalizado(0,barra,this.norm_period_);
+  Stoch_norm_2 = Stoch_OO.Normalizado(1,barra+1,this.norm_period_);
   Volume_norm = Volumes_OO.Normalizado(barra,this.norm_period_);
   WPR_norm = WPR_Ind.Normalizado(barra,this.norm_period_);
 

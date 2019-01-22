@@ -45,6 +45,9 @@ class Aquisicao {
   int DP_D_Perm;
   int Hilo_Direcao;
   int Hilo_Perm;
+  double MA_high;
+  double MA_low;
+  double MA_delta;
   double MACD_FW;
   double MACD_Cx_0;
   double MACD_Cx_1;
@@ -104,6 +107,8 @@ void Aquisicao::Dados(int barra = 0)
   DeMarker *DeMarker_Ind = new DeMarker();
   DP *DP_Ind = new DP();
   HiLo_OO *hilo = new HiLo_OO(4);
+  MA *MA_High_o = new MA(3,MODE_SMA,PERIOD_CURRENT,0,PRICE_HIGH);
+  MA *MA_Low_o = new MA(3,MODE_SMA,PERIOD_CURRENT,0,PRICE_LOW);
   MACD *macd = new MACD(12,26,9,NULL,TimeFrame);
   MFI *MFI_OO = new MFI(TimeFrame);
   Momentum *Momentum_OO = new Momentum();
@@ -165,6 +170,9 @@ void Aquisicao::Dados(int barra = 0)
   DP_D_Perm = DP_Ind.Permanencia(barra);
   Hilo_Direcao = hilo.Direcao(barra+1);
   Hilo_Perm = hilo.Permanencia(barra+1);
+  MA_high = MA_High_o.Valor(barra);
+  MA_low = MA_Low_o.Valor(barra);
+  MA_delta = MA_high - MA_low;
   MACD_FW = macd.Valor(barra) ;
   Momentum_Var =  Momentum_OO.Valor(barra)  ;
   WPR_Var = WPR_Ind.Valor(barra)   ;
@@ -203,6 +211,8 @@ void Aquisicao::Dados(int barra = 0)
   delete(CCI_Ind);
   delete(DeMarker_Ind);
   delete(hilo);
+  delete(MA_High_o);
+  delete(MA_Low_o);
   delete(macd);
   delete(MFI_OO);
   delete(Momentum_OO);

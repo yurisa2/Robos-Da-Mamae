@@ -30,6 +30,9 @@ int Rand_Geral = MathRand();
 #include <Stops_OO.mqh>
 #include <Condicoes.mqh>
 #include <Comentario.mqh>
+#include <Afis.mqh>
+#include <Math\Stat\Math.mqh>
+
 
 #include <Indicadores\AC.mqh>
 #include <Indicadores\AD.mqh>

@@ -5,7 +5,7 @@ class Aquisicao {
   void Aquisicao::Dados(int barra = 0);
   double Busca_Var(string Var);
   double AC_Var;
-  double AC_cx;
+    double AC_cx;
   double AC_norm;
   double AD_Var;
   double AD_cx;

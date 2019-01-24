@@ -114,6 +114,9 @@ int Xeon::Exchange()
       jv["MA_high"] = DoubleToString(ind.MA_high);
       jv["MA_low"] = DoubleToString(ind.MA_low);
       jv["MA_delta"] = DoubleToString(ind.MA_delta);
+      // jv["MACD_Cx_0"] = DoubleToString(ind.MACD_Cx_0);
+      // jv["MACD_Cx_1"] = DoubleToString(ind.MACD_Cx_1);
+      jv["MACD_FW"] = DoubleToString(ind.MACD_FW);
       jv["MFI_FW"] = DoubleToString(ind.MFI_FW);
       jv["MFI_Cx"] = DoubleToString(ind.MFI_Cx);
       jv["MFI_norm"] = DoubleToString(ind.MFI_norm);
@@ -209,7 +212,7 @@ int Xeon::SendJson(string url, CJAVal &json_type){
               StringToCharArray(json_type.Serialize(),
               data, 0, WHOLE_ARRAY)-1);
 
-  int res=WebRequest("POST",url,headers2,3000,data,result,result_headers);
+  int res=WebRequest("POST",url,headers2,20000,data,result,result_headers);
   if(res==-1)   {
     Print("Erro no WebRequest. Código de erro =",GetLastError());
     Print("É necessário adicionar um endereço '"+url+

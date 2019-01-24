@@ -73,6 +73,7 @@ ArrayResize(box_out,5);
                     box_out[4]); // MAX
 }
 
+// Extracts a Col as an array
 void Afis::Get_Feature_Col(double& dataset_feature_in[][100], double& feature_col_out[], int feature) {
   ArrayResize(feature_col_out,ArrayRange(dataset_feature_in,0));
 

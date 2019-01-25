@@ -17,6 +17,11 @@ class Afis
   void Get_Feature_Col(double& dataset_feature_in[][100], double& feature_col_out[], int feature);
   void BX_Cols(double& dataset_full_in[][100], double& feature_full_bx_out[][5]);
 
+  void Feature_Ranking();
+
+  void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CFuzzyVariable& InputFuzzyVar);
+  void Afis::Output_Var_Generator(int which_dataset,CFuzzyVariable& OutputFuzzyVar);
+
   double param_feature_min_cut;
 
   void Add_Line(double& line[]);
@@ -27,6 +32,7 @@ class Afis
   double dataset_0_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
   double dataset_1_bx[][5];
 
+  double feature_ranking[];
 
   double dataset[][100]; // Hope doesn't get shit
 
@@ -98,7 +104,63 @@ void Afis::BX_Cols(double& dataset_full_in[][100], double& feature_full_bx_out[]
   }
 }
 
+void Afis::Feature_Ranking() {
+  ArrayResize(feature_ranking,this.linesize);
+  double feature_ranking_temp[];
+  ArrayResize(feature_ranking_temp,this.linesize);
 
+  double vari_0;
+  double vari_1;
+
+  double feat_array0[];
+  double feat_array1[];
+  ArrayResize(feat_array0,this.linesize);
+  ArrayResize(feat_array1,this.linesize);
+
+  double features[];
+  ArrayResize(features,this.linesize);
+
+
+  for (int i = 1; i < this.linesize; i++) {
+    this.Get_Feature_Col(this.dataset_0,feat_array0,i);
+    this.Get_Feature_Col(this.dataset_1,feat_array1,i);
+
+
+    vari_0 = MathVariance(feat_array0);
+    vari_1 = MathVariance(feat_array1);
+
+    feature_ranking_temp[i] = MathMax(vari_0,vari_1) /
+    MathMin(vari_0,vari_1);
+  }
+
+Normaliza_Array(feature_ranking_temp,this.feature_ranking,1);
+}
+
+void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CFuzzyVariable& InputFuzzyVar) {
+double dataset_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
+
+if(which_dataset == 0) ArrayCopy(dataset_bx,this.dataset_0_bx);
+else ArrayCopy(dataset_bx,this.dataset_1_bx);
+
+    CFuzzyVariable *InputVar=new CFuzzyVariable(IntegerToString(Feature_idx),dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][4]);
+    InputVar.Terms().Add(new CFuzzyTerm("a3", new CTriangularMembershipFunction(dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][1])));
+    InputVar.Terms().Add(new CFuzzyTerm("a2", new CTriangularMembershipFunction(dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][1],dataset_bx[Feature_idx][2])));
+    InputVar.Terms().Add(new CFuzzyTerm("1", new CTriangularMembershipFunction(dataset_bx[Feature_idx][2],dataset_bx[Feature_idx][3],dataset_bx[Feature_idx][4])));
+    InputVar.Terms().Add(new CFuzzyTerm("b2", new CTriangularMembershipFunction(dataset_bx[Feature_idx][3],dataset_bx[Feature_idx][4],dataset_bx[Feature_idx][5])));
+    InputVar.Terms().Add(new CFuzzyTerm("b3", new CTriangularMembershipFunction(dataset_bx[Feature_idx][4],dataset_bx[Feature_idx][5],dataset_bx[Feature_idx][5])));
+
+    InputFuzzyVar = InputVar;
+}
+
+void Afis::Output_Var_Generator(int which_dataset,CFuzzyVariable& OutputFuzzyVar) {
+  CFuzzyVariable *OutputVar=new CFuzzyVariable("Resultado",0,100);
+  OutputVar.Terms().Add(new CFuzzyTerm("a3", new CTriangularMembershipFunction(0,0,25)));
+  OutputVar.Terms().Add(new CFuzzyTerm("a2", new CTriangularMembershipFunction(0,25,50)));
+  OutputVar.Terms().Add(new CFuzzyTerm("1", new CTriangularMembershipFunction(25,50,75)));
+  OutputVar.Terms().Add(new CFuzzyTerm("b2", new CTriangularMembershipFunction(50,75,100)));
+  OutputVar.Terms().Add(new CFuzzyTerm("b3", new CTriangularMembershipFunction(75,100,100)));
+  OutputFuzzyVar = OutputVar;
+}
 
 //  auto_feature_selector
   // - Evaluate and rank Features comparing their BX values

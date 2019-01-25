@@ -9,7 +9,9 @@
 class Afis
 {
   public:
-  Afis() {this.linesize = 100;};
+  Afis() {this.linesize = 100;
+          this.param_feature_min_cut = 0.5;
+  };
 
   void divide_datasets(double& dataset_inteiro[][100]);
 
@@ -19,10 +21,14 @@ class Afis
 
   void Feature_Ranking();
 
+  void Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep);
   void Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model);
   void Output_Var_Generator(int which_dataset,CMamdaniFuzzySystem& Afis_Model);
   void StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model);
+  void Feature_Selector(int& Features_idx[]);
+  void Process(double& process[]);
 
+  int selected_features[];
 
   double param_feature_min_cut;
 
@@ -138,6 +144,16 @@ void Afis::Feature_Ranking() {
 Normaliza_Array(feature_ranking_temp,this.feature_ranking,1);
 }
 
+void Afis::Feature_Selector(int& Features_idx[]) {
+
+  for(int i = 0; i < ArrayRange(this.feature_ranking,0); i++) {
+    if(this.feature_ranking[i] > param_feature_min_cut) {
+      ArrayResize(Features_idx,ArrayRange(Features_idx,0)+1);
+      Features_idx[ArrayRange(Features_idx,0)-1] = i;
+    }
+  }
+}
+
 void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model) {
 double dataset_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
 
@@ -174,6 +190,24 @@ void Afis::StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model) {
   Afis_Model.Rules().Add(rule3);
   Afis_Model.Rules().Add(rule4);
   Afis_Model.Rules().Add(rule5);
+}
+
+void Afis::Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep) {
+
+     this.Output_Var_Generator(which_dataset,Afis_Model_Sep);
+
+     for (int i = 0; i < ArrayRange(selected_features,0); i++) {
+       this.Input_Var_Generator(which_dataset,selected_features[i],Afis_Model_Sep);
+       this.StaticRules(selected_features[i], Afis_Model_Sep);
+     }
+}
+
+void Afis::Process(double& process[]) {
+  ArrayResize(process,2);
+
+  this.divide_datasets(this.dataset);
+
+
 }
 
 //  auto_feature_selector

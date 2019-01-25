@@ -19,8 +19,10 @@ class Afis
 
   void Feature_Ranking();
 
-  void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CFuzzyVariable& InputFuzzyVar);
-  void Afis::Output_Var_Generator(int which_dataset,CFuzzyVariable& OutputFuzzyVar);
+  void Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model);
+  void Output_Var_Generator(int which_dataset,CMamdaniFuzzySystem& Afis_Model);
+  void StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model);
+
 
   double param_feature_min_cut;
 
@@ -136,30 +138,42 @@ void Afis::Feature_Ranking() {
 Normaliza_Array(feature_ranking_temp,this.feature_ranking,1);
 }
 
-void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CFuzzyVariable& InputFuzzyVar) {
+void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model) {
 double dataset_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
 
 if(which_dataset == 0) ArrayCopy(dataset_bx,this.dataset_0_bx);
 else ArrayCopy(dataset_bx,this.dataset_1_bx);
 
-    CFuzzyVariable *InputVar=new CFuzzyVariable(IntegerToString(Feature_idx),dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][4]);
+    CFuzzyVariable *InputVar = new CFuzzyVariable(IntegerToString(Feature_idx),dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][4]);
     InputVar.Terms().Add(new CFuzzyTerm("a3", new CTriangularMembershipFunction(dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][1])));
     InputVar.Terms().Add(new CFuzzyTerm("a2", new CTriangularMembershipFunction(dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][1],dataset_bx[Feature_idx][2])));
     InputVar.Terms().Add(new CFuzzyTerm("1", new CTriangularMembershipFunction(dataset_bx[Feature_idx][2],dataset_bx[Feature_idx][3],dataset_bx[Feature_idx][4])));
     InputVar.Terms().Add(new CFuzzyTerm("b2", new CTriangularMembershipFunction(dataset_bx[Feature_idx][3],dataset_bx[Feature_idx][4],dataset_bx[Feature_idx][5])));
     InputVar.Terms().Add(new CFuzzyTerm("b3", new CTriangularMembershipFunction(dataset_bx[Feature_idx][4],dataset_bx[Feature_idx][5],dataset_bx[Feature_idx][5])));
 
-    InputFuzzyVar = InputVar;
+    Afis_Model.Input().Add(InputVar);
 }
 
-void Afis::Output_Var_Generator(int which_dataset,CFuzzyVariable& OutputFuzzyVar) {
-  CFuzzyVariable *OutputVar=new CFuzzyVariable("Resultado",0,100);
-  OutputVar.Terms().Add(new CFuzzyTerm("a3", new CTriangularMembershipFunction(0,0,25)));
-  OutputVar.Terms().Add(new CFuzzyTerm("a2", new CTriangularMembershipFunction(0,25,50)));
-  OutputVar.Terms().Add(new CFuzzyTerm("1", new CTriangularMembershipFunction(25,50,75)));
-  OutputVar.Terms().Add(new CFuzzyTerm("b2", new CTriangularMembershipFunction(50,75,100)));
-  OutputVar.Terms().Add(new CFuzzyTerm("b3", new CTriangularMembershipFunction(75,100,100)));
-  OutputFuzzyVar = OutputVar;
+void Afis::Output_Var_Generator(int which_dataset,CMamdaniFuzzySystem& Afis_Model) {
+  CFuzzyVariable *OutputVar = new CFuzzyVariable("Resultado",0,100);
+  OutputVar.Terms().Add(new CFuzzyTerm("Baixo", new CTriangularMembershipFunction(0,0,50)));
+  OutputVar.Terms().Add(new CFuzzyTerm("Neutro", new CTriangularMembershipFunction(0,50,100)));
+  OutputVar.Terms().Add(new CFuzzyTerm("Alto", new CTriangularMembershipFunction(50,100,100)));
+  Afis_Model.Output().Add(OutputVar);
+
+}
+
+void Afis::StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model) {
+  CMamdaniFuzzyRule *rule1 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is a3) then (Resultado is Baixo)");
+  CMamdaniFuzzyRule *rule2 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is a2) then (Resultado is Neutro)");
+  CMamdaniFuzzyRule *rule3 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is 1) then (Resultado is Alto)");
+  CMamdaniFuzzyRule *rule4 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is b2) then (Resultado is Neutro)");
+  CMamdaniFuzzyRule *rule5 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is b3) then (Resultado is Baixo)");
+  Afis_Model.Rules().Add(rule1);
+  Afis_Model.Rules().Add(rule2);
+  Afis_Model.Rules().Add(rule3);
+  Afis_Model.Rules().Add(rule4);
+  Afis_Model.Rules().Add(rule5);
 }
 
 //  auto_feature_selector

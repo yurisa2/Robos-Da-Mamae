@@ -12,6 +12,7 @@ class Afis
   Afis() {this.linesize = 100;
           this.param_feature_min_cut = 0.5;
           this.debug_afis = false;
+          this.feature_method = "variance";
   };
 
   bool debug_afis;
@@ -49,6 +50,7 @@ class Afis
 
   double dataset[][100]; // Hope doesn't get shit
 
+  string feature_method;
 
   private:
 
@@ -122,8 +124,6 @@ void Afis::Feature_Ranking() {
   double feature_ranking_temp[];
   ArrayResize(feature_ranking_temp,this.linesize);
 
-  double vari_0;
-  double vari_1;
 
   double feat_array0[];
   double feat_array1[];
@@ -138,31 +138,67 @@ void Afis::Feature_Ranking() {
     this.Get_Feature_Col(this.dataset_0,feat_array0,i);
     this.Get_Feature_Col(this.dataset_1,feat_array1,i);
 
+    if(this.feature_method == "variance"){
+      double vari_0;
+      double vari_1;
 
-    vari_0 = MathVariance(feat_array0);
-    vari_1 = MathVariance(feat_array1);
+      vari_0 = MathVariance(feat_array0);
+      vari_1 = MathVariance(feat_array1);
 
-    if(vari_0 == 0) vari_0 = 0.0000001;
-    if(vari_1 == 0) vari_1 = 0.0000001;
+      if(vari_0 == 0) vari_0 = 0.0000001;
+      if(vari_1 == 0) vari_1 = 0.0000001;
 
-    feature_ranking_temp[i] = MathMax(vari_0,vari_1) /
-    MathMin(vari_0,vari_1);
+      feature_ranking_temp[i] = MathMax(vari_0,vari_1) /
+      MathMin(vari_0,vari_1);
+      }
+
+    if(this.feature_method == "std"){
+      double std_0;
+      double std_1;
+
+      std_0 = MathStandardDeviation(feat_array0);
+      std_1 = MathStandardDeviation(feat_array1);
+
+      if(std_0 == 0) std_0 = 0.0000001;
+      if(std_1 == 0) std_1 = 0.0000001;
+
+      feature_ranking_temp[i] = MathMax(std_0,std_1) /
+      MathMin(std_0,std_1);
+      }
   }
 
   if(this.debug_afis) {
-    for (int i = 0; i < ArrayRange(feature_ranking_temp,0); i++) {
-      Print("i: " + IntegerToString(i) + " | feature_ranking_temp[i]: ",DoubleToString(feature_ranking_temp[i]));
-    }
-
+  for (int i = 0; i < ArrayRange(feature_ranking_temp,0); i++) {
+    Print("i: " + IntegerToString(i) + " | feature_ranking_temp[i]: ",DoubleToString(feature_ranking_temp[i]));
   }
+}
 
 Normaliza_Array(feature_ranking_temp,this.feature_ranking,1);
+
 }
 
 void Afis::Feature_Selector(int& Features_idx[]) {
 
-  for(int i = 0; i < ArrayRange(this.feature_ranking,0); i++) {
-    if(this.feature_ranking[i] > param_feature_min_cut) {
+
+    double        minimum;
+    double        lower_hinge;
+    double        median;
+    double        upper_hinge;
+    double        maximum;
+
+    MathTukeySummary(
+      this.feature_ranking,
+      true,
+      minimum,
+      lower_hinge,
+      median,
+      upper_hinge,
+      maximum        // maximum value
+    );
+
+
+  for(int i = 1; i < ArrayRange(this.feature_ranking,0); i++) {
+    if(this.feature_ranking[i] > upper_hinge) {
       ArrayResize(Features_idx,ArrayRange(Features_idx,0)+1);
       Features_idx[ArrayRange(Features_idx,0)-1] = i;
     }
@@ -240,6 +276,19 @@ void Afis::Process(double& process[]) {
       Print("i: " + IntegerToString(i) + " | this.feature_ranking[i]: ",DoubleToString(this.feature_ranking[i]));
     }
   }
+
+  int results_order[];
+
+  // MathOrder(this.feature_ranking,results_order);
+  // ArrayPrint(results_order);
+
+  //
+  // Print("minimum" +  minimum);
+  // Print("lower_hinge" +  lower_hinge);
+  // Print("median" +  median);
+  // Print("upper_hinge" +  upper_hinge);
+  // Print("maximum" +  maximum);
+
   this.Feature_Selector(this.selected_features);
   if(debug_afis) {
     for (int i = 0; i < ArrayRange(this.selected_features,0); i++) {
@@ -250,7 +299,6 @@ void Afis::Process(double& process[]) {
   CList *in0=new CList;
   CList *in1=new CList;
 
-
   // 0 MODEL
   CMamdaniFuzzySystem *Model_0 = new CMamdaniFuzzySystem();
   this.Fuzzy_Model(0,Model_0,in0);
@@ -258,7 +306,6 @@ void Afis::Process(double& process[]) {
   // 1 MODEL
   CMamdaniFuzzySystem *Model_1 = new CMamdaniFuzzySystem();
   this.Fuzzy_Model(1,Model_1,in1);
-
 
   CList *result0;
   CList *result1;
@@ -269,8 +316,8 @@ void Afis::Process(double& process[]) {
   Afis_Dic0 = result0.GetNodeAtIndex(0);
   Afis_Dic1 = result1.GetNodeAtIndex(0);
 
-Print("Afis_Dic0.Value()" + Afis_Dic0.Value());
-Print("Afis_Dic1.Value()" + Afis_Dic1.Value());
+  process[0] = Afis_Dic0.Value();
+  process[1] = Afis_Dic1.Value();
 
   delete(Afis_Dic0);
   delete(Afis_Dic1);
@@ -281,17 +328,3 @@ Print("Afis_Dic1.Value()" + Afis_Dic1.Value());
   delete(Model_0);
   delete(Model_1);
 }
-
-
-//  auto_feature_selector
-  // - Evaluate and rank Features comparing their BX values
-  // - Select features by a param
-  // - Grava Indices (classificacoes/pesos)
-
-
-
-// Main AFIS
-// Cria Entradas
-// Cria Saidas
-// Cria Regras - Fixas e dinamicas
-// Avalia Saidas

@@ -11,7 +11,10 @@ class Afis
   public:
   Afis() {this.linesize = 100;
           this.param_feature_min_cut = 0.5;
+          this.debug_afis = false;
   };
+
+  bool debug_afis;
 
   void divide_datasets(double& dataset_inteiro[][100]);
 
@@ -21,9 +24,9 @@ class Afis
 
   void Feature_Ranking();
 
-  void Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep);
-  void Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model);
-  void Output_Var_Generator(int which_dataset,CMamdaniFuzzySystem& Afis_Model);
+  void Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in);
+  void Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model, CList& in);
+  void Output_Var_Generator(CMamdaniFuzzySystem& Afis_Model);
   void StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model);
   void Feature_Selector(int& Features_idx[]);
   void Process(double& process[]);
@@ -39,6 +42,8 @@ class Afis
 
   double dataset_0_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
   double dataset_1_bx[][5];
+
+  double input_fuzzy[];
 
   double feature_ranking[];
 
@@ -137,8 +142,18 @@ void Afis::Feature_Ranking() {
     vari_0 = MathVariance(feat_array0);
     vari_1 = MathVariance(feat_array1);
 
+    if(vari_0 == 0) vari_0 = 0.0000001;
+    if(vari_1 == 0) vari_1 = 0.0000001;
+
     feature_ranking_temp[i] = MathMax(vari_0,vari_1) /
     MathMin(vari_0,vari_1);
+  }
+
+  if(this.debug_afis) {
+    for (int i = 0; i < ArrayRange(feature_ranking_temp,0); i++) {
+      Print("i: " + IntegerToString(i) + " | feature_ranking_temp[i]: ",DoubleToString(feature_ranking_temp[i]));
+    }
+
   }
 
 Normaliza_Array(feature_ranking_temp,this.feature_ranking,1);
@@ -154,8 +169,13 @@ void Afis::Feature_Selector(int& Features_idx[]) {
   }
 }
 
-void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model) {
+void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model, CList& in) {
 double dataset_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
+ArrayResize(dataset_bx,this.linesize);
+ArrayResize(input_fuzzy,this.linesize);
+
+CDictionary_Obj_Double *rule_dic = new CDictionary_Obj_Double;
+
 
 if(which_dataset == 0) ArrayCopy(dataset_bx,this.dataset_0_bx);
 else ArrayCopy(dataset_bx,this.dataset_1_bx);
@@ -163,14 +183,17 @@ else ArrayCopy(dataset_bx,this.dataset_1_bx);
     CFuzzyVariable *InputVar = new CFuzzyVariable(IntegerToString(Feature_idx),dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][4]);
     InputVar.Terms().Add(new CFuzzyTerm("a3", new CTriangularMembershipFunction(dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][1])));
     InputVar.Terms().Add(new CFuzzyTerm("a2", new CTriangularMembershipFunction(dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][1],dataset_bx[Feature_idx][2])));
-    InputVar.Terms().Add(new CFuzzyTerm("1", new CTriangularMembershipFunction(dataset_bx[Feature_idx][2],dataset_bx[Feature_idx][3],dataset_bx[Feature_idx][4])));
-    InputVar.Terms().Add(new CFuzzyTerm("b2", new CTriangularMembershipFunction(dataset_bx[Feature_idx][3],dataset_bx[Feature_idx][4],dataset_bx[Feature_idx][5])));
-    InputVar.Terms().Add(new CFuzzyTerm("b3", new CTriangularMembershipFunction(dataset_bx[Feature_idx][4],dataset_bx[Feature_idx][5],dataset_bx[Feature_idx][5])));
+    InputVar.Terms().Add(new CFuzzyTerm("n1", new CTriangularMembershipFunction(dataset_bx[Feature_idx][1],dataset_bx[Feature_idx][2],dataset_bx[Feature_idx][3])));
+    InputVar.Terms().Add(new CFuzzyTerm("b2", new CTriangularMembershipFunction(dataset_bx[Feature_idx][2],dataset_bx[Feature_idx][3],dataset_bx[Feature_idx][4])));
+    InputVar.Terms().Add(new CFuzzyTerm("b3", new CTriangularMembershipFunction(dataset_bx[Feature_idx][3],dataset_bx[Feature_idx][4],dataset_bx[Feature_idx][4])));
 
     Afis_Model.Input().Add(InputVar);
+
+    rule_dic.SetAll(InputVar, n_(this.input_fuzzy[Feature_idx],dataset_bx[Feature_idx][0],dataset_bx[Feature_idx][4]));
+    in.Add(rule_dic);
 }
 
-void Afis::Output_Var_Generator(int which_dataset,CMamdaniFuzzySystem& Afis_Model) {
+void Afis::Output_Var_Generator(CMamdaniFuzzySystem& Afis_Model) {
   CFuzzyVariable *OutputVar = new CFuzzyVariable("Resultado",0,100);
   OutputVar.Terms().Add(new CFuzzyTerm("Baixo", new CTriangularMembershipFunction(0,0,50)));
   OutputVar.Terms().Add(new CFuzzyTerm("Neutro", new CTriangularMembershipFunction(0,50,100)));
@@ -180,11 +203,11 @@ void Afis::Output_Var_Generator(int which_dataset,CMamdaniFuzzySystem& Afis_Mode
 }
 
 void Afis::StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model) {
-  CMamdaniFuzzyRule *rule1 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is a3) then (Resultado is Baixo)");
-  CMamdaniFuzzyRule *rule2 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is a2) then (Resultado is Neutro)");
-  CMamdaniFuzzyRule *rule3 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is 1) then (Resultado is Alto)");
-  CMamdaniFuzzyRule *rule4 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is b2) then (Resultado is Neutro)");
-  CMamdaniFuzzyRule *rule5 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is b3) then (Resultado is Baixo)");
+  CMamdaniFuzzyRule *rule1 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is a3) then Resultado is Baixo");
+  CMamdaniFuzzyRule *rule2 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is a2) then Resultado is Neutro");
+  CMamdaniFuzzyRule *rule3 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is n1) then Resultado is Alto");
+  CMamdaniFuzzyRule *rule4 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is b2) then Resultado is Neutro");
+  CMamdaniFuzzyRule *rule5 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is b3) then Resultado is Baixo");
   Afis_Model.Rules().Add(rule1);
   Afis_Model.Rules().Add(rule2);
   Afis_Model.Rules().Add(rule3);
@@ -192,12 +215,12 @@ void Afis::StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model) {
   Afis_Model.Rules().Add(rule5);
 }
 
-void Afis::Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep) {
+void Afis::Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in) {
 
-     this.Output_Var_Generator(which_dataset,Afis_Model_Sep);
+     this.Output_Var_Generator(Afis_Model_Sep);
 
      for (int i = 0; i < ArrayRange(selected_features,0); i++) {
-       this.Input_Var_Generator(which_dataset,selected_features[i],Afis_Model_Sep);
+       this.Input_Var_Generator(which_dataset,selected_features[i],Afis_Model_Sep,in);
        this.StaticRules(selected_features[i], Afis_Model_Sep);
      }
 }
@@ -207,8 +230,58 @@ void Afis::Process(double& process[]) {
 
   this.divide_datasets(this.dataset);
 
+  this.BX_Cols(this.dataset_0,this.dataset_0_bx);
 
+  this.BX_Cols(this.dataset_1,this.dataset_1_bx);
+
+  this.Feature_Ranking();
+  if(debug_afis) {
+    for (int i = 0; i < ArrayRange(this.feature_ranking,0); i++) {
+      Print("i: " + IntegerToString(i) + " | this.feature_ranking[i]: ",DoubleToString(this.feature_ranking[i]));
+    }
+  }
+  this.Feature_Selector(this.selected_features);
+  if(debug_afis) {
+    for (int i = 0; i < ArrayRange(this.selected_features,0); i++) {
+      Print("i: ",IntegerToString(i)," | this.selected_features[i]: ",DoubleToString(this.selected_features[i]));
+    }
+  }
+
+  CList *in0=new CList;
+  CList *in1=new CList;
+
+
+  // 0 MODEL
+  CMamdaniFuzzySystem *Model_0 = new CMamdaniFuzzySystem();
+  this.Fuzzy_Model(0,Model_0,in0);
+
+  // 1 MODEL
+  CMamdaniFuzzySystem *Model_1 = new CMamdaniFuzzySystem();
+  this.Fuzzy_Model(1,Model_1,in1);
+
+
+  CList *result0;
+  CList *result1;
+  CDictionary_Obj_Double *Afis_Dic0;
+  CDictionary_Obj_Double *Afis_Dic1;
+  result0 = Model_0.Calculate(in0);
+  result1 = Model_1.Calculate(in1);
+  Afis_Dic0 = result0.GetNodeAtIndex(0);
+  Afis_Dic1 = result1.GetNodeAtIndex(0);
+
+Print("Afis_Dic0.Value()" + Afis_Dic0.Value());
+Print("Afis_Dic1.Value()" + Afis_Dic1.Value());
+
+  delete(Afis_Dic0);
+  delete(Afis_Dic1);
+  delete(result0);
+  delete(result1);
+  delete(in0);
+  delete(in1);
+  delete(Model_0);
+  delete(Model_1);
 }
+
 
 //  auto_feature_selector
   // - Evaluate and rank Features comparing their BX values

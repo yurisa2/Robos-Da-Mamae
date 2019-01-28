@@ -446,8 +446,8 @@ double Normaliza_Hora(datetime TimeInput)
 void Normaliza_Array(double& array_entrada[], double& array_saida[], int start_point = 0) {
   ArrayResize(array_saida,ArrayRange(array_entrada,0));
 
-  double Z_min = array_entrada[ArrayMinimum(array_entrada)];
-  double Z_max = array_entrada[ArrayMaximum(array_entrada)];
+  double Z_min = array_entrada[ArrayMinimum(array_entrada,start_point)];
+  double Z_max = array_entrada[ArrayMaximum(array_entrada,start_point)];
 
   double Z_max_Zmin = Z_max - Z_min;
   if(Z_max_Zmin == 0 ) Z_max_Zmin = 0.000000000000000000001;

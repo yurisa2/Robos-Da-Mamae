@@ -124,9 +124,13 @@ void Afis::Feature_Ranking() {
   double feature_ranking_temp[];
   ArrayResize(feature_ranking_temp,this.linesize);
 
-
   double feat_array0[];
   double feat_array1[];
+
+  double feat_array_target[];
+  double feat_array_full[];
+
+
   ArrayResize(feat_array0,this.linesize);
   ArrayResize(feat_array1,this.linesize);
 
@@ -138,6 +142,9 @@ void Afis::Feature_Ranking() {
     this.Get_Feature_Col(this.dataset_0,feat_array0,i);
     this.Get_Feature_Col(this.dataset_1,feat_array1,i);
 
+    this.Get_Feature_Col(this.dataset,feat_array_target,0);
+    this.Get_Feature_Col(this.dataset,feat_array_full,i);
+
     if(this.feature_method == "variance"){
       double vari_0;
       double vari_1;
@@ -145,11 +152,12 @@ void Afis::Feature_Ranking() {
       vari_0 = MathVariance(feat_array0);
       vari_1 = MathVariance(feat_array1);
 
-      if(vari_0 == 0) vari_0 = 0.001;
-      if(vari_1 == 0) vari_1 = 0.001;
-
-      feature_ranking_temp[i] = MathMax(vari_0,vari_1) /
-      MathMin(vari_0,vari_1);
+      if(vari_0 == 0 || vari_1 == 0) {
+        feature_ranking_temp[i] = 0;
+      } else {
+        feature_ranking_temp[i] = MathMax(vari_0,vari_1) /
+        MathMin(vari_0,vari_1);
+      }
     }
 
     if(this.feature_method == "quantile"){
@@ -209,9 +217,18 @@ void Afis::Feature_Ranking() {
       double p_total = delta_median;
 
       feature_ranking_temp[i] = p_total;
-
     }
 
+    if(this.feature_method == "spearman"){
+        // double spear_0;
+        double spear;
+
+        // spear_0 = MathCorrelationSpearman(feat_array0,feat_array0_target[],spear_0);
+        spear = MathCorrelationSpearman(feat_array_target,feat_array_full,spear);
+
+
+        feature_ranking_temp[i] = MathAbs(spear);
+        }
   }
 
   if(this.debug_afis) {

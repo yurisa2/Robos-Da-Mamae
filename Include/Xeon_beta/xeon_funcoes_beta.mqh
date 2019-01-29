@@ -119,10 +119,10 @@ void Xeon_beta::Avalia() {
 
   Afis *afis = new Afis;
 
-  afis.param_feature_min_cut = 0;
-  afis.debug_afis = true;
+  afis.param_feature_min_cut = xeon_cut;
+  afis.debug_afis = false;
 
-  afis.feature_method = "quantile";
+  afis.feature_method = "spearman";
 
   HiLo_OO *hilo = new HiLo_OO(4);
   int direcao_now = hilo.Direcao();
@@ -164,9 +164,8 @@ afis.Process(processado);
 
 int status_exchange = 0;
 
-if(processado[1] > processado[0] &&
-  processado[0] > 16 &&
-  processado[1] > 16)
+if(processado[1] > xeon_thresh &&
+  processado[0] > 16)
 {
   Print("direcao_now: " + direcao_now + " | Vai: 1 - v0: " + DoubleToString(processado[0],2) + " | v1: " + DoubleToString(processado[1],2));
   status_exchange = 1;

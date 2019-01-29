@@ -13,9 +13,16 @@ class Afis
           this.param_feature_min_cut = 0.5;
           this.debug_afis = false;
           this.feature_method = "variance";
+          this.feature_ranking_temp_print = false;
+          this.feature_ranking_print = false;
+          this.selected_features_print = false;
   };
 
   bool debug_afis;
+  bool feature_ranking_temp_print;
+  bool feature_ranking_print;
+  bool selected_features_print;
+
 
   void divide_datasets(double& dataset_inteiro[][100]);
 
@@ -231,7 +238,7 @@ void Afis::Feature_Ranking() {
         }
   }
 
-  if(this.debug_afis) {
+  if(this.debug_afis || this.feature_ranking_temp_print) {
   for (int i = 0; i < ArrayRange(feature_ranking_temp,0); i++) {
     Print("i: " + IntegerToString(i) + " | feature_ranking_temp[i]: ",DoubleToString(feature_ranking_temp[i]));
   }
@@ -335,7 +342,7 @@ void Afis::Process(double& process[]) {
   this.BX_Cols(this.dataset_1,this.dataset_1_bx);
 
   this.Feature_Ranking();
-  if(debug_afis) {
+  if(this.debug_afis || this.feature_ranking_print) {
     for (int i = 0; i < ArrayRange(this.feature_ranking,0); i++) {
       Print("i: " + IntegerToString(i) + " | this.feature_ranking[i]: ",DoubleToString(this.feature_ranking[i]));
     }
@@ -343,18 +350,8 @@ void Afis::Process(double& process[]) {
 
   int results_order[];
 
-  // MathOrder(this.feature_ranking,results_order);
-  // ArrayPrint(results_order);
-
-  //
-  // Print("minimum" +  minimum);
-  // Print("lower_hinge" +  lower_hinge);
-  // Print("median" +  median);
-  // Print("upper_hinge" +  upper_hinge);
-  // Print("maximum" +  maximum);
-
   this.Feature_Selector(this.selected_features);
-  if(debug_afis) {
+  if(this.debug_afis || this.selected_features_print) {
     for (int i = 0; i < ArrayRange(this.selected_features,0); i++) {
       Print("i: ",IntegerToString(i)," | this.selected_features[i]: ",DoubleToString(this.selected_features[i]));
     }

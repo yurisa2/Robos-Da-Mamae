@@ -121,8 +121,10 @@ void Xeon_beta::Avalia() {
 
   afis.param_feature_min_cut = xeon_cut;
   afis.debug_afis = false;
+  // afis.selected_features_print = true;
+  // afis.feature_ranking_print = true;
 
-  afis.feature_method = "spearman";
+  afis.feature_method = "variance";
 
   HiLo_OO *hilo = new HiLo_OO(4);
   int direcao_now = hilo.Direcao();

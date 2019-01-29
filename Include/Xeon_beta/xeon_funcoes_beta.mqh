@@ -8,7 +8,7 @@ class Xeon_beta
   void Comentario();
 
   void Avalia();
-  void Get_Data(int& barra, int& Array_Size, double& Valores[]);
+  void Get_Data(int barra, int& Array_Size, double& Valores[]);
 
   private:
 
@@ -22,18 +22,18 @@ void Xeon_beta::Xeon_beta()
 
 }
 
-void Xeon_beta::Get_Data(int& barra, int& Array_Size, double& Valores[])
+void Xeon_beta::Get_Data(int barra, int& Array_Size, double& Valores[])
 {
-  Aquisicao *ind = new Aquisicao(60);
+  Aquisicao *ind = new Aquisicao(xeon_norm);
   HiLo_OO *hilo = new HiLo_OO(4);
-  int direcao_now = hilo.Direcao();
+  int direcao_hilo = hilo.Direcao(barra);
 
   ArrayResize(Valores,Array_Size);
 
   int n = 0;
 
   double delta_atual = (Preco(barra+1).close - Preco(barra+2).close);
-  delta_atual = delta_atual * direcao_now;
+  delta_atual = delta_atual * direcao_hilo;
 
   if(delta_atual > 0  && delta_atual > xeon_min_diff) Valores[n++] = 1;
   else Valores[n++] = 0;
@@ -120,11 +120,17 @@ void Xeon_beta::Avalia() {
   Afis *afis = new Afis;
 
   afis.param_feature_min_cut = 0;
+  afis.debug_afis = true;
+
+  afis.feature_method = "quantile";
 
   HiLo_OO *hilo = new HiLo_OO(4);
   int direcao_now = hilo.Direcao();
 
   afis.linesize = 62;
+
+  ArrayResize(afis.input_fuzzy,afis.linesize);
+
 
   int actual_i = 0;
 
@@ -136,9 +142,11 @@ void Xeon_beta::Avalia() {
 for (int i = 1; i < 3000; i++) {
 
   if(direcao_now == hilo.Direcao(i)) {
+
+    this.Get_Data(i, afis.linesize, array_afis_temp);
+
     afis.Add_Line(array_afis_temp);
     actual_i++;
-
     if(actual_i == xeon_count_periods) break;
   }
 }
@@ -147,18 +155,12 @@ for (int i = 1; i < 3000; i++) {
 delete(hilo);
 
 
-ArrayResize(afis.input_fuzzy,afis.linesize);
 
-afis.debug_afis = false;
 
+this.Get_Data(0, afis.linesize, afis.input_fuzzy);
 
 double processado[];
 afis.Process(processado);
-
-// for (int i = 0; i < ArrayRange(processado,0); i++) {
-//   Print("i: " + IntegerToString(i) + " | processado[i]: ",DoubleToString(processado[i]));
-// }
-//
 
 int status_exchange = 0;
 

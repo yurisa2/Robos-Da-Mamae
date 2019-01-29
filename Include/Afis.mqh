@@ -145,26 +145,73 @@ void Afis::Feature_Ranking() {
       vari_0 = MathVariance(feat_array0);
       vari_1 = MathVariance(feat_array1);
 
-      if(vari_0 == 0) vari_0 = 0.0000001;
-      if(vari_1 == 0) vari_1 = 0.0000001;
+      if(vari_0 == 0) vari_0 = 0.001;
+      if(vari_1 == 0) vari_1 = 0.001;
 
       feature_ranking_temp[i] = MathMax(vari_0,vari_1) /
       MathMin(vari_0,vari_1);
-      }
+    }
 
-    if(this.feature_method == "std"){
-      double std_0;
-      double std_1;
+    if(this.feature_method == "quantile"){
+      double quant_0[5];
+      double quant_1[5];
 
-      std_0 = MathStandardDeviation(feat_array0);
-      std_1 = MathStandardDeviation(feat_array1);
+      MathTukeySummary(
+        feat_array0,
+        true,
+        quant_0[0],
+        quant_0[1],
+        quant_0[2],
+        quant_0[3],
+        quant_0[4]        // maximum value
+      );
 
-      if(std_0 == 0) std_0 = 0.0000001;
-      if(std_1 == 0) std_1 = 0.0000001;
+      MathTukeySummary(
+        feat_array1,
+        true,
+        quant_1[0],
+        quant_1[1],
+        quant_1[2],
+        quant_1[3],
+        quant_1[4]        // maximum value
+      );
 
-      feature_ranking_temp[i] = MathMax(std_0,std_1) /
-      MathMin(std_0,std_1);
-      }
+      double min_feature = MathMin(quant_1[0],quant_0[0]);
+      double top_feature = MathMax(quant_1[4],quant_0[4]);
+
+      double full_delta = top_feature - min_feature;
+
+      if(full_delta == 0) full_delta = 0.0001;
+
+      double delta_min = MathMax(quant_1[0],quant_0[0]) -
+                         MathMin(quant_1[0],quant_0[0]);
+
+      double delta_q1 = MathMax(quant_1[1],quant_0[1]) -
+                        MathMin(quant_1[1],quant_0[1]);
+
+      double delta_median = MathMax(quant_1[2],quant_0[2]) -
+                            MathMin(quant_1[2],quant_0[2]);
+
+      double delta_q3 = MathMax(quant_1[3],quant_0[3]) -
+                        MathMin(quant_1[3],quant_0[3]);
+
+      double delta_max = MathMax(quant_1[4],quant_0[4]) -
+                         MathMin(quant_1[4],quant_0[4]);
+
+      double p_delta_min = (delta_min / full_delta) * 1;
+      double p_delta_q1 = (delta_q1 / full_delta) * 1;
+      double p_delta_median = (delta_median / full_delta) * 2000;
+      double p_delta_q3 = (delta_q3 / full_delta) * 1;
+      double p_delta_max = (delta_max / full_delta) * 1;
+
+      // double p_total = p_delta_min + p_delta_q1 + p_delta_median + p_delta_q3 +
+      //                  p_delta_max;
+      double p_total = delta_median;
+
+      feature_ranking_temp[i] = p_total;
+
+    }
+
   }
 
   if(this.debug_afis) {

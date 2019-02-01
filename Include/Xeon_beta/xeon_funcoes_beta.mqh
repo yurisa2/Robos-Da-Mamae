@@ -121,8 +121,10 @@ void Xeon_beta::Avalia() {
 
   afis.param_feature_min_cut = xeon_cut;
   afis.debug_afis = false;
-  // afis.selected_features_print = true;
+  afis.selected_features_print = true;
   // afis.feature_ranking_print = true;
+
+  // afis.feature_selection_method = "all";
 
   afis.feature_method = "variance";
 
@@ -130,16 +132,12 @@ void Xeon_beta::Avalia() {
   int direcao_now = hilo.Direcao();
 
   afis.linesize = 62;
+  double array_afis_temp[62];
 
   ArrayResize(afis.input_fuzzy,afis.linesize);
 
-
   int actual_i = 0;
-
-
-  double array_afis_temp[62];
-
-    int n = 0;
+  int n = 0;
 
 for (int i = 1; i < 3000; i++) {
 

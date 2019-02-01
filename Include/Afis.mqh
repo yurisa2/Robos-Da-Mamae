@@ -16,6 +16,7 @@ class Afis
           this.feature_ranking_temp_print = false;
           this.feature_ranking_print = false;
           this.selected_features_print = false;
+          this.feature_selection_method = "upperhinge";
   };
 
   bool debug_afis;
@@ -23,8 +24,11 @@ class Afis
   bool feature_ranking_print;
   bool selected_features_print;
 
+  string feature_selection_method;
 
   void divide_datasets(double& dataset_inteiro[][100]);
+
+  void DynamicRules( CMamdaniFuzzySystem& Afis_Model);
 
   void Calc_BX(const double& col_feature_in[], double& box_out[]);
   void Get_Feature_Col(double& dataset_feature_in[][100], double& feature_col_out[], int feature);
@@ -269,10 +273,22 @@ void Afis::Feature_Selector(int& Features_idx[]) {
 
 
   for(int i = 1; i < ArrayRange(this.feature_ranking,0); i++) {
-    if(this.feature_ranking[i] > upper_hinge) {
+
+    if(this.feature_ranking[i] > upper_hinge && this.feature_selection_method == "upperhinge") {
       ArrayResize(Features_idx,ArrayRange(Features_idx,0)+1);
       Features_idx[ArrayRange(Features_idx,0)-1] = i;
     }
+
+    if(this.feature_ranking[i] > xeon_cut && this.feature_selection_method == "cut") {
+      ArrayResize(Features_idx,ArrayRange(Features_idx,0)+1);
+      Features_idx[ArrayRange(Features_idx,0)-1] = i;
+    }
+
+    if(this.feature_selection_method == "all") {
+      ArrayResize(Features_idx,ArrayRange(Features_idx,0)+1);
+      Features_idx[ArrayRange(Features_idx,0)-1] = i;
+    }
+
   }
 }
 
@@ -322,6 +338,33 @@ void Afis::StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model) {
   Afis_Model.Rules().Add(rule5);
 }
 
+void Afis::DynamicRules(CMamdaniFuzzySystem& Afis_Model) {
+  string definitive_rules[];
+  string antecedents[] = {"a3", "a2", "n1", "b2", "b3"};
+  // string consequents[] = {"Baixo", "Neutro", "Alto"};
+  // this.selected_features;
+  string output_full[];
+  string output;
+
+  for(int i = 0; i < ArrayRange(this.selected_features,0); i++) {
+  for (int j = 0; j < ArrayRange(antecedents,0); j++) {
+      for (int k = 0; k < ArrayRange(this.selected_features,0); k++) {
+      output = "(";
+      output += IntegerToString(this.selected_features[i]);
+      output += " is ";
+      output += antecedents[k];
+      output += ")";
+      ArrayResize(output_full,ArrayRange(output_full,0)+1);
+      output_full[ArrayRange(output_full,0)-1] = output;
+    }
+  }
+  // Print(output);
+}
+ArrayPrint(output_full);
+Print("Dynamic tralala");
+
+}
+
 void Afis::Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in) {
 
      this.Output_Var_Generator(Afis_Model_Sep);
@@ -363,6 +406,8 @@ void Afis::Process(double& process[]) {
   // 0 MODEL
   CMamdaniFuzzySystem *Model_0 = new CMamdaniFuzzySystem();
   this.Fuzzy_Model(0,Model_0,in0);
+
+  // this.DynamicRules(Model_0);
 
   // 1 MODEL
   CMamdaniFuzzySystem *Model_1 = new CMamdaniFuzzySystem();

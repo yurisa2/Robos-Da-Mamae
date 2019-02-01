@@ -31,6 +31,7 @@ int Rand_Geral = MathRand();
 #include <Condicoes.mqh>
 #include <Comentario.mqh>
 #include <Afis.mqh>
+#include <ExpandGrid.mqh>
 #include <Math\Stat\Math.mqh>
 
 
@@ -455,8 +456,20 @@ void Normaliza_Array(double& array_entrada[], double& array_saida[], int start_p
 
   for (int i = start_point; i < ArrayRange(array_entrada,0); i++) {
     array_saida[i] = (array_entrada[i] - Z_min) / (Z_max_Zmin);
-
-
   }
+}
 
+void Normalizacao_Manual(double& array_entrada[], double& array_saida[], int start_point = 0, double min = 0, double max = 100) {
+  ArrayResize(array_saida,ArrayRange(array_entrada,0));
+
+  double Z_min =min;
+  double Z_max = max;
+
+  double Z_max_Zmin = Z_max - Z_min;
+  if(Z_max_Zmin == 0 ) Z_max_Zmin = 0.000000000000000000001;
+
+
+  for (int i = start_point; i < ArrayRange(array_entrada,0); i++) {
+    array_saida[i] = (array_entrada[i] - Z_min) / (Z_max_Zmin);
+  }
 }

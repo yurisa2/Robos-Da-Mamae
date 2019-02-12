@@ -1,4 +1,4 @@
-# README #
+﻿# README #
 
 
                       .-.
@@ -49,18 +49,18 @@
 
 https://bitbucket.org/yurisa2/rob-s-da-mam-e
 
-Em caso de dúvida, sempre fale com o Yuri primeiro (https://about.me/yuri.sa).
+Em caso de dÃºvida, sempre fale com o Yuri primeiro (https://about.me/yuri.sa).
 
-Se quiser dar Merge, manda o request, a gente testa e publica. Seria bom ter mais alguém aqui.
+Se quiser dar Merge, manda o request, a gente testa e publica. Seria bom ter mais alguÃ©m aqui.
 
-Se vier falar de "patterns", "estruturas", "objetos" etc... Nem gasta, por favor, forka e faz o seu. Aliás, você nem estaria procurando códigos por aí se você fosse tão pica.
+Se vier falar de "patterns", "estruturas", "objetos" etc... Nem gasta, por favor, forka e faz o seu. AliÃ¡s, vocÃª nem estaria procurando cÃ³digos por aÃ­ se vocÃª fosse tÃ£o pica.
 
-Fiz funcional mesmo, é XGH mesmo, to nem ae.
+Fiz funcional mesmo, Ã© XGH mesmo, to nem ae.
 
-Falando em estrutura de código, lembre-se, vários "métodos alternativos" foram feitos para se adequar à realidade das corretoras e da Bovespa, porém eu também opero FX e tento fazer um coringão que funcione nos dois... Tem dado certo.
+Falando em estrutura de cÃ³digo, lembre-se, vÃ¡rios "mÃ©todos alternativos" foram feitos para se adequar Ã  realidade das corretoras e da Bovespa, porÃ©m eu tambÃ©m opero FX e tento fazer um coringÃ£o que funcione nos dois... Tem dado certo.
 
-Também tenho muito código legado, vindo de outras versões e de outros robôs... Arrumando a bagunça, mas eu tenho mesmo é que tirar dinheiro disso aqui. Então eu troco código bonito por grana, parece bom...
+TambÃ©m tenho muito cÃ³digo legado, vindo de outras versÃµes e de outros robÃ´s... Arrumando a bagunÃ§a, mas eu tenho mesmo Ã© que tirar dinheiro disso aqui. EntÃ£o eu troco cÃ³digo bonito por grana, parece bom...
 
-Solitário aqui.
+SolitÃ¡rio aqui.
 
-### Pode-se e deve-se adicionar bugs e resolver o máximo de tretas (Issues) por aqui, fica documentado e trampo de organizar é zero ###
+### Pode-se e deve-se adicionar bugs e resolver o mÃ¡ximo de tretas (Issues) por aqui, fica documentado e trampo de organizar Ã© zero ###

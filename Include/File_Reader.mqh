@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+ï»¿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                  File_Writer.mqh |
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, RobÃ´s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class File_Read
@@ -80,7 +80,7 @@ void File_Read::File_Read(string InpFileName="teste.txt", string InpDirectoryNam
     // num_linhas--;
     // if(linha_str_array[num_linhas-1] == "\n")
     // {
-    //   Print("Ultima linha era só pulinho MOTHAFUCKA");
+    //   Print("Ultima linha era sÃ³ pulinho MOTHAFUCKA");
     //   ExpertRemove();
     // }
     // PrintFormat("Teste indice: %i ",Indice_Arquivo);
@@ -97,7 +97,7 @@ int File_Read::Retorna_Indice_Arquivo_Virtual(string Nome_Arquivo)
     if(Arquivos[i][0] == Nome_Arquivo)
     {
      retorno = i;
-     // PrintFormat("Achei o Arquivo, é o Indice: %i",i);
+     // PrintFormat("Achei o Arquivo, Ã© o Indice: %i",i);
    }
   }
 

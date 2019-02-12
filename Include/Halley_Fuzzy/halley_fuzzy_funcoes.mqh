@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 
 class Halley_Fuzzy
 {
@@ -41,12 +41,12 @@ int  Halley_Fuzzy::Formato(int barra = 0)
   //  Print("Hora: " +  Preco(barra+1).time +" | OHLC:" + Preco(barra+1).open + " | " + Preco(barra+1).high +" | " + Preco(barra+1).low +" | " + Preco(barra+1).close);
 
   /*  REGRAS PARA O FORMATO
-  InvÈs de ter as regras cl·ssicas, as regras para construÁ„o dos formatos s„o:
+  Inv√©s de ter as regras cl√°ssicas, as regras para constru√ß√£o dos formatos s√£o:
 
-  Sombra > Corpo (classificatÛria)
+  Sombra > Corpo (classificat√≥ria)
   Sombra > sombra2 ou sombra2 == 0.01
 
-  Fica excluÌdo o n_vezes, nem sei se vou incluir ele (prov·vel que nao)
+  Fica exclu√≠do o n_vezes, nem sei se vou incluir ele (prov√°vel que nao)
 
   Queria ver se tudo relativo ao candle em si funfa.
 

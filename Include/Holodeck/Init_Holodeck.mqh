@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+ï»¿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             SA2 - Investment soft|
 //+------------------------------------------------------------------+
@@ -16,27 +16,27 @@ ENUM_INIT_RETCODE Verifica_Init_Holo ()
 {
       if(Holo_Mediana && Holo_Distancia > 0)
       {
-        MessageBox("Mais de um método de entrada","Erro de Inicialização",MB_OK);
-        Print("Mais de um método de entrada","Erro de Inicialização");
+        MessageBox("Mais de um mÃ©todo de entrada","Erro de InicializaÃ§Ã£o",MB_OK);
+        Print("Mais de um mÃ©todo de entrada","Erro de InicializaÃ§Ã£o");
         return(INIT_PARAMETERS_INCORRECT);
       }
 
       if(!Holo_Mediana && Holo_Distancia < 1)
       {
-        MessageBox("Nao foi escolhido um método de entrada","Erro de Inicialização",MB_OK);
-        Print("Nao foi escolhido um método de entrada","Erro de Inicialização");
+        MessageBox("Nao foi escolhido um mÃ©todo de entrada","Erro de InicializaÃ§Ã£o",MB_OK);
+        Print("Nao foi escolhido um mÃ©todo de entrada","Erro de InicializaÃ§Ã£o");
         return(INIT_PARAMETERS_INCORRECT);
       }
 
       if(Holo_Menor_TP && Usa_Prop){
-        MessageBox("Mexe Com isso agora nao vai...","Erro de Inicialização",MB_OK);
-        Print("Mexe Com isso agora nao vai...","Erro de Inicialização");
+        MessageBox("Mexe Com isso agora nao vai...","Erro de InicializaÃ§Ã£o",MB_OK);
+        Print("Mexe Com isso agora nao vai...","Erro de InicializaÃ§Ã£o");
         return(INIT_PARAMETERS_INCORRECT);
       }
 
       if(Holo_Delta_Menor_q <= Holo_Delta_Maior_q){
-        MessageBox("Holo Range Delta Errado","Erro de Inicialização",MB_OK);
-        Print("Holo Range Delta Errado","Erro de Inicialização");
+        MessageBox("Holo Range Delta Errado","Erro de InicializaÃ§Ã£o",MB_OK);
+        Print("Holo Range Delta Errado","Erro de InicializaÃ§Ã£o");
         return(INIT_PARAMETERS_INCORRECT);
       }
 

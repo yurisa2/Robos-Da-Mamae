@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 class Capta_Dados_Entrada_stub {
   public:

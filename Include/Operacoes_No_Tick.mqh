@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                funcoesbender.mqh |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
@@ -22,7 +22,7 @@ void Operacoes_No_tick()
 
   //Fim das Vars Atualizadas Globalmente
 
-  /////////////////////// Fun�oes de STOP
+  /////////////////////// Funçoes de STOP
 
   O_Stops.No_Tick();
 

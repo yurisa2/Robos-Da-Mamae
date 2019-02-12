@@ -1,9 +1,9 @@
-/* -*- C++ -*- */
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+﻿/* -*- C++ -*- */
+#property copyright "PetroSa, RobÃ´s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 // Aqui da o lucro da posicao
-// Armazena os Stops (tanto em qual que tá quanto )
+// Armazena os Stops (tanto em qual que tÃ¡ quanto )
 // TicketDaposicao
 // ordens abertas nessa posicao, abertas por esse magic
 

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 class Xeon
 {
@@ -214,9 +214,9 @@ int Xeon::SendJson(string url, CJAVal &json_type){
 
   int res=WebRequest("POST",url,headers2,20000,data,result,result_headers);
   if(res==-1)   {
-    Print("Erro no WebRequest. Código de erro =",GetLastError());
-    Print("É necessário adicionar um endereço '"+url+
-          "' à lista de URL permitidas na guia 'Experts'");
+    Print("Erro no WebRequest. CÃ³digo de erro =",GetLastError());
+    Print("Ã‰ necessÃ¡rio adicionar um endereÃ§o '"+url+
+          "' Ã  lista de URL permitidas na guia 'Experts'");
   }  else  {
     if(res==200)  {
 
@@ -227,7 +227,7 @@ int Xeon::SendJson(string url, CJAVal &json_type){
             "| Simbolo: " + Symbol());
       return resultado_api;
     } else {
-      PrintFormat("Xeon - Erro de download '%s', código %d",url,res);
+      PrintFormat("Xeon - Erro de download '%s', cÃ³digo %d",url,res);
       return 0;
     }
     return 0;

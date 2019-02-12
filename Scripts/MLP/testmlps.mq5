@@ -1,4 +1,4 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                     TestMLPs.mq5 |
 //+------------------------------------------------------------------+
 #property copyright "Yurich"
@@ -8,7 +8,7 @@
 // Network features: input vector and network structure notions are separated,
 // i.e. input vector and network structure descriptions are not connected to each other.
 // The size of the input vector can have any value within reasonable limits.
-// The data should be normalized, i.e. the data should be within the range �-1 .. -1..1 or 0..1.
+// The data should be normalized, i.e. the data should be within the range  -1 .. -1..1 or 0..1.
 // Various activation functions are applied for the network depending on 
 // the type of the used data: hyperbolic tangent should be used for -1..1 data range, 
 // while sigmoid is used for 0..1 data range.

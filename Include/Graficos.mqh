@@ -1,8 +1,8 @@
-/* -*- C++ -*- */
-#property copyright "PetroSa, RobÙs feitos na hora, quentinhos, tragam vasilhas."
+Ôªø/* -*- C++ -*- */
+#property copyright "PetroSa, Rob√¥s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-////// Bot„o
+////// Bot√£o
 
 int broadcastEventID=5000;
 
@@ -46,16 +46,16 @@ void Graficos::monitor_graficos()
   void Graficos::Cria_Botao_Abortar ()
   {
     Apaga_Botoes();
-    //--- criar o bot„o
+    //--- criar o bot√£o
     ObjectCreate(0,"BTN_ABORTAR",OBJ_BUTTON,0,0,0,0,0);
 
-    //--- definir coordenadas do bot„o
+    //--- definir coordenadas do bot√£o
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_XDISTANCE,150);
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_YDISTANCE,0);
-    //--- definir tamanho do bot„o
+    //--- definir tamanho do bot√£o
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_XSIZE,100);
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_YSIZE,18);
-    //--- determinar o canto do gr·fico onde as coordenadas do ponto s„o definidas
+    //--- determinar o canto do gr√°fico onde as coordenadas do ponto s√£o definidas
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_CORNER,CORNER_LEFT_UPPER);
     //--- definir o texto
     ObjectSetString(0,"BTN_ABORTAR",OBJPROP_TEXT,"!!!Aborta a Trade!!!");
@@ -73,14 +73,14 @@ void Graficos::monitor_graficos()
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_BACK,false);
     //--- set button state
     //  ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_STATE,false);
-    //--- habilitar (true) ou desabilitar (false) o modo do movimento do bot„o com o mouse
+    //--- habilitar (true) ou desabilitar (false) o modo do movimento do bot√£o com o mouse
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_SELECTABLE,false);
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_SELECTED,false);
-    //--- ocultar (true) ou exibir (false) o nome do objeto gr·fico na lista de objeto
+    //--- ocultar (true) ou exibir (false) o nome do objeto gr√°fico na lista de objeto
     ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_HIDDEN,false);
-    //--- definir a prioridade para receber o evento com um clique do mouse no gr·fico
+    //--- definir a prioridade para receber o evento com um clique do mouse no gr√°fico
     //   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_ZORDER,1);
-    //--- sucesso na execuÁ„o
+    //--- sucesso na execu√ß√£o
     botao_abortar_presente = true;
   }
 
@@ -127,19 +127,19 @@ void Graficos::monitor_graficos()
   void Graficos::Cria_Botao_Operar ()
   {
     Apaga_Botoes();
-    //--- criar o bot„o
+    //--- criar o bot√£o
     ObjectCreate(0,"Botao_Operar",OBJ_BUTTON,0,0,0,0,0);
 
-    //--- definir coordenadas do bot„o
+    //--- definir coordenadas do bot√£o
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_XDISTANCE,150);
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_YDISTANCE,0);
-    //--- definir tamanho do bot„o
+    //--- definir tamanho do bot√£o
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_XSIZE,100);
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_YSIZE,18);
-    //--- determinar o canto do gr·fico onde as coordenadas do ponto s„o definidas
+    //--- determinar o canto do gr√°fico onde as coordenadas do ponto s√£o definidas
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_CORNER,CORNER_LEFT_UPPER);
     //--- definir o texto
-    ObjectSetString(0,"Botao_Operar",OBJPROP_TEXT,"!!!ForÁa Trade!!!");
+    ObjectSetString(0,"Botao_Operar",OBJPROP_TEXT,"!!!For√ßa Trade!!!");
     //--- definir o texto fonte
     ObjectSetString(0,"Botao_Operar",OBJPROP_FONT,"Arial");
     //--- definir tamanho da fonte
@@ -154,14 +154,14 @@ void Graficos::monitor_graficos()
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_BACK,false);
     //--- set button state
     //  ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_STATE,false);
-    //--- habilitar (true) ou desabilitar (false) o modo do movimento do bot„o com o mouse
+    //--- habilitar (true) ou desabilitar (false) o modo do movimento do bot√£o com o mouse
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_SELECTABLE,false);
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_SELECTED,false);
-    //--- ocultar (true) ou exibir (false) o nome do objeto gr·fico na lista de objeto
+    //--- ocultar (true) ou exibir (false) o nome do objeto gr√°fico na lista de objeto
     ObjectSetInteger(0,"Botao_Operar",OBJPROP_HIDDEN,false);
-    //--- definir a prioridade para receber o evento com um clique do mouse no gr·fico
+    //--- definir a prioridade para receber o evento com um clique do mouse no gr√°fico
     //   ObjectSetInteger(0,"BTN_ABORTAR",OBJPROP_ZORDER,1);
-    //--- sucesso na execuÁ„o
+    //--- sucesso na execu√ß√£o
     botao_operar_presente = true;
   }
 
@@ -180,11 +180,11 @@ void Graficos::monitor_graficos()
     {
       Opera_Mercado *opera = new Opera_Mercado;
 
-      //--- Verifique o evento pressionando um bot„o do mouse
+      //--- Verifique o evento pressionando um bot√£o do mouse
       if(id==CHARTEVENT_OBJECT_CLICK)
       {
         string clickedChartObject=sparam;
-        //--- Se vocÍ clicar sobre o objeto com o nome buttonID
+        //--- Se voc√™ clicar sobre o objeto com o nome buttonID
         if(clickedChartObject=="BTN_ABORTAR")
         {
           Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
@@ -216,7 +216,7 @@ void Graficos::monitor_graficos()
         {
 
         }
-        ChartRedraw();// Redesenho forÁado de todos os objetos de gr·fico
+        ChartRedraw();// Redesenho for√ßado de todos os objetos de gr√°fico
         delete(opera);
 
       }

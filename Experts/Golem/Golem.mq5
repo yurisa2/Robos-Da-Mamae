@@ -1,4 +1,4 @@
-#property copyright "Golem - Avaliador de DOM (Depth of Market)."
+﻿#property copyright "Golem - Avaliador de DOM (Depth of Market)."
 #property link      "http://www.sa2.com.br"
 
 #property version   "1.38" //Trabalhando para o FOREX funcionar

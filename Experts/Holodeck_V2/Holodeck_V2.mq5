@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                         Xavier, Unstable MOFucker|
 //|                        Copyright 2017, Sa2 INVESTMENT            |
@@ -7,8 +7,12 @@
 #property copyright "Holodeck V2, Scalpes Curtos."
 #property link      "http://www.sa2.com.br"
 
+#include <ML_stub.mqh>
+#include <dados_nn_stub.mqh>
+#include <Inputs_ML_stub.mqh>
+
 #property version   "2.0" //Usando posicoes
-string Nome_Robo = "Holodeck"; 
+string Nome_Robo = "Holodeck";
 #include <Inputs_Vars.mqh>
 #include <basico.mqh>
 
@@ -59,14 +63,14 @@ void OnTick()
 
   if(Condicoes.Horario())
   {
-  
+
  Operacoes_No_tick();
 
   Holodeck *holo = new Holodeck;
   holo.Avalia();
   delete(holo);
-  
-  
+
+
   }
     delete(Condicoes);
 }
@@ -75,5 +79,11 @@ void OnTick()
 void OnNewBar()
 {
 
+
+}
+
+
+void OnTradeOut(CDealInfo &myDealInfo)
+{
 
 }

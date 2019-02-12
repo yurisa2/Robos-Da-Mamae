@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 int resposta;
 
 class Capta_Dados_Entrada {
@@ -91,7 +91,7 @@ void Capta_Dados_Entrada::Dados_Entrada()
   ATR *atr = new ATR();
   CCI *cci = new CCI();
   DP *dp = new DP(); //TUDO SOMAR 1 e dividir por 2
-  MACD *macd = new MACD(12,26,9,Symbol(),TimeFrame); //Só aqui tem uns 4
+  MACD *macd = new MACD(12,26,9,Symbol(),TimeFrame); //SÃ³ aqui tem uns 4
   Momentum *momentum = new Momentum();
   Stoch *stoch = new Stoch(10,3,3,TimeFrame); //Memo papo do MACD
   Volumes *volumes = new Volumes(Symbol(),TimeFrame);
@@ -371,8 +371,8 @@ void Capta_Dados_Entrada::Saida(double Profit)
   Linha_Montada += DoubleToString(OBV_Cx,6);
   Linha_Montada += ",";
 
-  //Aqui é o resultado da classe.
-  Linha_Montada += DoubleToString(n_(Profit*100,0,1),6); //Que eu pelo visto pilantrei e to colocando direto na normalizacao o x100 é para o Forex que paga em Centavos
+  //Aqui Ã© o resultado da classe.
+  Linha_Montada += DoubleToString(n_(Profit*100,0,1),6); //Que eu pelo visto pilantrei e to colocando direto na normalizacao o x100 Ã© para o Forex que paga em Centavos
     machine_learning.Append(Linha_Montada);
 
 }

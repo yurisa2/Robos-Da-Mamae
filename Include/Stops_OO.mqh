@@ -1,9 +1,9 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Rob�s feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class Stops
@@ -160,8 +160,8 @@ void Stops::TakeProfit_Calcula()
   delta_bb = 1;
   //FIM DA DEFINICAO MULTIPLICADOR DA BANDA
 
-  //Aqui da pau no proporcional pq nao se acerta com o Tick Size, o certo � pegar o valor d
-  //do neg�cio, deixar o TPC em tick size e
+  //Aqui da pau no proporcional pq nao se acerta com o Tick Size, o certo ï¿½ pegar o valor d
+  //do negï¿½cio, deixar o TPC em tick size e
 
   //Print("delta_bb: " + delta_bb);  //DEBUG
 
@@ -299,7 +299,7 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
 
     if(Tipo_Posicao_ == 0)
     {
-      Alert("Tipo de posicao nao está vindo, vou morrer agora");
+      Alert("Tipo de posicao nao estÃ¡ vindo, vou morrer agora");
     }
   }
   double sl = valor - (StopLoss_Op * (Tipo_Posicao_ * Tick_Size));
@@ -310,14 +310,14 @@ void Stops::Setar_Ordens_Vars_Static(int funcao = 0)
   // double tp3 = 0; //Tem que arrumar depois
   double tpMax = tp3;
 
-  //Isso aqui é para colocar os TPs no alto, mas, obvio, tá dando errado.
-  if(TakeProfit3_op == 0 && TakeProfit2 == 0)   // Nesse caso só tem TP1
+  //Isso aqui Ã© para colocar os TPs no alto, mas, obvio, tÃ¡ dando errado.
+  if(TakeProfit3_op == 0 && TakeProfit2 == 0)   // Nesse caso sÃ³ tem TP1
   {
     tp3 = tp1 + (1000 * Tick_Size * Tipo_Posicao_);
     tpMax = tp1;
   }
 
-  if(TakeProfit3_op == 0 && TakeProfit2 != 0) //Nesse caso tem TP2, mas não TP3
+  if(TakeProfit3_op == 0 && TakeProfit2 != 0) //Nesse caso tem TP2, mas nÃ£o TP3
   {
     tp3 = tp2 + (1000 * Tick_Size * Tipo_Posicao_);
     tpMax = tp2;

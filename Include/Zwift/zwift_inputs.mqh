@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 
 input string Zwift_Label = "Configs do Zwift";  // -----------ZWIFT--------------

@@ -1,4 +1,4 @@
-FUNCTION_BLOCK WesleyNovo
+﻿FUNCTION_BLOCK WesleyNovo
 
 VAR_INPUT
 BB: REAL;

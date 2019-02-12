@@ -1,17 +1,17 @@
-/* -*- C++ -*- */
-#property copyright "PetroSa, Rob�s feitos na hora, quentinhos, tragam vasilhas."
+﻿/* -*- C++ -*- */
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class BB
 {
   public:
   void BB(
-    ENUM_TIMEFRAMES     period = PERIOD_CURRENT,            // per�odo
-    string              symbol = NULL,            // s�mbolo nome
-    int                 bands_period = 20,      // per�odo para o c�lculo da m�dia da linha
+    ENUM_TIMEFRAMES     period = PERIOD_CURRENT,            // perï¿½odo
+    string              symbol = NULL,            // sï¿½mbolo nome
+    int                 bands_period = 20,      // perï¿½odo para o cï¿½lculo da mï¿½dia da linha
     int                 bands_shift = 0,       // deslocamento horizontal do indicador
-    double              deviation = 2,         // n�mero de desvios padr�o
-    ENUM_APPLIED_PRICE  applied_price = PRICE_CLOSE     // tipo de pre�o ou manipulador
+    double              deviation = 2,         // nï¿½mero de desvios padrï¿½o
+    ENUM_APPLIED_PRICE  applied_price = PRICE_CLOSE     // tipo de preï¿½o ou manipulador
   );
 
   double BB_Low(int barra = 0);
@@ -41,12 +41,12 @@ class BB
 };
 
 void BB::BB(
-  ENUM_TIMEFRAMES     period = PERIOD_CURRENT,            // per�odo
-  string              symbol = NULL,            // s�mbolo nome
-  int                 bands_period = 20,      // per�odo para o c�lculo da m�dia da linha
+  ENUM_TIMEFRAMES     period = PERIOD_CURRENT,            // perï¿½odo
+  string              symbol = NULL,            // sï¿½mbolo nome
+  int                 bands_period = 20,      // perï¿½odo para o cï¿½lculo da mï¿½dia da linha
   int                 bands_shift = 0,       // deslocamento horizontal do indicador
-  double              deviation = 2,         // n�mero de desvios padr�o
-  ENUM_APPLIED_PRICE  applied_price = PRICE_CLOSE     // tipo de pre�o ou manipulador
+  double              deviation = 2,         // nï¿½mero de desvios padrï¿½o
+  ENUM_APPLIED_PRICE  applied_price = PRICE_CLOSE     // tipo de preï¿½o ou manipulador
 )
 {
 

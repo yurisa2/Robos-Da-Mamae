@@ -1,11 +1,11 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 //+------------------------------------------------------------------+
 //|                                            Fermat , o antigo ... |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Rob�s feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 void Inicializa_iMAs ()
@@ -49,7 +49,7 @@ double MA3 (int candle = 0)
   return ValorMA[candle];
 }
 
-int Direcao_Fermat (int candle = 0) //True se cumpre os quesitos de maior menor e distancia e d� o sentido, ZERO (0) e igual a nao cumpre
+int Direcao_Fermat (int candle = 0) //True se cumpre os quesitos de maior menor e distancia e dï¿½ o sentido, ZERO (0) e igual a nao cumpre
 {
   if(MA3(candle) < MA1(candle) && MA2(candle) < MA1(candle) && MA1(candle)-MA3(candle) >= Tick_Size*Distancia_m1_m3)
   {

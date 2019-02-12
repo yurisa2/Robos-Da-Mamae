@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+ï»¿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                  File_Gen_Writer.mqh |
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, RobÃ´s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 string Arquivos[][2];
@@ -102,7 +102,7 @@ int File_Gen::Retorna_Indice_Arquivo_Virtual(string Nome_Arquivo)
     if(Arquivos[i][0] == Nome_Arquivo)
     {
      retorno = i;
-     // PrintFormat("Achei o Arquivo, é o Indice: %i",i);
+     // PrintFormat("Achei o Arquivo, Ã© o Indice: %i",i);
    }
   }
 

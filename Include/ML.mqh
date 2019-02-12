@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                  File_Writer.mqh |
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, RobÃ´s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 int entrada = 7;
 double resposta_y[2];
@@ -118,7 +118,7 @@ void ML::Append(string Linha)
 
   ArrayResize(Matriz,ArrayRange(Matriz,0)+1);
   num_linhas = StringSplit(Linha,StringGetCharacter(",",0),linha_temp);
-  entradas = num_linhas; //Essas linhas aqui s�o da segunda dimensao
+  entradas = num_linhas; //Essas linhas aqui sï¿½o da segunda dimensao
 
   for(int i=0; i<entradas;i++)
   {

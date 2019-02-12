@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                      OnTrade.mqh |
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, RobÙs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Rob√¥s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 void OnTradeTransaction(const MqlTradeTransaction& trans,
@@ -53,7 +53,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 
         if(negocio.DealType() == DEAL_TYPE_BUY)
         {
-          Print(Descricao_Robo+" … COMPRA");
+          Print(Descricao_Robo+" √â COMPRA");
           //                  PrecoCompra = negocio.Price();
           //                  CalculaStops();
           num_ordem_tiquete=0;
@@ -61,7 +61,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 
         if(negocio.DealType() == DEAL_TYPE_SELL)
         {
-          Print(Descricao_Robo+" … VENDA");
+          Print(Descricao_Robo+" √â VENDA");
           //                  PrecoVenda = negocio.Price();
           //                  CalculaStops();
           num_ordem_tiquete=0;
@@ -70,31 +70,31 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 
         Print(Descricao_Robo);
         Print(Descricao_Robo+" "+"Volume: ",negocio.Volume());
-        Print(Descricao_Robo+" "+"PreÁo: ",negocio.Price());
+        Print(Descricao_Robo+" "+"Pre√ßo: ",negocio.Price());
         Print(Descricao_Robo+" "+"Time: ",negocio.Time());
         Print(Descricao_Robo+" "+"Symbol: ",negocio.Symbol());
         Print(Descricao_Robo+" "+"Type: ",EnumToString(negocio.DealType()));
         Print(Descricao_Robo+" "+"Entry: ",EnumToString(negocio.Entry()));
         Print(Descricao_Robo+" "+"Profit: ",negocio.Profit());
         Print(Descricao_Robo+" "+"Magic: ",negocio.Magic());
-        Print(Descricao_Robo+" "+"Coment·rio: ", negocio.Comment());
+        Print(Descricao_Robo+" "+"Coment√°rio: ", negocio.Comment());
 
 
         // string  BodyEmail =
         //
         //          Descricao_Robo +
         //          + "\r\nVolume: " + DoubleToString(NormalizeDouble(negocio.Volume(),2)) +
-        //          + "\r\nPreÁo: " + DoubleToString(NormalizeDouble(negocio.Price(),2)) +
+        //          + "\r\nPre√ßo: " + DoubleToString(NormalizeDouble(negocio.Price(),2)) +
         //          + "\r\nTime: " + TimeToString(negocio.Time(),TIME_MINUTES) +
         //          + "\r\nSimbolo: " + negocio.Symbol() +
         //          + "\r\nTipo: " + EnumToString(negocio.DealType()) +
         //          + "\r\nEntrada: " + EnumToString(negocio.Entry()) +
         //          + "\r\nLucro: " + DoubleToString(NormalizeDouble(negocio.Profit(),2)) +
         //          + "\r\nMagic: " + IntegerToString(negocio.Magic()) +
-        //          + "\r\nComent·rio: " +  negocio.Comment();
+        //          + "\r\nComent√°rio: " +  negocio.Comment();
 
 
-        // SendMail("RelatÛrio: "+Descricao_Robo,BodyEmail);
+        // SendMail("Relat√≥rio: "+Descricao_Robo,BodyEmail);
 
         //Acumulado = Acumulado + negocio.Profit();
         //Print("\nAcumulado: ",Acumulado);

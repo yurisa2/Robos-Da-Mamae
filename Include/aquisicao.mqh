@@ -1,4 +1,4 @@
-class Aquisicao {
+﻿class Aquisicao {
 
   public:
   Aquisicao(int norm_period = 7);
@@ -135,7 +135,7 @@ void Aquisicao::Dados(int barra = 0)
   RSI_Var =  RSI_OO.Valor(barra)  ;
   Stoch_FW = Stoch_OO.Valor(barra) ;
 
-  //Angulares -90-90 (mas....n�)
+  //Angulares -90-90 (mas....nï¿½)
   AC_cx  =  AC_Ind.Cx(barra)*conv  ;
   AD_cx   =  AD_Ind.Cx(barra)*conv  ;
   adx_cx  = ADX_OO.Cx(0,barra)*conv  ;
@@ -158,7 +158,7 @@ void Aquisicao::Dados(int barra = 0)
   BB_Delta_Bruto_Cx = Banda_BB.Cx_BB_Delta_Bruto(barra)*conv ;
   BB_Posicao_Percent_Cx = Banda_BB.Cx_BB_Posicao_Percent(barra)*conv ;
 
-  //Brutos e Livres (as vezes at� bin�rios e relativos)
+  //Brutos e Livres (as vezes atï¿½ binï¿½rios e relativos)
   BB_Delta_Bruto = Banda_BB.BB_Delta_Bruto(barra) ;
   Banda_Delta_Valor = Banda_BB.Banda_Delta_Valor(barra) ;
   BWMFI_Var =   BWMFI_Ind.Valor(barra+1) ;

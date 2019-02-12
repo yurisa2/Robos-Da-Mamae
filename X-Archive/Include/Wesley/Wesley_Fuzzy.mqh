@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 
 double Wesley::Fuzzy_Respo(
@@ -8,7 +8,7 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
 {
   double retorno = 0;
 
-  // Bloco para nao estourar o FUzz„o
+  // Bloco para nao estourar o FUzz√£o
   if(Banda < -49) Banda = 0;
   if(Banda > 149) Banda = 149;
   if(Rsi < 0) Rsi = 0;
@@ -27,7 +27,7 @@ double BandaL = 0, double RsiL = 50, double EstocasticoL = 50, double MoneyFIL =
   if(MoneyFIL > 100) MoneyFIL = 100;
   if(Wesley_ADX < 0) Wesley_ADX = 0;
   if(Wesley_ADX > 100) Wesley_ADX = 100;
-  // Bloco para nao estourar o FUzz„o
+  // Bloco para nao estourar o FUzz√£o
 
 
   //--- Mamdani Fuzzy System

@@ -1,4 +1,4 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                 VerificaInit.mqh |
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
@@ -73,8 +73,8 @@ ENUM_INIT_RETCODE VerificaInit ()
 
 if(((TakeProfit_Volume == TakeProfit_Volume2 && TakeProfit_Volume2 == TakeProfit_Volume3) && TakeProfit_Volume > 1) &&   MQLInfoInteger(MQL_TESTER))
 {
-  MessageBox("Entrada com ponto de saída iguais, que burrice! ","Erro de Inicializao",MB_OK);
-  Print("Entrada com ponto de saída iguais, que burrice!  "," - Erro de Inicializao");
+  MessageBox("Entrada com ponto de saÃ­da iguais, que burrice! ","Erro de Inicializao",MB_OK);
+  Print("Entrada com ponto de saÃ­da iguais, que burrice!  "," - Erro de Inicializao");
   return(INIT_PARAMETERS_INCORRECT);
 }
 

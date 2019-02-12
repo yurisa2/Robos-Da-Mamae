@@ -1,5 +1,5 @@
-/* -*- C++ -*- */
-#property copyright "PetroSa, Rob�s feitos na hora, quentinhos, tragam vasilhas."
+﻿/* -*- C++ -*- */
+#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 class IXP

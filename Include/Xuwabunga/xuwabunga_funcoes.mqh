@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 class Xuwabunga
 {
@@ -59,7 +59,7 @@ void Xuwabunga::Avalia()
 
     if(Xuwabunga_valor > Xuwabunga_limite_superior && iSpread(Symbol(),TimeFrame,0) < Xuwabunga_limite_spread_max)
     {
-     // PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
+     // PrintFormat("Voadora Ã© pouco: " + iSpread(Symbol(),TimeFrame,0));
 
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(-1  * multip,DoubleToString(Xuwabunga_valor,1));

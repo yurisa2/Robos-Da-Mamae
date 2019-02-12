@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 class Xing
 {
@@ -59,7 +59,7 @@ void Xing::Avalia()
 
     if(xing_valor > xing_limite_superior && iSpread(Symbol(),TimeFrame,0) < xing_limite_spread_max)
     {
-     // PrintFormat("Voadora é pouco: " + iSpread(Symbol(),TimeFrame,0));
+     // PrintFormat("Voadora Ã© pouco: " + iSpread(Symbol(),TimeFrame,0));
 
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(-1  * multip,DoubleToString(xing_valor,1));

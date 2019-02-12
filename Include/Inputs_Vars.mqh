@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                       Inputs.mqh |
 //|                                                              Sa2 |
@@ -28,7 +28,7 @@ enum TFs
 
 
 input string Parametros_Gerais = "-------------------------------------";  //Parametros Gerais
-// input bool  multi_op = false;                                              //Multi Operacao (define o método de operacao)
+// input bool  multi_op = false;                                              //Multi Operacao (define o mÃ©todo de operacao)
 input TFs TimeFrame_ = _M1;                              //TimeFrame base
 
 ENUM_TIMEFRAMES defMarcoTiempo(TFs marco)
@@ -66,7 +66,7 @@ sinput bool Aleta_Operacao = false;                                          //A
 sinput bool Custom_resultado_treino_nn = false;
 
 input string Parametros_Financeiros = "---------OU QUASE--------------------";
-input int Limite_Operacoes = 9999;                                         //Limite de operacoes diário (entrada e Saida)
+input int Limite_Operacoes = 9999;                                         //Limite de operacoes diÃ¡rio (entrada e Saida)
 input double custo_operacao = 1.36;                                        //$ Por negocio
 input double lucro_dia = 1000000;                                          //Lucro MAX dario ($ - liq)
 input double preju_dia = 1000000;                                          //Preju MAX dario ($ - liq)

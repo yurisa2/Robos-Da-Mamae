@@ -1,3 +1,3 @@
-[submodule "Experts/mt5-box-robot"]
+﻿[submodule "Experts/mt5-box-robot"]
 	path = Experts/mt5-box-robot
 	url = https://github.com/erlonfs/mt5-box-robot.git

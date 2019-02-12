@@ -1,9 +1,9 @@
-//+------------------------------------------------------------------+
+ï»¿//+------------------------------------------------------------------+
 //|                                                 VerificaInit.mqh |
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Robôs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, RobÃ´s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 ENUM_INIT_RETCODE InitBucareste () {
@@ -11,8 +11,8 @@ ENUM_INIT_RETCODE InitBucareste () {
 
     if(SaiPeloIndicador==true && IndicadorTempoReal == true)
     {
-      MessageBox("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização",MB_OK);
-      Print("Se o Indicador está em tempo real, não dá pra sair pelo mesmo, chuva de ordens","Erro de Inicialização");
+      MessageBox("Se o Indicador estÃ¡ em tempo real, nÃ£o dÃ¡ pra sair pelo mesmo, chuva de ordens","Erro de InicializaÃ§Ã£o",MB_OK);
+      Print("Se o Indicador estÃ¡ em tempo real, nÃ£o dÃ¡ pra sair pelo mesmo, chuva de ordens","Erro de InicializaÃ§Ã£o");
       return(INIT_PARAMETERS_INCORRECT);
     }
 
@@ -20,8 +20,8 @@ ENUM_INIT_RETCODE InitBucareste () {
   int Verifica_Indicadores = Usa_Hilo + Usa_PSar ;
   if(Verifica_Indicadores != 1)
   {
-    MessageBox("Erro de Indicadores (mais de um ou nenhum escolhido)...","Erro de Inicialização",MB_OK);
-    Print("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de Inicialização");
+    MessageBox("Erro de Indicadores (mais de um ou nenhum escolhido)...","Erro de InicializaÃ§Ã£o",MB_OK);
+    Print("Erro de Indicadores (mais de um ou nennum escolhido)...","Erro de InicializaÃ§Ã£o");
     return(INIT_PARAMETERS_INCORRECT);
   }
 
@@ -32,15 +32,15 @@ ENUM_INIT_RETCODE InitBucareste () {
       //  if(Zerado_BSI()+Zerado_Fractals()+Zerado_Ozy()+Zerado_PSAR()>0)  //STRIPPED
         if(Zerado_PSAR()>0)
         {
-          MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+          MessageBox("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+          Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
           return(INIT_PARAMETERS_INCORRECT);
         }
 
         if(Periodos < 2)
         {
-          MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+          MessageBox("Algum Parametro zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+          Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
           return(INIT_PARAMETERS_INCORRECT);
         }
       }
@@ -49,15 +49,15 @@ ENUM_INIT_RETCODE InitBucareste () {
       // {
       //   if(Zerado_HiLo()+Zerado_Fractals()+Zerado_Ozy()+Zerado_PSAR()>0)
       //   {
-      //     MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-      //     Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+      //     MessageBox("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+      //     Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
       //     return(INIT_PARAMETERS_INCORRECT);
       //   }
       //
       //   if(BSI_RangePeriod==0 || BSI_Slowing ==0 || BSI_Avg_Period == 0)
       //   {
-      //     MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-      //     Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+      //     MessageBox("Algum Parametro zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+      //     Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
       //     return(INIT_PARAMETERS_INCORRECT);
       //   }
       //
@@ -67,15 +67,15 @@ ENUM_INIT_RETCODE InitBucareste () {
       // {
       //   if(Zerado_HiLo()+Zerado_BSI()+Zerado_Ozy()+Zerado_PSAR()>0)
       //   {
-      //     MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-      //     Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+      //     MessageBox("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+      //     Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
       //     return(INIT_PARAMETERS_INCORRECT);
       //   }
       //
       //   if(Frac_Candles_Espera == 0)
       //   {
-      //     MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-      //     Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+      //     MessageBox("Algum Parametro zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+      //     Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
       //     return(INIT_PARAMETERS_INCORRECT);
       //   }
       //
@@ -85,15 +85,15 @@ ENUM_INIT_RETCODE InitBucareste () {
       // {
       //   if(Zerado_HiLo()+Zerado_BSI()+Zerado_Fractals()+Zerado_PSAR()>0)
       //   {
-      //     MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-      //     Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+      //     MessageBox("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+      //     Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
       //     return(INIT_PARAMETERS_INCORRECT);
       //   }
       //
       //   if(Ozy_length == 0)
       //   {
-      //     MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-      //     Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+      //     MessageBox("Algum Parametro zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+      //     Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
       //     return(INIT_PARAMETERS_INCORRECT);
       //   }
       //
@@ -104,15 +104,15 @@ ENUM_INIT_RETCODE InitBucareste () {
       //  if(Zerado_HiLo()+Zerado_BSI()+Zerado_Fractals()+Zerado_Ozy()>0)  //STRIPPED
         if(Zerado_HiLo() > 0)
         {
-          MessageBox("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+          MessageBox("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+          Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
           return(INIT_PARAMETERS_INCORRECT);
         }
 
         if(PSAR_Step == 0 || PSAR_Max_Step == 0)
         {
-          MessageBox("Algum Parametro zerado dos outros indicadores","Erro de Inicialização",MB_OK);
-          Print("Algum Parametro Não zerado dos outros indicadores","Erro de Inicialização");
+          MessageBox("Algum Parametro zerado dos outros indicadores","Erro de InicializaÃ§Ã£o",MB_OK);
+          Print("Algum Parametro NÃ£o zerado dos outros indicadores","Erro de InicializaÃ§Ã£o");
           return(INIT_PARAMETERS_INCORRECT);
         }
       }

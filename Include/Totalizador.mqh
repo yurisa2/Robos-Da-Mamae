@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 #property copyright "PetroSa, Robs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
@@ -35,7 +35,7 @@ void Totalizador::calcula_financeiro()
   // Print("custo_ate_momento: " + DoubleToString(custo_ate_momento()));
 }
 
-double Totalizador::lucro_ate_momento()  ///ai fica 0 para inicio execucao, 1 para o diário
+double Totalizador::lucro_ate_momento()  ///ai fica 0 para inicio execucao, 1 para o diÃ¡rio
 {
   if(tipo_operacao == 0)  HistorySelect(data_inicio_execucao,TimeCurrent());
 
@@ -56,7 +56,7 @@ double Totalizador::lucro_ate_momento()  ///ai fica 0 para inicio execucao, 1 pa
   for(uint i = 0;i<total;i++)
   {
     //--- try to get deals ticket
-    if((ticket = HistoryDealGetTicket(i))>0) //Colocar aqui pesquisa��o de MAGIC
+    if((ticket = HistoryDealGetTicket(i))>0) //Colocar aqui pesquisaï¿½ï¿½o de MAGIC
     {
       //--- get deals properties
       ulong type  = HistoryDealGetInteger(ticket,DEAL_TYPE);

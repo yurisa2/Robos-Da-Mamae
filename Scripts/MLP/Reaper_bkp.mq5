@@ -1,4 +1,4 @@
-//+------------------------------------------------------------------+
+ï»¿//+------------------------------------------------------------------+
 //|                                                     TestMLPs.mq5 |
 //+------------------------------------------------------------------+
 #property copyright "Yurich"
@@ -37,7 +37,7 @@ void OnStart()
     // double m_1 = MathRand() * 3.05/100000;
     // double m_2 = MathRand() * 3.05/100000;
 
-    //Proposta Inicial é
+    //Proposta Inicial Ã©
 
     double m_1 = MathRand() * 3.05/100000;  //Preco Normalizado 1
     double m_2 = MathRand() * 3.05/100000;  //Preco Normalizado 2
@@ -69,13 +69,13 @@ void OnStart()
   PrintFormat("ArraySize(EntradaTeach): %1",ArraySize(EntradaTeach));
 
 
-//captação
+//captaÃ§Ã£o
 //AC, ATR, BBDB, BBDV, BbP, BULLS_P
 
   CNetMLP *net;
   int epoch=10000;
   //---
-  Print("Agora é media denovo com 5 caboco, CAZZO!");
+  Print("Agora Ã© media denovo com 5 caboco, CAZZO!");
   //--- for the input data range -1..1 the active function hyperbolic tangent is used
   int AFT=0;
   //--- network creation

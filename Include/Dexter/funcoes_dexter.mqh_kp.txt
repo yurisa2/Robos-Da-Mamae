@@ -1,10 +1,10 @@
-// + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - + 
+ï»¿// + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - + 
 // |                                                                                           F u n c o e s B e n d e r D e f . m q h   | 
 // |                                                 C o p y r i g h t   2 0 1 5 ,   M e t a Q u o t e s   S o f t w a r e   C o r p .   | 
 // |                                                                                           h t t p s : / / w w w . m q l 5 . c o m   | 
 // + - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - + 
 
-# p r o p e r t y   c o p y r i g h t   " P e t r o S a ,   R o b ï ¿ ½ s   f e i t o s   n a   h o r a ,   q u e n t i n h o s ,   t r a g a m   v a s i l h a s . " 
+# p r o p e r t y   c o p y r i g h t   " P e t r o S a ,   R o b Ã¯ Â¿ Â½ s   f e i t o s   n a   h o r a ,   q u e n t i n h o s ,   t r a g a m   v a s i l h a s . " 
 # p r o p e r t y   l i n k             " h t t p : / / w w w . s a 2 . c o m . b r " 
   
  v o i d   I n i c i a l i z a _ F u n c s   ( ) 
@@ -45,7 +45,7 @@
  
  
  
- / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /   P r i m e i r a   O p e r a ï ¿ ½ a o 
+ / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / / /   P r i m e i r a   O p e r a Ã¯ Â¿ Â½ a o 
  
  
  
@@ -213,7 +213,7 @@
  
  { 
  
-     C o m e n t a r i o _ R o b o   =   " " ;   / / P a r a   n ã o   r e p e t i r   a   p o r r a   t o d a 
+     C o m e n t a r i o _ R o b o   =   " " ;   / / P a r a   n Ã£ o   r e p e t i r   a   p o r r a   t o d a 
  
  
  

@@ -1,8 +1,8 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             SA2 - Investment soft|
 //+------------------------------------------------------------------+
-#property copyright "Sa2, pq s„o sÛ dois na empresa agora."
+#property copyright "Sa2, pq s√£o s√≥ dois na empresa agora."
 #property link      "http://www.sa2.com.br"
 
 

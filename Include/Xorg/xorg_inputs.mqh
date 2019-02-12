@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 
 input string Xorg_Label = "Configs do Xorg";  // -----------XORG--------------

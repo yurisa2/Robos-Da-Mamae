@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                      OnTrade.mqh |
 //|                                                              Sa2 |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Rob�s feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 void OnTradeTransaction(const MqlTradeTransaction& trans,
@@ -373,7 +373,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   //--- 2) partial closure of the open position
                   //else if(pos_vol>0.0)
                   // PrintFormat("\n%s: partial closure of the current position",deal_symbol);
-                  //PrintFormat("\n%s: Redu��o da Posi��o (Realiza��o Parcial)",deal_symbol);
+                  //PrintFormat("\n%s: Reduï¿½ï¿½o da Posiï¿½ï¿½o (Realizaï¿½ï¿½o Parcial)",deal_symbol);
                 }
               }
 

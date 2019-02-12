@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             FuncoesBenderDef.mqh |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Rob�s feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 
@@ -37,7 +37,7 @@ void Inicializa_Funcs ()
 
 }
 
-//////////////////////////////// Primeira Opera�ao
+//////////////////////////////// Primeira Operaï¿½ao
 
 void PrimeiraOperacao ()
 {
@@ -121,7 +121,7 @@ void VendaIndicador (string Desc,string IO = "Neutro")
 
 void Comentario_Dexter ()
 {
-  Comentario_Robo = ""; //Para n�o repetir a porra toda
+  Comentario_Robo = ""; //Para nï¿½o repetir a porra toda
 
 if(Usa_Hilo) Comentario_Robo = Comentario_Robo+"HiLo - M"+EnumToString(TimeFrame)+"N"+IntegerToString(Periodos)+"\n";
 if(Usa_Ozy) Comentario_Robo = Comentario_Robo+"Ozy"+IntegerToString(Ozy_MM)+";"+IntegerToString(Ozy_Shift)+"."+IntegerToString(Ozy_length);

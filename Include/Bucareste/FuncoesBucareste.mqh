@@ -1,10 +1,10 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             FuncoesBenderDef.mqh |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "PetroSa, Rob�s feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 
@@ -34,7 +34,7 @@ void Inicializa_Funcs ()
 
 }
 
-//////////////////////////////// Primeira Opera�ao
+//////////////////////////////// Primeira Operaï¿½ao
 
 void PrimeiraOperacao ()
 {

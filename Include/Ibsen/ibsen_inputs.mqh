@@ -1,9 +1,9 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 
 
 input string Ibsen_Label = "Configs do Ibsen";  // -----------IBSEN--------------
-input int tamanho_candle_p = 60;        //Quantos % um candle sÛ est· da banda para operar
-input int tamanho_candle_para_fora_p = 50;  //Quantos % um candle est· opara fora
+input int tamanho_candle_p = 60;        //Quantos % um candle s√≥ est√° da banda para operar
+input int tamanho_candle_para_fora_p = 50;  //Quantos % um candle est√° opara fora
 input int p_bb = 20; //Periodos da Banda
 
 enum Tipo_Gatilho
@@ -13,4 +13,4 @@ enum Tipo_Gatilho
 };
 input Tipo_Gatilho Gatilho = 0;
 
-input bool Opera_Contra = true; //Opera Contr·rio o rompimento (true) ou a favor (false)
+input bool Opera_Contra = true; //Opera Contr√°rio o rompimento (true) ou a favor (false)

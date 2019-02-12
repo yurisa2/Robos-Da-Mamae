@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                       Inputs.mqh |
 //|                                                              Sa2 |
@@ -38,7 +38,7 @@ input int rna_epochs = 1000; //DESLIGADO POR ENQUANTO
 int rna_hidden_layers = 1; //Desligando para tentar sistema auto9matico com liberdade
 int rna_segunda_camada = 10; //Desligando para tentar sistema auto9matico com liberdade
 int rna_terceira_camada = 0; //Desligando para tentar sistema auto9matico com liberdade
-int rna_camada_saida = 2; //DESLIGADO POR ENQUANTO E quando voltar, provavelmente será automática
+int rna_camada_saida = 2; //DESLIGADO POR ENQUANTO E quando voltar, provavelmente serÃ¡ automÃ¡tica
  input int rna_grau_liberdade_alpha = 2; //Grau de liberdade da rede (2-10, 2 eh mais neuronios)
 input int rna_restarts_ = 2 ; //Restarts (2 na doc)
 //  double rna_wstep_ = 0.001 ;

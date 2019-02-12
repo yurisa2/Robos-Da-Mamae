@@ -1,4 +1,4 @@
-providers: [
+﻿providers: [
   {
     key: "bt"
     config:

@@ -1,9 +1,9 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 
-#property copyright "PetroSa, RobÙs feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Rob√¥s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
-input bool OperacaoLogoDeCara = false;                                     //Opera assim que o hor·rio liberar, sem virada de tendencia
+input bool OperacaoLogoDeCara = false;                                     //Opera assim que o hor√°rio liberar, sem virada de tendencia
 
 
 input string Indicadores = "-------------------------------------";

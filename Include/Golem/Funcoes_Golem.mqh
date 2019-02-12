@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 #property link      "http://www.sa2.com.br"
 
@@ -103,7 +103,7 @@ void Evento_Book ()
 
   Comentario_Robo += "soma_diferenca: " + DoubleToString(soma_diferenca,1);
   Comentario_Robo += "\n";
-  Direcao = soma_direcao;   //Achar lugar melhor pra isso, outro peda�o do objeto
+  Direcao = soma_direcao;   //Achar lugar melhor pra isso, outro pedaï¿½o do objeto
 
   Comentario_Robo += "\n";
   Comentario_Robo += "\n";

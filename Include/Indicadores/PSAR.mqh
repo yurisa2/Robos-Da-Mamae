@@ -1,6 +1,6 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
-#property copyright "PetroSa, Rob�s feitos na hora, quentinhos, tragam vasilhas."
+#property copyright "PetroSa, Robï¿½s feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
 int CondicaoPsar = 0; //TEMP
@@ -12,7 +12,7 @@ bool CalculaPSar ()
   ArraySetAsSeries(PSar_Array, true);
   int copiedPSar=CopyBuffer(HandlePSar,0,0,100,PSar_Array);
 
-  //--- D� uns prints s� pra ver //--- Print("Valor do PSAR: ",PSar_Array[0]," Pre�o: ",daotick_geral);
+  //--- Dï¿½ uns prints sï¿½ pra ver //--- Print("Valor do PSAR: ",PSar_Array[0]," Preï¿½o: ",daotick_geral);
   if(PSar_Array[0] > daotick_venda)     CondicaoPsar = -1;
   if(PSar_Array[0] < daotick(1))     CondicaoPsar = 1;
 
@@ -35,7 +35,7 @@ void PSar ()
     ArraySetAsSeries(PSar_Array, true);
     int copiedPSar=CopyBuffer(HandlePSar,0,0,100,PSar_Array);
 
-    //--- D� uns prints s� pra ver //--- Print("Valor do PSAR: ",PSar_Array[0]," Pre�o: ",daotick_geral);
+    //--- Dï¿½ uns prints sï¿½ pra ver //--- Print("Valor do PSAR: ",PSar_Array[0]," Preï¿½o: ",daotick_geral);
     if(PSar_Array[0] >daotick_geral)     CondicaoPsar = -1;
     if(PSar_Array[0] <daotick_geral)     CondicaoPsar = 1;
 
@@ -48,15 +48,15 @@ void PSar ()
 
       if(Direcao==1 && Ordem==false)
       {
-        Print("Opera��es Antes da venda: ",Operacoes," VENDE! ");
-        VendaIndicador("Venda por Invers�o de PSAR","Entrada");
+        Print("Operaï¿½ï¿½es Antes da venda: ",Operacoes," VENDE! ");
+        VendaIndicador("Venda por Inversï¿½o de PSAR","Entrada");
         Ordem = true;
       }
 
       if(Direcao==-1 && Ordem==false)
       {
-        Print("Opera��es Antes da compra: ",Operacoes," COMPRA! ");
-        CompraIndicador("Compra por Invers�o de PSAR","Entrada");
+        Print("Operaï¿½ï¿½es Antes da compra: ",Operacoes," COMPRA! ");
+        CompraIndicador("Compra por Inversï¿½o de PSAR","Entrada");
         Ordem = true;
       }
 
@@ -67,7 +67,7 @@ void PSar ()
 
 }
 
-bool Zerado_PSAR ()   //Se o switch estiver FALSE e a soma for maior que 0 ele d� false
+bool Zerado_PSAR ()   //Se o switch estiver FALSE e a soma for maior que 0 ele dï¿½ false
 {
 
   double soma_params = PSAR_Step + PSAR_Max_Step;

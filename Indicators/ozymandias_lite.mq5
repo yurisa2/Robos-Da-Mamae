@@ -1,9 +1,9 @@
-//+------------------------------------------------------------------+
+п»ї//+------------------------------------------------------------------+
 //|                      Ozymandias_Lite.mq5 (PunkBASSter's edition) |
-//|                                     Copyright © 2014, GoldnMoney |
+//|                                     Copyright В© 2014, GoldnMoney |
 //|                                              http://www.mql5.com |
 //+------------------------------------------------------------------+
-#property copyright "Copyright © 2014, GoldnMoney"
+#property copyright "Copyright В© 2014, GoldnMoney"
 #property link "http://www.mql5.com"
 //---
 #property version   "1.00"
@@ -37,14 +37,14 @@ int OnInit()
    HMA_Handle=iMA(NULL,0,Length,0,MAType,PRICE_HIGH);
    if(HMA_Handle==INVALID_HANDLE)
      {
-      Print(" Не удалось получить хендл индикатора iMA");
+      Print(" ГЌГҐ ГіГ¤Г Г«Г®Г±Гј ГЇГ®Г«ГіГ·ГЁГІГј ГµГҐГ­Г¤Г« ГЁГ­Г¤ГЁГЄГ ГІГ®Г°Г  iMA");
       return(INIT_FAILED);
      }
 //---
    LMA_Handle=iMA(NULL,0,Length,0,MAType,PRICE_LOW);
    if(LMA_Handle==INVALID_HANDLE)
      {
-      Print(" Не удалось получить хендл индикатора iMA");
+      Print(" ГЌГҐ ГіГ¤Г Г«Г®Г±Гј ГЇГ®Г«ГіГ·ГЁГІГј ГµГҐГ­Г¤Г« ГЁГ­Г¤ГЁГЄГ ГІГ®Г°Г  iMA");
       return(INIT_FAILED);
      }
 //---
@@ -70,8 +70,8 @@ int OnInit()
 //+------------------------------------------------------------------+ 
 //| Custom indicator iteration function                              | 
 //+------------------------------------------------------------------+ 
-int OnCalculate(const int rates_total,    // количество истории в барах на текущем тике
-                const int prev_calculated,// количество истории в барах на предыдущем тике
+int OnCalculate(const int rates_total,    // ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЁГ±ГІГ®Г°ГЁГЁ Гў ГЎГ Г°Г Гµ Г­Г  ГІГҐГЄГіГ№ГҐГ¬ ГІГЁГЄГҐ
+                const int prev_calculated,// ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ® ГЁГ±ГІГ®Г°ГЁГЁ Гў ГЎГ Г°Г Гµ Г­Г  ГЇГ°ГҐГ¤Г»Г¤ГіГ№ГҐГ¬ ГІГЁГЄГҐ
                 const datetime &time[],
                 const double &open[],
                 const double &high[],
@@ -81,30 +81,30 @@ int OnCalculate(const int rates_total,    // количество истории в барах на текущ
                 const long &volume[],
                 const int &spread[])
   {
-//--- проверка количества баров на достаточность для расчета
+//--- ГЇГ°Г®ГўГҐГ°ГЄГ  ГЄГ®Г«ГЁГ·ГҐГ±ГІГўГ  ГЎГ Г°Г®Гў Г­Г  Г¤Г®Г±ГІГ ГІГ®Г·Г­Г®Г±ГІГј Г¤Г«Гї Г°Г Г±Г·ГҐГІГ 
    if(BarsCalculated(HMA_Handle)<rates_total
       || BarsCalculated(LMA_Handle)<rates_total
       || rates_total<min_rates_total) return(RESET);
-//--- объявление переменных
+//--- Г®ГЎГєГїГўГ«ГҐГ­ГЁГҐ ГЇГҐГ°ГҐГ¬ГҐГ­Г­Г»Гµ
    int to_copy,limit,trend0,nexttrend0;
    double hh,ll,maxl0,minh0,lma,hma,HMA[],LMA[];
    static int trend1,nexttrend1;
    static double maxl1,minh1;
-//--- расчет стартового номера limit для цикла пересчета баров
-   if(prev_calculated>rates_total || prev_calculated<=0)// проверка на первый старт расчета индикатора
+//--- Г°Г Г±Г·ГҐГІ Г±ГІГ Г°ГІГ®ГўГ®ГЈГ® Г­Г®Г¬ГҐГ°Г  limit Г¤Г«Гї Г¶ГЁГЄГ«Г  ГЇГҐГ°ГҐГ±Г·ГҐГІГ  ГЎГ Г°Г®Гў
+   if(prev_calculated>rates_total || prev_calculated<=0)// ГЇГ°Г®ГўГҐГ°ГЄГ  Г­Г  ГЇГҐГ°ГўГ»Г© Г±ГІГ Г°ГІ Г°Г Г±Г·ГҐГІГ  ГЁГ­Г¤ГЁГЄГ ГІГ®Г°Г 
      {
-      limit=rates_total-min_rates_total-1; // стартовый номер для расчета всех баров
+      limit=rates_total-min_rates_total-1; // Г±ГІГ Г°ГІГ®ГўГ»Г© Г­Г®Г¬ГҐГ° Г¤Г«Гї Г°Г Г±Г·ГҐГІГ  ГўГ±ГҐГµ ГЎГ Г°Г®Гў
       trend1=0;
       nexttrend1=0;
       maxl1=0;
       minh1=9999999;
      }
-   else limit=rates_total-prev_calculated;  // стартовый номер для расчета только новых баров
+   else limit=rates_total-prev_calculated;  // Г±ГІГ Г°ГІГ®ГўГ»Г© Г­Г®Г¬ГҐГ° Г¤Г«Гї Г°Г Г±Г·ГҐГІГ  ГІГ®Г«ГјГЄГ® Г­Г®ГўГ»Гµ ГЎГ Г°Г®Гў
    to_copy=limit+1;
-//--- копируем вновь появившиеся данные в массивы
+//--- ГЄГ®ГЇГЁГ°ГіГҐГ¬ ГўГ­Г®ГўГј ГЇГ®ГїГўГЁГўГёГЁГҐГ±Гї Г¤Г Г­Г­Г»ГҐ Гў Г¬Г Г±Г±ГЁГўГ»
    if(CopyBuffer(HMA_Handle,0,0,to_copy,HMA)<=0) return(RESET);
    if(CopyBuffer(LMA_Handle,0,0,to_copy,LMA)<=0) return(RESET);
-//--- индексация элементов в массивах как в таймсериях  
+//--- ГЁГ­Г¤ГҐГЄГ±Г Г¶ГЁГї ГЅГ«ГҐГ¬ГҐГ­ГІГ®Гў Гў Г¬Г Г±Г±ГЁГўГ Гµ ГЄГ ГЄ Гў ГІГ Г©Г¬Г±ГҐГ°ГЁГїГµ  
    ArraySetAsSeries(close,true);
    ArraySetAsSeries(high,true);
    ArraySetAsSeries(low,true);
@@ -114,7 +114,7 @@ int OnCalculate(const int rates_total,    // количество истории в барах на текущ
    nexttrend0=nexttrend1;
    maxl0=maxl1;
    minh0=minh1;
-//--- основной цикл расчета индикатора
+//--- Г®Г±Г­Г®ГўГ­Г®Г© Г¶ГЁГЄГ« Г°Г Г±Г·ГҐГІГ  ГЁГ­Г¤ГЁГЄГ ГІГ®Г°Г 
    for(int bar=limit; bar>=0 && !IsStopped(); bar--)
      {
       hh=high[ArrayMaximum(high,bar,Length)];

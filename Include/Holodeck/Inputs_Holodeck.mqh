@@ -1,14 +1,14 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             SA2 - Investment soft|
 //+------------------------------------------------------------------+
-#property copyright "Sa2, pq s„o sÛ dois na empresa agora."
+#property copyright "Sa2, pq s√£o s√≥ dois na empresa agora."
 #property link      "http://www.sa2.com.br"
 
 
 input string Indicadores = "-------------------------------------";
 input int   Holo_Periodos_BB = 20;                                        //Periodos da BB (20)
-// input int   Histerese_Media = 0;                                     //Histerese (da MÈdia) (0)
+// input int   Histerese_Media = 0;                                     //Histerese (da M√©dia) (0)
 input bool  Holo_Mediana = false;
 input int   Holo_Distancia = 0;
 

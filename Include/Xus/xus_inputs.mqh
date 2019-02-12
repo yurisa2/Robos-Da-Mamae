@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 input string Xus_Label = "Configs do Xus";  // -----------X-U-S----------------
 input int xus_delta_ativacao = 60; // Delta Ativacao (TickSize s)
 input double xus_valor_vendetta = 90;

@@ -1,8 +1,8 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             SA2 - Investment soft|
 //+------------------------------------------------------------------+
-#property copyright "Sa2, pq s„o sÛ dois na empresa agora."
+#property copyright "Sa2, pq s√£o s√≥ dois na empresa agora."
 #property link      "http://www.sa2.com.br"
 
 
@@ -12,11 +12,11 @@ ENUM_APPLIED_PRICE RSI_preco =  PRICE_CLOSE;
 
 input string Indicadores = "-------------------------------------";
 input bool  Wesley_Tempo_Real = true;   //Tempo real
-input bool Wesley_Inverte = true;       //Invers„o (precisa fazer sistema de continuidade)
+input bool Wesley_Inverte = true;       //Invers√£o (precisa fazer sistema de continuidade)
 input bool   Wesley_Sai_Em_Zero = true;                                          //Sai Quando Zera
 input bool   Wesley_Igual_Lados = true;                                           //Parametros Simetricos
-input double Wesley_Valor_Venda = 52.203;                                           //Valor MÌnimo para Venda (Usa esse para Simetricos)
-input double Wesley_Valor_Compra = -52.203;                                         //Valor MÌnimo para Compra (ignorado se Simetricos)
+input double Wesley_Valor_Venda = 52.203;                                           //Valor M√≠nimo para Venda (Usa esse para Simetricos)
+input double Wesley_Valor_Compra = -52.203;                                         //Valor M√≠nimo para Compra (ignorado se Simetricos)
 
 // input bool Wesley_Permite_Large = true;         //Permite o uso de 2 timeframes (large)
 // input ENUM_TIMEFRAMES Wesley_Large = PERIOD_M5;                                         //Periodo Large

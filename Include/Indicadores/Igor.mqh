@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 class Igor
 {
@@ -39,7 +39,7 @@ double Igor::Crisp_MACD() //Tabela 1 pag 101   |  -2 a 2 (Muito baixo a muito al
   double LinSinal = MACD_oo.Valor(1,0); //1 - Signal Line
   double m1 = MACD_oo.Cx(0); //Cx MACD
   double m2 = MACD_oo.Cx(1); //Cx Sinal
-  double distancia = MACD_oo.Distancia_Linha_Zero(); //dist�ncia do indicador Histograma MACD ao eixo zero;
+  double distancia = MACD_oo.Distancia_Linha_Zero(); //distância do indicador Histograma MACD ao eixo zero;
 
   if(LinMACD > 0 && LinMACD > LinSinal && m1 > 0 && m1 > m2) retorno = 2; //1
   if(LinMACD > 0 && LinMACD > LinSinal && m1 > 0 && m1 < m2) retorno = 1; //2

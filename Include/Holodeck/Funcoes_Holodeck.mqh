@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                             SA2 - Investment soft|
 //+------------------------------------------------------------------+
@@ -167,7 +167,7 @@ void Holo_No_Tick ()
   Holo_Direcao();
   Holo_Avalia();
 
-  //Passar os coment�rios para um objeto elegante
+  //Passar os comentï¿½rios para um objeto elegante
   Comentario_Robo = "\n Linha Superior da BB: " + DoubleToString(Holo_BB_High_Var,_Digits);
   if(Holo_Mediana) Comentario_Robo = Comentario_Robo + "\n Linha Mediana da BB: " + DoubleToString(Holo_BB_Mediana_Var,_Digits);
   Comentario_Robo = Comentario_Robo + "\n Linha Inferior da BB: " + DoubleToString(Holo_BB_Low_Var,_Digits);
@@ -179,7 +179,7 @@ void Holo_No_Tick ()
   Comentario_Robo = Comentario_Robo + "\n\n Valor Rompimento: " + DoubleToString(Holo_Valor_Rompimento,_Digits);
   Comentario_Robo = Comentario_Robo + "\n\n\n";
 
-  //Avalia��es de END Movel
+  //Avaliaï¿½ï¿½es de END Movel
   Holo_TP_Movel();
   Holo_SL_Movel();
   //Fim do EN MOVEL

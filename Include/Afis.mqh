@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                              Sa2 |
 //|                                           https://www.sa2.com.br |
@@ -279,7 +279,7 @@ void Afis::Feature_Selector(int& Features_idx[]) {
       Features_idx[ArrayRange(Features_idx,0)-1] = i;
     }
 
-    if(this.feature_ranking[i] > xeon_cut && this.feature_selection_method == "cut") {
+    if(this.feature_ranking[i] > this.param_feature_min_cut && this.feature_selection_method == "cut") {
       ArrayResize(Features_idx,ArrayRange(Features_idx,0)+1);
       Features_idx[ArrayRange(Features_idx,0)-1] = i;
     }

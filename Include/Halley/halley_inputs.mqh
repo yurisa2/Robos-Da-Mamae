@@ -1,12 +1,12 @@
-/* -*- C++ -*- */
+Ôªø/* -*- C++ -*- */
 
 
 
 
 input string Halley_Label = "Configs do Halley";  // -----------H-A-L-L-E-Y----------------
 input double n_vezes = 2;  //Quantas vezes sombra > corpo
-input double n_ultimos = 3;  //Verificar quantos Candles para tr·s
-input double prop_sombra = 2; //ProporÁ„o minima entre as duas sombras
+input double n_ultimos = 3;  //Verificar quantos Candles para tr√°s
+input double prop_sombra = 2; //Propor√ß√£o minima entre as duas sombras
 input bool Opera_Somente_Formato = false; //Opera Somente Formato
 enum Tipo_Op
 {

@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 
 class FiltroF
 {
@@ -62,7 +62,7 @@ double FiltroF::Fuzzy()
   fvFILTRO.Terms().Add(new CFuzzyTerm("MuitoBom", new CTrapezoidMembershipFunction(80,90,100,100)));
   fsFILTRO.Output().Add(fvFILTRO);
 
-  //Mano, sistema fuzzy autom�tico e serial...CARALHO
+  //Mano, sistema fuzzy automï¿½tico e serial...CARALHO
 
   //ESQUEMA AQUI VAI SER CRIAR UMA FUNCAO QUE PEGUE OS DADOS DO ARQUIVO USANDO
   //O OBJETO FILEREADER, DESMONTE CADA STRING E RETORNE o nome, bom, ruim ...  Var_Input a gente pega do aquisicao

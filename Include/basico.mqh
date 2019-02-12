@@ -1,4 +1,4 @@
-/* -*- C++ -*- */
+﻿/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                funcoesbender.mqh |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
@@ -60,11 +60,11 @@ int Rand_Geral = MathRand();
 #include <Indicadores\WPR.mqh>
 #include <Indicadores\XING.mqh>
 #include <aquisicao.mqh>
-//#include <Filtro_Fuzzy.mqh> //Programa de Emagrecimento do Yurão
+//#include <Filtro_Fuzzy.mqh> //Programa de Emagrecimento do YurÃ£o
 
-//#include <File_Writer.mqh> //Programa de Emagrecimento do Yurão
+//#include <File_Writer.mqh> //Programa de Emagrecimento do YurÃ£o
 #include <File_Writer_Gen.mqh>
-// #include <File_Writer_Filtro.mqh> //Programa de Emagrecimento do Yurão
+// #include <File_Writer_Filtro.mqh> //Programa de Emagrecimento do YurÃ£o
 #include <File_Reader.mqh>
 
    #include <Expert\ExpertBase.mqh>
@@ -112,12 +112,12 @@ bool TaDentroDoHorario(string HoraInicio, string HoraFim)
 ////////////////////////////////////////////
 
 //////////////////////// DAOTICK ///////////
-////// Fun��o Pega Tick e devolve a hora e o valor da porra do ativo
+////// Funï¿½ï¿½o Pega Tick e devolve a hora e o valor da porra do ativo
 double daotick(int tipo = 0)
 {
   double retornoTick = 0;
 
-  retornoTick = SymbolInfoDouble(Symbol(),SYMBOL_ASK); // ASK eh bom pra compra, pra venda � bid
+  retornoTick = SymbolInfoDouble(Symbol(),SYMBOL_ASK); // ASK eh bom pra compra, pra venda ï¿½ bid
 
   if(tipo == -1)
   {
@@ -172,7 +172,7 @@ double Segundos_Fim_Barra_num()
 //         Sleep(1000);
 //         SendMail(Descricao_Robo+"Venda para zerar o dia","Finalizando o dia com uma venda, e tal...");
 //       }
-//       Print(Descricao_Robo+"Depois da Ultima Opera��o: ",IntegerToString(Operacoes));
+//       Print(Descricao_Robo+"Depois da Ultima Operaï¿½ï¿½o: ",IntegerToString(Operacoes));
 //       Sleep(5000);
 //     } // Fim do ta dentro do horario
 //   } // Fim do JaDeuFinal
@@ -335,7 +335,7 @@ void Init_Padrao()
   // data_inicio_execucao = TimeCurrent();
   data_inicio_execucao = StringToTime(data_inicio_execucao_string);
 
-  Print("Descrição: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
+  Print("DescriÃ§Ã£o: "+Descricao_Robo+" "+IntegerToString(TimeMagic));
   Print("Liquidez da conta: ",conta.Equity());
   Print("TimeMagic: ",IntegerToString(TimeMagic));
 

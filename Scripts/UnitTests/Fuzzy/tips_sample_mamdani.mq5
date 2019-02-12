@@ -1,4 +1,4 @@
-//+------------------------------------------------------------------+
+Ôªø//+------------------------------------------------------------------+
 //|                                                     fuzzynet.mqh |
 //|                        Copyright 2015, MetaQuotes Software Corp. |
 //|                                             https://www.mql5.com |
@@ -67,9 +67,9 @@ void OnStart()
 
   double retorno = 0;
 
-  // Bloco para nao estourar o FUzz„o
+  // Bloco para nao estourar o FUzz√£o
 
-  // Bloco para nao estourar o FUzz„o
+  // Bloco para nao estourar o FUzz√£o
 
 
 

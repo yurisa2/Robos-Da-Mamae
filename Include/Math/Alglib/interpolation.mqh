@@ -1,4 +1,4 @@
-//+------------------------------------------------------------------+
+﻿//+------------------------------------------------------------------+
 //|                                                interpolation.mqh |
 //|            Copyright 2003-2012 Sergey Bochkanov (ALGLIB project) |
 //|                   Copyright 2012-2017, MetaQuotes Software Corp. |

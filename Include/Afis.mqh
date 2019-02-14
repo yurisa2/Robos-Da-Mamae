@@ -339,7 +339,7 @@ void Afis::StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model) {
 }
 
 void Afis::DynamicRules(CMamdaniFuzzySystem& Afis_Model) {
-  string definitive_rules[];
+  // string definitive_rules[];
   string antecedents[] = {"a3", "a2", "n1", "b2", "b3"};
   // string consequents[] = {"Baixo", "Neutro", "Alto"};
   // this.selected_features;

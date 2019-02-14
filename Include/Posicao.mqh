@@ -34,7 +34,7 @@ long posicao::TicketPosicao()
 
 bool posicao::PosicaoExiste()
 {
-  return 0;
+  return false;
 }
 
 void  posicao::posicao()

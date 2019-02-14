@@ -1,4 +1,4 @@
-п»ї//+------------------------------------------------------------------+
+//+------------------------------------------------------------------+
 //|                                                  integration.mqh |
 //|            Copyright 2003-2012 Sergey Bochkanov (ALGLIB project) |
 //|                   Copyright 2012-2017, MetaQuotes Software Corp. |
@@ -78,12 +78,12 @@ CGaussQ::~CGaussQ(void)
 //| and zeroth moment Mu0                                            |
 //| Mu0 = integral(W(x)dx,a,b)                                       |
 //| INPUT PARAMETERS:                                                |
-//|     Alpha   вЂ“   array[0..N-1], alpha coefficients                |
-//|     Beta    вЂ“   array[0..N-1], beta coefficients                 |
+//|     Alpha   –   array[0..N-1], alpha coefficients                |
+//|     Beta    –   array[0..N-1], beta coefficients                 |
 //|                 Zero-indexed element is not used and may be      |
 //|                 arbitrary. Beta[I]>0.                            |
-//|     Mu0     вЂ“   zeroth moment of the weight function.            |
-//|     N       вЂ“   number of nodes of the quadrature formula, N>=1  |
+//|     Mu0     –   zeroth moment of the weight function.            |
+//|     N       –   number of nodes of the quadrature formula, N>=1  |
 //| OUTPUT PARAMETERS:                                               |
 //|     Info    -   error code:                                      |
 //|                 * -3    internal eigenproblem solver hasn't      |
@@ -161,14 +161,14 @@ static void CGaussQ::GQGenerateRec(double &alpha[],double &beta[],
 //| and zeroth moment Mu0                                            |
 //| Mu0 = integral(W(x)dx,a,b)                                       |
 //| INPUT PARAMETERS:                                                |
-//|     Alpha   вЂ“   array[0..N-2], alpha coefficients                |
-//|     Beta    вЂ“   array[0..N-2], beta coefficients.                |
+//|     Alpha   –   array[0..N-2], alpha coefficients                |
+//|     Beta    –   array[0..N-2], beta coefficients.                |
 //|                 Zero-indexed element is not used, may be         |
 //|                 arbitrary. Beta[I]>0                             |
-//|     Mu0     вЂ“   zeroth moment of the weighting function.         |
-//|     A       вЂ“   left boundary of the integration interval.       |
-//|     B       вЂ“   right boundary of the integration interval.      |
-//|     N       вЂ“   number of nodes of the quadrature formula, N>=3  |
+//|     Mu0     –   zeroth moment of the weighting function.         |
+//|     A       –   left boundary of the integration interval.       |
+//|     B       –   right boundary of the integration interval.      |
+//|     N       –   number of nodes of the quadrature formula, N>=3  |
 //|                 (including the left and right boundary nodes).   |
 //| OUTPUT PARAMETERS:                                               |
 //|     Info    -   error code:                                      |
@@ -317,13 +317,13 @@ static void CGaussQ::GQGenerateGaussLobattoRec(double &calpha[],double &cbeta[],
 //| and zeroth moment Mu0                                            |
 //| Mu0 = integral(W(x)dx,a,b)                                       |
 //| INPUT PARAMETERS:                                                |
-//|     Alpha   вЂ“   array[0..N-2], alpha coefficients.               |
-//|     Beta    вЂ“   array[0..N-1], beta coefficients                 |
+//|     Alpha   –   array[0..N-2], alpha coefficients.               |
+//|     Beta    –   array[0..N-1], beta coefficients                 |
 //|                 Zero-indexed element is not used.                |
 //|                 Beta[I]>0                                        |
-//|     Mu0     вЂ“   zeroth moment of the weighting function.         |
-//|     A       вЂ“   left boundary of the integration interval.       |
-//|     N       вЂ“   number of nodes of the quadrature formula, N>=2  |
+//|     Mu0     –   zeroth moment of the weighting function.         |
+//|     A       –   left boundary of the integration interval.       |
+//|     N       –   number of nodes of the quadrature formula, N>=2  |
 //|                 (including the left boundary node).              |
 //| OUTPUT PARAMETERS:                                               |
 //|     Info    -   error code:                                      |
@@ -745,12 +745,12 @@ CGaussKronrodQ::~CGaussKronrodQ(void)
 //| and zero moment Mu0                                              |
 //|     Mu0 = integral(W(x)dx,a,b)                                   |
 //| INPUT PARAMETERS:                                                |
-//|     Alpha       вЂ“   alpha coefficients, array[0..floor(3*K/2)].  |
-//|     Beta        вЂ“   beta coefficients,  array[0..ceil(3*K/2)].   |
+//|     Alpha       –   alpha coefficients, array[0..floor(3*K/2)].  |
+//|     Beta        –   beta coefficients,  array[0..ceil(3*K/2)].   |
 //|                     Beta[0] is not used and may be arbitrary.    |
 //|                     Beta[I]>0.                                   |
-//|     Mu0         вЂ“   zeroth moment of the weight function.        |
-//|     N           вЂ“   number of nodes of the Gauss-Kronrod         |
+//|     Mu0         –   zeroth moment of the weight function.        |
+//|     N           –   number of nodes of the Gauss-Kronrod         |
 //|                     quadrature formula,                          |
 //|                     N >= 3,                                      |
 //|                     N =  2*K+1.                                  |
@@ -2423,7 +2423,7 @@ static bool CAutoGK::AutoGKInternalIteration(CAutoGKInternalState &state)
       //--- Use rectangles method
       inta=inta+MathAbs(v)*state.m_wr[i];
       i=i+1;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_Internal_lbl_5(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
      }
 //--- check
@@ -2440,7 +2440,7 @@ static bool CAutoGK::AutoGKInternalIteration(CAutoGKInternalState &state)
       //--- Use rectangles method
       inta=inta+MathAbs(v)*state.m_wr[i];
       i=i+1;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_Internal_lbl_11(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
      }
 //--- check
@@ -2457,7 +2457,7 @@ static bool CAutoGK::AutoGKInternalIteration(CAutoGKInternalState &state)
       //--- Use rectangles method
       inta=inta+MathAbs(v)*state.m_wr[i];
       i=i+1;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_Internal_lbl_19(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
      }
 //--- Routine body
@@ -2532,7 +2532,7 @@ static bool CAutoGK::AutoGKInternalIteration(CAutoGKInternalState &state)
       state.m_sumerr=0;
       state.m_sumabs=0;
       j=0;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_Internal_lbl_8(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
      }
 //--- no maximum width requirements
@@ -2547,7 +2547,7 @@ static bool CAutoGK::AutoGKInternalIteration(CAutoGKInternalState &state)
    intk=0;
    inta=0;
    i=0;
-//--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+//--- function call, возврат результата
    return(Func_Internal_lbl_5(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
   }
 //+------------------------------------------------------------------+
@@ -2645,7 +2645,7 @@ static bool CAutoGK::Func_Internal_lbl_8(CAutoGKInternalState &state,
    intk=0;
    inta=0;
    i=0;
-//--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+//--- function call, возврат результата
    return(Func_Internal_lbl_11(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
   }
 //+------------------------------------------------------------------+
@@ -2673,7 +2673,7 @@ static bool CAutoGK::Func_Internal_lbl_11(CAutoGKInternalState &state,
       state.m_sumerr=state.m_sumerr+state.m_heap[j][0];
       state.m_sumabs=state.m_sumabs+MathAbs(inta);
       j=j+1;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_Internal_lbl_8(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
      }
 //--- obtain F
@@ -2718,7 +2718,7 @@ static bool CAutoGK::Func_Internal_lbl_14(CAutoGKInternalState &state,
    state.m_heap[state.m_heapused].Set(3,0.5*(ta+tb));
    state.m_heap[state.m_heapused].Set(4,tb);
    j=state.m_heapused-1;
-//--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+//--- function call, возврат результата
    return(Func_Internal_lbl_16(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
   }
 //+------------------------------------------------------------------+
@@ -2749,7 +2749,7 @@ static bool CAutoGK::Func_Internal_lbl_16(CAutoGKInternalState &state,
    intk=0;
    inta=0;
    i=0;
-//--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+//--- function call, возврат результата
    return(Func_Internal_lbl_19(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
   }
 //+------------------------------------------------------------------+
@@ -2775,7 +2775,7 @@ static bool CAutoGK::Func_Internal_lbl_19(CAutoGKInternalState &state,
       state.m_sumerr=state.m_sumerr+state.m_heap[j][0];
       state.m_sumabs=state.m_sumabs+state.m_heap[j][2];
       j=j+1;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_Internal_lbl_16(state,i,j,ns,info,c1,c2,intg,intk,inta,v,ta,tb,qeps));
      }
 //--- F(x)
@@ -2844,7 +2844,7 @@ static bool CAutoGK::AutoGKIteration(CAutoGKState &state)
       state.m_needf=false;
       state.m_nfev=state.m_nfev+1;
       state.m_internalstate.m_f=state.m_f;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_lbl_5(state,s,tmp,eps,a,b,x,t,alpha,beta,v1,v2));
      }
 //--- check
@@ -2858,7 +2858,7 @@ static bool CAutoGK::AutoGKIteration(CAutoGKState &state)
       else
          state.m_internalstate.m_f=state.m_f;
       state.m_nfev=state.m_nfev+1;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_lbl_9(state,s,tmp,eps,a,b,x,t,alpha,beta,v1,v2));
      }
 //--- check
@@ -2872,7 +2872,7 @@ static bool CAutoGK::AutoGKIteration(CAutoGKState &state)
       else
          state.m_internalstate.m_f=state.m_f;
       state.m_nfev=state.m_nfev+1;
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_lbl_11(state,s,tmp,eps,a,b,x,t,alpha,beta,v1,v2));
      }
 //--- Routine body
@@ -2929,7 +2929,7 @@ static bool CAutoGK::AutoGKIteration(CAutoGKState &state)
       //---     integral(f(x)dx,a,(b+a)/2)=
       //---     =1/(1+alpha) * integral(t^(-alpha/(1+alpha))*f(a+t^(1/(1+alpha)))dt,0,(0.5*(b-a))^(1+alpha))
       AutoGKInternalPrepare(0,MathPow(0.5*(b-a),1+alpha),eps,state.m_xwidth,state.m_internalstate);
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_lbl_9(state,s,tmp,eps,a,b,x,t,alpha,beta,v1,v2));
      }
 //--- special case
@@ -2943,7 +2943,7 @@ static bool CAutoGK::AutoGKIteration(CAutoGKState &state)
      }
 //--- general case
    AutoGKInternalPrepare(a,b,eps,state.m_xwidth,state.m_internalstate);
-//--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+//--- function call, возврат результата
    return(Func_lbl_5(state,s,tmp,eps,a,b,x,t,alpha,beta,v1,v2));
   }
 //+------------------------------------------------------------------+
@@ -3017,7 +3017,7 @@ static bool CAutoGK::Func_lbl_9(CAutoGKState &state,double &s,double &tmp,
       //---     integral(f(x)dx,(b+a)/2,b)=
       //---     =1/(1+beta) * integral(t^(-beta/(1+beta))*f(b-t^(1/(1+beta)))dt,0,(0.5*(b-a))^(1+beta))
       AutoGKInternalPrepare(0,MathPow(0.5*(b-a),1+beta),eps,state.m_xwidth,state.m_internalstate);
-      //--- function call, ГўГ®Г§ГўГ°Г ГІ Г°ГҐГ§ГіГ«ГјГІГ ГІГ 
+      //--- function call, возврат результата
       return(Func_lbl_11(state,s,tmp,eps,a,b,x,t,alpha,beta,v1,v2));
      }
 //--- Fill State.X,State.XMinusA,State.BMinusX.

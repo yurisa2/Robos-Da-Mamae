@@ -28,12 +28,12 @@ class ML
   void  ML_Save(string NomeArquivo){};
   void Append(string Linha){};
   void Treino_RNA(CMultilayerPerceptronShell &network_trn){};
-  bool Levanta_RNA(CMultilayerPerceptronShell &objRed, string nombArch= ""){return 1;};
-  bool Salva_RNA(CMultilayerPerceptronShell &objRed, string nombArch= ""){return 1;};
+  bool Levanta_RNA(CMultilayerPerceptronShell &objRed, string nombArch= ""){return true;};
+  bool Salva_RNA(CMultilayerPerceptronShell &objRed, string nombArch= ""){return true;};
   void Processa_RNA(double &y[], CMultilayerPerceptronShell &objRed, double &x[]){};
   void Treino_RDF(CDecisionForestShell &tree_trn){};
-  bool Salva_RDF(CDecisionForestShell &tree_trn, string nombArch= ""){return 1;};
-  bool Levanta_RDF(CDecisionForestShell &tree_trn, string nombArch= ""){return 1;};
+  bool Salva_RDF(CDecisionForestShell &tree_trn, string nombArch= ""){return true;};
+  bool Levanta_RDF(CDecisionForestShell &tree_trn, string nombArch= ""){return true;};
   void Processa_RDF(double &y[], CDecisionForestShell &tree_trn,double &x[]){};
   void Saida_ML(){};
   double resp_y[2];

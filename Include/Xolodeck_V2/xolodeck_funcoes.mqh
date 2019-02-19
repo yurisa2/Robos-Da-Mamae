@@ -121,17 +121,41 @@ void Xolodeck::Timer()
 
 void Xolodeck::Get_Dataset()
 {
-
-
     File_Read_Gen *file_read = new File_Read_Gen("teste.txt", "");
 
-     // ArrayPrint(file_read.linha_str_array);
-     // Print(file_read.num_linhas);
-     // Print("PosAP");
-     string dataset[][100];
+    string dataset_result[][100];
+    int max_lines = 100;
 
-     file_read.Convert_To_Dataset(dataset);
+     file_read.Convert_CSV();
+     ArrayPrint(file_read.dataset_csv);
+     // Print(file_read.Index_By_Name("io"));
+     // Print(file_read.Index_By_Name("hora"));
+     // Print(file_read.Index_By_Name("lucro"));
+     // Print(file_read.Index_By_Name("AD_cx"));
+     // Print(file_read.Index_By_Name("BB_Delta_Bruto_norm"));
+     // Print(file_read.Index_By_Name("BB_Posicao_Percent_Cx"));
+     // Print(file_read.Index_By_Name("CCI_Var_Cx"));
+     // Print(file_read.Index_By_Name("DeMarker_Var"));
 
+     for(int i = 0; i < ArrayRange(file_read.dataset_csv,0); i++) {
+       if(file_read.dataset_csv[i][file_read.Index_By_Name("io")] == "DEAL_ENTRY_IN") {
+         int n = 0;
+         ArrayResize(dataset_result,ArrayRange(dataset_result,0)+1);
+
+
+         string lucro =  file_read.dataset_csv[i+1][file_read.Index_By_Name("lucro")];
+
+         if(StringToDouble(lucro) > 0) dataset_result[ArrayRange(dataset_result,0)-1][n++] = 1;
+         else dataset_result[ArrayRange(dataset_result,0)-1][n++] = 0;
+
+         dataset_result[ArrayRange(dataset_result,0)-1][n++] = (file_read.dataset_csv[i][file_read.Index_By_Name("AD_cx")]);
+         dataset_result[ArrayRange(dataset_result,0)-1][n++] = (file_read.dataset_csv[i][file_read.Index_By_Name("BB_Delta_Bruto_norm")]);
+         dataset_result[ArrayRange(dataset_result,0)-1][n++] = (file_read.dataset_csv[i][file_read.Index_By_Name("BB_Posicao_Percent_Cx")]);
+         dataset_result[ArrayRange(dataset_result,0)-1][n++] = (file_read.dataset_csv[i][file_read.Index_By_Name("CCI_Var_Cx")]);
+         dataset_result[ArrayRange(dataset_result,0)-1][n++] = (file_read.dataset_csv[i][file_read.Index_By_Name("DeMarker_Var")]);
+       }
+     }
+     ArrayPrint(dataset_result);
 }
 
 BB O_BB(TimeFrame,NULL,p_bb);

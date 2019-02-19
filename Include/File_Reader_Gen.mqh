@@ -10,8 +10,10 @@
 class File_Read_Gen {
   public:
   void File_Read_Gen(string InpFileName="teste.txt", string InpDirectoryName="Data");
-  void Convert_To_Dataset(string& dataset_f[][100]);
+  void Convert_CSV();
+  int Index_By_Name(string Col_Name);
 
+  string dataset_csv[][100];
   string linha_str_array[];
   int num_linhas;
 
@@ -40,6 +42,7 @@ void File_Read_Gen::File_Read_Gen(string InpFileName="teste.txt", string InpDire
       str_size=FileReadInteger(file_handle_r,INT_VALUE);
       //--- read the string
       str=FileReadString(file_handle_r,str_size);
+      StringReplace(str,"\"","");
       //--- print the string
       // PrintFormat(str);
 
@@ -59,8 +62,8 @@ void File_Read_Gen::File_Read_Gen(string InpFileName="teste.txt", string InpDire
   }
 }
 
-void File_Read_Gen::Convert_To_Dataset(string& dataset_f[][100]) {
-  ArrayResize(dataset_f,this.num_linhas);
+void File_Read_Gen::Convert_CSV() {
+  ArrayResize(this.dataset_csv,this.num_linhas);
 
   for(int i = 0; i < this.num_linhas; i++) {
 
@@ -69,10 +72,19 @@ void File_Read_Gen::Convert_To_Dataset(string& dataset_f[][100]) {
     StringSplit(this.linha_str_array[i],StringGetCharacter(",",0),current_line);
 
     for(int j = 0; j < ArrayRange(current_line,0); j ++) {
-      dataset_f[i][j] = current_line[j];
+      this.dataset_csv[i][j] = current_line[j];
     }
   }
+  // ArrayPrint(this.dataset_csv);
+}
 
-  ArrayPrint(dataset_f);
+int File_Read_Gen::Index_By_Name(string Col_Name) {
+  int retorno = -1;
 
+  for(int i = 0; i < ArrayRange(this.dataset_csv,1); i++) {
+
+    retorno = i;
+    if(Col_Name == this.dataset_csv[0][i]) break;
+  }
+return retorno;
 }

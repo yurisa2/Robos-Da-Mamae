@@ -1,13 +1,15 @@
 ﻿/* -*- C++ -*- */
 
-class Holodeck
+class Xolodeck
 {
 
   public:
+  Xolodeck();
   void Comentario();
   void Avalia();
   void Timer();
-  Holodeck();
+  void Get_Dataset();
+
 
   private:
   bool Toque_Mediana();
@@ -16,13 +18,13 @@ class Holodeck
 
 };
 
-void Holodeck::Holodeck()
+void Xolodeck::Xolodeck()
 {
 
 
 }
 
-bool Holodeck::Toque_Mediana()
+bool Xolodeck::Toque_Mediana()
 {
   bool retorno = false;
   if(O_BB.BB_Base() >= (daotick_geral - Tick_Size) && O_BB.BB_Base() <=  (daotick_geral + Tick_Size)) retorno = true;
@@ -32,7 +34,7 @@ bool Holodeck::Toque_Mediana()
   return retorno;
 }
 
-int Holodeck::Rompimento_Bandas(int barra)
+int Xolodeck::Rompimento_Bandas(int barra)
 {
   int retorno = 0;
 
@@ -53,13 +55,13 @@ int Holodeck::Rompimento_Bandas(int barra)
   return retorno;
 }
 
-void Holodeck::Comentario()
+void Xolodeck::Comentario()
 {
 
 
 }
 
-int Holodeck::Direcao()
+int Xolodeck::Direcao()
 {
   int retorno = 0;
   int barra_i = 0;
@@ -75,7 +77,7 @@ int Holodeck::Direcao()
   return retorno;
 }
 
-void Holodeck::Avalia()
+void Xolodeck::Avalia()
 {
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
 
@@ -86,7 +88,7 @@ void Holodeck::Avalia()
   ultimo_rompimento_operado != ultimo_rompimento
   )
   {
-    if(Direcao() > 0 && holo_compra
+    if(Direcao() > 0 && xolo_compra
     && daotick_geral > (O_BB.BB_Base() + (rompimento_mediana * Tick_Size)) )
     {
       Opera_Mercado *opera = new Opera_Mercado;
@@ -95,7 +97,7 @@ void Holodeck::Avalia()
       ultimo_rompimento_operado = ultimo_rompimento;
     }
 
-    if(Direcao() < 0 && holo_venda
+    if(Direcao() < 0 && xolo_venda
     && daotick_geral < (O_BB.BB_Base() - (rompimento_mediana * Tick_Size)) )
     {
       Opera_Mercado *opera = new Opera_Mercado;
@@ -111,9 +113,24 @@ void Holodeck::Avalia()
   delete(Condicoes);
 }
 
-void Holodeck::Timer()
+void Xolodeck::Timer()
 {
 
+
+}
+
+void Xolodeck::Get_Dataset()
+{
+
+
+    File_Read_Gen *file_read = new File_Read_Gen("teste.txt", "");
+
+     // ArrayPrint(file_read.linha_str_array);
+     // Print(file_read.num_linhas);
+     // Print("PosAP");
+     string dataset[][100];
+
+     file_read.Convert_To_Dataset(dataset);
 
 }
 

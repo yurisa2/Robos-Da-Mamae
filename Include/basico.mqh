@@ -66,6 +66,7 @@ int Rand_Geral = MathRand();
 #include <File_Writer_Gen.mqh>
 // #include <File_Writer_Filtro.mqh> //Programa de Emagrecimento do YurÃ£o
 #include <File_Reader.mqh>
+#include <File_Reader_Gen.mqh>
 
    #include <Expert\ExpertBase.mqh>
    #include <Expert\ExpertTrailing.mqh>

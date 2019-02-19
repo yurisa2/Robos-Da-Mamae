@@ -131,7 +131,7 @@ void Aquisicao::Dados(int barra = 0)
   MFI_FW = MFI_OO.Valor(barra) ;
   Volume_FW = Volumes_OO.Valor(barra+1) ;
   DeMarker_Var =  DeMarker_Ind.Valor(barra)  ;
-  BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(barra+1);
+  BB_Posicao_Percent = Banda_BB.BB_Posicao_Percent(barra);
   RSI_Var =  RSI_OO.Valor(barra)  ;
   Stoch_FW = Stoch_OO.Valor(barra) ;
 

@@ -31,7 +31,7 @@ int Rand_Geral = MathRand();
 #include <Condicoes.mqh>
 #include <Comentario.mqh>
 #include <Afis.mqh>
-#include <ExpandGrid.mqh>
+// #include <ExpandGrid.mqh>
 #include <Math\Stat\Math.mqh>
 
 

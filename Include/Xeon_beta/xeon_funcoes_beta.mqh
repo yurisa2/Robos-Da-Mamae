@@ -121,10 +121,10 @@ void Xeon_beta::Avalia() {
 
   afis.param_feature_min_cut = xeon_cut;
   afis.debug_afis = false;
-  afis.selected_features_print = true;
-  // afis.feature_ranking_print = true;
+  afis.selected_features_print = false;
+  afis.feature_ranking_print = false;
 
-  // afis.feature_selection_method = "all";
+  afis.feature_selection_method = "cut";
 
   afis.feature_method = "variance";
 

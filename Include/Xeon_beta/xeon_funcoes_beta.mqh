@@ -124,7 +124,11 @@ void Xeon_beta::Avalia() {
   afis.selected_features_print = false;
   afis.feature_ranking_print = false;
 
-  afis.feature_selection_method = "cut";
+  afis.feature_selection_method = "upperhinge";
+
+
+  afis.max_feats = 2;
+  afis.min_feats = 1 ;
 
   afis.feature_method = "variance";
 

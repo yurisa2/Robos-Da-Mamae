@@ -328,7 +328,7 @@ class Afis
         }
       }
 
-      ArrayPrint(Features_idx);//DEBUG
+      // ArrayPrint(Features_idx);//DEBUG
 
     }
 
@@ -384,7 +384,7 @@ class Afis
       {
         if (index == r)    {
           for (int j=0; j<r; j++){
-            Print("linhas: " + linhas); //DEBUG
+            // Print("linhas: " + linhas); //DEBUG
             if(j < r) final_ar[linhas][j] = data[j];
           }
           this.linhas++;
@@ -406,6 +406,8 @@ class Afis
         string output_full[][100];
         double results_rules[];
         string output_strings[];
+
+        this.linhas = 0;
 
         int r = ArrayRange(this.selected_features,0);
 
@@ -482,7 +484,7 @@ class Afis
         // ArrayPrint(output_strings);
 
         // ArrayPrint(output_full);
-        Print("Dynamic tralala");
+        // Print("Afis::DynamicRules() END"); //DEBUG
 
       }
 
@@ -492,9 +494,15 @@ class Afis
 
         for (int i = 0; i < ArrayRange(selected_features,0); i++) {
           this.Input_Var_Generator(which_dataset,selected_features[i],Afis_Model_Sep,in);
-          if(this.rules_method == "static") this.StaticRules(selected_features[i], Afis_Model_Sep);
+          if(this.rules_method == "static") {
+            this.StaticRules(selected_features[i], Afis_Model_Sep);
+            // Print("Static Rules");
+          }
         }
-        if(this.rules_method == "dynamic") this.DynamicRules(Afis_Model_Sep);
+          if(this.rules_method == "dynamic") {
+            this.DynamicRules(Afis_Model_Sep);
+            // Print("Dynamic Rules");
+          }
       }
 
       void Afis::Process(double& process[]) {

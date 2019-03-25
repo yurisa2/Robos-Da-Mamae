@@ -127,10 +127,12 @@ void Xeon_beta::Avalia() {
   afis.feature_selection_method = "upperhinge";
 
 
-  afis.max_feats = 2;
+  afis.max_feats = xeon_max_feats;
   afis.min_feats = 1 ;
 
-  afis.feature_method = "variance";
+if(xeon_feature_selection == 0) afis.feature_method = "variance";
+if(xeon_feature_selection == 1) afis.feature_method = "spearman";
+if(xeon_feature_selection == 2) afis.feature_method = "quantile";
 
   HiLo_OO *hilo = new HiLo_OO(4);
   int direcao_now = hilo.Direcao();

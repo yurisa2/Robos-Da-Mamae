@@ -177,8 +177,8 @@ class Afis
           if(vari_0 == 0 || vari_1 == 0) {
             feature_ranking_temp[i] = 0;
           } else {
-            feature_ranking_temp[i] = MathMax(vari_0,vari_1) /
-            MathMin(vari_0,vari_1);
+            feature_ranking_temp[i] = divisao(MathMax(vari_0,vari_1),
+            MathMin(vari_0,vari_1));
           }
         }
 
@@ -499,10 +499,10 @@ class Afis
             // Print("Static Rules");
           }
         }
-          if(this.rules_method == "dynamic") {
-            this.DynamicRules(Afis_Model_Sep);
-            // Print("Dynamic Rules");
-          }
+        if(this.rules_method == "dynamic") {
+          this.DynamicRules(Afis_Model_Sep);
+          // Print("Dynamic Rules");
+        }
       }
 
       void Afis::Process(double& process[]) {

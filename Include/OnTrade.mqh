@@ -1,4 +1,4 @@
-﻿/* -*- C++ -*- */
+/* -*- C++ -*- */
 //+------------------------------------------------------------------+
 //|                                                      OnTrade.mqh |
 //|                                                              Sa2 |
@@ -313,26 +313,43 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                 //Print("Entrou myDealInfo.PositionId() " + myDealInfo.PositionId());
                 if(!Otimizacao)
                 {
-                 File *arquivo = new File();
-                 // FiltroF *filtro_fuzzy = new FiltroF;
+                  File *arquivo = new File();
+                  // FiltroF *filtro_fuzzy = new FiltroF;
 
-                 arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()),0,DEAL_ENTRY_IN);
-                 // filtro_ind.Dados();
-                 // filtro_fuzzy_arquivo = filtro_fuzzy.Fuzzy();
-                 delete(arquivo);
-                 // delete(filtro_fuzzy);
+                  arquivo.Escreve(IntegerToString(myDealInfo.PositionId()),EnumToString(myDealInfo.DealType()),0,DEAL_ENTRY_IN);
+                  // filtro_ind.Dados();
+                  // filtro_fuzzy_arquivo = filtro_fuzzy.Fuzzy();
+                  delete(arquivo);
+                  // delete(filtro_fuzzy);
 
                 }
 
                 on_trade_robo *trade_especifico = new on_trade_robo(1);
                 delete trade_especifico;
 
+                aquisicao_entrada.Dados();
               }
 
               //--- if the market was exited
               else if(deal_entry==DEAL_ENTRY_OUT)
               {
                 OnTradeOut(myDealInfo);
+
+                double lucro = myDealInfo.Profit();
+
+                // MATRIX DEALS
+                double line[];
+                ArrayResize(line,(ArrayRange(aquisicao_entrada.todosDados,0)+1));
+
+                line[0] = lucro;
+
+                for (int i = 1; i < ArrayRange(line,0); i++) {
+                  line[i] = aquisicao_entrada.todosDados[i-1];
+                }
+
+                deal_matrix.Add_Line(line);
+                aquisicao_entrada.Zerar();
+                // MATRIX DEALS
 
                 // Print("Saiu deal_ticket" + deal_ticket);
                 // Print("Saiu myDealInfo.Profit() " + myDealInfo.Profit());
@@ -348,8 +365,8 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   //filtro_teste.Escreve_Medias_Filtro();
                   //delete(filtro_teste);
                   delete(arquivo);
-                //  delete(arquivo_filtro);
-                // Print(myDealInfo.Profit());
+                  //  delete(arquivo_filtro);
+                  // Print(myDealInfo.Profit());
                 }
                 // Print(myDealInfo.Profit());
 

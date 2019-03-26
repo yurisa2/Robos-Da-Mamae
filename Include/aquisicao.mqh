@@ -2,10 +2,13 @@
 
   public:
   Aquisicao(int norm_period = 7);
-  void Aquisicao::Dados(int barra = 0);
-  double Busca_Var(string Var);
+  void Dados(int barra = 0);
+  void Zerar();
+  void passArray();
+  double todosDados[72]; // CONTAR FEATURES ABAIXO
+
   double AC_Var;
-    double AC_cx;
+  double AC_cx;
   double AC_norm;
   double AD_Var;
   double AD_cx;
@@ -14,6 +17,7 @@
   double adx_cx;
   double adx_norm;
   double ATR_Var;
+  // 10 Acima
   double ATR_cx;
   double ATR_norm;
   double BB_Delta_Bruto;
@@ -24,6 +28,7 @@
   double BB_Posicao_Percent_Cx;
   double BB_Posicao_Percent_norm;
   double BullsP_Var;
+  // 10 Acima
   double BullsP_Var_Cx;
   double BullsP_norm;
   double BearsP_Var;
@@ -34,6 +39,7 @@
   double BWMFI_norm;
   double CCI_Var;
   double CCI_Var_Cx;
+  // 10 Acima
   double CCI_norm;
   double DeMarker_Var;
   double DeMarker_Var_Cx;
@@ -44,6 +50,7 @@
   int DP_D;
   int DP_D_Perm;
   int Hilo_Direcao;
+  // 10 Acima
   int Hilo_Perm;
   double MA_high;
   double MA_low;
@@ -54,6 +61,7 @@
   double MACD_Diff_Angulo_LS;
   double MACD_Distancia_Linha_Sinal;
   double MACD_Distancia_Linha_Zero;
+  // 10 Acima
   double MACD_Normalizacao;
   double MACD_Normalizacao_Zero;
   double MFI_FW;
@@ -64,6 +72,7 @@
   double Momentum_norm;
   double RSI_Var;
   double RSI_Var_Cx;
+  // 10 Acima
   double RSI_norm;
   double Stoch_FW;
   double Stoch_Cx_0;
@@ -74,8 +83,10 @@
   double Volume_Cx;
   double Volume_norm;
   double WPR_Var;
+  // 10 Acima
   double WPR_Var_Cx;
   double WPR_norm;
+
   int norm_period_;
 
   private:
@@ -197,7 +208,7 @@ void Aquisicao::Dados(int barra = 0)
   Volume_norm = Volumes_OO.Normalizado(barra,this.norm_period_);
   WPR_norm = WPR_Ind.Normalizado(barra,this.norm_period_);
 
-
+  this.passArray();
 
   delete(AC_Ind);
   delete(AD_Ind);
@@ -223,58 +234,156 @@ void Aquisicao::Dados(int barra = 0)
 
 }
 
-double Aquisicao::Busca_Var(string Var)
-{
-  if(Var == "AC_Var") return AC_Var;
-  if(Var == "AC_cx") return AC_cx;
-  if(Var == "AD_Var") return AD_Var;
-  if(Var == "AD_cx") return AD_cx;
-  if(Var == "ADX_FW") return ADX_FW;
-  if(Var == "adx_cx") return adx_cx;
-  if(Var == "ATR_Var") return ATR_Var;
-  if(Var == "ATR_cx") return ATR_cx;
-  if(Var == "BB_Delta_Bruto") return BB_Delta_Bruto;
-  if(Var == "BB_Delta_Bruto_Cx") return BB_Delta_Bruto_Cx;
-  if(Var == "Banda_Delta_Valor") return Banda_Delta_Valor;
-  if(Var == "BB_Posicao_Percent") return BB_Posicao_Percent;
-  if(Var == "BB_Posicao_Percent_Cx") return BB_Posicao_Percent_Cx;
-  if(Var == "BullsP_Var") return BullsP_Var;
-  if(Var == "BullsP_Var_Cx") return BullsP_Var_Cx;
-  if(Var == "BearsP_Var") return BearsP_Var;
-  if(Var == "BearsP_Var_Cx") return BearsP_Var_Cx;
-  if(Var == "BWMFI_Var") return BWMFI_Var;
-  if(Var == "BWMFI_Var_Cx") return BWMFI_Var_Cx;
-  if(Var == "CCI_Var") return CCI_Var;
-  if(Var == "CCI_Var_Cx") return CCI_Var_Cx;
-  if(Var == "DeMarker_Var") return DeMarker_Var;
-  if(Var == "DeMarker_Var_Cx") return DeMarker_Var_Cx;
-  if(Var == "DP_DMM20") return DP_DMM20;
-  if(Var == "DP_PAAMM20") return DP_PAAMM20;
-  if(Var == "DP_MM20MM50") return DP_MM20MM50;
-  if(Var == "DP_D") return DP_D;
-  if(Var == "Hilo_Direcao") return Hilo_Direcao;
-  if(Var == "MACD_FW") return MACD_FW;
-  if(Var == "MACD_Cx_0") return MACD_Cx_0;
-  if(Var == "MACD_Cx_1") return MACD_Cx_1;
-  if(Var == "MACD_Diff_Angulo_LS") return MACD_Diff_Angulo_LS;
-  if(Var == "MACD_Distancia_Linha_Sinal") return MACD_Distancia_Linha_Sinal;
-  if(Var == "MACD_Distancia_Linha_Zero") return MACD_Distancia_Linha_Zero;
-  if(Var == "MACD_Normalizacao") return MACD_Normalizacao;
-  if(Var == "MACD_Normalizacao_Zero") return MACD_Normalizacao_Zero;
-  if(Var == "MFI_FW") return MFI_FW;
-  if(Var == "MFI_Cx") return MFI_Cx;
-  if(Var == "Momentum_Var") return Momentum_Var;
-  if(Var == "Momentum_Var_Cx") return Momentum_Var_Cx;
-  if(Var == "RSI_Var") return RSI_Var;
-  if(Var == "RSI_Var_Cx") return RSI_Var_Cx;
-  if(Var == "Stoch_FW") return Stoch_FW;
-  if(Var == "Stoch_Cx_0") return Stoch_Cx_0;
-  if(Var == "Stoch_Cx_1") return Stoch_Cx_1;
-  if(Var == "Volume_FW") return Volume_FW;
-  if(Var == "Volume_Cx") return Volume_Cx;
-  if(Var == "WPR_Var") return WPR_Var;
-  if(Var == "WPR_Var_Cx") return WPR_Var_Cx;
-
-  return NULL;
-
+void Aquisicao::Zerar() {
+  this.AC_Var = NULL;
+  this.AC_cx = NULL;
+  this.AC_norm = NULL;
+  this.AD_Var = NULL;
+  this.AD_cx = NULL;
+  this.AD_norm = NULL;
+  this.ADX_FW = NULL;
+  this.adx_cx = NULL;
+  this.adx_norm = NULL;
+  this.ATR_Var = NULL;
+  this.ATR_cx = NULL;
+  this.ATR_norm = NULL;
+  this.BB_Delta_Bruto = NULL;
+  this.BB_Delta_Bruto_Cx = NULL;
+  this.BB_Delta_Bruto_norm = NULL;
+  this.Banda_Delta_Valor = NULL;
+  this.BB_Posicao_Percent = NULL;
+  this.BB_Posicao_Percent_Cx = NULL;
+  this.BB_Posicao_Percent_norm = NULL;
+  this.BullsP_Var = NULL;
+  this.BullsP_Var_Cx = NULL;
+  this.BullsP_norm = NULL;
+  this.BearsP_Var = NULL;
+  this.BearsP_Var_Cx = NULL;
+  this.BearsP_norm = NULL;
+  this.BWMFI_Var = NULL;
+  this.BWMFI_Var_Cx = NULL;
+  this.BWMFI_norm = NULL;
+  this.CCI_Var = NULL;
+  this.CCI_Var_Cx = NULL;
+  this.CCI_norm = NULL;
+  this.DeMarker_Var = NULL;
+  this.DeMarker_Var_Cx = NULL;
+  this.DeMarker_norm = NULL;
+  this.DP_DMM20 = NULL;
+  this.DP_PAAMM20 = NULL;
+  this.DP_MM20MM50 = NULL;
+  this.DP_D = NULL;
+  this.DP_D_Perm = NULL;
+  this.Hilo_Direcao = NULL;
+  this.Hilo_Perm = NULL;
+  this.MA_high = NULL;
+  this.MA_low = NULL;
+  this.MA_delta = NULL;
+  this.MACD_FW = NULL;
+  this.MACD_Cx_0 = NULL;
+  this.MACD_Cx_1 = NULL;
+  this.MACD_Diff_Angulo_LS = NULL;
+  this.MACD_Distancia_Linha_Sinal = NULL;
+  this.MACD_Distancia_Linha_Zero = NULL;
+  this.MACD_Normalizacao = NULL;
+  this.MACD_Normalizacao_Zero = NULL;
+  this.MFI_FW = NULL;
+  this.MFI_Cx = NULL;
+  this.MFI_norm = NULL;
+  this.Momentum_Var = NULL;
+  this.Momentum_Var_Cx = NULL;
+  this.Momentum_norm = NULL;
+  this.RSI_Var = NULL;
+  this.RSI_Var_Cx = NULL;
+  this.RSI_norm = NULL;
+  this.Stoch_FW = NULL;
+  this.Stoch_Cx_0 = NULL;
+  this.Stoch_Cx_1 = NULL;
+  this.Stoch_norm_1 = NULL;
+  this.Stoch_norm_2 = NULL;
+  this.Volume_FW = NULL;
+  this.Volume_Cx = NULL;
+  this.Volume_norm = NULL;
+  this.WPR_Var = NULL;
+  this.WPR_Var_Cx = NULL;
+  this.WPR_norm = NULL;
 }
+
+void Aquisicao::passArray() {
+  int f = 0;
+  this.todosDados[f] = this.AC_Var;
+  this.todosDados[f++] = this.AC_cx;
+  this.todosDados[f++] = this.AC_norm;
+  this.todosDados[f++] = this.AD_Var;
+  this.todosDados[f++] = this.AD_cx;
+  this.todosDados[f++] = this.AD_norm;
+  this.todosDados[f++] = this.ADX_FW;
+  this.todosDados[f++] = this.adx_cx;
+  this.todosDados[f++] = this.adx_norm;
+  this.todosDados[f++] = this.ATR_Var;
+  this.todosDados[f++] = this.ATR_cx;
+  this.todosDados[f++] = this.ATR_norm;
+  this.todosDados[f++] = this.BB_Delta_Bruto;
+  this.todosDados[f++] = this.BB_Delta_Bruto_Cx;
+  this.todosDados[f++] = this.BB_Delta_Bruto_norm;
+  this.todosDados[f++] = this.Banda_Delta_Valor;
+  this.todosDados[f++] = this.BB_Posicao_Percent;
+  this.todosDados[f++] = this.BB_Posicao_Percent_Cx;
+  this.todosDados[f++] = this.BB_Posicao_Percent_norm;
+  this.todosDados[f++] = this.BullsP_Var;
+  this.todosDados[f++] = this.BullsP_Var_Cx;
+  this.todosDados[f++] = this.BullsP_norm;
+  this.todosDados[f++] = this.BearsP_Var;
+  this.todosDados[f++] = this.BearsP_Var_Cx;
+  this.todosDados[f++] = this.BearsP_norm;
+  this.todosDados[f++] = this.BWMFI_Var;
+  this.todosDados[f++] = this.BWMFI_Var_Cx;
+  this.todosDados[f++] = this.BWMFI_norm;
+  this.todosDados[f++] = this.CCI_Var;
+  this.todosDados[f++] = this.CCI_Var_Cx;
+  this.todosDados[f++] = this.CCI_norm;
+  this.todosDados[f++] = this.DeMarker_Var;
+  this.todosDados[f++] = this.DeMarker_Var_Cx;
+  this.todosDados[f++] = this.DeMarker_norm;
+  this.todosDados[f++] = this.DP_DMM20;
+  this.todosDados[f++] = this.DP_PAAMM20;
+  this.todosDados[f++] = this.DP_MM20MM50;
+  this.todosDados[f++] = this.DP_D;
+  this.todosDados[f++] = this.DP_D_Perm;
+  this.todosDados[f++] = this.Hilo_Direcao;
+  this.todosDados[f++] = this.Hilo_Perm;
+  this.todosDados[f++] = this.MA_high;
+  this.todosDados[f++] = this.MA_low;
+  this.todosDados[f++] = this.MA_delta;
+  this.todosDados[f++] = this.MACD_FW;
+  this.todosDados[f++] = this.MACD_Cx_0;
+  this.todosDados[f++] = this.MACD_Cx_1;
+  this.todosDados[f++] = this.MACD_Diff_Angulo_LS;
+  this.todosDados[f++] = this.MACD_Distancia_Linha_Sinal;
+  this.todosDados[f++] = this.MACD_Distancia_Linha_Zero;
+  this.todosDados[f++] = this.MACD_Normalizacao;
+  this.todosDados[f++] = this.MACD_Normalizacao_Zero;
+  this.todosDados[f++] = this.MFI_FW;
+  this.todosDados[f++] = this.MFI_Cx;
+  this.todosDados[f++] = this.MFI_norm;
+  this.todosDados[f++] = this.Momentum_Var;
+  this.todosDados[f++] = this.Momentum_Var_Cx;
+  this.todosDados[f++] = this.Momentum_norm;
+  this.todosDados[f++] = this.RSI_Var;
+  this.todosDados[f++] = this.RSI_Var_Cx;
+  this.todosDados[f++] = this.RSI_norm;
+  this.todosDados[f++] = this.Stoch_FW;
+  this.todosDados[f++] = this.Stoch_Cx_0;
+  this.todosDados[f++] = this.Stoch_Cx_1;
+  this.todosDados[f++] = this.Stoch_norm_1;
+  this.todosDados[f++] = this.Stoch_norm_2;
+  this.todosDados[f++] = this.Volume_FW;
+  this.todosDados[f++] = this.Volume_Cx;
+  this.todosDados[f++] = this.Volume_norm;
+  this.todosDados[f++] = this.WPR_Var;
+  this.todosDados[f++] = this.WPR_Var_Cx;
+  this.todosDados[f++] = this.WPR_norm;
+  this.todosDados[f++] = this.norm_period_;
+}
+
+Aquisicao aquisicao_entrada;

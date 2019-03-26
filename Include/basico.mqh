@@ -33,6 +33,7 @@ int Rand_Geral = MathRand();
 #include <Afis.mqh>
 // #include <ExpandGrid.mqh>
 #include <Math\Stat\Math.mqh>
+#include <Deal_Matrix.mqh>
 
 
 #include <Indicadores\AC.mqh>
@@ -60,7 +61,7 @@ int Rand_Geral = MathRand();
 #include <Indicadores\WPR.mqh>
 #include <Indicadores\XING.mqh>
 #include <aquisicao.mqh>
-//#include <Filtro_Fuzzy.mqh> //Programa de Emagrecimento do YurÃ£o
+#include <Filtro_Afis.mqh>
 
 //#include <File_Writer.mqh> //Programa de Emagrecimento do YurÃ£o
 #include <File_Writer_Gen.mqh>
@@ -473,4 +474,16 @@ void Normalizacao_Manual(double& array_entrada[], double& array_saida[], int sta
   for (int i = start_point; i < ArrayRange(array_entrada,0); i++) {
     array_saida[i] = (array_entrada[i] - Z_min) / (Z_max_Zmin);
   }
+}
+
+double divisao(double cima,double baixo) {
+  double retorno = 0;
+  if(baixo > 0 || baixo == NULL)  {
+    // Print("baixo ZERO: " + baixo); //DEBUG
+    retorno = cima/baixo;
+  }
+  // Print("cima: " + cima); //DEBUG
+  // Print("baixo: " + baixo); //DEBUG
+
+  return retorno;
 }

@@ -46,10 +46,7 @@ int OnInit()
   }
 
   //Fim do Especifico Bucareste
-  
 
-
-  
 }
 
 void OnTimer()
@@ -57,26 +54,20 @@ void OnTimer()
   if(!Otimizacao) Comentario();
 
   Operacoes_No_Timer();
-
 }
 
-void OnTick()
-{
+void OnTick() {
     Operacoes_No_tick();
-
 }
 
 
-void OnNewBar()
-{
+void OnNewBar() {
   Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
   delete(Condicoes);
-  
-  
-    Xeon_beta *xeon_o = new Xeon_beta;
+
+  Xeon_beta *xeon_o = new Xeon_beta;
   xeon_o.Avalia();
   delete(xeon_o);
-  
 }
 
 void OnTradeOut(CDealInfo &myDealInfo)

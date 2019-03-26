@@ -347,6 +347,11 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
                   line[i] = aquisicao_entrada.todosDados[i-1];
                 }
 
+                ArrayResize(line,(ArrayRange(line,0)+1));
+                line[ArrayRange(line,0)-1] = Normaliza_Hora(myDealInfo.Time());
+
+                // ArrayPrint(line); //DEBUG
+
                 deal_matrix.Add_Line(line);
                 aquisicao_entrada.Zerar();
                 // MATRIX DEALS

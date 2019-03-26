@@ -5,7 +5,7 @@
   void Dados(int barra = 0);
   void Zerar();
   void passArray();
-  double todosDados[72]; // CONTAR FEATURES ABAIXO
+  double todosDados[78]; // CONTAR FEATURES ABAIXO
 
   double AC_Var;
   double AC_cx;
@@ -86,6 +86,12 @@
   // 10 Acima
   double WPR_Var_Cx;
   double WPR_norm;
+  double Preco_open;
+  double Preco_high;
+  double Preco_low;
+  double Preco_close;
+  double Preco_time;
+  double Preco_Delta;
 
   int norm_period_;
 
@@ -207,6 +213,12 @@ void Aquisicao::Dados(int barra = 0)
   Stoch_norm_2 = Stoch_OO.Normalizado(1,barra+1,this.norm_period_);
   Volume_norm = Volumes_OO.Normalizado(barra,this.norm_period_);
   WPR_norm = WPR_Ind.Normalizado(barra,this.norm_period_);
+  Preco_open = Preco(barra+1).open;
+  Preco_high = Preco(barra+1).high;
+  Preco_low = Preco(barra+1).low;
+  Preco_close = Preco(barra+1).close;
+  Preco_time = Normaliza_Hora(Preco(barra+1).time);
+  Preco_Delta = Preco_high - Preco_low;
 
   this.passArray();
 
@@ -383,7 +395,12 @@ void Aquisicao::passArray() {
   this.todosDados[f++] = this.WPR_Var;
   this.todosDados[f++] = this.WPR_Var_Cx;
   this.todosDados[f++] = this.WPR_norm;
-  this.todosDados[f++] = this.norm_period_;
+  this.todosDados[f++] = this.Preco_open;
+  this.todosDados[f++] = this.Preco_high;
+  this.todosDados[f++] = this.Preco_low;
+  this.todosDados[f++] = this.Preco_close;
+  this.todosDados[f++] = this.Preco_time;
+  this.todosDados[f++] = this.Preco_Delta;
 }
 
 Aquisicao aquisicao_entrada;

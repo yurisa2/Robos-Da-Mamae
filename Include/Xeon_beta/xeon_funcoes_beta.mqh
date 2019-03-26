@@ -1,4 +1,4 @@
-﻿/* -*- C++ -*- */
+/* -*- C++ -*- */
 
 class Xeon_beta
 {
@@ -130,9 +130,9 @@ void Xeon_beta::Avalia() {
   afis.max_feats = xeon_max_feats;
   afis.min_feats = 1 ;
 
-if(xeon_feature_selection == 0) afis.feature_method = "variance";
-if(xeon_feature_selection == 1) afis.feature_method = "spearman";
-if(xeon_feature_selection == 2) afis.feature_method = "quantile";
+  if(xeon_feature_selection == 0) afis.feature_method = "variance";
+  if(xeon_feature_selection == 1) afis.feature_method = "spearman";
+  if(xeon_feature_selection == 2) afis.feature_method = "quantile";
 
   HiLo_OO *hilo = new HiLo_OO(4);
   int direcao_now = hilo.Direcao();
@@ -145,63 +145,63 @@ if(xeon_feature_selection == 2) afis.feature_method = "quantile";
   int actual_i = 0;
   int n = 0;
 
-for (int i = 1; i < 3000; i++) {
+  for (int i = 1; i < 3000; i++) {
 
-  if(direcao_now == hilo.Direcao(i)) {
+    if(direcao_now == hilo.Direcao(i)) {
 
-    this.Get_Data(i, afis.linesize, array_afis_temp);
+      this.Get_Data(i, afis.linesize, array_afis_temp);
 
-    afis.Add_Line(array_afis_temp);
-    actual_i++;
-    if(actual_i == xeon_count_periods) break;
+      afis.Add_Line(array_afis_temp);
+      actual_i++;
+      if(actual_i == xeon_count_periods) break;
+    }
   }
-}
 
 
-delete(hilo);
+  delete(hilo);
 
 
 
 
-this.Get_Data(0, afis.linesize, afis.input_fuzzy);
+  this.Get_Data(0, afis.linesize, afis.input_fuzzy);
 
-double processado[];
-afis.Process(processado);
+  double processado[];
+  afis.Process(processado);
 
-int status_exchange = 0;
+  int status_exchange = 0;
 
-if(processado[1] > xeon_thresh &&
-  processado[0] > 16)
-{
-  Print("direcao_now: " + direcao_now + " | Vai: 1 - v0: " + DoubleToString(processado[0],2) + " | v1: " + DoubleToString(processado[1],2));
-  status_exchange = 1;
-}
-else Print("direcao_now: " + direcao_now + " | Vai: 0 - v0 - " + DoubleToString(processado[0],2) + " | v1: " + DoubleToString(processado[1],2));
+  if(processado[1] > xeon_thresh &&
+    processado[0] > 16)
+    {
+      Print("direcao_now: " + direcao_now + " | Vai: 1 - v0: " + DoubleToString(processado[0],2) + " | v1: " + DoubleToString(processado[1],2));
+      status_exchange = 1;
+    }
+    // else Print("direcao_now: " + direcao_now + " | Vai: 0 - v0 - " + DoubleToString(processado[0],2) + " | v1: " + DoubleToString(processado[1],2));
 
-// Print("ArrayRange(afis.dataset_0,0)" + ArrayRange(afis.dataset_0,0));
-// Print("ArrayRange(afis.dataset_1,0)" + ArrayRange(afis.dataset_1,0));
+    // Print("ArrayRange(afis.dataset_0,0)" + ArrayRange(afis.dataset_0,0));
+    // Print("ArrayRange(afis.dataset_1,0)" + ArrayRange(afis.dataset_1,0));
 
-// Print("reco(1).close - Preco(2).close: " + (Preco(1).close - Preco(2).close));
+    // Print("reco(1).close - Preco(2).close: " + (Preco(1).close - Preco(2).close));
 
-Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
+    Condicoes_Basicas_OO *Condicoes = new Condicoes_Basicas_OO;
 
-if((xeon_encerra_zero && status_exchange == 0) ||
-   (O_Stops.Tipo_Posicao() != 0 &&
+    if((xeon_encerra_zero && status_exchange == 0) ||
+    (O_Stops.Tipo_Posicao() != 0 &&
     O_Stops.Tipo_Posicao() != direcao_now) )  {
-  Opera_Mercado *opera = new Opera_Mercado;
-  opera.FechaPosicao() ;
-  delete(opera);
-}
+      Opera_Mercado *opera = new Opera_Mercado;
+      opera.FechaPosicao() ;
+      delete(opera);
+    }
 
-if(status_exchange == 1 && Condicoes.Horario()) {
+    if(status_exchange == 1 && Condicoes.Horario()) {
 
-  Opera_Mercado *opera = new Opera_Mercado;
-  opera.AbrePosicao(direcao_now, "Entrada Xeon");
-  delete(opera);
-}
+      Opera_Mercado *opera = new Opera_Mercado;
+      opera.AbrePosicao(direcao_now, "Entrada Xeon");
+      delete(opera);
+    }
 
 
-delete(afis);
-delete(Condicoes);
+    delete(afis);
+    delete(Condicoes);
 
-}
+  }

@@ -516,18 +516,22 @@ class Afis
 
         this.Feature_Ranking();
         if(this.debug_afis || this.feature_ranking_print) {
+          Print("/// FEATURE RANKING BEGIN ///");
           for (int i = 0; i < ArrayRange(this.feature_ranking,0); i++) {
             Print("i: " + IntegerToString(i) + " | this.feature_ranking[i]: ",DoubleToString(this.feature_ranking[i]));
           }
+          Print("/// FEATURE RANKING BEGIN ///");
         }
 
         int results_order[];
 
         this.Feature_Selector(this.selected_features);
         if(this.debug_afis || this.selected_features_print) {
+          Print("/// SELECTED FEATURES BEGIN ///");
           for (int i = 0; i < ArrayRange(this.selected_features,0); i++) {
             Print("i: ",IntegerToString(i)," | this.selected_features[i]: ",DoubleToString(this.selected_features[i]));
           }
+          Print("/// SELECTED FEATURES END ///");
         }
 
         CList *in0=new CList;

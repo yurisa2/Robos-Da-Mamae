@@ -15,7 +15,7 @@ void DealMatrix::Add_Line(double& line[]) {
   for(int i = 0; i <   ArrayRange(line,0); i++) {
     this.matrix[(ArrayRange(this.matrix,0)-1)][i] = line[i];
   }
-  ArrayPrint(this.matrix);
+  // ArrayPrint(this.matrix); //DEBUG
 }
 
 DealMatrix deal_matrix;

@@ -52,29 +52,27 @@ class Afis
   void Process(double& process[]);
 
   void combinationUtil(string& arr[], string& data[], int start, int end,
-    int index, int r, string& final_ar[][100]);
+                       int index, int r, string& final_ar[][100]);
 
-    int selected_features[];
+  int selected_features[];
 
-    double param_feature_min_cut;
+  double param_feature_min_cut;
 
-    void Add_Line(double& line[]);
-    int linesize;
-    double dataset_0[][100]; //dataset_0[line][column/featureVALUE]
-    double dataset_1[][100];
+  void Add_Line(double& line[]);
+  int linesize;
+  double dataset_0[][100]; //dataset_0[line][column/featureVALUE]
+  double dataset_1[][100];
+  double dataset_0_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
+  double dataset_1_bx[][5];
+  double input_fuzzy[];
 
-    double dataset_0_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
-    double dataset_1_bx[][5];
+  double feature_ranking[];
 
-    double input_fuzzy[];
+  double dataset[][100]; // Hope doesn't get shit
 
-    double feature_ranking[];
+  string feature_method;
 
-    double dataset[][100]; // Hope doesn't get shit
-
-    string feature_method;
-
-    private:
+  private:
 
   };
 
@@ -90,6 +88,9 @@ class Afis
 
     for (int i = 0; i <  ArrayRange(dataset_inteiro,0); i++) {
 
+      if(dataset_inteiro[i][0] < 0) dataset_inteiro[i][0] = 0;
+      if(dataset_inteiro[i][0] > 0) dataset_inteiro[i][0] = 1;
+      
       if(dataset_inteiro[i][0] == 0) {
         ArrayResize(this.dataset_0, ArrayRange(this.dataset_0,0)+1);
         for(int j = 0; j <  this.linesize; j++) {

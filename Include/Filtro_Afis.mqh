@@ -10,6 +10,7 @@ class Filtro_Afis
   string feature_method;
   string feature_selection_method;
   Afis *afis;
+  Aquisicao *aquisicao;
   double inputs[]; // PEGAR INPUTS ATUAIS VIA AQUISICAO
 
   bool calc();
@@ -18,6 +19,7 @@ class Filtro_Afis
 
 void Filtro_Afis::Filtro_Afis() {
   this.afis = new Afis;
+  this.aquisicao = new Aquisicao;
 
 
 
@@ -42,6 +44,15 @@ bool Filtro_Afis::calc() {
   // this.afis.feature_method = "quantile";
 
   ArrayCopy(this.afis.dataset, deal_matrix.matrix);
+
+  ArrayResize(inputs,ArrayRange(deal_matrix.matrix,0));
+
+  inputs[0] = NULL;
+
+  for (int i = 1; i < ArrayRange(inputs,0); i++) {
+    inputs[i] = this.aquisicao.todosDados[i-1];
+  }
+
 
 return false;
 }

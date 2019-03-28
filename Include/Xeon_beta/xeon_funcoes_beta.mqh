@@ -195,6 +195,11 @@ void Xeon_beta::Avalia() {
 
     if(status_exchange == 1 && Condicoes.Horario()) {
 
+      Filtro_Afis *f_afis = new Filtro_Afis;
+
+      f_afis.calc();
+
+
       Opera_Mercado *opera = new Opera_Mercado;
       opera.AbrePosicao(direcao_now, "Entrada Xeon");
       delete(opera);

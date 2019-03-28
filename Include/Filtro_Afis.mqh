@@ -9,6 +9,7 @@ class Filtro_Afis
   int min_feats;
   string feature_method;
   string feature_selection_method;
+  double output[];
   Afis *afis;
   Aquisicao *aquisicao;
   double inputs[]; // PEGAR INPUTS ATUAIS VIA AQUISICAO
@@ -47,12 +48,19 @@ bool Filtro_Afis::calc() {
 
   ArrayResize(inputs,ArrayRange(deal_matrix.matrix,0));
 
+  Print("ArrayRange(deal_matrix.matrix,0) " + ArrayRange(deal_matrix.matrix,0));
+
   inputs[0] = NULL;
 
   for (int i = 1; i < ArrayRange(inputs,0); i++) {
     inputs[i] = this.aquisicao.todosDados[i-1];
   }
 
+  Print("Dataset-filtro: " + ArrayRange(deal_matrix.matrix,0));
+
+  afis.Process(this.output);
+
+  ArrayPrint(this.output);
 
 return false;
 }

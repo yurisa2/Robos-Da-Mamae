@@ -21,6 +21,7 @@ class Afis
     this.linhas = 0;
     this.max_feats = 10;
     this.min_feats = 2;
+    this.dataset_min_size = 6;
   };
 
   bool debug_afis;
@@ -30,6 +31,7 @@ class Afis
   int linhas;
   int max_feats;
   int min_feats;
+  int dataset_min_size;
 
   string feature_selection_method;
   string rules_method;
@@ -90,7 +92,7 @@ class Afis
 
       if(dataset_inteiro[i][0] < 0) dataset_inteiro[i][0] = 0;
       if(dataset_inteiro[i][0] > 0) dataset_inteiro[i][0] = 1;
-      
+
       if(dataset_inteiro[i][0] == 0) {
         ArrayResize(this.dataset_0, ArrayRange(this.dataset_0,0)+1);
         for(int j = 0; j <  this.linesize; j++) {
@@ -510,6 +512,18 @@ class Afis
         ArrayResize(process,2);
 
         this.divide_datasets(this.dataset);
+
+        if(ArrayRange(this.dataset,0) < dataset_min_size) {
+          process[0] = -1;
+          process[1] = -1;
+          return;
+        }
+
+        if(ArrayRange(this.dataset_0,0) < 2 || ArrayRange(this.dataset_1,0) < 2) {
+          process[0] = -1;
+          process[1] = -1;
+          return;
+        }
 
         this.BX_Cols(this.dataset_0,this.dataset_0_bx);
 

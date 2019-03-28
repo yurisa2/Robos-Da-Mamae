@@ -22,6 +22,7 @@ class Afis
     this.max_feats = 10;
     this.min_feats = 2;
     this.dataset_min_size = 6;
+    this.dataset_max_size = 99999999;
   };
 
   bool debug_afis;
@@ -32,9 +33,12 @@ class Afis
   int max_feats;
   int min_feats;
   int dataset_min_size;
+  int dataset_max_size;
 
   string feature_selection_method;
   string rules_method;
+
+  void Dataset_Last_Lines();
 
   void divide_datasets(double& dataset_inteiro[][100]);
 
@@ -511,13 +515,18 @@ class Afis
       void Afis::Process(double& process[]) {
         ArrayResize(process,2);
 
-        this.divide_datasets(this.dataset);
 
-        if(ArrayRange(this.dataset,0) < dataset_min_size) {
+        if(ArrayRange(this.dataset,0) < this.dataset_min_size) {
           process[0] = -1;
           process[1] = -1;
           return;
         }
+
+        if(ArrayRange(this.dataset,0) > this.dataset_max_size) {
+          this.Dataset_Last_Lines();
+        }
+
+        this.divide_datasets(this.dataset);
 
         if(ArrayRange(this.dataset_0,0) < 2 || ArrayRange(this.dataset_1,0) < 2) {
           process[0] = -1;
@@ -583,3 +592,29 @@ class Afis
         delete(Model_0);
         delete(Model_1);
       }
+
+void Afis::Dataset_Last_Lines() {
+  double dataset_temp[][100];
+  ArrayCopy(dataset_temp,this.dataset);
+  ArrayFree(this.dataset);
+
+  ArrayPrint(this.dataset);
+
+  int for_s = ArrayRange(dataset_temp,0) - this.dataset_max_size;
+
+
+  int art_i = 0;
+  for (int i = for_s; i < ArrayRange(dataset_temp,0); i++) {
+    ArrayResize(this.dataset,art_i+1);
+    for (int j = 0; j < 100; j++) {
+      this.dataset[art_i][j] = dataset_temp[i][j];
+    }
+    art_i++;
+  }
+
+
+  Print("for_s: " + for_s);
+  Print("Dataset_Last_Lines(): " + ArrayRange(this.dataset,0));
+
+
+}

@@ -26,6 +26,9 @@ string Nome_Robo = "Xeon_beta";
 #include <Xeon_beta\xeon_inputs_beta.mqh>
 #include <Xeon_beta\xeon_funcoes_beta.mqh>
 
+#include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
+
+
 #include <File_Writer.mqh>
 
 int OnInit()

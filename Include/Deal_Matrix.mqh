@@ -9,7 +9,7 @@ class DealMatrix
   double matrix[][100];
   bool print_matrix_each_deal;
   datetime deals_time[];
-  long deals_type[];
+  ENUM_DEAL_TYPE deals_type[];
 
 };
 
@@ -28,14 +28,14 @@ void DealMatrix::addDeal(CDealInfo& deal) {
   ArrayResize(deals_time,(current_size+1));
   ArrayResize(deals_type,(current_size+1));
 
-  this.deals_type[current_size] = deal.Entry();
+  this.deals_type[current_size] = deal.DealType();
   this.deals_time[current_size] = deal.Time();
 
 
   for (int i = 0; i < ArrayRange(this.deals_type,0); i++) {
 
 
-    Print("DIRECAO: " + this.deals_type[i]);
+    Print("DIRECAO: " + EnumToString(this.deals_type[i]));
     Print("i: " + i + "time: " + this.deals_time[i]);
     // Print("ArrayRange(deals,0): " + ArrayRange(deals,0));
   }

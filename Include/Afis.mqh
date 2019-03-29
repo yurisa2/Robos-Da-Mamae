@@ -25,21 +25,21 @@ class Afis
     this.dataset_max_size = 99999999;
   };
 
-  void Dataset_Last_Lines();
-  void divide_datasets(double& dataset_inteiro[][100]);
-  void DynamicRules( CMamdaniFuzzySystem& Afis_Model);
-  void Calc_BX(const double& col_feature_in[], double& box_out[]);
-  void Get_Feature_Col(double& dataset_feature_in[][100], double& feature_col_out[], int feature);
-  void BX_Cols(double& dataset_full_in[][100], double& feature_full_bx_out[][5]);
-  void Feature_Ranking();
-  void Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in);
-  void Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model, CList& in);
-  void Output_Var_Generator(CMamdaniFuzzySystem& Afis_Model);
-  void StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model);
-  void Feature_Selector(int& Features_idx[]);
-  void Process(double& process[]);
-  void Add_Line(double& line[]);
+  void addLine(double& line[]);
+  void bxCols(double& dataset_full_in[][100], double& feature_full_bx_out[][5]);
+  void calcBX(const double& col_feature_in[], double& box_out[]);
   void combinationUtil(string& arr[], string& data[], int start, int end, int index, int r, string& final_ar[][100]);
+  void datasetLastLines();
+  void divideDatasets(double& dataset_inteiro[][100]);
+  void dynamicRules( CMamdaniFuzzySystem& Afis_Model);
+  void featureSelector(int& Features_idx[]);
+  void fuzzyModel(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in);
+  void featureRanking();
+  void getFeatureCol(double& dataset_feature_in[][100], double& feature_col_out[], int feature);
+  void inputVarGenerator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model, CList& in);
+  void outputVarGenerator(CMamdaniFuzzySystem& Afis_Model);
+  void staticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model);
+  void process(double& process[]);
 
   int selected_features[];
   bool debug_afis;
@@ -69,7 +69,7 @@ class Afis
 
   };
 
-  void Afis::Add_Line(double& line[]) {
+  void Afis::addLine(double& line[]) {
     ArrayResize(this.dataset, ArrayRange(this.dataset,0)+1); //Aumenta o Array em uma unidade
 
     for(int i = 0; i <  this.linesize; i++) {
@@ -77,7 +77,7 @@ class Afis
     }
   }
 
-  void Afis::divide_datasets(double& dataset_inteiro[][100]) {
+  void Afis::divideDatasets(double& dataset_inteiro[][100]) {
 
     for (int i = 0; i <  ArrayRange(dataset_inteiro,0); i++) {
 
@@ -99,7 +99,7 @@ class Afis
     }
   }
 
-  void Afis::Calc_BX(const double& col_feature_in[], double& box_out[]) {
+  void Afis::calcBX(const double& col_feature_in[], double& box_out[]) {
     ArrayResize(box_out,5);
     MathTukeySummary(col_feature_in,
       true,
@@ -111,7 +111,7 @@ class Afis
     }
 
     // Extracts a Col as an array
-    void Afis::Get_Feature_Col(double& dataset_feature_in[][100], double& feature_col_out[], int feature) {
+    void Afis::getFeatureCol(double& dataset_feature_in[][100], double& feature_col_out[], int feature) {
       ArrayResize(feature_col_out,ArrayRange(dataset_feature_in,0));
 
       for (int i = 0; i < ArrayRange(dataset_feature_in,0); i++) { // Linhas
@@ -119,15 +119,15 @@ class Afis
       }
     }
 
-    void Afis::BX_Cols(double& dataset_full_in[][100], double& feature_full_bx_out[][5]) {
+    void Afis::bxCols(double& dataset_full_in[][100], double& feature_full_bx_out[][5]) {
       ArrayResize(feature_full_bx_out,this.linesize);
       double bx_values_temp[5] ;
 
       for (int i = 0; i < this.linesize; i++) {
         double array_coluna[];
         ArrayResize(array_coluna,ArrayRange(dataset_full_in,0));
-        this.Get_Feature_Col(dataset_full_in,array_coluna,i);
-        this.Calc_BX(array_coluna, bx_values_temp);
+        this.getFeatureCol(dataset_full_in,array_coluna,i);
+        this.calcBX(array_coluna, bx_values_temp);
 
         for (int j = 0; j < 5; j++) {
           feature_full_bx_out[i][j] = bx_values_temp[j];
@@ -135,7 +135,7 @@ class Afis
       }
     }
 
-    void Afis::Feature_Ranking() {
+    void Afis::featureRanking() {
       ArrayResize(feature_ranking,this.linesize);
       double feature_ranking_temp[];
       ArrayResize(feature_ranking_temp,this.linesize);
@@ -155,11 +155,11 @@ class Afis
 
 
       for (int i = 1; i < this.linesize; i++) {
-        this.Get_Feature_Col(this.dataset_0,feat_array0,i);
-        this.Get_Feature_Col(this.dataset_1,feat_array1,i);
+        this.getFeatureCol(this.dataset_0,feat_array0,i);
+        this.getFeatureCol(this.dataset_1,feat_array1,i);
 
-        this.Get_Feature_Col(this.dataset,feat_array_target,0);
-        this.Get_Feature_Col(this.dataset,feat_array_full,i);
+        this.getFeatureCol(this.dataset,feat_array_target,0);
+        this.getFeatureCol(this.dataset,feat_array_full,i);
 
         if(this.feature_method == "variance"){
           double vari_0;
@@ -257,7 +257,7 @@ class Afis
 
     }
 
-    void Afis::Feature_Selector(int& Features_idx[]) {
+    void Afis::featureSelector(int& Features_idx[]) {
 
 
       double        minimum;
@@ -326,7 +326,7 @@ class Afis
 
     }
 
-    void Afis::Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model, CList& in) {
+    void Afis::inputVarGenerator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model, CList& in) {
       double dataset_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
       ArrayResize(dataset_bx,this.linesize);
       ArrayResize(input_fuzzy,this.linesize);
@@ -350,7 +350,7 @@ class Afis
       in.Add(rule_dic);
     }
 
-    void Afis::Output_Var_Generator(CMamdaniFuzzySystem& Afis_Model) {
+    void Afis::outputVarGenerator(CMamdaniFuzzySystem& Afis_Model) {
       CFuzzyVariable *OutputVar = new CFuzzyVariable("Resultado",0,100);
       OutputVar.Terms().Add(new CFuzzyTerm("Baixo", new CTriangularMembershipFunction(0,0,50)));
       OutputVar.Terms().Add(new CFuzzyTerm("Neutro", new CTriangularMembershipFunction(0,50,100)));
@@ -359,7 +359,7 @@ class Afis
 
     }
 
-    void Afis::StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model) {
+    void Afis::staticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model) {
       CMamdaniFuzzyRule *rule1 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is a3) then Resultado is Baixo");
       CMamdaniFuzzyRule *rule2 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is a2) then Resultado is Neutro");
       CMamdaniFuzzyRule *rule3 = Afis_Model.ParseRule("if (" + IntegerToString(Feature_idx)  + " is n1) then Resultado is Alto");
@@ -391,7 +391,7 @@ class Afis
         }
       }
 
-      void Afis::DynamicRules(CMamdaniFuzzySystem& Afis_Model) {
+      void Afis::dynamicRules(CMamdaniFuzzySystem& Afis_Model) {
         // string definitive_rules[];
         string antecedents[] = {"a3", "a2", "n1", "b2", "b3"};
         // string antecedents[] = {"a3", "a2"};
@@ -478,28 +478,28 @@ class Afis
         // ArrayPrint(output_strings);
 
         // ArrayPrint(output_full);
-        // Print("Afis::DynamicRules() END"); //DEBUG
+        // Print("Afis::dynamicRules() END"); //DEBUG
 
       }
 
-      void Afis::Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in) {
+      void Afis::fuzzyModel(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in) {
 
-        this.Output_Var_Generator(Afis_Model_Sep);
+        this.outputVarGenerator(Afis_Model_Sep);
 
         for (int i = 0; i < ArrayRange(selected_features,0); i++) {
-          this.Input_Var_Generator(which_dataset,selected_features[i],Afis_Model_Sep,in);
+          this.inputVarGenerator(which_dataset,selected_features[i],Afis_Model_Sep,in);
           if(this.rules_method == "static") {
-            this.StaticRules(selected_features[i], Afis_Model_Sep);
+            this.staticRules(selected_features[i], Afis_Model_Sep);
             // Print("Static Rules");
           }
         }
         if(this.rules_method == "dynamic") {
-          this.DynamicRules(Afis_Model_Sep);
+          this.dynamicRules(Afis_Model_Sep);
           // Print("Dynamic Rules");
         }
       }
 
-      void Afis::Process(double& process[]) {
+      void Afis::process(double& process[]) {
         ArrayResize(process,2);
 
 
@@ -510,10 +510,10 @@ class Afis
         }
 
         if(ArrayRange(this.dataset,0) > this.dataset_max_size) {
-          this.Dataset_Last_Lines();
+          this.datasetLastLines();
         }
 
-        this.divide_datasets(this.dataset);
+        this.divideDatasets(this.dataset);
 
         if(ArrayRange(this.dataset_0,0) < 2 || ArrayRange(this.dataset_1,0) < 2) {
           process[0] = -1;
@@ -521,11 +521,11 @@ class Afis
           return;
         }
 
-        this.BX_Cols(this.dataset_0,this.dataset_0_bx);
+        this.bxCols(this.dataset_0,this.dataset_0_bx);
 
-        this.BX_Cols(this.dataset_1,this.dataset_1_bx);
+        this.bxCols(this.dataset_1,this.dataset_1_bx);
 
-        this.Feature_Ranking();
+        this.featureRanking();
         if(this.debug_afis || this.feature_ranking_print) {
           Print("/// FEATURE RANKING BEGIN ///");
           for (int i = 0; i < ArrayRange(this.feature_ranking,0); i++) {
@@ -536,7 +536,7 @@ class Afis
 
         int results_order[];
 
-        this.Feature_Selector(this.selected_features);
+        this.featureSelector(this.selected_features);
         if(this.debug_afis || this.selected_features_print) {
           Print("/// SELECTED FEATURES BEGIN ///");
           for (int i = 0; i < ArrayRange(this.selected_features,0); i++) {
@@ -550,13 +550,13 @@ class Afis
 
         // 0 MODEL
         CMamdaniFuzzySystem *Model_0 = new CMamdaniFuzzySystem();
-        this.Fuzzy_Model(0,Model_0,in0);
+        this.fuzzyModel(0,Model_0,in0);
 
-        // this.DynamicRules(Model_0);
+        // this.dynamicRules(Model_0);
 
         // 1 MODEL
         CMamdaniFuzzySystem *Model_1 = new CMamdaniFuzzySystem();
-        this.Fuzzy_Model(1,Model_1,in1);
+        this.fuzzyModel(1,Model_1,in1);
 
         CList *result0;
         CList *result1;
@@ -580,7 +580,7 @@ class Afis
         delete(Model_1);
       }
 
-void Afis::Dataset_Last_Lines() {
+void Afis::datasetLastLines() {
   double dataset_temp[][100];
   ArrayCopy(dataset_temp,this.dataset);
   ArrayFree(this.dataset);
@@ -601,7 +601,7 @@ void Afis::Dataset_Last_Lines() {
 
 
   // Print("for_s: " + for_s); //DEBUG
-  // Print("Dataset_Last_Lines(): " + ArrayRange(this.dataset,0)); //DEBUG
+  // Print("datasetLastLines(): " + ArrayRange(this.dataset,0)); //DEBUG
 
 
 }

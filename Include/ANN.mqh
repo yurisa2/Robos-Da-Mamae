@@ -160,4 +160,7 @@ void ANN::process(double &y[], CMultilayerPerceptronShell &objRed,double &x[])
   algebra_proc.MLPProcess(objRed,x,y);
 
 
+  Print("ANN y: ");
+  ArrayPrint(y);
+
 }

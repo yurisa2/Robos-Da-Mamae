@@ -155,7 +155,7 @@ void Xeon_beta::Avalia() {
 
         this.Get_Data(i, afis.linesize, array_afis_temp);
 
-        afis.Add_Line(array_afis_temp);
+        afis.addLine(array_afis_temp);
         actual_i++;
         if(actual_i == xeon_count_periods) break;
       }
@@ -167,7 +167,7 @@ void Xeon_beta::Avalia() {
     this.Get_Data(0, afis.linesize, afis.input_fuzzy);
 
     double processado[];
-    afis.Process(processado);
+    afis.process(processado);
 
     int status_exchange = 0;
 

@@ -54,7 +54,7 @@ int Filtro_Afis::calc() {
 
   // Print("Dataset-filtro: " + ArrayRange(deal_matrix.matrix,0));
 
-  afis.Process(this.output);
+  afis.process(this.output);
 
   this.res_0 = this.output[0];
   this.res_1 = this.output[1];

@@ -12,7 +12,7 @@ class Afis
   Afis() {this.linesize = 100;
     this.param_feature_min_cut = 0.5;
     this.debug_afis = false;
-    this.feature_method = "variance";
+    this.feature_method = "spearman";
     this.feature_ranking_temp_print = false;
     this.feature_ranking_print = false;
     this.selected_features_print = false;
@@ -25,6 +25,23 @@ class Afis
     this.dataset_max_size = 99999999;
   };
 
+  void Dataset_Last_Lines();
+  void divide_datasets(double& dataset_inteiro[][100]);
+  void DynamicRules( CMamdaniFuzzySystem& Afis_Model);
+  void Calc_BX(const double& col_feature_in[], double& box_out[]);
+  void Get_Feature_Col(double& dataset_feature_in[][100], double& feature_col_out[], int feature);
+  void BX_Cols(double& dataset_full_in[][100], double& feature_full_bx_out[][5]);
+  void Feature_Ranking();
+  void Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in);
+  void Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model, CList& in);
+  void Output_Var_Generator(CMamdaniFuzzySystem& Afis_Model);
+  void StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model);
+  void Feature_Selector(int& Features_idx[]);
+  void Process(double& process[]);
+  void Add_Line(double& line[]);
+  void combinationUtil(string& arr[], string& data[], int start, int end, int index, int r, string& final_ar[][100]);
+
+  int selected_features[];
   bool debug_afis;
   bool feature_ranking_temp_print;
   bool feature_ranking_print;
@@ -34,48 +51,18 @@ class Afis
   int min_feats;
   int dataset_min_size;
   int dataset_max_size;
-
   string feature_selection_method;
   string rules_method;
-
-  void Dataset_Last_Lines();
-
-  void divide_datasets(double& dataset_inteiro[][100]);
-
-  void DynamicRules( CMamdaniFuzzySystem& Afis_Model);
-
-  void Calc_BX(const double& col_feature_in[], double& box_out[]);
-  void Get_Feature_Col(double& dataset_feature_in[][100], double& feature_col_out[], int feature);
-  void BX_Cols(double& dataset_full_in[][100], double& feature_full_bx_out[][5]);
-
-  void Feature_Ranking();
-
-  void Fuzzy_Model(int which_dataset, CMamdaniFuzzySystem& Afis_Model_Sep, CList& in);
-  void Input_Var_Generator(int which_dataset,int Feature_idx,CMamdaniFuzzySystem& Afis_Model, CList& in);
-  void Output_Var_Generator(CMamdaniFuzzySystem& Afis_Model);
-  void StaticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model);
-  void Feature_Selector(int& Features_idx[]);
-  void Process(double& process[]);
-
-  void combinationUtil(string& arr[], string& data[], int start, int end,
-                       int index, int r, string& final_ar[][100]);
-
-  int selected_features[];
-
   double param_feature_min_cut;
-
-  void Add_Line(double& line[]);
   int linesize;
   double dataset_0[][100]; //dataset_0[line][column/featureVALUE]
   double dataset_1[][100];
   double dataset_0_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
   double dataset_1_bx[][5];
   double input_fuzzy[];
-
+  double result_raw[]; //Nao usando ainda, é para fazer correlacões como FeatureRanking...melhor pensar
   double feature_ranking[];
-
   double dataset[][100]; // Hope doesn't get shit
-
   string feature_method;
 
   private:

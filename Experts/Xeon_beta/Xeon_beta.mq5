@@ -4,9 +4,11 @@
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 
-#include <ML_stub.mqh>
-#include <dados_nn_stub.mqh>
-#include <Inputs_ML_stub.mqh>
+// #include <ML_stub.mqh>
+// #include <dados_nn_stub.mqh>
+// #include <Inputs_ML_stub.mqh>
+
+#include <ANN.mqh>
 
 #property copyright "Xeon_beta - Da Fuzzynator"
 #property link      "http://www.sa2.com.br"
@@ -28,8 +30,8 @@ string Nome_Robo = "Xeon_beta";
 
 #include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
 
-
 #include <File_Writer.mqh>
+
 
 int OnInit()
 {

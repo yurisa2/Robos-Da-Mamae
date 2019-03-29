@@ -5,7 +5,12 @@
   void Dados(int barra = 0);
   void Zerar();
   void passArray();
+  void getNames();
+  int featIndex(string featName);
+
+
   double todosDados[78]; // CONTAR FEATURES ABAIXO
+  string names[78];
 
   double AC_Var;
   double AC_cx;
@@ -221,6 +226,7 @@ void Aquisicao::Dados(int barra = 0)
   Preco_Delta = Preco_high - Preco_low;
 
   this.passArray();
+  this.getNames();
 
   delete(AC_Ind);
   delete(AD_Ind);
@@ -402,5 +408,98 @@ void Aquisicao::passArray() {
   this.todosDados[f++] = this.Preco_time;
   this.todosDados[f++] = this.Preco_Delta;
 }
+
+void Aquisicao::getNames() {
+  int f = 0;
+  this.names[f] = "AC_Var";
+  this.names[f++] = "AC_cx";
+  this.names[f++] = "AC_norm";
+  this.names[f++] = "AD_Var";
+  this.names[f++] = "AD_cx";
+  this.names[f++] = "AD_norm";
+  this.names[f++] = "ADX_FW";
+  this.names[f++] = "adx_cx";
+  this.names[f++] = "adx_norm";
+  this.names[f++] = "ATR_Var";
+  this.names[f++] = "ATR_cx";
+  this.names[f++] = "ATR_norm";
+  this.names[f++] = "BB_Delta_Bruto";
+  this.names[f++] = "BB_Delta_Bruto_Cx";
+  this.names[f++] = "BB_Delta_Bruto_norm";
+  this.names[f++] = "Banda_Delta_Valor";
+  this.names[f++] = "BB_Posicao_Percent";
+  this.names[f++] = "BB_Posicao_Percent_Cx";
+  this.names[f++] = "BB_Posicao_Percent_norm";
+  this.names[f++] = "BullsP_Var";
+  this.names[f++] = "BullsP_Var_Cx";
+  this.names[f++] = "BullsP_norm";
+  this.names[f++] = "BearsP_Var";
+  this.names[f++] = "BearsP_Var_Cx";
+  this.names[f++] = "BearsP_norm";
+  this.names[f++] = "BWMFI_Var";
+  this.names[f++] = "BWMFI_Var_Cx";
+  this.names[f++] = "BWMFI_norm";
+  this.names[f++] = "CCI_Var";
+  this.names[f++] = "CCI_Var_Cx";
+  this.names[f++] = "CCI_norm";
+  this.names[f++] = "DeMarker_Var";
+  this.names[f++] = "DeMarker_Var_Cx";
+  this.names[f++] = "DeMarker_norm";
+  this.names[f++] = "DP_DMM20";
+  this.names[f++] = "DP_PAAMM20";
+  this.names[f++] = "DP_MM20MM50";
+  this.names[f++] = "DP_D";
+  this.names[f++] = "DP_D_Perm";
+  this.names[f++] = "Hilo_Direcao";
+  this.names[f++] = "Hilo_Perm";
+  this.names[f++] = "MA_high";
+  this.names[f++] = "MA_low";
+  this.names[f++] = "MA_delta";
+  this.names[f++] = "MACD_FW";
+  this.names[f++] = "MACD_Cx_0";
+  this.names[f++] = "MACD_Cx_1";
+  this.names[f++] = "MACD_Diff_Angulo_LS";
+  this.names[f++] = "MACD_Distancia_Linha_Sinal";
+  this.names[f++] = "MACD_Distancia_Linha_Zero";
+  this.names[f++] = "MACD_Normalizacao";
+  this.names[f++] = "MACD_Normalizacao_Zero";
+  this.names[f++] = "MFI_FW";
+  this.names[f++] = "MFI_Cx";
+  this.names[f++] = "MFI_norm";
+  this.names[f++] = "Momentum_Var";
+  this.names[f++] = "Momentum_Var_Cx";
+  this.names[f++] = "Momentum_norm";
+  this.names[f++] = "RSI_Var";
+  this.names[f++] = "RSI_Var_Cx";
+  this.names[f++] = "RSI_norm";
+  this.names[f++] = "Stoch_FW";
+  this.names[f++] = "Stoch_Cx_0";
+  this.names[f++] = "Stoch_Cx_1";
+  this.names[f++] = "Stoch_norm_1";
+  this.names[f++] = "Stoch_norm_2";
+  this.names[f++] = "Volume_FW";
+  this.names[f++] = "Volume_Cx";
+  this.names[f++] = "Volume_norm";
+  this.names[f++] = "WPR_Var";
+  this.names[f++] = "WPR_Var_Cx";
+  this.names[f++] = "WPR_norm";
+  this.names[f++] = "Preco_open";
+  this.names[f++] = "Preco_high";
+  this.names[f++] = "Preco_low";
+  this.names[f++] = "Preco_close";
+  this.names[f++] = "Preco_time";
+  this.names[f++] = "Preco_Delta";
+}
+
+int Aquisicao::featIndex(string featName) {
+  int retorno = -1;
+
+  for (int i = 0; i < ArrayRange(this.names,0); i++) {
+    if(this.names[i] == featName) return i;
+  }
+
+  return retorno;
+}
+
 
 Aquisicao aquisicao_entrada;

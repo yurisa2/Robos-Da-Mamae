@@ -359,9 +359,6 @@ void Init_Padrao()
   if(!Otimizacao) File_Init();
   // if(!Otimizacao) File_Filtro_Init();
 
-  if(ml_on && rna_levanta_arquivo_rede && rna_filtros_on) machine_learning.Levanta_RNA(machine_learning.rede_obj,rna_arquivo_trn);
-  if(ml_on && rdf_levanta_arquivo_arvores && rdf_filtros_on) machine_learning.Levanta_RDF(machine_learning.tree_obj,rdf_arquivo_trn);
-
 }
 
 MqlRates Preco(int barra = 0)
@@ -395,42 +392,14 @@ double n_(double valor, double min, double max)
   return retorno;
 }
 
-class on_trade_robo {
-  public:
-  on_trade_robo(int es=0, double lucro = 0);
-  double Profit;
-
-  int io;
-
-};
-
-void on_trade_robo::on_trade_robo(int es=0, double lucro = 0) //in = 1 |  out = -1
-{
-  io = es;
-  if(ml_on && io == -1)
-  {
-    dados_nn.Saida(lucro);
-    machine_learning.Saida_ML();
-  }
-
-  if(ml_on && io == 1) dados_nn.Dados_Entrada();
-};
-
 double OnTester()
 {
   double resultado;
-  if(ml_on && ml_Salva_Arquivo_hist) machine_learning.ML_Save(ml_nome_arquivo_hist);
-  if(ml_on && rna_on_treino) machine_learning.Treino_RNA(machine_learning.rede_obj);
-  if(ml_on && rdf_on_treino) machine_learning.Treino_RDF(machine_learning.tree_obj);
 
-  if(!Custom_resultado_treino_nn)
-  {
   Totalizador *totalizator = new Totalizador();
   resultado = totalizator.ganho_liquido();
  // resultado = totalizator.negocios;
   delete(totalizator);
-  }
-  else resultado = NormalizeDouble((TesterStatistics(STAT_PROFIT_TRADES)/TesterStatistics(STAT_TRADES))*100,2);
 
   return resultado;
 }

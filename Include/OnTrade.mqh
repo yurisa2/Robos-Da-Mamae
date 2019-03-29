@@ -324,7 +324,7 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 
                 }
 
-
+                deal_matrix.addDeal(myDealInfo);
                 aquisicao_entrada.Dados();
               }
 
@@ -350,7 +350,8 @@ void OnTradeTransaction(const MqlTradeTransaction& trans,
 
                 // ArrayPrint(line); //DEBUG
 
-                deal_matrix.Add_Line(line);
+                deal_matrix.addLine(line);
+                // deal_matrix.addDeal(myDealInfo);
                 aquisicao_entrada.Zerar();
                 // MATRIX DEALS
 

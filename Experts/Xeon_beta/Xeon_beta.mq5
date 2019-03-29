@@ -21,6 +21,7 @@ string Nome_Robo = "Xeon_beta";
 #include <FuncoesGerais.mqh>
 
 #include <Stops_OO.mqh>
+
 #include <MontarRequisicao.mqh>
 //#include <Bucareste\InitBucareste.mqh>
 #include <VerificaInit.mqh>

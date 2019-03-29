@@ -41,29 +41,32 @@ class Afis
   void staticRules(int Feature_idx, CMamdaniFuzzySystem& Afis_Model);
   void process(double& process[]);
 
-  int selected_features[];
   bool debug_afis;
   bool feature_ranking_temp_print;
   bool feature_ranking_print;
   bool selected_features_print;
-  int linhas;
-  int max_feats;
-  int min_feats;
+
   int dataset_min_size;
   int dataset_max_size;
+  int linhas;
+  int linesize;
+  int max_feats;
+  int min_feats;
+  int selected_features[];
+
+  string feature_method;
   string feature_selection_method;
   string rules_method;
-  double param_feature_min_cut;
-  int linesize;
+
+  double dataset[][100]; // Hope doesn't get shit
   double dataset_0[][100]; //dataset_0[line][column/featureVALUE]
   double dataset_1[][100];
   double dataset_0_bx[][5]; //dataset_0_bx[featureINDEX][bx_data]
   double dataset_1_bx[][5];
   double input_fuzzy[];
-  double result_raw[]; //Nao usando ainda, é para fazer correlacões como FeatureRanking...melhor pensar
   double feature_ranking[];
-  double dataset[][100]; // Hope doesn't get shit
-  string feature_method;
+  double param_feature_min_cut;
+  double result_raw[]; //Nao usando ainda, é para fazer correlacões como FeatureRanking...melhor pensar
 
   private:
 

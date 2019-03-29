@@ -185,6 +185,7 @@ void Xeon_beta::Avalia() {
 
       // Print("reco(1).close - Preco(2).close: " + (Preco(1).close - Preco(2).close));
 
+      deal_matrix.print_matrix_each_deal = false;
 
       if((xeon_encerra_zero && status_exchange == 0) ||
       (O_Stops.Tipo_Posicao() != 0 &&

@@ -1,38 +1,93 @@
-﻿/* -*- C++ -*- */
+/* -*- C++ -*- */
 
 class Filtro_Afis
 {
   public:
+  int calc();
   Filtro_Afis();
-  int min_lines;
-  int max_feats;
-  int min_feats;
-  string feature_method;
-  string feature_selection_method;
-  double output[];
+  void cutDataset();
+
   Afis *afis;
   Aquisicao *aquisicao;
-  double inputs[]; // PEGAR INPUTS ATUAIS VIA AQUISICAO
 
+  string feature_method;
+  string feature_selection_method;
+
+  double dataset_temp[][100];
+  double dataset_temp_0[][100];
+  double dataset_temp_1[][100];
+  double inputs[]; // PEGAR INPUTS ATUAIS VIA AQUISICAO
+  double output[];
   double res_0;
   double res_1;
 
-
-  int calc();
+  int direction;
+  int min_feats;
+  int num_lines;
+  int max_feats;
 
 };
 
 void Filtro_Afis::Filtro_Afis() {
   this.afis = new Afis;
   this.aquisicao = new Aquisicao;
+  this.direction = 0;
+  this.num_lines = 10;
+}
+
+void Filtro_Afis::cutDataset() {
+  int size_dataset_min = MathMin(ArrayRange(this.dataset_temp_0,0),ArrayRange(this.dataset_temp_1,0));
+  int w_i = ArrayRange(this.dataset_temp,0) - 1;
+  ArrayFree(this.dataset_temp_0);
+  ArrayFree(this.dataset_temp_1);
 
 
+  // while (size_dataset_min < this.num_lines || w_i > 0) {
+  while (size_dataset_min < this.num_lines) {
+    if(this.dataset_temp[w_i][0] <= 0) {
+      ArrayResize(this.dataset_temp_0,(ArrayRange(this.dataset_temp_0,0)+1));
+      for (int i = 0; i < ArrayRange(this.dataset_temp_0,1); i++) {
+        this.dataset_temp_0[(ArrayRange(this.dataset_temp_0,0)-1)][i] = this.dataset_temp[w_i][i];
+      }
+    } else {
+      ArrayResize(this.dataset_temp_1,(ArrayRange(this.dataset_temp_1,0)+1));
+      for (int i = 0; i < ArrayRange(this.dataset_temp_1,1); i++) {
+        this.dataset_temp_1[(ArrayRange(this.dataset_temp_1,0)-1)][i] = this.dataset_temp[w_i][i];
+      }
+    }
 
+    w_i--;
+    size_dataset_min = MathMin(ArrayRange(this.dataset_temp_0,0),ArrayRange(this.dataset_temp_1,0));
+  }
+
+  Print("w_i: " + w_i);
+  Print("ArrayRange(this.dataset_temp,0): " + ArrayRange(this.dataset_temp,0));
+  // ArrayRemove(this.dataset_temp,0,w_i);
+
+  ArrayPrint(dataset_temp);
 }
 
 int Filtro_Afis::calc() {
 
-  if(ArrayRange(deal_matrix.matrix,0) == 0) return -1;
+  if(this.direction == 0)  {
+    ArrayCopy(this.dataset_temp, deal_matrix.matrix);
+    ArrayCopy(this.dataset_temp_0, deal_matrix.matrix_0);
+    ArrayCopy(this.dataset_temp_1, deal_matrix.matrix_1);
+  }
+  if(this.direction < 0)  {
+    ArrayCopy(this.dataset_temp, deal_matrix.matrix_sell);
+    ArrayCopy(this.dataset_temp_0, deal_matrix.matrix_sell_0);
+    ArrayCopy(this.dataset_temp_1, deal_matrix.matrix_sell_1);
+  }
+  if(this.direction > 0)  {
+    ArrayCopy(this.dataset_temp, deal_matrix.matrix_buy);
+    ArrayCopy(this.dataset_temp_0, deal_matrix.matrix_buy_0);
+    ArrayCopy(this.dataset_temp_1, deal_matrix.matrix_buy_1);
+  }
+
+
+
+  if(MathMin(ArrayRange(this.dataset_temp_0,0),ArrayRange(this.dataset_temp_1,0)) < this.num_lines) return -1;
 
   this.afis.linesize = 79 ;
 
@@ -41,10 +96,11 @@ int Filtro_Afis::calc() {
 
   this.afis.dataset_max_size = 20;
 
-  ArrayCopy(this.afis.dataset, deal_matrix.matrix);
+  this.cutDataset();
+
+  ArrayCopy(this.afis.dataset, dataset_temp);
 
   ArrayResize(inputs,(ArrayRange(this.aquisicao.todosDados,0)+1));
-
 
   inputs[0] = NULL;
 
@@ -61,5 +117,5 @@ int Filtro_Afis::calc() {
 
   // ArrayPrint(this.output);
 
-return false;
+  return false;
 }

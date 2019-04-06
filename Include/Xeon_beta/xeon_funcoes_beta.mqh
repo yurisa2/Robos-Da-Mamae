@@ -199,17 +199,25 @@ void Xeon_beta::Avalia() {
 
         Filtro_Afis *filtrofuzzy = new Filtro_Afis;
         filtrofuzzy.max_feats = 3;
+        filtrofuzzy.max_feats = 1;
+        filtrofuzzy.direction = direcao_now;
         filtrofuzzy.calc();
 
         Print("filtrofuzzy.res_0: " + filtrofuzzy.res_0);
         Print("filtrofuzzy.res_1: " + filtrofuzzy.res_1);
 
+        bool filtro_fuzzy_ok = false;
+
+        if(filtrofuzzy.res_1 == 0 || (filtrofuzzy.res_1 >= filtrofuzzy.res_0)) filtro_fuzzy_ok = true;
+
+
+        if(filtro_fuzzy_ok || !usa_ff) {
+          Opera_Mercado *opera = new Opera_Mercado;
+          opera.AbrePosicao(direcao_now, "Entrada Xeon");
+          delete(opera);
+        }
+
         delete(filtrofuzzy);
-
-
-        Opera_Mercado *opera = new Opera_Mercado;
-        opera.AbrePosicao(direcao_now, "Entrada Xeon");
-        delete(opera);
 
       }
 

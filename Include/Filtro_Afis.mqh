@@ -45,7 +45,7 @@ void Filtro_Afis::cutDataset() {
   // while (size_dataset_min < this.num_lines || w_i > 0) {
   // while (size_dataset_min < this.num_lines) {
   // while (size_dataset_min < this.num_lines && w_i > 0) {
-  for(w_i; w_i >= 0; w_i--) {
+  for(w_i = ArrayRange(this.dataset_temp,0) - 1; w_i >= 0; w_i--) {
     if(this.dataset_temp[w_i][0] <= 0) {
       ArrayResize(this.dataset_temp_0,(ArrayRange(this.dataset_temp_0,0)+1));
       for (int i = 0; i < ArrayRange(this.dataset_temp_0,1); i++) {

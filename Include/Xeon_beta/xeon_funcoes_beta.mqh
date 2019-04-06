@@ -198,7 +198,7 @@ void Xeon_beta::Avalia() {
       if(status_exchange == 1) {
 
         Filtro_Afis *filtrofuzzy = new Filtro_Afis;
-        filtrofuzzy.max_feats = 1;
+        filtrofuzzy.max_feats = 3;
         filtrofuzzy.calc();
 
         Print("filtrofuzzy.res_0: " + filtrofuzzy.res_0);

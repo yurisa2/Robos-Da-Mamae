@@ -41,9 +41,11 @@ void Filtro_Afis::cutDataset() {
   ArrayFree(this.dataset_temp_0);
   ArrayFree(this.dataset_temp_1);
 
-
+  // Print("INSIDE WHILE size_dataset_min: " + size_dataset_min);
   // while (size_dataset_min < this.num_lines || w_i > 0) {
-  while (size_dataset_min < this.num_lines) {
+  // while (size_dataset_min < this.num_lines) {
+  // while (size_dataset_min < this.num_lines && w_i > 0) {
+  for(w_i; w_i >= 0; w_i--) {
     if(this.dataset_temp[w_i][0] <= 0) {
       ArrayResize(this.dataset_temp_0,(ArrayRange(this.dataset_temp_0,0)+1));
       for (int i = 0; i < ArrayRange(this.dataset_temp_0,1); i++) {
@@ -56,15 +58,18 @@ void Filtro_Afis::cutDataset() {
       }
     }
 
-    w_i--;
     size_dataset_min = MathMin(ArrayRange(this.dataset_temp_0,0),ArrayRange(this.dataset_temp_1,0));
+    if(size_dataset_min == this.num_lines) break;
+    // Print("INSIDE WHILE size_dataset_min: " + size_dataset_min);
   }
 
-  Print("w_i: " + w_i);
-  Print("ArrayRange(this.dataset_temp,0): " + ArrayRange(this.dataset_temp,0));
-  // ArrayRemove(this.dataset_temp,0,w_i);
+  // Print("w_i: " + w_i);
+  // Print("POS FOR( ArrayRange(this.dataset_temp,0): " + ArrayRange(this.dataset_temp,0));
+  // Print("POS FOR( ArrayRange(this.dataset_temp_0,0): " + ArrayRange(this.dataset_temp_0,0));
+  // Print("POS for() ArrayRange(this.dataset_temp_1,0): " + ArrayRange(this.dataset_temp_1,0));
 
-  ArrayPrint(dataset_temp);
+  ArrayRemove(this.dataset_temp,0,w_i);
+  // ArrayPrint(dataset_temp);
 }
 
 int Filtro_Afis::calc() {

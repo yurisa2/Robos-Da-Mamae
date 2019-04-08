@@ -24,6 +24,7 @@ class Igor
 
 void Igor::Igor(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT)
 {
+  periodo = TimeFrame;
   Igor_TF = periodo;
 }
 

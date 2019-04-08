@@ -21,7 +21,7 @@ class Preco_O
 
 void Preco_O::Preco_O(ENUM_TIMEFRAMES Periodo_MA_PA = PERIOD_CURRENT)
 {
-  Periodo_MA = Periodo_MA_PA;
+  Periodo_MA = TimeFrame;
   MA *OO_HighMA = new MA(3,MODE_SMA,Periodo_MA_PA,0,PRICE_HIGH);
   MA *OO_LowMA = new MA(3,MODE_SMA,Periodo_MA_PA,0,PRICE_LOW);
   MA *OO_CloseMA = new MA(3,MODE_SMA,Periodo_MA_PA,0,PRICE_CLOSE);

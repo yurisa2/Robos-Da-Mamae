@@ -30,7 +30,7 @@ double IXP::Valor(int barra = 0)
 
      MqlRates rates[];
      ArraySetAsSeries(rates,true);
-     int copied=CopyRates(Symbol(),PERIOD_CURRENT,0,200,rates);
+     int copied=CopyRates(Symbol(),TimeFrame_,0,200,rates);
      delta_preco = (rates[barra].high - rates[barra].low);
 
      BB *Banda_BB = new BB(NULL,NULL,IXP_Periodos);

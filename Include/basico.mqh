@@ -13,6 +13,9 @@ int Rand_Geral = MathRand();
 #include <Trade\SymbolInfo.mqh>
 //#include <Charts\Chart.mqh>
 
+#include <VerificaInit.mqh>
+
+
 #include <Posicao.mqh>
 #include <JAson.mqh>
 #include <OnTrade.mqh>
@@ -22,8 +25,8 @@ int Rand_Geral = MathRand();
 #include <Interruptor.mqh>
 #include <InTradeControl.mqh>
 
-
-#include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
+#include <FuncoesGerais.mqh>
+#include <MontarRequisicao.mqh>
 
 #include <Lib_CisNewBar.mqh>
 #include <Operacoes_No_tick.mqh>
@@ -61,7 +64,6 @@ int Rand_Geral = MathRand();
 #include <Indicadores\WPR.mqh>
 #include <Indicadores\XING.mqh>
 #include <aquisicao.mqh>
-#include <Filtro_Afis.mqh>
 
 //#include <File_Writer.mqh> //Programa de Emagrecimento do YurÃ£o
 #include <File_Writer_Gen.mqh>

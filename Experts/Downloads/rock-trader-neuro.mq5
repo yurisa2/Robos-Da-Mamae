@@ -13,7 +13,7 @@ input int      StopLoss=30;      // Stop Loss
 input int      TakeProfit=100;   // Take Profit
 input int      EA_Magic=12345;   // EA Magic Number
 input double   Lot=1.0;          // Lots to Trade
-input ENUM_TIMEFRAMES TimeFrames = PERIOD_CURRENT;
+input ENUM_TIMEFRAMES TimeFrames = TimeFrame_;
 //--- weight of Neuros values                                                                   
 input double w0=0.8;
 input double w1=0.4;
@@ -68,7 +68,7 @@ int OnInit()
 //--- save the current chart symbol for further operation of the EA on this very symbol
    my_symbol=Symbol();
 //--- save the current time frame of the chart for further operation of the EA on this very time frame
-   my_timeframe=PERIOD_CURRENT;
+   my_timeframe=TimeFrame_;
 //--- save the minimum lot of the transaction to be performed
    lot_size=SymbolInfoDouble(my_symbol,SYMBOL_VOLUME_MIN);
 //--- apply the indicator and get its handle

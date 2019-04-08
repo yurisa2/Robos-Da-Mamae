@@ -23,6 +23,8 @@ class MFI
 
 void MFI::MFI(ENUM_TIMEFRAMES period = PERIOD_CURRENT,int ma_period = 14, ENUM_APPLIED_VOLUME  applied_volume = VOLUME_REAL,string symbol = NULL)
 {
+
+   period = TimeFrame;
   HandleMFI = 0;
   HandleMFI = iMFI(symbol,period,ma_period,applied_volume);
   // ChartIndicatorAdd(0,1,HandleMFI);

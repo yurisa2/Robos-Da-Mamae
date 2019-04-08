@@ -27,7 +27,7 @@
 
 //+------------------------------------------------------------------+
 bool Wesley_Permite_Large = false;         //Permite o uso de 2 timeframes (large)
-ENUM_TIMEFRAMES Wesley_Large = PERIOD_CURRENT;                                         //Periodo Large
+ENUM_TIMEFRAMES Wesley_Large = TimeFrame_;                                         //Periodo Large
 
 bool Wesley_BBG_Enable = false;
 bool Wesley_RSIG_Enable = false;
@@ -53,7 +53,7 @@ double         RatesTotal[];
 double         indice[];
 
 
-ENUM_TIMEFRAMES TimeFrame = PERIOD_CURRENT;
+ENUM_TIMEFRAMES TimeFrame = TimeFrame_;
 
 class Wesley
 {

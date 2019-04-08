@@ -3,7 +3,7 @@
 //|                                             SA2 - Investment soft|
 //+------------------------------------------------------------------+
 
-int   Xavier_Handle_BB = iBands(NULL,PERIOD_CURRENT,20,0,2,PRICE_CLOSE);
+int   Xavier_Handle_BB = iBands(NULL,TimeFrame_,20,0,2,PRICE_CLOSE);
 
 class Xavier {
 public:

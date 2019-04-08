@@ -198,9 +198,10 @@ void Xeon_beta::Avalia() {
       if(status_exchange == 1) {
 
         Filtro_Afis *filtrofuzzy = new Filtro_Afis;
-        filtrofuzzy.max_feats = 3;
-        filtrofuzzy.max_feats = 1;
+        filtrofuzzy.min_feats = 1;
+        filtrofuzzy.max_feats = ff_max_feats;
         filtrofuzzy.direction = direcao_now;
+        filtrofuzzy.num_lines = ff_dataset_size;
         filtrofuzzy.calc();
 
         Print("filtrofuzzy.res_0: " + filtrofuzzy.res_0);
@@ -209,7 +210,6 @@ void Xeon_beta::Avalia() {
         bool filtro_fuzzy_ok = false;
 
         if(filtrofuzzy.res_1 == 0 || (filtrofuzzy.res_1 >= filtrofuzzy.res_0)) filtro_fuzzy_ok = true;
-
 
         if(filtro_fuzzy_ok || !usa_ff) {
           Opera_Mercado *opera = new Opera_Mercado;

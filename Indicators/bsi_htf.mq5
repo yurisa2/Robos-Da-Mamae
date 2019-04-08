@@ -256,7 +256,7 @@ bool TimeFramesCheck(string IndName,
                      ENUM_TIMEFRAMES TFrame) // Ïåðèîä ãðàôèêà èíäèêàòîðà
   {
 //--- ïðîâåðêà ïåðèîäîâ ãðàôèêîâ íà êîððåêòíîñòü
-   if(TFrame<Period() && TFrame!=PERIOD_CURRENT)
+   if(TFrame<Period() && TFrame!=TimeFrame_)
      {
       Print("Ïåðèîä ãðàôèêà äëÿ èíäèêàòîðà "+IndName+" íå ìîæåò áûòü ìåíüøå ïåðèîäà òåêóùåãî ãðàôèêà!");
       Print("Ñëåäóåò èçìåíèòü âõîäíûå ïàðàìåòðû èíäèêàòîðà!");

@@ -6,7 +6,7 @@
 #property link      "http://www.sa2.com.br"
 
 
-ENUM_TIMEFRAMES RSI_TimeFrame = PERIOD_CURRENT;
+ENUM_TIMEFRAMES RSI_TimeFrame = TimeFrame_;
 int RSI_period = 14;
 ENUM_APPLIED_PRICE RSI_preco =  PRICE_CLOSE;
 

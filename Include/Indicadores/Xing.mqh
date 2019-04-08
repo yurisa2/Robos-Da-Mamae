@@ -13,6 +13,7 @@ class Xing_Ind
 
 void Xing_Ind::Xing_Ind(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT)
 {
+  periodo = TimeFrame; 
   Xing_Ind_TF = periodo;
 }
 

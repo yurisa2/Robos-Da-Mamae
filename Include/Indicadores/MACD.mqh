@@ -23,6 +23,7 @@ class MACD
 
 void MACD::MACD(int fast_ema_period = 12,int slow_ema_period = 26,int signal_period = 9,string symbol = NULL, ENUM_TIMEFRAMES period = PERIOD_CURRENT, ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE)
 {
+  period = TimeFrame;
   HandleMACD = 0;
   HandleMACD = iMACD(symbol,period,fast_ema_period,slow_ema_period,signal_period,applied_price);
   // ChartIndicatorAdd(0,1,HandleMACD);

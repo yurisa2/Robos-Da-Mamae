@@ -8,8 +8,8 @@ class Xuwabunga
   void Avalia();
   double Valor();
   Xuwabunga();
-  void MainTrend(ENUM_TIMEFRAMES Periodo = PERIOD_CURRENT);
-  void SecTrend(ENUM_TIMEFRAMES Periodo = PERIOD_CURRENT);
+  void MainTrend(ENUM_TIMEFRAMES Periodo = TimeFrame_);
+  void SecTrend(ENUM_TIMEFRAMES Periodo = TimeFrame_);
 
 
   private:
@@ -77,7 +77,7 @@ double Xuwabunga::Valor()
 }
 
 
-void Xuwabunga:: MainTrend(ENUM_TIMEFRAMES Periodo = PERIOD_CURRENT)
+void Xuwabunga:: MainTrend(ENUM_TIMEFRAMES Periodo = TimeFrame_)
 {
 
 

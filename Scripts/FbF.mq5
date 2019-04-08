@@ -10,7 +10,7 @@ string Nome_Robo = "ML_JarqueBeraTest";
 #include <ML.mqh>
 #include <Inputs_ML.mqh>
 
-ENUM_TIMEFRAMES TimeFrame = PERIOD_CURRENT;                              //TimeFrame base
+ENUM_TIMEFRAMES TimeFrame = TimeFrame_;                              //TimeFrame base
 int Tipo_Comentario = 0;                                          //Tipo de Comentario (0 - simples, 1 - Avancado, 2 - DEBUG)
 bool rna_filtros_on = false;
 bool rdf_filtros_on = false;

@@ -1,5 +1,12 @@
 /* -*- C++ -*- */
 
+input string Label_FF = "FILTRO FUZZY"; // ----------- FILTRO FUZZY -----------
+input bool usa_ff = false;
+input int ff_dataset_size = 20;
+input int ff_max_feats = 5;
+input int ff_feature_method = 1;
+
+
 class Filtro_Afis
 {
   public:
@@ -9,9 +16,6 @@ class Filtro_Afis
 
   Afis *afis;
   Aquisicao *aquisicao;
-
-  string feature_method;
-  string feature_selection_method;
 
   double dataset_temp[][100];
   double dataset_temp_0[][100];
@@ -33,6 +37,11 @@ void Filtro_Afis::Filtro_Afis() {
   this.aquisicao = new Aquisicao;
   this.direction = 0;
   this.num_lines = 10;
+
+  if(ff_feature_method == 0) afis.feature_method = "variance";
+  if(ff_feature_method == 1) afis.feature_method = "spearman";
+  if(ff_feature_method == 2) afis.feature_method = "quantile";
+
 }
 
 void Filtro_Afis::cutDataset() {
@@ -99,7 +108,7 @@ int Filtro_Afis::calc() {
   this.afis.max_feats = 5;
   this.afis.min_feats = 1 ;
 
-  this.afis.dataset_max_size = 20;
+  this.afis.dataset_max_size = 99999;
 
   this.cutDataset();
 

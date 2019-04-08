@@ -4,34 +4,24 @@
 //|                                             https://www.mql5.com |
 //+------------------------------------------------------------------+
 
-// #include <ML_stub.mqh>
-// #include <dados_nn_stub.mqh>
-// #include <Inputs_ML_stub.mqh>
-
-#include <ANN.mqh>
-
 #property copyright "Xeon_beta - Da Fuzzynator"
 #property link      "http://www.sa2.com.br"
 
 #property version   "1.0" //Usando posicoes
 string Nome_Robo = "Xeon_beta";
+#include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
 #include <Inputs_Vars.mqh>
 #include <basico.mqh>
-
-#include <FuncoesGerais.mqh>
-
-#include <Stops_OO.mqh>
-
-#include <MontarRequisicao.mqh>
-//#include <Bucareste\InitBucareste.mqh>
-#include <VerificaInit.mqh>
 
 #include <Xeon_beta\xeon_inputs_beta.mqh>
 #include <Xeon_beta\xeon_funcoes_beta.mqh>
 
-#include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
 
 #include <File_Writer.mqh>
+
+
+#include <ANN.mqh>
+#include <Filtro_Afis.mqh>
 
 
 int OnInit()

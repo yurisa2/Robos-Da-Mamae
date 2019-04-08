@@ -18,6 +18,7 @@ class Stoch
 
 void Stoch::Stoch(int STOCH_k_period = 10,int STOCH_d_period = 3,int STOCH_slowing = 3,ENUM_TIMEFRAMES STOCH_periods = PERIOD_CURRENT,string symbol = NULL, ENUM_MA_METHOD STOCH_method = MODE_SMA,ENUM_STO_PRICE STOCH_price = STO_LOWHIGH)
 {
+  STOCH_periods = TimeFrame;
   HandleStoch = 0;
   HandleStoch = iStochastic(symbol,STOCH_periods,STOCH_k_period,STOCH_d_period,STOCH_slowing,STOCH_method,STOCH_price);
   // ChartIndicatorAdd(0,1,HandleStoch);

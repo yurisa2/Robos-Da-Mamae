@@ -17,6 +17,7 @@ class MA
 
 void MA::MA(int ma_period = 3,ENUM_MA_METHOD ma_method = MODE_SMA, ENUM_TIMEFRAMES Periodos_MA = PERIOD_CURRENT,int ma_shift = 0,ENUM_APPLIED_PRICE applied_price = PRICE_CLOSE)
 {
+  Periodos_MA = TimeFrame;
   HandleMA = 0;
   HandleMA = iMA(Symbol(),Periodos_MA,ma_period,ma_shift,ma_method,applied_price) ;
   // ChartIndicatorAdd(0,0,HandleMA);

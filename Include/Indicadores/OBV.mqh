@@ -17,6 +17,8 @@ class OBV
 
 void OBV::OBV(ENUM_TIMEFRAMES periodo = PERIOD_CURRENT)
 {
+  periodo = TimeFrame;
+
   HandleOBV = 0;
   HandleOBV = iOBV(Symbol(),periodo,VOLUME_TICK) ;
   // ChartIndicatorAdd(0,0,HandleMA);

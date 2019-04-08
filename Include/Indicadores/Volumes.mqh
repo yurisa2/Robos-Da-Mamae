@@ -17,6 +17,7 @@ class Volumes
 
 void Volumes::Volumes(string symbol = NULL, ENUM_TIMEFRAMES period = PERIOD_CURRENT, ENUM_APPLIED_VOLUME  applied_volume = VOLUME_TICK)
 {
+  period = TimeFrame;
   HandleVolumes = 0;
   HandleVolumes = iVolumes(symbol,period,applied_volume) ;
   // ChartIndicatorAdd(0,1,HandleVolumes);

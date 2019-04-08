@@ -13,4 +13,3 @@ input bool xeon_encerra_zero = true; //xeon_encerra_zero - Encerra quando avalia
 input int xeon_feature_selection = 0; //xeon_feature_selection - Método de selecao de feature
 input int xeon_max_feats = 3; //xeon_max_feats - Maximo de features
 input double xeon_delta = 0; //xeon_delta - Delta do resultado
-input bool usa_ff = false;

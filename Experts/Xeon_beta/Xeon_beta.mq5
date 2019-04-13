@@ -16,10 +16,6 @@ string Nome_Robo = "Xeon_beta";
 #include <Xeon_beta\xeon_inputs_beta.mqh>
 #include <Xeon_beta\xeon_funcoes_beta.mqh>
 
-
-#include <File_Writer.mqh>
-
-
 #include <ANN.mqh>
 #include <Filtro_Afis.mqh>
 

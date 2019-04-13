@@ -6,6 +6,8 @@
 #property copyright "PetroSa, Robs feitos na hora, quentinhos, tragam vasilhas."
 #property link      "http://www.sa2.com.br"
 
+#include <Math\Fuzzy\MamdaniFuzzySystem.mqh>
+
 class Afis
 {
   public:

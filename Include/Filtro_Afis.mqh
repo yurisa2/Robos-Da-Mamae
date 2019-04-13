@@ -1,7 +1,7 @@
 /* -*- C++ -*- */
 
 input string Label_FF = "FILTRO FUZZY"; // ----------- FILTRO FUZZY -----------
-input bool usa_ff = false;
+input bool ff_usa = false;
 input int ff_dataset_size = 20;
 input int ff_max_feats = 5;
 input int ff_feature_method = 1;

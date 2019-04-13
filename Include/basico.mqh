@@ -358,7 +358,7 @@ void Init_Padrao()
   Print("Tick_Size: ",DoubleToString(Tick_Size));
   if(Tick_Size == 0) Alert("Tick_Size ZERO!");
 
-  if(!Otimizacao) File_Init();
+  //if(!Otimizacao) File_Init();
   // if(!Otimizacao) File_Filtro_Init();
 
 }

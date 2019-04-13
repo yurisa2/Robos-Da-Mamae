@@ -211,7 +211,7 @@ void Xeon_beta::Avalia() {
 
         if(filtrofuzzy.res_1 == 0 || (filtrofuzzy.res_1 >= filtrofuzzy.res_0)) filtro_fuzzy_ok = true;
 
-        if(filtro_fuzzy_ok || !usa_ff) {
+        if(filtro_fuzzy_ok || !ff_usa) {
           Opera_Mercado *opera = new Opera_Mercado;
           opera.AbrePosicao(direcao_now, "Entrada Xeon");
           delete(opera);

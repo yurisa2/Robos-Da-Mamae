@@ -49,7 +49,9 @@ void ANN::trainANN(CMultilayerPerceptronShell &network_trn)
   CAlglib algebra_trn;
   CMLPReportShell infotreino_trn;
 
-  int amostras = this.linhas; //Verificar a Matrix
+  // int amostras = this.linhas; //Verificar a Matrix // ORIGINAL
+  int amostras = ArrayRange(this.Matrix,0); //Automatico
+
   PrintFormat("Amostras: %f | Entradas: %f: ",amostras,this.linesize);
 
   int resposta_trn;

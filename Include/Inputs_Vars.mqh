@@ -219,4 +219,4 @@ bool mocosa_indicadores = true; //esconde indicadores no teste, util para ver fl
 bool ja_zerou_sl_temp = false; //PQ NAO TO AGUENTANDO MAIS
 
 
-input int file_normalizacao = 20;
+// input int file_normalizacao = 20;
